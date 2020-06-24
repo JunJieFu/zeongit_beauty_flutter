@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -34,6 +29,8 @@ class _LoginPageState extends State<LoginPage> {
     ),
       body: WebView(
         initialUrl: "https://fanyi.baidu.com/",
+        //JS执行模式 是否允许JS执行
+        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }
