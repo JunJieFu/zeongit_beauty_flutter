@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:zeongitbeautyflutter/pages/login.page.dart';
 
 import 'fragment/ink_clip.widget.dart';
 
@@ -28,7 +29,10 @@ class MenuWidget extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      print("1");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) {
+                        return LoginPage();
+                      }));
                     },
                   )
                 ]))),

@@ -86,7 +86,4 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ));
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

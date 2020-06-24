@@ -30,6 +30,7 @@ dependencies:
   dio: ^3.0.0
   shared_preferences: ^0.5.7+3
   provider: ^4.0.0
+  webview_flutter: 0.3.22+1
   flutter_svg:
 dev_dependencies:
   flutter_test:
