@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       ],
     ),
       body: WebView(
-        initialUrl: "http://account.secdra.com/signIn",
+        initialUrl: "https://fanyi.baidu.com/",
       ),
     );
   }
