@@ -1,0 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
+import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
+
+class FragmentState extends ChangeNotifier {
+  bool _hadInit;
+
+  bool get hadInit => _hadInit;
+
+  FragmentState({bool hadInit}) {
+    this._hadInit = hadInit;
+  }
+
+  updateHadInit() {
+    StorageManager.saveBool(KeyConstant.HAD_INIT, true);
+    this._hadInit = true;
+    notifyListeners();
+  }
+}
