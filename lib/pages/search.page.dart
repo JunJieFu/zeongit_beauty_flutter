@@ -17,14 +17,10 @@ class _SearchPageState extends State<SearchPage> {
   bool _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
-  Future<void> listTagTop30() async {
-    if (_tagState.recommendTagList == null) {
-      var result = await TagService.listTagTop30();
-      setState(() {
-        _tagState.setRecommendTagList(result.data);
-      });
-    }
+  Future<void> _listTagTop30() async {
+    var result = await TagService.listTagTop30();
     setState(() {
+      _tagState.setRecommendTagList(result.data);
       _loading = false;
     });
     return;
@@ -63,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
         ),
         body: RefreshIndicator(
           key: _refreshIndicatorKey,
-          onRefresh: listTagTop30,
+          onRefresh: _listTagTop30,
           color: Colors.grey,
           backgroundColor: Colors.white,
           child: ListView(

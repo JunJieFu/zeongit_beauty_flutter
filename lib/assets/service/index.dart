@@ -38,7 +38,7 @@ class PictureService {
     return HttpUtil.get("/picture/pagingByRecommend", params: _);
   }
 
-  static paging(PageableEntity pageable, String tagList, String targetId) {
+  static paging(PageableEntity pageable, {String tagList, String targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["tagList"] = tagList;
