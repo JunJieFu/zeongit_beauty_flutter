@@ -10,10 +10,10 @@ enum ImageType {
 
 class ImageUtil {
   static picture(String url, {ImageType type}) {
-    return ConfigConstant.qiniuImage +
-        '/' +
-        url +
-        ConfigConstant.qiniuSeparator +
-        type.toString();
+    if (type != null){
+      return ConfigConstant.qiniuImage + '/' + url +ConfigConstant.qiniuSeparator + type.toString().split('.').last;
+    } else{
+      return ConfigConstant.qiniuImage + '/' + url;
+    }
   }
 }
