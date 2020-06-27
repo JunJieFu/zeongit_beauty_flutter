@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/pages/home.page.dart';
+import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -16,8 +16,9 @@ class WelcomePage extends StatelessWidget {
                     fit: BoxFit.cover),
                 onTap: () async {
                   fragmentState.updateHadInit();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-                    return HomePage();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) {
+                    return TabPage();
                   }));
                 })));
   }
