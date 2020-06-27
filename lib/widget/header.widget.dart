@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/pages/search.page.dart';
 import 'package:zeongitbeautyflutter/widget/header/user.widget.dart';
 
-import 'header/settings.widget.dart';
-
 class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
+  HeaderWidget({Key key, this.title}) : super(key: key);
+
+  final Widget title;
+
   @override
   Size get preferredSize {
     return Size.fromHeight(kToolbarHeight);
@@ -14,14 +16,12 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 1,
-      title: Text("主页"),
+      title: title,
       actions: <Widget>[
         UserWidget(),
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {
-
-          },
+          onPressed: () {},
         ),
         IconButton(
           icon: Icon(Icons.search),

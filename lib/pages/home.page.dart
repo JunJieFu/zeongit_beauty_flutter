@@ -31,8 +31,7 @@ class _HomePageState extends State<HomePage> {
       _recommendList =
           JsonConvert.fromJsonAsT<List<PictureEntity>>(page.content);
       var page2 = JsonConvert.fromJsonAsT<PageEntity>(result2.data);
-      _newList =
-          JsonConvert.fromJsonAsT<List<PictureEntity>>(page2.content);
+      _newList = JsonConvert.fromJsonAsT<List<PictureEntity>>(page2.content);
       _loading = false;
     });
     return;
@@ -51,11 +50,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: HeaderWidget(),
+        appBar: HeaderWidget(title: Text("主页")),
         drawer: Drawer(
-          //New added
-          child: MenuWidget(), //New added
-        ), //New added
+          child: MenuWidget(),
+        ),
         body: RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: _listByRecommend,
@@ -64,54 +62,46 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: GridView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        //横轴元素个数
-                        crossAxisCount: 2,
-                        //纵轴间距
-                        mainAxisSpacing: 10.0,
-                        //横轴间距
-                        crossAxisSpacing: 10.0,
-                        //子组件宽高长度比例
-                        childAspectRatio: 1),
-                    children: _recommendList?.map((PictureEntity e) {
-                          return Image.network(
-                              "http://secdraimg.secdra.com/" +
-                                  e.url +
-                                  "-specifiedWidth",
-                              fit: BoxFit.cover);
-                        })?.toList() ??
-                        <Widget>[]),
+              ListTile(
+                title: Text("推荐作品"),
               ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: GridView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        //横轴元素个数
-                        crossAxisCount: 2,
-                        //纵轴间距
-                        mainAxisSpacing: 10.0,
-                        //横轴间距
-                        crossAxisSpacing: 10.0,
-                        //子组件宽高长度比例
-                        childAspectRatio: 1),
-                    children: _newList?.map((PictureEntity e) {
-                          return Image.network(
-                              "http://secdraimg.secdra.com/" +
-                                  e.url +
-                                  "-specifiedWidth",
-                              fit: BoxFit.cover);
-                        })?.toList() ??
-                        <Widget>[]),
-              )
+              _PictureList(list: _recommendList),
+              ListTile(title: Text("最新作品")),
+              _PictureList(list: _newList)
             ],
           ),
         ));
+  }
+}
+
+
+class _PictureList extends StatelessWidget {
+  const _PictureList({Key key, @required this.list}) : super(key: key);
+
+  final List<PictureEntity> list;
+
+  @override
+  Widget build(BuildContext context) {
+    var gap = 6.0;
+    var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, //横轴元素个数
+        mainAxisSpacing: gap, //纵轴间距
+        crossAxisSpacing: gap, //横轴间距
+        childAspectRatio: 1 //子组件宽高长度比例
+        );
+
+    return Padding(
+      padding: EdgeInsets.fromLTRB(gap, 0, gap, gap),
+      child: GridView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: gridDelegate,
+          children: list?.map((PictureEntity e) {
+                return Image.network(
+                    "http://secdraimg.secdra.com/" + e.url + "-specifiedWidth",
+                    fit: BoxFit.cover);
+              })?.toList() ??
+              <Widget>[]),
+    );
   }
 }

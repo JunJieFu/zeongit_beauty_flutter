@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
-class UserWidget extends StatefulWidget {
-  UserWidget({Key key}) : super(key: key);
-
-  @override
-  _UserWidgetState createState() => _UserWidgetState();
-}
-
-class _UserWidgetState extends State<UserWidget> {
-  UserState userState;
-
+class UserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-//    userState = Provider.of<UserState>(context, listen: false);
     return IconButton(
       padding: EdgeInsets.all(0),
       icon: Container(
