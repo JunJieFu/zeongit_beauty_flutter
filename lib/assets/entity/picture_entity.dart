@@ -1,3 +1,4 @@
+import 'package:zeongitbeautyflutter/assets/entity/picture_user_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.dart';
 
 class PictureEntity with JsonConvert<PictureEntity> {
@@ -13,20 +14,7 @@ class PictureEntity with JsonConvert<PictureEntity> {
 	int height;
 	String sizeType;
 	List<String> tagList;
-	PictureUser user;
+	PictureUserEntity user;
 	String createDate;
 }
 
-class PictureUser with JsonConvert<PictureUser> {
-	int id;
-	String gender;
-	String birthday;
-	String nickname;
-	String introduction;
-	String avatarUrl;
-	String background;
-	String focus;
-	String country;
-	String province;
-	String city;
-}

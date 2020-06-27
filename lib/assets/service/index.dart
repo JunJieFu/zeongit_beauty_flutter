@@ -1,5 +1,7 @@
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/result_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/util/http.util.dart';
 
 class UserService {
@@ -32,13 +34,13 @@ class UserService {
 }
 
 class PictureService {
-  static pagingByRecommend(PageableEntity pageable) {
+  static Future<ResultEntity<PagePictureEntity>>pagingByRecommend(PageableEntity pageable) {
     var _ = pageable.toJson();
     _["page"]--;
     return HttpUtil.get("/picture/pagingByRecommend", params: _);
   }
 
-  static paging(PageableEntity pageable, {String tagList, String targetId}) {
+  static Future<ResultEntity<PagePictureEntity>>paging(PageableEntity pageable, {String tagList, String targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["tagList"] = tagList;
@@ -46,7 +48,7 @@ class PictureService {
     return HttpUtil.get("/picture/paging", params: _);
   }
 
-  static get(String id) {
+  static Future<ResultEntity<PictureEntity>>get(String id) {
     return HttpUtil.get("/picture/get", params: {id: id});
   }
 
@@ -105,7 +107,7 @@ class FootprintService {
 }
 
 class TagService {
-  static Future<ResultEntity> listTagTop30() async {
+  static Future<ResultEntity<List<String>>> listTagTop30() async {
     return HttpUtil.get("/tag/listTagTop30");
   }
 

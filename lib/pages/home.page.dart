@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/assets/entity/page_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.dart';
-import 'package:zeongitbeautyflutter/widget/menu.widget.dart';
 import 'package:zeongitbeautyflutter/widget/header.widget.dart';
+import 'package:zeongitbeautyflutter/widget/menu.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,10 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _loading = true;
+  dynamic _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  List<PictureEntity> _recommendList;
-  List<PictureEntity> _newList;
+  PagePictureEntity _recommendList;
+  PagePictureEntity _newList;
 
   Future<void> _listByRecommend() async {
     var result = await PictureService.pagingByRecommend(
@@ -27,11 +26,9 @@ class _HomePageState extends State<HomePage> {
     var result2 = await PictureService.paging(
         PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
     setState(() {
-      var page = JsonConvert.fromJsonAsT<PageEntity>(result.data);
-      _recommendList =
-          JsonConvert.fromJsonAsT<List<PictureEntity>>(page.content);
-      var page2 = JsonConvert.fromJsonAsT<PageEntity>(result2.data);
-      _newList = JsonConvert.fromJsonAsT<List<PictureEntity>>(page2.content);
+      print(result.data);
+      _recommendList = result.data;
+      _newList = result2.data;
       _loading = false;
     });
     return;
@@ -62,18 +59,15 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              ListTile(
-                title: Text("推荐作品"),
-              ),
-              _PictureList(list: _recommendList),
+              ListTile(title: Text("推荐作品")),
+              _PictureList(list: _recommendList?.content),
               ListTile(title: Text("最新作品")),
-              _PictureList(list: _newList)
+              _PictureList(list: _newList?.content)
             ],
           ),
         ));
   }
 }
-
 
 class _PictureList extends StatelessWidget {
   const _PictureList({Key key, @required this.list}) : super(key: key);

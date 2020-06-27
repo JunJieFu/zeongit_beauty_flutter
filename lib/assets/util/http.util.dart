@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
-import 'package:zeongitbeautyflutter/assets/entity/result_entity.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
 
 class HttpUtil {
-  static Future<ResultEntity> get(String url, {Map<String, dynamic> params}) async {
+  static Future<ResultEntity<T>> get<T>(String url, {Map<String, dynamic> params}) async {
     try {
       String token = _getToken();
       Options options =
@@ -15,14 +15,14 @@ class HttpUtil {
 
       _handleToken(response);
 
-      var result = ResultEntity().fromJson(response.data);
+      var result = ResultEntity.fromJson<T>(response.data);
       return result;
     } catch (error) {
-      return ResultEntity(status: 500, data: null, message: "服务器错误");
+      return ResultEntity(status: 500, message: "服务器错误", data: null);
     }
   }
 
-  static Future<ResultEntity> post(String url, {Map<String, dynamic> params}) async {
+  static Future<ResultEntity<T>> post<T>(String url, {Map<String, dynamic> params}) async {
     try {
       String token = _getToken();
       Options options =
@@ -31,10 +31,10 @@ class HttpUtil {
           .post(ConfigConstant.host + url, data: params, options: options);
 
       _handleToken(response);
-      var result = ResultEntity().fromJson(response.data);
+      var result = ResultEntity.fromJson<T>(response.data);
       return result;
     } catch (error) {
-      return ResultEntity(status: 500, data: null, message: "服务器错误");
+      return ResultEntity(status: 500, message: "服务器错误", data: null);
     }
   }
 

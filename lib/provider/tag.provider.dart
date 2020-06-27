@@ -5,8 +5,8 @@ class TagState extends ChangeNotifier {
 
   List<String> get recommendTagList => _recommendTagList;
 
-  setRecommendTagList(List<dynamic> recommendTagList) {
-    this._recommendTagList = recommendTagList.map((e) => e.toString()).toList();
+  setRecommendTagList(recommendTagList) {
+    this._recommendTagList = recommendTagList;
     notifyListeners();
   }
 }
