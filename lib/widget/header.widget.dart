@@ -21,17 +21,13 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
         UserWidget(),
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: Icon(Icons.search),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return SearchPage();
             }));
           },
         )
-      ],
+      ]
     );
   }
 }

@@ -4,8 +4,6 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/widget/header.widget.dart';
-import 'package:zeongitbeautyflutter/widget/menu.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -14,7 +12,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   dynamic _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   PagePictureEntity _recommendList;
@@ -26,7 +25,6 @@ class _HomePageState extends State<HomePage> {
     var result2 = await PictureService.paging(
         PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
     setState(() {
-      print(result.data);
       _recommendList = result.data;
       _newList = result2.data;
       _loading = false;
@@ -46,27 +44,26 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: HeaderWidget(title: Text("主页")),
-        drawer: Drawer(
-          child: MenuWidget(),
-        ),
-        body: RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: _listByRecommend,
-          color: Colors.grey,
-          backgroundColor: Colors.white,
-          child: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              ListTile(title: Text("推荐作品")),
-              _PictureList(list: _recommendList?.content),
-              ListTile(title: Text("最新作品")),
-              _PictureList(list: _newList?.content)
-            ],
-          ),
-        ));
+    super.build(context);
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      onRefresh: _listByRecommend,
+      color: Colors.grey,
+      backgroundColor: Colors.white,
+      child: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          ListTile(title: Text("推荐作品")),
+          _PictureList(list: _recommendList?.content),
+          ListTile(title: Text("最新作品")),
+          _PictureList(list: _newList?.content)
+        ],
+      ),
+    );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _PictureList extends StatelessWidget {

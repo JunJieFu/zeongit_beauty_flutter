@@ -1,11 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:zeongitbeautyflutter/assets/constant/index.constant.dart';
+import 'package:zeongitbeautyflutter/assets/model/index.model.dart';
 import 'package:zeongitbeautyflutter/pages/login.page.dart';
 
 import 'fragment/ink_clip.widget.dart';
 
-class MenuWidget extends StatelessWidget {
+class MenuWidget extends StatefulWidget {
+  MenuWidget({Key key}) : super(key: key);
+
+  @override
+  _MenuWidgetState createState() => _MenuWidgetState();
+}
+
+class _MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(children: <Widget>[
@@ -29,19 +38,12 @@ class MenuWidget extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return LoginPage();
                       }));
                     },
                   )
                 ]))),
-      ),
-      ListTile(
-        title: Text('猜你喜欢'),
-      ),
-      ListTile(
-        title: Text('本站最新'),
       ),
     ]);
   }

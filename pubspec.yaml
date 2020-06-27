@@ -32,6 +32,7 @@ dependencies:
   provider: ^4.0.0
   webview_flutter: 0.3.22+1
   flutter_svg:
+  waterfall_flow: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/pages/home.page.dart';
+import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
@@ -36,9 +37,11 @@ class App extends StatelessWidget {
         ],
         child: MaterialApp(
             theme: ThemeData(
+              platform: TargetPlatform.fuchsia,
+              scaffoldBackgroundColor: Colors.white,
               primaryColor: Colors.white,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: _hasInit ? HomePage() : WelcomePage()));
+            home: _hasInit ? TabPage() : WelcomePage()));
   }
 }
