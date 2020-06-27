@@ -5,6 +5,7 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
 import 'package:zeongitbeautyflutter/pages/detail.page.dart';
 
 class HomePage extends StatefulWidget {
@@ -81,7 +82,7 @@ class _PictureList extends StatelessWidget {
         mainAxisSpacing: gap, //纵轴间距
         crossAxisSpacing: gap, //横轴间距
         childAspectRatio: 1 //子组件宽高长度比例
-        );
+    );
 
     return Padding(
       padding: EdgeInsets.fromLTRB(gap, 0, gap, gap),
@@ -89,20 +90,19 @@ class _PictureList extends StatelessWidget {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: gridDelegate,
-          children: list?.map((PictureEntity e) {
-                return InkWell(
+          children: list?.map((PictureEntity picture) {
+            return Ink(
+                child: InkWell(
                   child: Image.network(
-                      "http://secdraimg.secdra.com/" +
-                          e.url +
-                          "-specifiedWidth",
+                      ImageUtil.picture(picture.url, type: ImageType.specifiedWidth),
                       fit: BoxFit.cover),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return DetailPage(id: e.id);
+                      return DetailPage(id: picture.id);
                     }));
                   },
-                );
-              })?.toList() ??
+                ));
+          })?.toList() ??
               <Widget>[]),
     );
   }
