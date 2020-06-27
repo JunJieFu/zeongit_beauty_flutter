@@ -4,6 +4,8 @@ import 'package:zeongitbeautyflutter/pages/home.page.dart';
 import 'package:zeongitbeautyflutter/widget/header.widget.dart';
 import 'package:zeongitbeautyflutter/widget/menu.widget.dart';
 
+import 'new.page.dart';
+
 class TabPage extends StatefulWidget {
   TabPage({Key key}) : super(key: key);
 
@@ -16,7 +18,8 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   List<Tab> _tabList = [
     Tab(icon: Icon(Icons.home)),
-    Tab(icon: Icon(Icons.find_in_page))
+    Tab(icon: Icon(Icons.find_in_page)),
+    Tab(icon: Icon(Icons.fiber_new)),
   ];
 
   @override
@@ -37,7 +40,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
         ),
         body: TabBarView(
             controller: _tabController,
-            children: <Widget>[HomePage(), FindPage()]),
+            children: <Widget>[HomePage(), FindPage(), NewPage()]),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -52,7 +55,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
             indicatorColor: Colors.transparent,
             indicatorWeight: 1,
             labelColor: Colors.black87,
-              unselectedLabelColor: Colors.black45,
+            unselectedLabelColor: Colors.black45,
           ),
         ));
   }

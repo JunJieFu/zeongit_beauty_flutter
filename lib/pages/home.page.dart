@@ -4,6 +4,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/pages/detail.page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -73,7 +75,7 @@ class _PictureList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gap = 6.0;
+    var gap = listGap;
     var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, //横轴元素个数
         mainAxisSpacing: gap, //纵轴间距
@@ -88,9 +90,18 @@ class _PictureList extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: gridDelegate,
           children: list?.map((PictureEntity e) {
-                return Image.network(
-                    "http://secdraimg.secdra.com/" + e.url + "-specifiedWidth",
-                    fit: BoxFit.cover);
+                return InkWell(
+                  child: Image.network(
+                      "http://secdraimg.secdra.com/" +
+                          e.url +
+                          "-specifiedWidth",
+                      fit: BoxFit.cover),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return DetailPage(id: e.id);
+                    }));
+                  },
+                );
               })?.toList() ??
               <Widget>[]),
     );

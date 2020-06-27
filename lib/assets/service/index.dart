@@ -9,23 +9,23 @@ class UserService {
     return HttpUtil.get("/userInfo/get");
   }
 
-  static getByTargetId(String targetId) {
-    return HttpUtil.get("/userInfo/get", params: {targetId: targetId});
+  static getByTargetId(int targetId) {
+    return HttpUtil.get("/userInfo/get", params: {"targetId": targetId});
   }
 
-  static follow(String followingId) {
+  static follow(int followingId) {
     return HttpUtil.post("/following/focus",
-        params: {followingId: followingId});
+        params: {"followingId": followingId});
   }
 
-  static pagingFollower(PageableEntity pageable, String targetId) {
+  static pagingFollower(PageableEntity pageable, int targetId) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
     return HttpUtil.get("/follower/paging", params: _);
   }
 
-  static pagingFollowing(PageableEntity pageable, String targetId) {
+  static pagingFollowing(PageableEntity pageable, int targetId) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
@@ -34,13 +34,15 @@ class UserService {
 }
 
 class PictureService {
-  static Future<ResultEntity<PagePictureEntity>>pagingByRecommend(PageableEntity pageable) {
+  static Future<ResultEntity<PagePictureEntity>> pagingByRecommend(
+      PageableEntity pageable) {
     var _ = pageable.toJson();
     _["page"]--;
     return HttpUtil.get("/picture/pagingByRecommend", params: _);
   }
 
-  static Future<ResultEntity<PagePictureEntity>>paging(PageableEntity pageable, {String tagList, String targetId}) {
+  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
+      {String tagList, int targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["tagList"] = tagList;
@@ -48,11 +50,11 @@ class PictureService {
     return HttpUtil.get("/picture/paging", params: _);
   }
 
-  static Future<ResultEntity<PictureEntity>>get(String id) {
-    return HttpUtil.get("/picture/get", params: {id: id});
+  static Future<ResultEntity<PictureEntity>> get(int id) {
+    return HttpUtil.get("/picture/get", params: {"id": id});
   }
 
-  static pagingRecommendById(PageableEntity pageable, String id) {
+  static pagingRecommendById(PageableEntity pageable, int id) {
     var _ = pageable.toJson();
     _["page"]--;
     _["id"] = id;
@@ -67,18 +69,18 @@ class PictureService {
 }
 
 class CollectionService {
-  static paging(PageableEntity pageable, String targetId) {
+  static paging(PageableEntity pageable, int targetId) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
     return HttpUtil.get("/collection/paging", params: _);
   }
 
-  focus(String pictureId) {
-    return HttpUtil.post("/collection/focus", params: {pictureId: pictureId});
+  focus(int pictureId) {
+    return HttpUtil.post("/collection/focus", params: {"pictureId": pictureId});
   }
 
-  pagingUser(PageableEntity pageable, String pictureId) {
+  pagingUser(PageableEntity pageable, int pictureId) {
     var _ = pageable.toJson();
     _["page"]--;
     _["pictureId"] = pictureId;
@@ -87,18 +89,18 @@ class CollectionService {
 }
 
 class FootprintService {
-  static paging(PageableEntity pageable, String targetId) {
+  static paging(PageableEntity pageable, int targetId) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
     return HttpUtil.get("/footprint/paging", params: _);
   }
 
-  static save(String pictureId) {
-    return HttpUtil.post("/footprint/save", params: {pictureId: pictureId});
+  static save(int pictureId) {
+    return HttpUtil.post("/footprint/save", params: {"pictureId": pictureId});
   }
 
-  pagingUser(PageableEntity pageable, String pictureId) {
+  pagingUser(PageableEntity pageable, int pictureId) {
     var _ = pageable.toJson();
     _["page"]--;
     _["pictureId"] = pictureId;
@@ -111,8 +113,8 @@ class TagService {
     return HttpUtil.get("/tag/listTagTop30");
   }
 
-  static listTagFrequencyByUserId(String targetId) {
+  static listTagFrequencyByUserId(int targetId) {
     return HttpUtil.get("/tag/listTagFrequencyByUserId",
-        params: {targetId: targetId});
+        params: {"targetId": targetId});
   }
 }

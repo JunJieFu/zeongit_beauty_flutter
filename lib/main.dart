@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
-import 'package:zeongitbeautyflutter/pages/home.page.dart';
 import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
@@ -15,6 +14,10 @@ void main() {
 }
 
 _init() async {
+  await  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));

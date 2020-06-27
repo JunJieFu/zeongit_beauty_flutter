@@ -5,14 +5,14 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/list_waterfall.widget.dart';
 
-class FindPage extends StatefulWidget {
-  FindPage({Key key}) : super(key: key);
+class NewPage extends StatefulWidget {
+  NewPage({Key key}) : super(key: key);
 
   @override
-  _FindPageState createState() => _FindPageState();
+  _NewPageState createState() => _NewPageState();
 }
 
-class _FindPageState extends State<FindPage>
+class _NewPageState extends State<NewPage>
     with AutomaticKeepAliveClientMixin {
   dynamic _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
