@@ -27,7 +27,6 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   @override
   Widget build(BuildContext context) {
     return WaterfallFlow(
-
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(listGap),
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
@@ -35,21 +34,20 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
             crossAxisSpacing: listGap,
             mainAxisSpacing: listGap),
         children: widget.page?.content?.map((PictureEntity picture) {
-              return Ink(
-                child: InkWell(
-                    child: Container(
-                        child: Ink.image(
-                            image: NetworkImage(ImageUtil.picture(
-                                "81754094_p0.jpg",
-                                type: ImageType.specifiedWidth)),
-                            fit: BoxFit.cover)),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => DetailPage(id: picture.id)));
-                    }),
-              );
+              return InkWell(
+                  child: AspectRatio(
+                      aspectRatio: picture.width / picture.height,
+                      child: Ink.image(
+                        image: NetworkImage(ImageUtil.picture(picture.url,
+                            type: ImageType.specifiedWidth)),
+                        fit: BoxFit.cover,
+                      )),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => DetailPage(id: picture.id)));
+                  });
 
 //                  Ink(
 //                      child: InkWell(

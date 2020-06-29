@@ -43,6 +43,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                   )
                 ]))),
       ),
+      ListTile(
+        title: Image(image: AssetImage('assets/images/welcome.png')),
+        onTap: () {},
+      )
     ]);
   }
 }
