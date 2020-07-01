@@ -15,7 +15,8 @@ class MenuWidget extends StatefulWidget {
 class _MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
+    return ListView(
+        children: <Widget>[
       AspectRatio(
         aspectRatio: 2,
         child: Ink(
@@ -42,10 +43,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                     },
                   )
                 ]))),
-      ),
-      ListTile(
-        title: Image(image: AssetImage('assets/images/welcome.png')),
-        onTap: () {},
       )
     ]);
   }

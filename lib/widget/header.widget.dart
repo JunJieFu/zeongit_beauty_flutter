@@ -14,20 +14,16 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      elevation: 1,
-      title: title,
-      actions: <Widget>[
-        UserWidget(),
-        IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return SearchPage();
-            }));
-          },
-        )
-      ]
-    );
+    return AppBar(title: title, actions: <Widget>[
+      UserWidget(),
+      IconButton(
+        icon: Icon(Icons.search),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return SearchPage();
+          }));
+        },
+      )
+    ]);
   }
 }

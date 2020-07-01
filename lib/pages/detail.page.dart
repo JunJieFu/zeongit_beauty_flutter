@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/ink_clip.widget.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -33,7 +37,9 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     var queryData = MediaQuery.of(context);
-    return _picture != null  ? Scaffold(
+    var pageGap = StyleConfig.gap * 3;
+    return _picture != null
+        ? Scaffold(
             body: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
@@ -55,17 +61,104 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               SliverList(
-                  delegate: SliverChildListDelegate(
-                //返回组件集合
-                  [
-                    Container(
-                        child: Image.network(
-                            "http://secdraimg.secdra.com/" +
-                                _picture.url +
-                                "-specifiedWidth1200",
-                            fit: BoxFit.cover))
-                  ]
-                ),
+                delegate: SliverChildListDelegate([
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.comment),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.star_border),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.share),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.more_vert),
+                      )
+                    ],
+                  ),
+                  Divider(),
+                  Padding(
+                      padding: EdgeInsets.all(pageGap),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(_picture.name + _picture.name,
+                              textScaleFactor: 1.5),
+                          Text(
+                            "创建于${_picture.createDate}",
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                          Wrap(
+                            children: <Widget>[
+                              Wrap(children: <Widget>[
+                                Text("1"),
+                                Text(
+                                  "123",
+                                  style: TextStyle(color: Colors.black54),
+                                )
+                              ]),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: StyleConfig.gap * 3),
+                                  child: Wrap(children: <Widget>[
+                                    Text("1"),
+                                    Text(
+                                      "123",
+                                      style: TextStyle(color: Colors.black54),
+                                    )
+                                  ])),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: pageGap),
+                            child: Text(
+                              _picture.introduction,
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          )
+                        ],
+                      )),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: pageGap),
+                    child: Wrap(
+                        spacing: pageGap / 2,
+                        runSpacing: -pageGap / 2,
+                        children: _picture.tagList
+                                ?.map((e) => ActionChip(
+                                    label: Text(e),
+                                    onPressed: () {
+                                      print(e);
+                                    }))
+                                ?.toList() ??
+                            <Widget>[]),
+                  ),
+                  Divider(),
+                  Padding(
+                    padding: EdgeInsets.all(pageGap),
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: <Widget>[
+                        InkClipWidget(
+                            child: SvgPicture.asset(
+                                'assets/images/default-head.svg')),
+                        Expanded(
+                          flex: 1,
+                          child: Text(_picture.user.nickname),
+                        ),
+                        RaisedButton(
+                          highlightElevation: 0,
+                          elevation: 0,
+                          child: Text("关注"),
+                          onPressed: (){},
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
               )
             ],
           ))

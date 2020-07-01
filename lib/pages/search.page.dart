@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 
 class SearchPage extends StatefulWidget {
@@ -65,10 +66,10 @@ class _SearchPageState extends State<SearchPage> {
           child: ListView(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(StyleConfig.gap * 2),
                 child: Wrap(
-                    spacing: 8,
-                    runSpacing: -4,
+                    spacing: StyleConfig.gap * 2,
+                    runSpacing: -StyleConfig.gap,
                     children: _tagState.recommendTagList
                             ?.map((e) => ActionChip(
                                 label: Text(e),

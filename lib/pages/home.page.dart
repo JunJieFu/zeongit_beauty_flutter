@@ -77,7 +77,7 @@ class _PictureList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gap = listGap;
+    var gap = StyleConfig.listGap;
     var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, //横轴元素个数
         mainAxisSpacing: gap, //纵轴间距
@@ -95,7 +95,7 @@ class _PictureList extends StatelessWidget {
                 return ImageInkWidget(
                     constrained: true,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(listGap)),
+                      borderRadius: BorderRadius.all(Radius.circular(gap)),
                       child: Image(
                           fit: BoxFit.cover,
                           image: NetworkImage(

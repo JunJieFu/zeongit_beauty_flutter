@@ -29,15 +29,15 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   Widget build(BuildContext context) {
     return WaterfallFlow(
         //cacheExtent: 0.0,
-        padding: EdgeInsets.all(listGap),
+        padding: EdgeInsets.all(StyleConfig.listGap),
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: listGap,
-            mainAxisSpacing: listGap),
+            crossAxisSpacing: StyleConfig.listGap,
+            mainAxisSpacing: StyleConfig.listGap),
         children: widget.page?.content?.map((PictureEntity picture) {
               return ImageInkWidget(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(listGap)),
+                    borderRadius: BorderRadius.all(Radius.circular(StyleConfig.listGap)),
                     child: Image(
                         fit: BoxFit.cover,
                         image: NetworkImage(

@@ -14,10 +14,8 @@ void main() {
 }
 
 _init() async {
-  await  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));
@@ -31,6 +29,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     var _hasInit = StorageManager.get(KeyConstant.HAD_INIT) ?? false;
 
+    var themeData = ThemeData();
+
+    var chipTheme = themeData.chipTheme;
+
     /// 在异步操作时,显示的页面
     return MultiProvider(
         providers: [
@@ -40,11 +42,34 @@ class App extends StatelessWidget {
         ],
         child: MaterialApp(
             theme: ThemeData(
-              platform: TargetPlatform.fuchsia,
-              scaffoldBackgroundColor: Colors.white,
-              primaryColor: Colors.white,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
+                chipTheme: ChipThemeData(
+                    backgroundColor: chipTheme.backgroundColor,
+                    disabledColor: chipTheme.disabledColor,
+                    selectedColor: chipTheme.selectedColor,
+                    secondarySelectedColor: chipTheme.secondarySelectedColor,
+                    labelPadding: chipTheme.labelPadding,
+                    padding: chipTheme.padding,
+                    shape: chipTheme.shape,
+                    labelStyle: chipTheme.labelStyle,
+                    secondaryLabelStyle: chipTheme.secondaryLabelStyle,
+                    brightness: chipTheme.brightness,
+                    elevation: 0,
+                    pressElevation: 0),
+                buttonTheme: ButtonThemeData(
+                    buttonColor: Colors.blue,
+                    textTheme: ButtonTextTheme.primary),
+                platform: TargetPlatform.android,
+                scaffoldBackgroundColor: Colors.white,
+                primaryColor: Colors.white,
+                primaryColorBrightness: Brightness.light,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                appBarTheme: AppBarTheme(
+                  elevation: 1
+                ),
+                tabBarTheme: TabBarTheme(
+                  labelColor: Colors.blue,
+                  unselectedLabelColor: Colors.black45,
+                )),
             home: _hasInit ? TabPage() : WelcomePage()));
   }
 }

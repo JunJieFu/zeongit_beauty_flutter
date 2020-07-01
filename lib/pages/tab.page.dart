@@ -46,9 +46,6 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
             tabs: _tabList.map((it) => it.tab).toList(),
             controller: _tabController,
             indicatorColor: Colors.transparent,
-            indicatorWeight: 1,
-            labelColor: Colors.black87,
-            unselectedLabelColor: Colors.black45,
           ),
         ));
   }
