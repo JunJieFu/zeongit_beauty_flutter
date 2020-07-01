@@ -11,14 +11,14 @@ import 'package:zeongitbeautyflutter/pages/detail.page.dart';
 import 'image_ink.widget.dart';
 
 class ListWaterFallWidget extends StatefulWidget {
-  ListWaterFallWidget({Key key, this.page, this.loading, this.pageable})
+  ListWaterFallWidget({Key key, this.page, this.list, this.paging})
       : super(key: key);
 
   final PagePictureEntity page;
 
-  final bool loading;
+  final List<PictureEntity> list;
 
-  final PageableEntity pageable;
+  final paging;
 
   @override
   _ListWaterFallWidgetState createState() => _ListWaterFallWidgetState();
@@ -31,8 +31,13 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   void initState() {
     super.initState();
     _scrollController.addListener(() {
-      int offset = _scrollController.position.pixels.toInt();
-      print("滑动距离$offset");
+      if (_scrollController.position.maxScrollExtent -
+              _scrollController.position.pixels <
+          150) {
+        if (widget.paging != null) {
+          widget.paging(widget.page.pageable.pageNumber + 2);
+        }
+      }
     });
   }
 
@@ -46,17 +51,20 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
             crossAxisCount: 2,
             crossAxisSpacing: StyleConfig.listGap,
             mainAxisSpacing: StyleConfig.listGap),
-        children: widget.page?.content?.map((PictureEntity picture) {
+        children: widget.list?.map((PictureEntity picture) {
               return ImageInkWidget(
                   child: ClipRRect(
                     borderRadius:
                         BorderRadius.all(Radius.circular(StyleConfig.listGap)),
-                    child: Image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          ImageUtil.picture(picture.url,
-                              type: ImageType.specifiedWidth),
-                        )),
+                    child: AspectRatio(
+                      aspectRatio: picture.width / picture.height,
+                      child: Image(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            ImageUtil.picture(picture.url,
+                                type: ImageType.specifiedWidth),
+                          )),
+                    ),
                   ),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {

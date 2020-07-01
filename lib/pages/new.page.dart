@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/list_waterfall.widget.dart';
 
@@ -13,18 +14,31 @@ class NewPage extends StatefulWidget {
 }
 
 class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
-  dynamic _loading = true;
+  bool _loading = false;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   PagePictureEntity _page;
+  List<PictureEntity> _list = [];
+  PageableEntity _pageable =
+      PageableEntity(page: 0, size: 16, sort: "createDate,desc");
 
-  Future<void> _paging() async {
-    var result = await PictureService.pagingByRecommend(
-        PageableEntity(page: 0, size: 16, sort: "createDate,desc"));
+  Future<void> _refresh() async {
+    _paging(0);
+  }
+
+  Future<void> _paging(int page) async {
+    _pageable.page = page;
+    if (this._loading || (this._page != null && this._page.last)) return;
+    _loading = true;
+    var result = await PictureService.paging(_pageable);
     setState(() {
       _page = result.data;
-      _loading = false;
+      if (page == 0) {
+        _list = _page.content;
+      } else {
+        _list.addAll(_page.content);
+      }
     });
-    return;
+    _loading = false;
   }
 
   @override
@@ -44,9 +58,8 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-      key: _refreshIndicatorKey,
-      onRefresh: _paging,
-      child: ListWaterFallWidget(page: _page),
-    );
+        key: _refreshIndicatorKey,
+        onRefresh: _refresh,
+        child: ListWaterFallWidget(page: _page, list: _list, paging: _paging));
   }
 }
