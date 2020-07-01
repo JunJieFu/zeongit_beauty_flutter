@@ -25,9 +25,21 @@ class ListWaterFallWidget extends StatefulWidget {
 }
 
 class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      int offset = _scrollController.position.pixels.toInt();
+      print("滑动距离$offset");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WaterfallFlow(
+        controller: _scrollController,
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
@@ -37,7 +49,8 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
         children: widget.page?.content?.map((PictureEntity picture) {
               return ImageInkWidget(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(StyleConfig.listGap)),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(StyleConfig.listGap)),
                     child: Image(
                         fit: BoxFit.cover,
                         image: NetworkImage(
@@ -50,20 +63,6 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
                       return DetailPage(id: picture.id);
                     }));
                   });
-
-//                  Ink(
-//                      child: InkWell(
-//                child: Container(
-//                    child: Image(
-//                        image: NetworkImage(ImageUtil.picture("81754094_p0.jpg",
-//                            type: ImageType.specifiedWidth)),
-//                        fit: BoxFit.cover)),
-//                onTap: () {
-//                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-//                    return DetailPage(id: picture.id);
-//                  }));
-//                },
-//              ));
             })?.toList() ??
             []);
   }
