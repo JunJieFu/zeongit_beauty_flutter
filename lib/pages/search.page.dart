@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 
 class SearchPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   TagState _tagState;
   bool _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
+  TextEditingController _keywordController = TextEditingController();
 
   Future<void> _listTagTop30() async {
     var result = await TagService.listTagTop30();
@@ -47,6 +49,7 @@ class _SearchPageState extends State<SearchPage> {
           elevation: 1,
           title: TextField(
             autofocus: true,
+            controller: _keywordController,
             decoration: InputDecoration(
               border: InputBorder.none,
             ),
@@ -54,7 +57,12 @@ class _SearchPageState extends State<SearchPage> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) {
+                  return SearchResultPage(keyword: _keywordController.text);
+                }));
+              },
             )
           ],
         ),
@@ -74,7 +82,10 @@ class _SearchPageState extends State<SearchPage> {
                             ?.map((e) => ActionChip(
                                 label: Text(e),
                                 onPressed: () {
-                                  print(e);
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return SearchResultPage(keyword: e);
+                                  }));
                                 }))
                             ?.toList() ??
                         <Widget>[]),

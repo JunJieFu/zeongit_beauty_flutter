@@ -14,7 +14,7 @@ class FindPage extends StatefulWidget {
 
 class _FindPageState extends State<FindPage>
     with AutomaticKeepAliveClientMixin {
-  dynamic _loading = true;
+  bool _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   PagePictureEntity _page;
 
