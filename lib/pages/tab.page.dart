@@ -16,10 +16,10 @@ class TabPage extends StatefulWidget {
 class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   TabController _tabController;
 
-  List<Tab> _tabList = [
-    Tab(icon: Icon(Icons.home)),
-    Tab(icon: Icon(Icons.find_in_page)),
-    Tab(icon: Icon(Icons.fiber_new)),
+  List<TabItemModel> _tabList = [
+    TabItemModel(view: HomePage(), tab: Tab(icon: Icon(Icons.home))),
+    TabItemModel(view: FindPage(), tab: Tab(icon: Icon(Icons.find_in_page))),
+    TabItemModel(view: NewPage(), tab: Tab(icon: Icon(Icons.fiber_new)))
   ];
 
   @override
@@ -40,17 +40,10 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
         ),
         body: TabBarView(
             controller: _tabController,
-            children: <Widget>[HomePage(), FindPage(), NewPage()]),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(top: BorderSide(color: Colors.black12, width: .5)),
-            boxShadow: [
-              BoxShadow(color: Colors.black12, spreadRadius: .1),
-            ],
-          ),
+            children: _tabList.map((it) => it.view).toList()),
+        bottomNavigationBar: BottomAppBar(
           child: TabBar(
-            tabs: _tabList,
+            tabs: _tabList.map((it) => it.tab).toList(),
             controller: _tabController,
             indicatorColor: Colors.transparent,
             indicatorWeight: 1,
@@ -65,4 +58,12 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
     _tabController.dispose();
     super.dispose();
   }
+}
+
+class TabItemModel {
+  final Widget view;
+
+  final Widget tab;
+
+  TabItemModel({this.view, this.tab});
 }

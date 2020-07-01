@@ -1,1 +1,1 @@
-final listGap = 6.0;
+final listGap = 12.0;

@@ -7,6 +7,7 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
 import 'package:zeongitbeautyflutter/pages/detail.page.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/image_ink.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -82,7 +83,7 @@ class _PictureList extends StatelessWidget {
         mainAxisSpacing: gap, //纵轴间距
         crossAxisSpacing: gap, //横轴间距
         childAspectRatio: 1 //子组件宽高长度比例
-    );
+        );
 
     return Padding(
       padding: EdgeInsets.fromLTRB(gap, 0, gap, gap),
@@ -91,18 +92,23 @@ class _PictureList extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           gridDelegate: gridDelegate,
           children: list?.map((PictureEntity picture) {
-            return Ink(
-                child: InkWell(
-                  child: Image.network(
-                      ImageUtil.picture(picture.url, type: ImageType.specifiedWidth),
-                      fit: BoxFit.cover),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return DetailPage(id: picture.id);
-                    }));
-                  },
-                ));
-          })?.toList() ??
+                return ImageInkWidget(
+                    constrained: true,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(listGap)),
+                      child: Image(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            ImageUtil.picture(picture.url,
+                                type: ImageType.specifiedWidth),
+                          )),
+                    ),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return DetailPage(id: picture.id);
+                      }));
+                    });
+              })?.toList() ??
               <Widget>[]),
     );
   }
