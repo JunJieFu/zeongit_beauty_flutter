@@ -47,8 +47,6 @@ class _FindPageState extends State<FindPage>
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _paging,
-      color: Colors.grey,
-      backgroundColor: Colors.white,
       child: ListWaterFallWidget(page: _page),
     );
   }

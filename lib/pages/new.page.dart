@@ -12,8 +12,7 @@ class NewPage extends StatefulWidget {
   _NewPageState createState() => _NewPageState();
 }
 
-class _NewPageState extends State<NewPage>
-    with AutomaticKeepAliveClientMixin {
+class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   dynamic _loading = true;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
   PagePictureEntity _page;
@@ -47,8 +46,6 @@ class _NewPageState extends State<NewPage>
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _paging,
-      color: Colors.grey,
-      backgroundColor: Colors.white,
       child: ListWaterFallWidget(page: _page),
     );
   }

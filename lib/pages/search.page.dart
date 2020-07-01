@@ -69,8 +69,6 @@ class _SearchPageState extends State<SearchPage> {
         body: RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: _listTagTop30,
-          color: Colors.grey,
-          backgroundColor: Colors.white,
           child: ListView(
             children: <Widget>[
               Padding(

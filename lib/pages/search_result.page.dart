@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
-import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
-import 'package:zeongitbeautyflutter/pages/detail.page.dart';
 import 'package:zeongitbeautyflutter/pages/search.page.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/list_waterfall.widget.dart';
 
 class SearchResultPage extends StatefulWidget {
@@ -65,8 +60,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
         body: RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: _paging,
-          color: Colors.grey,
-          backgroundColor: Colors.white,
           child: ListWaterFallWidget(page: _page),
         ));
   }

@@ -69,7 +69,8 @@ class App extends StatelessWidget {
                 tabBarTheme: TabBarTheme(
                   labelColor: Colors.blue,
                   unselectedLabelColor: Colors.black45,
-                )),
+                )
+            ),
             home: _hasInit ? TabPage() : WelcomePage()));
   }
 }

@@ -52,8 +52,6 @@ class _HomePageState extends State<HomePage>
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _listByRecommend,
-      color: Colors.grey,
-      backgroundColor: Colors.white,
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
