@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/image_ink_clip.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
@@ -18,7 +19,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  dynamic _loading = true;
+  bool _loading = true;
   PictureEntity _picture;
 
   Future<void> _get() async {
@@ -129,10 +130,8 @@ class _DetailPageState extends State<DetailPage> {
                       children: <Widget>[
                         ImageInkClipWidget(
                           size: 75,
-                          child: Image.network(
-                              "http://secdraimg.secdra.com/" +
-                                  _picture.url +
-                                  "-specifiedWidth1200",
+                          child: AvatarWidget(_picture.user.avatarUrl,
+                              avatarStyle: AvatarStyle.small50,
                               fit: BoxFit.cover),
                           onTap: () {},
                         ),

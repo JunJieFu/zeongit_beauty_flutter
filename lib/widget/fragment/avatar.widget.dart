@@ -20,17 +20,9 @@ class AvatarWidget extends StatelessWidget {
         (BuildContext context, Object error, StackTrace stackTrace) {
       return SvgPicture.asset("assets/images/default-avatar.svg", fit: fit);
     };
-
-    if (avatarStyle != null) {
-      return Image.network(
-          "${ConfigConstant.qiniuAvatar}/$url${ConfigConstant.qiniuSeparator}${avatarStyle.toString().split('.').last}",
-          fit: fit,
-          errorBuilder: errorBuilder);
-    } else {
-      return Image.network(
-        ConfigConstant.qiniuAvatar + '/' + url,
-        fit: fit,
-      );
-    }
+    var _url = avatarStyle != null
+        ? "${ConfigConstant.qiniuAvatar}/$url${ConfigConstant.qiniuSeparator}${avatarStyle.toString().split('.').last}"
+        : "${ConfigConstant.qiniuAvatar}/$url";
+    return Image.network(_url, fit: fit, errorBuilder: errorBuilder);
   }
 }

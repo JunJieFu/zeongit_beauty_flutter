@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -94,8 +95,11 @@ class _PictureList extends StatelessWidget {
                     constrained: true,
                     child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(gap)),
-                        child: PictureWidget(picture.url,
-                            pictureStyle: PictureStyle.specifiedWidth)),
+                        child: PictureWidget(
+                          picture.url,
+                          pictureStyle: PictureStyle.specifiedWidth,
+                          fit: BoxFit.cover,
+                        )),
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return DetailPage(id: picture.id);

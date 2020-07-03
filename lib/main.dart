@@ -8,6 +8,7 @@ import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
+import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(
               create: (context) => FragmentState(hadInit: _hasInit)),
           ChangeNotifierProvider(create: (context) => TagState()),
+          ChangeNotifierProvider(create: (context) => UserState())
         ],
         child: MaterialApp(
             theme: ThemeData(
@@ -64,14 +66,11 @@ class App extends StatelessWidget {
                 primaryColor: Colors.white,
                 primaryColorBrightness: Brightness.light,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
-                appBarTheme: AppBarTheme(
-                  elevation: 1
-                ),
+                appBarTheme: AppBarTheme(elevation: 1),
                 tabBarTheme: TabBarTheme(
                   labelColor: StyleConfig.primaryColor,
                   unselectedLabelColor: Colors.black45,
-                )
-            ),
+                )),
             home: _hasInit ? TabPage() : WelcomePage()));
   }
 }

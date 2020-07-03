@@ -11,7 +11,8 @@ enum PictureStyle {
 }
 
 class PictureWidget extends StatelessWidget {
-  PictureWidget(this.url, {Key key, this.fit, this.pictureStyle})
+  PictureWidget(this.url,
+      {Key key, this.fit = BoxFit.contain, this.pictureStyle})
       : super(key: key);
 
   final String url;
@@ -24,19 +25,11 @@ class PictureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var errorBuilder =
         (BuildContext context, Object error, StackTrace stackTrace) {
-      return SvgPicture.asset("assets/images/default-avatar.svg", fit: fit);
+      return SvgPicture.asset("assets/images/default-picture.svg", fit: fit);
     };
-
-    if (pictureStyle != null) {
-      return Image.network(
-          "${ConfigConstant.qiniuPicture}/$url${ConfigConstant.qiniuSeparator}${pictureStyle.toString().split('.').last}",
-          fit: fit,
-          errorBuilder: errorBuilder);
-    } else {
-      return Image.network(
-        ConfigConstant.qiniuPicture + '/' + url,
-        fit: fit,
-      );
-    }
+    var _url = pictureStyle != null
+        ? "${ConfigConstant.qiniuPicture}/$url${ConfigConstant.qiniuSeparator}${pictureStyle.toString().split('.').last}"
+        : "${ConfigConstant.qiniuPicture}/$url";
+    return Image.network(_url, fit: fit, errorBuilder: errorBuilder);
   }
 }

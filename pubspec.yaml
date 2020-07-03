@@ -55,8 +55,9 @@ flutter:
     - assets/images/welcome.jpg
     - assets/images/splash.png
     - assets/images/default-avatar.svg
-#    - assets/images/default-picture.svg
+    - assets/images/default-picture.svg
     - assets/images/keep.svg
+    - assets/images/beauty.svg
   #   - images/a_dot_ham.jpeg
   fonts:
     - family: mdi
