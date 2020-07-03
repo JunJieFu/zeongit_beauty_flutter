@@ -11,6 +11,6 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, textScaleFactor: 1.5);
+    return Text(text, textScaleFactor: 1.25);
   }
 }
