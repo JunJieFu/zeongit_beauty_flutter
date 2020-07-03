@@ -51,6 +51,7 @@ class _SearchPageState extends State<SearchPage> {
             autofocus: true,
             controller: _keywordController,
             decoration: InputDecoration(
+              hintText: "搜索网站绘画",
               border: InputBorder.none,
             ),
           ),
@@ -91,5 +92,12 @@ class _SearchPageState extends State<SearchPage> {
             ],
           ),
         ));
+  }
+
+
+  @override
+  void dispose() {
+    _keywordController.dispose();
+    super.dispose();
   }
 }

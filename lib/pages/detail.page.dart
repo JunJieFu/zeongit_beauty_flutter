@@ -3,8 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
-import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/ink_clip.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/text.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/title.widget.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -50,13 +51,11 @@ class _DetailPageState extends State<DetailPage> {
                     queryData.size.width * _picture.height / _picture.width,
                 //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                      child: Image.network(
-                          "http://secdraimg.secdra.com/" +
-                              _picture.url +
-                              "-specifiedWidth1200",
-                          fit: BoxFit.cover)),
-                  centerTitle: true,
+                  background: Image.network(
+                      "http://secdraimg.secdra.com/" +
+                          _picture.url +
+                          "-specifiedWidth1200",
+                      fit: BoxFit.cover),
                   collapseMode: CollapseMode.pin,
                 ),
               ),
@@ -85,39 +84,26 @@ class _DetailPageState extends State<DetailPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(_picture.name + _picture.name,
-                              textScaleFactor: 1.5),
-                          Text(
-                            "创建于${_picture.createDate}",
-                            style: TextStyle(color: Colors.black54),
-                          ),
+                          TitleWidget(_picture.name + _picture.name),
+                          TextWidget("创建于${_picture.createDate}"),
                           Wrap(
                             children: <Widget>[
                               Wrap(children: <Widget>[
-                                Text("1"),
-                                Text(
-                                  "123",
-                                  style: TextStyle(color: Colors.black54),
-                                )
+                                LinkWidget("${_picture.viewAmount}"),
+                                TextWidget("人阅读")
                               ]),
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: StyleConfig.gap * 3),
                                   child: Wrap(children: <Widget>[
-                                    Text("1"),
-                                    Text(
-                                      "123",
-                                      style: TextStyle(color: Colors.black54),
-                                    )
+                                    LinkWidget("${_picture.likeAmount}"),
+                                    TextWidget("人喜欢")
                                   ])),
                             ],
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: pageGap),
-                            child: Text(
-                              _picture.introduction,
-                              style: TextStyle(color: Colors.black54),
-                            ),
+                            child: TextWidget(_picture.introduction),
                           )
                         ],
                       )),
@@ -142,9 +128,14 @@ class _DetailPageState extends State<DetailPage> {
                     child: Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
-                        InkClipWidget(
-                            child: SvgPicture.asset(
-                                'assets/images/default-head.svg')),
+                        IconButton(
+                          icon: AspectRatio(
+                              aspectRatio: 1,
+                              child: ClipOval(
+                                  child: SvgPicture.asset(
+                                      'assets/images/default-head.svg'))),
+                          onPressed: () {},
+                        ),
                         Expanded(
                           flex: 1,
                           child: Text(_picture.user.nickname),
@@ -153,7 +144,7 @@ class _DetailPageState extends State<DetailPage> {
                           highlightElevation: 0,
                           elevation: 0,
                           child: Text("关注"),
-                          onPressed: (){},
+                          onPressed: () {},
                         )
                       ],
                     ),

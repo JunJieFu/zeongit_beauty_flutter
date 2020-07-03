@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/assets/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/pages/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/home.page.dart';
+import 'package:zeongitbeautyflutter/pages/user.page.dart';
 import 'package:zeongitbeautyflutter/widget/header.widget.dart';
-import 'package:zeongitbeautyflutter/widget/menu.widget.dart';
 
 import 'new.page.dart';
 
@@ -17,9 +18,11 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   TabController _tabController;
 
   List<TabItemModel> _tabList = [
-    TabItemModel(view: HomePage(), tab: Tab(icon: Icon(Icons.home))),
-    TabItemModel(view: FindPage(), tab: Tab(icon: Icon(Icons.find_in_page))),
-    TabItemModel(view: NewPage(), tab: Tab(icon: Icon(Icons.fiber_new)))
+    TabItemModel(view: HomePage(), tab: Tab(icon: Icon(MdiIcons.home))),
+    TabItemModel(view: FindPage(), tab: Tab(icon: Icon(MdiIcons.compass))),
+    TabItemModel(
+        view: NewPage(), tab: Tab(icon: Icon(MdiIcons.alpha_n_box_outline))),
+    TabItemModel(view: UserPage(), tab: Tab(icon: Icon(MdiIcons.account))),
   ];
 
   @override
@@ -34,10 +37,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: HeaderWidget(title: Text("主页")),
-        drawer: Drawer(
-          child: MenuWidget(),
-        ),
+        appBar: HeaderWidget(title: Text("首页")),
         body: TabBarView(
             controller: _tabController,
             children: _tabList.map((it) => it.view).toList()),

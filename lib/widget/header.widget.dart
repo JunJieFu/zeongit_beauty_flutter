@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/assets/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/pages/search.page.dart';
 import 'package:zeongitbeautyflutter/widget/header/user.widget.dart';
 
@@ -15,15 +16,15 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(title: title, actions: <Widget>[
-      UserWidget(),
       IconButton(
-        icon: Icon(Icons.search),
+        icon: Icon(MdiIcons.magnify),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
             return SearchPage();
           }));
         },
-      )
+      ),
+      UserWidget(),
     ]);
   }
 }

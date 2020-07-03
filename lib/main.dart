@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
+import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
@@ -56,7 +57,7 @@ class App extends StatelessWidget {
                     elevation: 0,
                     pressElevation: 0),
                 buttonTheme: ButtonThemeData(
-                    buttonColor: Colors.blue,
+                    buttonColor: StyleConfig.primaryColor,
                     textTheme: ButtonTextTheme.primary),
                 platform: TargetPlatform.android,
                 scaffoldBackgroundColor: Colors.white,
@@ -67,7 +68,7 @@ class App extends StatelessWidget {
                   elevation: 1
                 ),
                 tabBarTheme: TabBarTheme(
-                  labelColor: Colors.blue,
+                  labelColor: StyleConfig.primaryColor,
                   unselectedLabelColor: Colors.black45,
                 )
             ),
