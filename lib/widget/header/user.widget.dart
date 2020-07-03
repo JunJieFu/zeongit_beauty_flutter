@@ -8,7 +8,7 @@ class UserWidget extends StatelessWidget {
       icon: AspectRatio(
           aspectRatio: 1,
           child: ClipOval(
-              child: SvgPicture.asset('assets/images/default-head.svg'))),
+              child: SvgPicture.asset('assets/images/default-avatar.svg'))),
       onPressed: () {},
     );
   }

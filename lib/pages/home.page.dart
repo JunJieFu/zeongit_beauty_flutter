@@ -5,9 +5,9 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
-import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
 import 'package:zeongitbeautyflutter/pages/detail.page.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/image_ink.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -93,14 +93,9 @@ class _PictureList extends StatelessWidget {
                 return ImageInkWidget(
                     constrained: true,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(gap)),
-                      child: Image(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            ImageUtil.picture(picture.url,
-                                type: ImageType.specifiedWidth),
-                          )),
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(gap)),
+                        child: PictureWidget(picture.url,
+                            pictureStyle: PictureStyle.specifiedWidth)),
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return DetailPage(id: picture.id);

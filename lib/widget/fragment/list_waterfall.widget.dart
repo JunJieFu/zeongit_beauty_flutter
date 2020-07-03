@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
-import 'package:zeongitbeautyflutter/assets/util/image.util.dart';
 import 'package:zeongitbeautyflutter/pages/detail.page.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
 
 import 'image_ink.widget.dart';
 
@@ -57,14 +56,12 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
                     borderRadius:
                         BorderRadius.all(Radius.circular(StyleConfig.listGap)),
                     child: AspectRatio(
-                      aspectRatio: picture.width / picture.height,
-                      child: Image(
+                        aspectRatio: picture.width / picture.height,
+                        child: PictureWidget(
+                          picture.url,
+                          pictureStyle: PictureStyle.specifiedWidth500,
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                            ImageUtil.picture(picture.url,
-                                type: ImageType.specifiedWidth),
-                          )),
-                    ),
+                        )),
                   ),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {

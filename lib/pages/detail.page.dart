@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/image_ink_clip.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/text.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/title.widget.dart';
 
@@ -51,10 +52,8 @@ class _DetailPageState extends State<DetailPage> {
                     queryData.size.width * _picture.height / _picture.width,
                 //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Image.network(
-                      "http://secdraimg.secdra.com/" +
-                          _picture.url +
-                          "-specifiedWidth1200",
+                  background: PictureWidget(_picture.url,
+                      pictureStyle: PictureStyle.specifiedHeight1200,
                       fit: BoxFit.cover),
                   collapseMode: CollapseMode.pin,
                 ),
@@ -128,17 +127,22 @@ class _DetailPageState extends State<DetailPage> {
                     child: Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
-                        IconButton(
-                          icon: AspectRatio(
-                              aspectRatio: 1,
-                              child: ClipOval(
-                                  child: SvgPicture.asset(
-                                      'assets/images/default-head.svg'))),
-                          onPressed: () {},
+                        ImageInkClipWidget(
+                          size: 75,
+                          child: Image.network(
+                              "http://secdraimg.secdra.com/" +
+                                  _picture.url +
+                                  "-specifiedWidth1200",
+                              fit: BoxFit.cover),
+                          onTap: () {},
                         ),
                         Expanded(
                           flex: 1,
-                          child: Text(_picture.user.nickname),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: StyleConfig.gap * 2),
+                            child: Text(_picture.user.nickname),
+                          ),
                         ),
                         RaisedButton(
                           highlightElevation: 0,
