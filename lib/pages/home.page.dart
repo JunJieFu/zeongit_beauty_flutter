@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -19,28 +20,27 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
-  dynamic _loading = true;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  PagePictureEntity _recommendList;
-  PagePictureEntity _newList;
+  bool _loading = true;
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+  List<PictureEntity> _recommendList = [];
+  List<PictureEntity> _newList = [];
 
-  Future<void> _listByRecommend() async {
+  Future<void> _refresh() async {
     var result = await PictureService.pagingByRecommend(
         PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
     var result2 = await PictureService.paging(
         PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
     setState(() {
-      _recommendList = result.data;
-      _newList = result2.data;
+      _recommendList.addAll(result.data.content);
+      _newList.addAll(result2.data.content);
       _loading = false;
     });
-    return;
   }
 
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _refreshIndicatorKey.currentState?.show();
@@ -52,14 +52,14 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return RefreshIndicator(
       key: _refreshIndicatorKey,
-      onRefresh: _listByRecommend,
+      onRefresh: _refresh,
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
           ListTile(title: Text("推荐作品")),
-          _PictureList(list: _recommendList?.content),
+          _PictureList(list: _recommendList),
           ListTile(title: Text("最新作品")),
-          _PictureList(list: _newList?.content)
+          _PictureList(list: _newList)
         ],
       ),
     );
@@ -86,27 +86,32 @@ class _PictureList extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(gap, 0, gap, gap),
-      child: GridView(
+      child: GridView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          gridDelegate: gridDelegate,
-          children: list?.map((PictureEntity picture) {
-                return ImageInkWidget(
-                    constrained: true,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(gap)),
-                        child: PictureWidget(
-                          picture.url,
-                          pictureStyle: PictureStyle.specifiedWidth,
-                          fit: BoxFit.cover,
-                        )),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return DetailPage(id: picture.id);
-                      }));
-                    });
-              })?.toList() ??
-              <Widget>[]),
+          gridDelegate:gridDelegate,
+          itemCount: list?.length,
+          itemBuilder: (BuildContext context, int index) {
+            var picture = list[index];
+            return ImageInkWidget(
+                constrained: true,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(gap)),
+                    child:
+                    Image.network(ConfigConstant.qiniuPicture + "/" +picture.url + "-specifiedWidth500", fit: BoxFit.cover)
+
+//                    PictureWidget(
+//                      picture.url,
+//                      pictureStyle: PictureStyle.specifiedWidth,
+//                      fit: BoxFit.cover,
+//                    )
+            ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return DetailPage(id: picture.id);
+                  }));
+                });
+          }),
     );
   }
 }

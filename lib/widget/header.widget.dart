@@ -16,7 +16,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(title: title, actions: <Widget>[
-      UserWidget(),
+//      UserWidget(),
       IconButton(
         icon: Icon(MdiIcons.magnify),
         onPressed: () {

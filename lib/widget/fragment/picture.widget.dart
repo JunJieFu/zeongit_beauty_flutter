@@ -23,13 +23,13 @@ class PictureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var errorBuilder =
-        (BuildContext context, Object error, StackTrace stackTrace) {
-      return SvgPicture.asset("assets/images/default-picture.svg", fit: fit);
-    };
     var _url = pictureStyle != null
         ? "${ConfigConstant.qiniuPicture}/$url${ConfigConstant.qiniuSeparator}${pictureStyle.toString().split('.').last}"
         : "${ConfigConstant.qiniuPicture}/$url";
-    return Image.network(_url, fit: fit, errorBuilder: errorBuilder);
+    return Image.network(_url, fit: fit, errorBuilder:
+        (BuildContext context, Object error, StackTrace stackTrace) {
+      return SvgPicture.asset("assets/images/default-picture.svg",
+          fit: fit);
+    });
   }
 }

@@ -16,7 +16,7 @@ class FindPage extends StatefulWidget {
 class _FindPageState extends State<FindPage>
     with AutomaticKeepAliveClientMixin {
   bool _loading = false;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   PagePictureEntity _page;
   List<PictureEntity> _list = [];
   PageableEntity _pageable =
@@ -45,7 +45,6 @@ class _FindPageState extends State<FindPage>
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _refreshIndicatorKey.currentState?.show();

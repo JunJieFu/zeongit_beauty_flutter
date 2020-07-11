@@ -90,7 +90,6 @@ class _PopupWindowState extends State<PopupWindow>
   Widget build(BuildContext context) {
     Offset targetOffset = widget.targetRenderBox.localToGlobal(Offset.zero);
     Size targetSize = widget.targetRenderBox.size;
-
     return WillPopScope(
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -114,7 +113,7 @@ class _PopupWindowState extends State<PopupWindow>
                   opacity: Tween(begin: 0.0, end: 1.0).animate(_controller),
                   child: widget.child,
                 ),
-              ),
+              )
             ],
           ),
         ),

@@ -42,7 +42,7 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return WaterfallFlow(
+    return WaterfallFlow.builder(
         controller: _scrollController,
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
@@ -50,25 +50,26 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
             crossAxisCount: 2,
             crossAxisSpacing: StyleConfig.listGap,
             mainAxisSpacing: StyleConfig.listGap),
-        children: widget.list?.map((PictureEntity picture) {
-              return ImageInkWidget(
-                  child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(StyleConfig.listGap)),
-                    child: AspectRatio(
-                        aspectRatio: picture.width / picture.height,
-                        child: PictureWidget(
-                          picture.url,
-                          pictureStyle: PictureStyle.specifiedWidth500,
-                          fit: BoxFit.cover,
-                        )),
-                  ),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return DetailPage(id: picture.id);
-                    }));
-                  });
-            })?.toList() ??
-            []);
+        itemCount: widget.list?.length,
+        itemBuilder: (BuildContext context, int index) {
+          PictureEntity picture = widget.list[index];
+          return ImageInkWidget(
+              child: ClipRRect(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(StyleConfig.listGap)),
+                child: AspectRatio(
+                    aspectRatio: picture.width / picture.height,
+                    child: PictureWidget(
+                      picture.url,
+                      pictureStyle: PictureStyle.specifiedWidth500,
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return DetailPage(id: picture.id);
+                }));
+              });
+        });
   }
 }

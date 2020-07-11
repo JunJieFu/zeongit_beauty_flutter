@@ -15,7 +15,7 @@ class NewPage extends StatefulWidget {
 
 class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   bool _loading = false;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   PagePictureEntity _page;
   List<PictureEntity> _list = [];
   PageableEntity _pageable =
@@ -44,7 +44,6 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _refreshIndicatorKey.currentState?.show();
