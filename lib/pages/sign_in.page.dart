@@ -10,8 +10,19 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
-  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController(text: "初始化的");
   TextEditingController _passwordController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        print(_focusNode.hasFocus);
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +33,30 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
           child: Column(
             children: <Widget>[
               TextField(
+                focusNode: _focusNode,
                 controller: _phoneController,
+                cursorColor: StyleConfig.primaryColor,
                 decoration: InputDecoration(
-                  prefix: Icon(MdiIcons.cellphone),
-                  hintText: "手机号码",
+                  isDense:false,
+                  focusColor: StyleConfig.primaryColor,
+                  prefixIcon: Icon(MdiIcons.cellphone,
+                      color: StyleConfig.primaryColor),
+                  hintText: '手机号码',
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: StyleConfig.primaryColor)),
                 ),
               ),
               TextField(
+                cursorColor: StyleConfig.primaryColor,
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  prefix: Icon(MdiIcons.lock),
-                  hintText: "密码",
+                  isDense:false,
+                  focusColor: StyleConfig.primaryColor,
+                  prefixIcon: Icon(MdiIcons.lock,
+                      color: StyleConfig.primaryColor),
+                  hintText: '密码',
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: StyleConfig.primaryColor)),
                 ),
               )
             ],
