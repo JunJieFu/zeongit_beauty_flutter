@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kumi_popup_window/PopRoute.dart';
-import 'package:kumi_popup_window/kumi_popup_window.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/popup_window.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/popup_container.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/text.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/title.widget.dart';
 
@@ -29,14 +27,14 @@ class UserWidget extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          PopRoute(
-            child: PopupWindow(
-              targetRenderBox:
-                  (_btnKey.currentContext.findRenderObject() as RenderBox),
+          PopupContainerRoute(
+            child: PopupContainer(
+              targetRenderKey: _btnKey,
               child: Card(
                 child: Padding(
                   padding: EdgeInsets.all(StyleConfig.gap * 3),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TitleWidget("想要成为ZeonGit用户？"),

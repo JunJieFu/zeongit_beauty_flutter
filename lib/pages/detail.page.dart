@@ -84,7 +84,7 @@ class _DetailPageState extends State<DetailPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          TitleWidget(_picture.name + _picture.name),
+                          TitleWidget(_picture.name),
                           TextWidget("创建于${_picture.createDate}"),
                           Wrap(
                             children: <Widget>[
