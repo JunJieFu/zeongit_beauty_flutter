@@ -1,11 +1,19 @@
+import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/util/http.util.dart';
 
 class UserService {
-  static getInfo() {
+  static Future<ResultEntity<bool>> signIn(String phone, String password) {
+    return HttpUtil.post("/user/signIn",
+        params: {"phone": phone, "password": password},
+        host: ConfigConstant.ACCOUNT_HOST);
+  }
+
+  static Future<ResultEntity<UserInfoEntity>> getInfo() {
     return HttpUtil.get("/userInfo/get");
   }
 

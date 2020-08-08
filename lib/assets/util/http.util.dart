@@ -5,13 +5,18 @@ import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/assets/entity/base
 import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
 
 class HttpUtil {
-  static Future<ResultEntity<T>> get<T>(String url, {Map<String, dynamic> params}) async {
+  static Future<ResultEntity<T>> get<T>(String url,
+      {Map<String, dynamic> params,
+      String host}) async {
+    if(host == null ){
+      host =  ConfigConstant.BEAUTY_HOST;
+    }
     try {
       String token = _getToken();
       Options options =
           Options(headers: token != null ? {KeyConstant.TOKEN_KEY: token} : {});
       Response response = await Dio()
-          .get(ConfigConstant.host + url, queryParameters: params, options: options);
+          .get(host + url, queryParameters: params, options: options);
 
       _handleToken(response);
 
@@ -22,13 +27,17 @@ class HttpUtil {
     }
   }
 
-  static Future<ResultEntity<T>> post<T>(String url, {Map<String, dynamic> params}) async {
+  static Future<ResultEntity<T>> post<T>(String url,
+      {Map<String, dynamic> params, String host}) async {
+    if(host == null ){
+      host = ConfigConstant.BEAUTY_HOST;
+    }
     try {
       String token = _getToken();
       Options options =
           Options(headers: token != null ? {KeyConstant.TOKEN_KEY: token} : {});
-      Response response = await Dio()
-          .post(ConfigConstant.host + url, data: params, options: options);
+      Response response = await Dio().post(host + url,
+          data: params, options: options);
 
       _handleToken(response);
       var result = ResultEntity.fromJson<T>(response.data);
@@ -39,12 +48,12 @@ class HttpUtil {
   }
 
   //统一处理返回token
-  static  _handleToken(Response response) {
+  static _handleToken(Response response) {
     try {
       var headers = response.headers;
       String token = headers.value(KeyConstant.TOKEN_KEY);
       if (token != null) {
-        StorageManager.saveString(KeyConstant.TOKEN_KEY, token);
+        StorageManager.setString(KeyConstant.TOKEN_KEY, token);
       }
     } catch (e) {}
   }

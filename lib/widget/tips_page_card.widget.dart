@@ -19,24 +19,31 @@ class TipsPageCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: StyleConfig.gap * 12),
-          child: Icon(icon, size: 100),
-        ),
-        CardTitleWidget(child: TitleWidget(title)),
-        CardTextWidget(child: TextWidget(text)),
-        btnDesc != null
-            ? OutlineButton(
-                child: Text(btnDesc),
-                borderSide: BorderSide(
-                  color: StyleConfig.primaryColor,
-                ),
-                onPressed: onPressed)
-            : null
-      ],
-    );
+    return SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: _columnChildren(),
+        ));
+  }
+
+  List<Widget> _columnChildren() {
+    var list = [
+      Padding(
+        padding: EdgeInsets.only(top: StyleConfig.gap * 12),
+        child: Icon(icon, size: 100),
+      ),
+      CardTitleWidget(child: TitleWidget(title)),
+      CardTextWidget(child: TextWidget(text))
+    ];
+    if (btnDesc != null) {
+      list.add(OutlineButton(
+          child: Text(btnDesc),
+          borderSide: BorderSide(
+            color: StyleConfig.primaryColor,
+          ),
+          onPressed: onPressed));
+    }
+    return list;
   }
 }
 

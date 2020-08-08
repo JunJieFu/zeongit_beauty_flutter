@@ -10,15 +10,15 @@ class StorageManager {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static saveString(String key, String value) {
+  static setString(String key, String value) {
     sharedPreferences.setString(key, value);
   }
 
-  static saveBool(String key, bool value) {
+  static setBool(String key, bool value) {
     sharedPreferences.setBool(key, value);
   }
 
-  static saveJson(String key, Map<String, dynamic> value) {
+  static setJson(String key, Map<String, dynamic> value) {
     sharedPreferences.setString(key, json.encode(value));
   }
 

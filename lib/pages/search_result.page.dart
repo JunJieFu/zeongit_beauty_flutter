@@ -6,6 +6,7 @@ import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search.page.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/list_waterfall.widget.dart';
+import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class SearchResultPage extends StatefulWidget {
   SearchResultPage({Key key, @required this.keyword}) : super(key: key);
@@ -74,7 +75,15 @@ class _SearchResultPageState extends State<SearchResultPage> {
         body: RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: _refresh,
-            child: ListWaterFallWidget(
-                page: _page, list: _list, paging: _paging)));
+            child: _emptyWidget()));
+  }
+
+  Widget _emptyWidget() {
+    if (_page != null && _page.empty && _page.first && _page.last) {
+      return TipsPageCardWidget(
+          icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一些标签搜索哦。");
+    } else {
+      return ListWaterFallWidget(page: _page, list: _list, paging: _paging);
+    }
   }
 }

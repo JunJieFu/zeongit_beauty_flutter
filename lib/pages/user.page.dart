@@ -25,24 +25,30 @@ class _UserPageState extends State<UserPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    var _userState = Provider.of<UserState>(context, listen: false);
-
-    if (_userState.info == null) {
-      return _Unlisted();
-    } else {
-      return Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 2,
-            child: BackgroundWidget(
-              _userState.info?.background,
-              fit: BoxFit.cover,
-              style: BackgroundStyle.backCard,
+    return Consumer<UserState>(builder: (ctx, UserState userState, child) {
+      if (userState.info == null) {
+        return _Unlisted();
+      } else {
+        return Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 2,
+              child: BackgroundWidget(
+                userState.info?.background,
+                fit: BoxFit.cover,
+                style: BackgroundStyle.backCard,
+              ),
             ),
-          )
-        ],
-      );
-    }
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                userState.logout();
+              },
+            )
+          ],
+        );
+      }
+    });
   }
 }
 
@@ -51,7 +57,8 @@ class _Unlisted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SignInPageCardWidget(icon: MdiIcons.account_outline,
+    return SignInPageCardWidget(
+        icon: MdiIcons.account_outline,
         title: "您的Zeongit Beauty主页",
         text: "请先登录，才能进入您的Zeongit Beauty主页。");
   }

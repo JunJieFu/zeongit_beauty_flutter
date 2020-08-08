@@ -24,8 +24,8 @@ class PictureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _url = pictureStyle != null
-        ? "${ConfigConstant.qiniuPicture}/$url${ConfigConstant.qiniuSeparator}${pictureStyle.toString().split('.').last}"
-        : "${ConfigConstant.qiniuPicture}/$url";
+        ? "${ConfigConstant.QINIU_PICTURE}/$url${ConfigConstant.QINIU_SEPARATOR}${pictureStyle.toString().split('.').last}"
+        : "${ConfigConstant.QINIU_PICTURE}/$url";
     return Image.network(_url, fit: fit
         , errorBuilder:
         (BuildContext context, Object error, StackTrace stackTrace) {

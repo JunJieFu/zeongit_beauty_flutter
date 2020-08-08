@@ -12,7 +12,7 @@ class FragmentState extends ChangeNotifier {
   }
 
   updateHadInit() {
-    StorageManager.saveBool(KeyConstant.HAD_INIT, true);
+    StorageManager.setBool(KeyConstant.HAD_INIT, true);
     this._hadInit = true;
     notifyListeners();
   }

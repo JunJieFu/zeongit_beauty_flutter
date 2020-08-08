@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/pages/detail.page.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/image_ink.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -94,19 +94,11 @@ class _PictureList extends StatelessWidget {
                 constrained: true,
                 child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(gap)),
-                    child: Image.network(
-                        ConfigConstant.qiniuPicture +
-                            "/" +
-                            picture.url +
-                            "-specifiedWidth500",
-                        fit: BoxFit.cover)
-
-//                    PictureWidget(
-//                      picture.url,
-//                      pictureStyle: PictureStyle.specifiedWidth,
-//                      fit: BoxFit.cover,
-//                    )
-                    ),
+                    child: PictureWidget(
+                      picture.url,
+                      pictureStyle: PictureStyle.specifiedWidth,
+                      fit: BoxFit.cover,
+                    )),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
                     return DetailPage(id: picture.id);

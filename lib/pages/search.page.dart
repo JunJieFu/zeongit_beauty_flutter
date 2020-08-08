@@ -29,6 +29,13 @@ class _SearchPageState extends State<SearchPage> {
     return;
   }
 
+  _search() {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (_) {
+          return SearchResultPage(keyword: _keywordController.text);
+        }));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -48,21 +55,21 @@ class _SearchPageState extends State<SearchPage> {
         appBar: AppBar(
           elevation: 1,
           title: TextField(
-            autofocus: true,
-            controller: _keywordController,
-            decoration: InputDecoration(
-              hintText: "搜索网站绘画",
-              border: InputBorder.none,
-            ),
+              autofocus: true,
+              controller: _keywordController,
+              decoration: InputDecoration(
+                hintText: "搜索网站绘画",
+                border: InputBorder.none,
+              ),
+              onSubmitted: (text) {
+                _search();
+              }
           ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (_) {
-                  return SearchResultPage(keyword: _keywordController.text);
-                }));
+                _search();
               },
             )
           ],
@@ -78,15 +85,16 @@ class _SearchPageState extends State<SearchPage> {
                     spacing: StyleConfig.gap * 2,
                     runSpacing: -StyleConfig.gap,
                     children: _tagState.recommendTagList
-                            ?.map((e) => ActionChip(
-                                label: Text(e),
-                                onPressed: () {
-                                  Navigator.pushReplacement(context,
-                                      MaterialPageRoute(builder: (_) {
+                        ?.map((e) =>
+                        ActionChip(
+                            label: Text(e),
+                            onPressed: () {
+                              Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (_) {
                                     return SearchResultPage(keyword: e);
                                   }));
-                                }))
-                            ?.toList() ??
+                            }))
+                        ?.toList() ??
                         <Widget>[]),
               )
             ],

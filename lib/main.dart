@@ -4,11 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
+import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart';
 import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+
+import 'assets/entity/user_info_entity.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +34,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     var _hasInit = StorageManager.get(KeyConstant.HAD_INIT) ?? false;
 
+    var info = StorageManager.getJson(KeyConstant.USER_INFO) != null
+        ? userInfoEntityFromJson(
+            UserInfoEntity(), StorageManager.getJson(KeyConstant.USER_INFO))
+        : null;
     var themeData = ThemeData();
 
     var chipTheme = themeData.chipTheme;
@@ -41,7 +48,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(
               create: (context) => FragmentState(hadInit: _hasInit)),
           ChangeNotifierProvider(create: (context) => TagState()),
-          ChangeNotifierProvider(create: (context) => UserState())
+          ChangeNotifierProvider(create: (context) => UserState(info: info))
         ],
         child: MaterialApp(
             theme: ThemeData(

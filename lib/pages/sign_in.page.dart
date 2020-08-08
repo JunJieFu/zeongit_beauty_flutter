@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/assets/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
 
 final _gap = StyleConfig.gap * 6;
@@ -27,6 +30,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var _userState = Provider.of<UserState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(title: Text("登录您的账号")),
         body: Padding(
@@ -58,7 +62,9 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                   height: 45,
                   child: RaisedButton(
                     child: Text("登录"),
-                    onPressed: () {},
+                    onPressed: () {
+                      _signIn(context, _userState);
+                    },
                   ),
                 ),
               ),
@@ -76,6 +82,15 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   void dispose() {
     _phoneController.dispose();
     super.dispose();
+  }
+
+  _signIn(BuildContext context, UserState userState) async {
+    var result = await UserService.signIn(
+        _phoneController.text, _passwordController.text);
+    if (result.status == 200) {
+      await userState.getInfo();
+      Navigator.pop(context);
+    }
   }
 }
 

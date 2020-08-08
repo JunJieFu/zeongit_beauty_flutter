@@ -1,11 +1,11 @@
 class StatusCode {
-  static const NOT_FOUND = 404;
+  static const int NOT_FOUND = 404;
 
-  static const PERMISSION = 403;
+  static const int PERMISSION = 403;
 
-  static const PROGRAM = 500;
+  static const int PROGRAM = 500;
 
-  static const SIGN_IN = 401;
+  static const int SIGN_IN = 401;
 
-  static const SUCCESS = 200;
+  static const int SUCCESS = 200;
 }
