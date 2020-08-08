@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/assets/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
+
+final _gap = StyleConfig.gap * 6;
 
 class SignInPage extends StatefulWidget {
   SignInPage({Key key}) : super(key: key);
@@ -10,16 +13,14 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
-  TextEditingController _phoneController = TextEditingController(text: "初始化的");
+  TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {
-        print(_focusNode.hasFocus);
-      }
+      if (!_focusNode.hasFocus) {}
     });
     super.initState();
   }
@@ -29,36 +30,43 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
     return Scaffold(
         appBar: AppBar(title: Text("登录您的账号")),
         body: Padding(
-          padding: EdgeInsets.all(StyleConfig.gap * 2),
+          padding: EdgeInsets.all(_gap),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TextField(
-                focusNode: _focusNode,
-                controller: _phoneController,
-                cursorColor: StyleConfig.primaryColor,
-                decoration: InputDecoration(
-                  isDense:false,
-                  focusColor: StyleConfig.primaryColor,
-                  prefixIcon: Icon(MdiIcons.cellphone,
-                      color: StyleConfig.primaryColor),
+              Padding(
+                padding: EdgeInsets.only(bottom: _gap),
+                child: IconTextField(
+                  controller: _phoneController,
+                  icon: MdiIcons.cellphone,
                   hintText: '手机号码',
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: StyleConfig.primaryColor)),
                 ),
               ),
-              TextField(
-                cursorColor: StyleConfig.primaryColor,
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  isDense:false,
-                  focusColor: StyleConfig.primaryColor,
-                  prefixIcon: Icon(MdiIcons.lock,
-                      color: StyleConfig.primaryColor),
+              Padding(
+                padding: EdgeInsets.only(bottom: _gap * 2),
+                child: IconTextField(
+                  controller: _passwordController,
+                  icon: MdiIcons.lock,
+                  obscureText: true,
                   hintText: '密码',
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: StyleConfig.primaryColor)),
                 ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: _gap),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: RaisedButton(
+                    child: Text("登录"),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: _gap / 2),
+                child: LinkWidget("忘记了登录密码？"),
+              ),
+              LinkWidget("已经有登录账号？"),
             ],
           ),
         ));
@@ -77,4 +85,56 @@ class SignInItemModel {
   final Widget tab;
 
   SignInItemModel({this.view, this.tab});
+}
+
+class IconTextField extends StatefulWidget {
+  IconTextField(
+      {Key key,
+      this.controller,
+      this.obscureText = false,
+      this.hintText,
+      this.icon})
+      : super(key: key);
+
+  final TextEditingController controller;
+  final bool obscureText;
+  final String hintText;
+  final IconData icon;
+
+  @override
+  _IconTextFieldState createState() => _IconTextFieldState();
+}
+
+class _IconTextFieldState extends State<IconTextField> {
+  FocusNode _focusNode = FocusNode();
+  bool hasFocus = false;
+
+  @override
+  void initState() {
+    _focusNode.addListener(() {
+      setState(() {
+        hasFocus = _focusNode.hasFocus;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      focusNode: _focusNode,
+      controller: widget.controller,
+      obscureText: widget.obscureText,
+      cursorColor: StyleConfig.primaryColor,
+      decoration: InputDecoration(
+        isDense: false,
+        focusColor: StyleConfig.primaryColor,
+        prefixIcon: Icon(widget.icon,
+            color: hasFocus ? StyleConfig.primaryColor : null),
+        hintText: widget.hintText,
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: StyleConfig.primaryColor)),
+      ),
+    );
+  }
 }

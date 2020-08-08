@@ -1,4 +1,4 @@
-import 'package:zeongitbeautyflutter/assets/entity/picture_user_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.dart';
 
 class PictureEntity with JsonConvert<PictureEntity> {
@@ -14,7 +14,7 @@ class PictureEntity with JsonConvert<PictureEntity> {
 	int height;
 	String sizeType;
 	List<String> tagList;
-	PictureUserEntity user;
+	UserInfoEntity user;
 	String createDate;
 }
 

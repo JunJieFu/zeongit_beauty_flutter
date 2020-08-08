@@ -29,10 +29,10 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 		data.country = json['country']?.toString();
 	}
 	if (json['province'] != null) {
-		data.province = json['province'];
+		data.province = json['province']?.toString();
 	}
 	if (json['city'] != null) {
-		data.city = json['city'];
+		data.city = json['city']?.toString();
 	}
 	return data;
 }

@@ -6,6 +6,7 @@ import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
 import '../popup.fun.dart';
 
 class UserWidget extends StatelessWidget {
+  UserWidget({Key key}) : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
   @override

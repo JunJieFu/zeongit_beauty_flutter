@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
+import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/image_ink_clip.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
@@ -67,9 +70,7 @@ class _DetailPageState extends State<DetailPage> {
                       IconButton(
                         icon: Icon(Icons.comment),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.star_border),
-                      ),
+                      CollectIconWidget(picture: _picture, callback: () {}),
                       IconButton(
                         icon: Icon(Icons.share),
                       ),
@@ -117,7 +118,10 @@ class _DetailPageState extends State<DetailPage> {
                                 ?.map((e) => ActionChip(
                                     label: Text(e),
                                     onPressed: () {
-                                      print(e);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) {
+                                        return SearchResultPage(keyword: e);
+                                      }));
                                     }))
                                 ?.toList() ??
                             <Widget>[]),
@@ -143,11 +147,9 @@ class _DetailPageState extends State<DetailPage> {
                             child: Text(_picture.user.nickname),
                           ),
                         ),
-                        RaisedButton(
-                          highlightElevation: 0,
-                          elevation: 0,
-                          child: Text("关注"),
-                          onPressed: () {},
+                        FollowBtn(
+                          user: _picture.user,
+                          callback: () => {},
                         )
                       ],
                     ),

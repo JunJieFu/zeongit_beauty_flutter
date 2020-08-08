@@ -3,5 +3,6 @@ class ConfigConstant {
   static var account = "http://account.secdra.com/api/";
   static var qiniuPicture  =  "http://secdraimg.secdra.com";
   static var qiniuAvatar  =  "http://secdrahead.secdra.com";
+  static var qiniuBackground  =  "http://secdraback.secdra.com";
   static var qiniuSeparator  =  "-";
 }

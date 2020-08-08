@@ -27,11 +27,11 @@ class PictureWidget extends StatelessWidget {
         ? "${ConfigConstant.qiniuPicture}/$url${ConfigConstant.qiniuSeparator}${pictureStyle.toString().split('.').last}"
         : "${ConfigConstant.qiniuPicture}/$url";
     return Image.network(_url, fit: fit
-//        , errorBuilder:
-//        (BuildContext context, Object error, StackTrace stackTrace) {
-//      return SvgPicture.asset("assets/images/default-picture.svg",
-//          fit: fit);
-//    }
+        , errorBuilder:
+        (BuildContext context, Object error, StackTrace stackTrace) {
+      return SvgPicture.asset("assets/images/default-picture.svg",
+          fit: fit);
+    }
     );
   }
 }

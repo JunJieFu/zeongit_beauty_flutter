@@ -5,7 +5,7 @@ class PageableEntity with JsonConvert<PageableEntity> {
   int size;
   String sort;
 
-  PageableEntity({this.page = 0, this.size = 16, this.sort});
+  PageableEntity({this.page = 0, this.size = 16, this.sort = "createDate,desc"});
 }
 
 class PagePageable with JsonConvert<PagePageable> {

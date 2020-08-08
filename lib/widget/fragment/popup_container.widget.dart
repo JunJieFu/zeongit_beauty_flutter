@@ -217,6 +217,7 @@ class _PopupContainerState extends State<PopupContainer>
           ),
         ),
         onWillPop: () {
+          _dismiss(context);
           return Future.value(false);
         });
   }

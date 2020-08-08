@@ -10,6 +10,6 @@ class UserInfoEntity with JsonConvert<UserInfoEntity> {
 	String background;
 	String focus;
 	String country;
-	dynamic province;
-	dynamic city;
+	String province;
+	String city;
 }

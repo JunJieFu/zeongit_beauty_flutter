@@ -22,8 +22,8 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<void> _listTagTop30() async {
     var result = await TagService.listTagTop30();
+    _tagState.setRecommendTagList(result.data);
     setState(() {
-      _tagState.setRecommendTagList(result.data);
       _loading = false;
     });
     return;

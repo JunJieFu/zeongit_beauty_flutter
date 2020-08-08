@@ -1,5 +1,5 @@
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_user_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 
 pictureEntityFromJson(PictureEntity data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
@@ -39,7 +39,7 @@ pictureEntityFromJson(PictureEntity data, Map<String, dynamic> json) {
 		data.tagList = json['tagList']?.map((v) => v?.toString())?.toList()?.cast<String>();
 	}
 	if (json['user'] != null) {
-		data.user = new PictureUserEntity().fromJson(json['user']);
+		data.user = new UserInfoEntity().fromJson(json['user']);
 	}
 	if (json['createDate'] != null) {
 		data.createDate = json['createDate']?.toString();

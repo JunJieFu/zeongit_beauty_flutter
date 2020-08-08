@@ -21,28 +21,35 @@ void popupSignIn(String title, String text, BuildContext context,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CardTitleWidget(Column(
+                CardTitleWidget(
+                    child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TitleWidget(title),
                     TextWidget(text),
                   ],
                 )),
-                Divider(),
-                CardTextWidget(Align(
-                  alignment: Alignment.centerRight,
-                  child: OutlineButton(
-                      child: Text("登录"),
-                      borderSide: BorderSide(
-                        color: StyleConfig.primaryColor,
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) {
-                          return SignInPage();
-                        }));
-                      }),
-                ))
+                Divider(height: 1),
+                Padding(
+                  padding: EdgeInsets.only(
+                      right: StyleConfig.gap * 3,
+                      bottom: StyleConfig.gap,
+                      top: StyleConfig.gap),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: OutlineButton(
+                        child: Text("登录"),
+                        borderSide: BorderSide(
+                          color: StyleConfig.primaryColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) {
+                            return SignInPage();
+                          }));
+                        }),
+                  ),
+                )
               ],
             ),
           ),

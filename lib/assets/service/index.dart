@@ -13,7 +13,7 @@ class UserService {
     return HttpUtil.get("/userInfo/get", params: {"targetId": targetId});
   }
 
-  static follow(int followingId) {
+  static Future<ResultEntity<String>> follow(int followingId) {
     return HttpUtil.post("/following/focus",
         params: {"followingId": followingId});
   }
@@ -76,7 +76,7 @@ class CollectionService {
     return HttpUtil.get("/collection/paging", params: _);
   }
 
-  focus(int pictureId) {
+  static Future<ResultEntity<String>> focus(int pictureId) {
     return HttpUtil.post("/collection/focus", params: {"pictureId": pictureId});
   }
 
