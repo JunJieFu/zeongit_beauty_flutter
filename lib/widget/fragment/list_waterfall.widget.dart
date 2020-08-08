@@ -61,7 +61,7 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
                     aspectRatio: picture.width / picture.height,
                     child: PictureWidget(
                       picture.url,
-                      pictureStyle: PictureStyle.specifiedWidth500,
+                      style: PictureStyle.specifiedWidth500,
                       fit: BoxFit.cover,
                     )),
               ),

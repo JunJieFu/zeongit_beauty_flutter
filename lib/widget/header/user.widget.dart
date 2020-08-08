@@ -21,7 +21,7 @@ class UserWidget extends StatelessWidget {
               child: AvatarWidget(
             _userState.info?.avatarUrl,
             fit: BoxFit.cover,
-            avatarStyle: AvatarStyle.small50,
+            style: AvatarStyle.small50,
           ))),
       onPressed: () {
         popupSignIn("想要成为Zeongit用户？", "请先登录，才能查看自己的主页。", context, _btnKey);

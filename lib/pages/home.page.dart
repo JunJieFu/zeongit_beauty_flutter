@@ -96,7 +96,7 @@ class _PictureList extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(gap)),
                     child: PictureWidget(
                       picture.url,
-                      pictureStyle: PictureStyle.specifiedWidth,
+                      style: PictureStyle.specifiedWidth,
                       fit: BoxFit.cover,
                     )),
                 onTap: () {

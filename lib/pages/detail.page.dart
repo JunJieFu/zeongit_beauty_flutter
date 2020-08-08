@@ -57,7 +57,7 @@ class _DetailPageState extends State<DetailPage> {
                 //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
                 flexibleSpace: FlexibleSpaceBar(
                   background: PictureWidget(_picture.url,
-                      pictureStyle: PictureStyle.specifiedHeight1200,
+                      style: PictureStyle.specifiedHeight1200,
                       fit: BoxFit.cover),
                   collapseMode: CollapseMode.pin,
                 ),
@@ -70,7 +70,13 @@ class _DetailPageState extends State<DetailPage> {
                       IconButton(
                         icon: Icon(Icons.comment),
                       ),
-                      CollectIconWidget(picture: _picture, callback: () {}),
+                      CollectIconWidget(
+                          picture: _picture,
+                          callback: (picture, String focus) {
+                            setState(() {
+                              _picture.focus = focus;
+                            });
+                          }),
                       IconButton(
                         icon: Icon(Icons.share),
                       ),
@@ -135,8 +141,7 @@ class _DetailPageState extends State<DetailPage> {
                         ImageInkClipWidget(
                           size: 75,
                           child: AvatarWidget(_picture.user.avatarUrl,
-                              avatarStyle: AvatarStyle.small50,
-                              fit: BoxFit.cover),
+                              style: AvatarStyle.small50, fit: BoxFit.cover),
                           onTap: () {},
                         ),
                         Expanded(
@@ -149,7 +154,11 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         FollowBtn(
                           user: _picture.user,
-                          callback: () => {},
+                          callback: (user, String focus) {
+                            setState(() {
+                              _picture.user.focus = focus;
+                            });
+                          },
                         )
                       ],
                     ),

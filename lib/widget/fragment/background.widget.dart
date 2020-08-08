@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
+import 'package:zeongitbeautyflutter/assets/util/string.util.dart';
 
 enum BackgroundStyle { backCard }
 
@@ -17,8 +18,8 @@ class BackgroundWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _url = style != null
-        ? "${ConfigConstant.QINIU_BACKGROUND}/${url}${ConfigConstant.QINIU_SEPARATOR}${style.toString().split('.').last}"
-        : "${ConfigConstant.QINIU_BACKGROUND}/${url}";
+        ? "${ConfigConstant.QINIU_BACKGROUND}/$url${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
+        : "${ConfigConstant.QINIU_BACKGROUND}/$url";
     return CachedNetworkImage(
         imageUrl: _url,
         fit: fit,
