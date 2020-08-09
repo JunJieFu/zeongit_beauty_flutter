@@ -115,24 +115,7 @@ class _DetailPageState extends State<DetailPage> {
                         ],
                       )),
                   Divider(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: pageGap),
-                    child: Wrap(
-                        spacing: pageGap / 2,
-                        runSpacing: -pageGap / 2,
-                        children: _picture.tagList
-                                ?.map((e) => ActionChip(
-                                    label: Text(e),
-                                    onPressed: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (_) {
-                                        return SearchResultPage(keyword: e);
-                                      }));
-                                    }))
-                                ?.toList() ??
-                            <Widget>[]),
-                  ),
-                  Divider(),
+                  ...buildTagList(pageGap, context),
                   Padding(
                     padding: EdgeInsets.all(pageGap),
                     child: Flex(
@@ -168,5 +151,32 @@ class _DetailPageState extends State<DetailPage> {
             ],
           ))
         : Scaffold(body: Container());
+  }
+
+  buildTagList(double pageGap, BuildContext context) {
+    if (_picture.tagList != null && _picture.tagList.length > 0) {
+      return [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: pageGap),
+          child: Wrap(
+              spacing: pageGap / 2,
+              runSpacing: -pageGap / 2,
+              children: _picture.tagList
+                      ?.map((e) => ActionChip(
+                          label: Text(e),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return SearchResultPage(keyword: e);
+                            }));
+                          }))
+                      ?.toList() ??
+                  <Widget>[]),
+        ),
+        Divider()
+      ];
+    } else {
+      return [];
+    }
   }
 }

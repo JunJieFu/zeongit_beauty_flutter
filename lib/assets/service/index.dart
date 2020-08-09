@@ -77,7 +77,8 @@ class PictureService {
 }
 
 class CollectionService {
-  static paging(PageableEntity pageable, int targetId) {
+  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
+      {int targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
@@ -93,6 +94,16 @@ class CollectionService {
     _["page"]--;
     _["pictureId"] = pictureId;
     return HttpUtil.get("/collection/pagingUser", params: _);
+  }
+}
+
+class WorksService {
+  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
+      {int targetId}) {
+    var _ = pageable.toJson();
+    _["page"]--;
+    _["targetId"] = targetId;
+    return HttpUtil.get("/works/paging", params: _);
   }
 }
 
