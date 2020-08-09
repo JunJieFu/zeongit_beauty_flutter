@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
@@ -27,12 +28,12 @@ class PictureWidget extends StatelessWidget {
     var _url = style != null
         ? "${ConfigConstant.QINIU_PICTURE}/$url${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
         : "${ConfigConstant.QINIU_PICTURE}/$url";
-    return Image.network(_url, fit: fit
-        , errorBuilder:
-        (BuildContext context, Object error, StackTrace stackTrace) {
-      return SvgPicture.asset("assets/images/default-picture.svg",
-          fit: fit);
-    }
-    );
+    return CachedNetworkImage(
+        imageUrl: _url,
+        fit: fit,
+        errorWidget: (BuildContext context, String url, dynamic error) {
+          return SvgPicture.asset("assets/images/default-picture.svg",
+              fit: fit);
+        });
   }
 }
