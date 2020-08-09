@@ -18,7 +18,7 @@ class ImageInkWidget extends StatelessWidget {
       constrained
           ? ConstrainedBox(
               child: child,
-              constraints: new BoxConstraints.expand(),
+              constraints: BoxConstraints.expand(),
             )
           : child,
       Positioned.fill(

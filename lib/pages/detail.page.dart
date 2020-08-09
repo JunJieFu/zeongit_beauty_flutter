@@ -9,6 +9,7 @@ import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/image_ink_clip.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
+import 'package:zeongitbeautyflutter/widget/fragment/shadow_icon.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/text.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/title.widget.dart';
 
@@ -49,6 +50,12 @@ class _DetailPageState extends State<DetailPage> {
             body: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
+                leading: IconButton(
+                  icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.maybePop(context);
+                  },
+                ),
                 elevation: 1,
                 //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
                 floating: false,

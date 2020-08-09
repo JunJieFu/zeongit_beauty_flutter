@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/assets/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/pages/works.page.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
@@ -37,22 +38,29 @@ class _UserPageState extends State<UserPage>
       } else {
         return Column(
           children: [
-            AspectRatio(
-              aspectRatio: 2,
-              child: BackgroundWidget(
-                userState.info?.background,
-                fit: BoxFit.cover,
-                style: BackgroundStyle.backCard,
+            Stack(children: <Widget>[
+              AspectRatio(
+                aspectRatio: 2,
+                child: BackgroundWidget(
+                  userState.info?.background,
+                  fit: BoxFit.cover,
+                  style: BackgroundStyle.backCard,
+                ),
               ),
-            ),
-            SizedBox(
-              width: 150,
-              child: AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipOval(
-                      child: AvatarWidget(userState.info?.avatarUrl,
-                          fit: BoxFit.cover))),
-            ),
+              Align(
+                child: Padding(
+                  padding: EdgeInsets.only(top: StyleConfig.gap * 30),
+                  child: SizedBox(
+                    width: 150,
+                    child: AspectRatio(
+                        aspectRatio: 1,
+                        child: ClipOval(
+                            child: AvatarWidget(userState.info?.avatarUrl,
+                                fit: BoxFit.cover))),
+                  ),
+                ),
+              ),
+            ]),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[

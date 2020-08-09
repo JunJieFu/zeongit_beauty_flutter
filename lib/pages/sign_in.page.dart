@@ -89,7 +89,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
         _phoneController.text, _passwordController.text);
     if (result.status == 200) {
       await userState.getInfo();
-      Navigator.pop(context);
+      Navigator.maybePop(context);
     }
   }
 }
