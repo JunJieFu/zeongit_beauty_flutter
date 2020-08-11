@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart';
+import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 
 class UserState extends ChangeNotifier {
   UserState({UserInfoEntity info}) {

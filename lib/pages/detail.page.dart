@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/shadow_icon.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/text.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/title.widget.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/avatar.widget.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/link.widget.dart';
+
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/shadow_icon.widget.dart';
+
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/title.widget.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);

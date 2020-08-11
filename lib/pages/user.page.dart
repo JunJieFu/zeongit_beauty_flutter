@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
-import 'package:zeongitbeautyflutter/assets/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/pages/works.page.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/background.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/background.widget.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/avatar.widget.dart';
+
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 import 'collection.page.dart';

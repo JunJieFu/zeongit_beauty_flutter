@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
-import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 
 class FragmentState extends ChangeNotifier {
   bool _hadInit;

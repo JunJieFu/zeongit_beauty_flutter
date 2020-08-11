@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
-import 'package:zeongitbeautyflutter/assets/util/string.util.dart';
+import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
 
 enum BackgroundStyle { backCard }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 
 class TextWidget extends StatelessWidget {
   TextWidget(

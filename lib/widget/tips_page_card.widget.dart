@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 import 'package:zeongitbeautyflutter/pages/sign_in.page.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/card.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/text.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/title.widget.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/card.widget.dart';
+
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 
 class TipsPageCardWidget extends StatelessWidget {
   TipsPageCardWidget(

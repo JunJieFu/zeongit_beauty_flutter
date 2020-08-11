@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/avatar.widget.dart';
 
 import '../popup.fun.dart';
 

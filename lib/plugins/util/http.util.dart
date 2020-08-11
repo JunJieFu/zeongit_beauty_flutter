@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
-import 'package:zeongitbeautyflutter/assets/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
-import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/assets/entity/base/result_entity.dart';
-import 'package:zeongitbeautyflutter/assets/util/storage.util.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
+import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
+
 
 class HttpUtil {
   static Future<ResultEntity<T>> get<T>(String url,
-      {Map<String, dynamic> params,
-      String host}) async {
-    if(host == null ){
-      host =  ConfigConstant.BEAUTY_HOST;
+      {Map<String, dynamic> params, String host}) async {
+    if (host == null) {
+      host = ConfigConstant.BEAUTY_HOST;
     }
     try {
       String token = _getToken();
@@ -29,15 +29,15 @@ class HttpUtil {
 
   static Future<ResultEntity<T>> post<T>(String url,
       {Map<String, dynamic> params, String host}) async {
-    if(host == null ){
+    if (host == null) {
       host = ConfigConstant.BEAUTY_HOST;
     }
     try {
       String token = _getToken();
       Options options =
           Options(headers: token != null ? {KeyConstant.TOKEN_KEY: token} : {});
-      Response response = await Dio().post(host + url,
-          data: params, options: options);
+      Response response =
+          await Dio().post(host + url, data: params, options: options);
 
       _handleToken(response);
       var result = ResultEntity.fromJson<T>(response.data);

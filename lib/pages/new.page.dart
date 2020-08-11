@@ -4,7 +4,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/list_waterfall.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/list_waterfall.widget.dart';
 
 class NewPage extends StatefulWidget {
   NewPage({Key key}) : super(key: key);
