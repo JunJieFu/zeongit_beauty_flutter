@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/plugins/widget/link.widget.dart';
 
 final _gap = StyleConfig.gap * 6;
 
@@ -92,15 +92,10 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   _signIn(BuildContext context, UserState userState) async {
     var result = await UserService.signIn(
         _phoneController.text, _passwordController.text);
-    Fluttertoast.showToast(
-        msg: "This is Center Short Toast",
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: StyleConfig.errorColor);
-
-    if (result.status == 200) {
+    ResultUtil.check(result).then((value) async {
       await userState.getInfo();
       Navigator.maybePop(context);
-    }
+    });
   }
 }
 
