@@ -11,7 +11,6 @@ import 'package:zeongitbeautyflutter/plugins/widget/background.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/btn/follow_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
@@ -54,9 +53,8 @@ class _UserPageState extends State<UserPage>
               ),
               Align(
                 child: Padding(
-                  padding: EdgeInsets.only(top: StyleConfig.gap * 30),
-                  child: AvatarWidget(userState.info,
-                      fit: BoxFit.cover, size: 150),
+                  padding: EdgeInsets.only(top: StyleConfig.gap * 35),
+                  child: buildMaterialAvatar(userState),
                 ),
               ),
             ]),
@@ -71,10 +69,6 @@ class _UserPageState extends State<UserPage>
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                FollowIconBtn(
-                  user: userState.info,
-                  callback: () {},
-                ),
                 ShareUserIconBtn(
                   user: userState.info,
                   callback: () {},
@@ -108,7 +102,7 @@ class _UserPageState extends State<UserPage>
             }),
             ...buildListTile(MdiIcons.upload_outline, "上传", () {}),
             ...buildListTile(MdiIcons.cog_outline, "设置", () {}),
-            ...buildListTile(MdiIcons.cog_outline, "退出", () {
+            ...buildListTile(MdiIcons.logout, "退出", () {
               showDialog(
                   context: context,
                   builder: (ctx) {
@@ -138,8 +132,18 @@ class _UserPageState extends State<UserPage>
     });
   }
 
-  List<Widget> buildListTile(
-      IconData icon, String title, GestureTapCallback onTap) {
+  Material buildMaterialAvatar(UserState userState) {
+    var size = 120.0;
+    return Material(
+      borderRadius: BorderRadius.all(Radius.circular(size)),
+      elevation: 3,
+      child: AvatarWidget(userState.info,
+          fit: BoxFit.cover, size: size),
+    );
+  }
+
+  List<Widget> buildListTile(IconData icon, String title,
+      GestureTapCallback onTap) {
     return [
       Divider(height: 1),
       ListTile(

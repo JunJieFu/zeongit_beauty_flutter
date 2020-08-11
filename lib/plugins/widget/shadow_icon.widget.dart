@@ -26,9 +26,9 @@ class ShadowIconWidget extends StatelessWidget {
             shadows: [
               boxShadow ??
                   BoxShadow(
-                      color: Colors.black45,
-                      offset: Offset(.1, .1),
-                      blurRadius: 5.0)
+                      color: Colors.black87,
+                      offset: Offset(0.1, .5),
+                      blurRadius: 3.0)
             ]));
   }
 }
