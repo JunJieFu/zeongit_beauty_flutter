@@ -36,7 +36,7 @@ class _UserPageState extends State<UserPage>
       if (userState.info == null) {
         return _Unlisted();
       } else {
-        return Column(
+        return ListView(
           children: [
             Stack(children: <Widget>[
               AspectRatio(
@@ -50,13 +50,10 @@ class _UserPageState extends State<UserPage>
               Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: StyleConfig.gap * 30),
-                  child: SizedBox(
-                    width: 150,
-                    child: AspectRatio(
-                        aspectRatio: 1,
-                        child: ClipOval(
-                            child: AvatarWidget(userState.info?.avatarUrl,
-                                fit: BoxFit.cover))),
+                  child: AvatarWidget(
+                    userState.info,
+                    fit: BoxFit.cover,
+                    size: 150
                   ),
                 ),
               ),
@@ -88,6 +85,12 @@ class _UserPageState extends State<UserPage>
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return WorksPage();
                 }));
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                userState.logout();
               },
             )
           ],

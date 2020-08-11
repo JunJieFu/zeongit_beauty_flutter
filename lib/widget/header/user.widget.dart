@@ -15,14 +15,12 @@ class UserWidget extends StatelessWidget {
 
     return IconButton(
       key: _btnKey,
-      icon: AspectRatio(
-          aspectRatio: 1,
-          child: ClipOval(
-              child: AvatarWidget(
-            _userState.info?.avatarUrl,
-            fit: BoxFit.cover,
-            style: AvatarStyle.small50,
-          ))),
+      icon: AvatarWidget(
+        _userState.info,
+        size: 30,
+        fit: BoxFit.cover,
+        style: AvatarStyle.small50,
+      ),
       onPressed: () {
         popupSignIn("想要成为Zeongit用户？", "请先登录，才能查看自己的主页。", context, _btnKey);
       },

@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/assets/style/index.style.dart';
 
 class ImageInkWidget extends StatelessWidget {
   const ImageInkWidget(
-      {Key key, this.child, this.constrained = false, this.onTap})
+      {Key key,
+      this.child,
+      this.constrained = false,
+      this.borderRadius,
+      this.onTap})
       : super(key: key);
 
   final Widget child;
@@ -11,6 +16,8 @@ class ImageInkWidget extends StatelessWidget {
   final bool constrained;
 
   final GestureTapCallback onTap;
+
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +27,16 @@ class ImageInkWidget extends StatelessWidget {
               child: child,
               constraints: BoxConstraints.expand(),
             )
-          : child,
+          : ClipRRect(
+              borderRadius: BorderRadius.all(
+                  Radius.circular(borderRadius ?? StyleConfig.listGap)),
+              child: child),
       Positioned.fill(
           child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius:
+              BorderRadius.circular(borderRadius ?? StyleConfig.listGap),
           onTap: onTap,
         ),
       ))

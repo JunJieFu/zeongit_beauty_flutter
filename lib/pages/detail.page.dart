@@ -6,7 +6,6 @@ import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/fragment/image_ink_clip.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/link.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/picture.widget.dart';
 import 'package:zeongitbeautyflutter/widget/fragment/shadow_icon.widget.dart';
@@ -128,12 +127,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
-                        ImageInkClipWidget(
-                          size: 75,
-                          child: AvatarWidget(_picture.user.avatarUrl,
-                              style: AvatarStyle.small50, fit: BoxFit.cover),
-                          onTap: () {},
-                        ),
+                        buildAvatar(),
                         Expanded(
                           flex: 1,
                           child: Padding(
@@ -158,6 +152,24 @@ class _DetailPageState extends State<DetailPage> {
             ],
           ))
         : Scaffold(body: Container());
+  }
+
+  InkWell buildAvatar() {
+    var size = 75.0;
+    var padding = 8.0;
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(size / 2)),
+      child: Padding(
+        padding: EdgeInsets.all(padding),
+        child: AvatarWidget(
+          _picture?.user,
+          size: size - padding * 2,
+          fit: BoxFit.cover,
+          style: AvatarStyle.small50,
+        ),
+      ),
+      onTap: () {},
+    );
   }
 
   buildTagList(double pageGap, BuildContext context) {

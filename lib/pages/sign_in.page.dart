@@ -33,48 +33,52 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
     var _userState = Provider.of<UserState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(title: Text("登录您的账号")),
-        body: Padding(
-          padding: EdgeInsets.all(_gap),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: _gap),
-                child: IconTextField(
-                  controller: _phoneController,
-                  icon: MdiIcons.cellphone,
-                  hintText: '手机号码',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: _gap * 2),
-                child: IconTextField(
-                  controller: _passwordController,
-                  icon: MdiIcons.lock,
-                  obscureText: true,
-                  hintText: '密码',
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: _gap),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 45,
-                  child: RaisedButton(
-                    child: Text("登录"),
-                    onPressed: () {
-                      _signIn(context, _userState);
-                    },
+        body: ListView(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(_gap),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _gap),
+                    child: IconTextField(
+                      controller: _phoneController,
+                      icon: MdiIcons.cellphone,
+                      hintText: '手机号码',
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _gap * 2),
+                    child: IconTextField(
+                      controller: _passwordController,
+                      icon: MdiIcons.lock,
+                      obscureText: true,
+                      hintText: '密码',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _gap),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: RaisedButton(
+                        child: Text("登录"),
+                        onPressed: () {
+                          _signIn(context, _userState);
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _gap / 2),
+                    child: LinkWidget("忘记了登录密码？"),
+                  ),
+                  LinkWidget("已经有登录账号？"),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: _gap / 2),
-                child: LinkWidget("忘记了登录密码？"),
-              ),
-              LinkWidget("已经有登录账号？"),
-            ],
-          ),
+            )
+          ],
         ));
   }
 
@@ -103,12 +107,11 @@ class SignInItemModel {
 }
 
 class IconTextField extends StatefulWidget {
-  IconTextField(
-      {Key key,
-      this.controller,
-      this.obscureText = false,
-      this.hintText,
-      this.icon})
+  IconTextField({Key key,
+    this.controller,
+    this.obscureText = false,
+    this.hintText,
+    this.icon})
       : super(key: key);
 
   final TextEditingController controller;

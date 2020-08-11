@@ -54,17 +54,13 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
         itemBuilder: (BuildContext context, int index) {
           PictureEntity picture = widget.list[index];
           return ImageInkWidget(
-              child: ClipRRect(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(StyleConfig.listGap)),
-                child: AspectRatio(
-                    aspectRatio: picture.width / picture.height,
-                    child: PictureWidget(
-                      picture.url,
-                      style: PictureStyle.specifiedWidth500,
-                      fit: BoxFit.cover,
-                    )),
-              ),
+              child: AspectRatio(
+                  aspectRatio: picture.width / picture.height,
+                  child: PictureWidget(
+                    picture.url,
+                    style: PictureStyle.specifiedWidth500,
+                    fit: BoxFit.cover,
+                  )),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return DetailPage(id: picture.id);
