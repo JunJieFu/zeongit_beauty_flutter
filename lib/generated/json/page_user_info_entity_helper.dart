@@ -1,13 +1,14 @@
-import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/page_base_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 
-pagePictureEntityFromJson(PagePictureEntity data, Map<String, dynamic> json) {
+pageUserInfoEntityFromJson(PageUserInfoEntity data, Map<String, dynamic> json) {
 	if (json['content'] != null) {
-		data.content = new List<PictureEntity>();
+		data.content = new List<UserInfoEntity>();
 		(json['content'] as List).forEach((v) {
-			data.content.add(new PictureEntity().fromJson(v));
+			data.content.add(new UserInfoEntity().fromJson(v));
 		});
 	}
 	if (json['pageable'] != null) {
@@ -43,7 +44,7 @@ pagePictureEntityFromJson(PagePictureEntity data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> pagePictureEntityToJson(PagePictureEntity entity) {
+Map<String, dynamic> pageUserInfoEntityToJson(PageUserInfoEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	if (entity.content != null) {
 		data['content'] =  entity.content.map((v) => v.toJson()).toList();

@@ -1,6 +1,6 @@
-
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
@@ -28,14 +28,18 @@ class UserService {
         params: {"followingId": followingId});
   }
 
-  static pagingFollower(PageableEntity pageable, int targetId) {
+  static Future<ResultEntity<PageUserInfoEntity>> pagingFollower(
+      PageableEntity pageable,
+      {int targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
     return HttpUtil.get("/follower/paging", params: _);
   }
 
-  static pagingFollowing(PageableEntity pageable, int targetId) {
+  static Future<ResultEntity<PageUserInfoEntity>> pagingFollowing(
+      PageableEntity pageable,
+      {int targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;
@@ -110,7 +114,8 @@ class WorksService {
 }
 
 class FootprintService {
-  static paging(PageableEntity pageable, int targetId) {
+  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
+      {int targetId}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["targetId"] = targetId;

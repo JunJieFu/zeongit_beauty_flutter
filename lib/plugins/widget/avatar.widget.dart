@@ -32,8 +32,6 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget build = buildSvgPicture();
-    final IconThemeData iconTheme = IconTheme.of(context);
-    print(iconTheme.size);
     if (info != null) {
       if (info.avatarUrl != null) {
         build = buildCachedNetworkImage();

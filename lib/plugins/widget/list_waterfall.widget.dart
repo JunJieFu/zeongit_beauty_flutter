@@ -31,7 +31,7 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent -
-              _scrollController.position.pixels <
+          _scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
           widget.paging(widget.page.pageable.pageNumber + 2);
@@ -53,9 +53,13 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
         itemCount: widget.list?.length,
         itemBuilder: (BuildContext context, int index) {
           PictureEntity picture = widget.list[index];
+          var aspectRatio = 1.0;
+          if (picture.width != 0 && picture.height != 0) {
+            aspectRatio = picture.width / picture.height;
+          }
           return ImageInkWidget(
               child: AspectRatio(
-                  aspectRatio: picture.width / picture.height,
+                  aspectRatio: aspectRatio,
                   child: PictureWidget(
                     picture.url,
                     style: PictureStyle.specifiedWidth500,
