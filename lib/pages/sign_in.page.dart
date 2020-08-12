@@ -17,14 +17,14 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  FocusNode _focusNode = FocusNode();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {}
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {}
     });
     super.initState();
   }
@@ -44,7 +44,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: _phoneController,
+                      controller: phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -52,7 +52,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _passwordController,
+                      controller: passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                       child: RaisedButton(
                         child: Text("登录"),
                         onPressed: () {
-                          _signIn(context, _userState);
+                          signIn(context, _userState);
                         },
                       ),
                     ),
@@ -85,25 +85,17 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _phoneController.dispose();
     super.dispose();
+    phoneController.dispose();
   }
 
-  _signIn(BuildContext context, UserState userState) async {
+  signIn(BuildContext context, UserState userState) async {
     var result = await UserService.signIn(
-        _phoneController.text, _passwordController.text);
+        phoneController.text, passwordController.text);
     await ResultUtil.check(result);
     await userState.getInfo();
     Navigator.maybePop(context);
   }
-}
-
-class SignInItemModel {
-  final Widget view;
-
-  final Widget tab;
-
-  SignInItemModel({this.view, this.tab});
 }
 
 class IconTextField extends StatefulWidget {
@@ -125,14 +117,14 @@ class IconTextField extends StatefulWidget {
 }
 
 class _IconTextFieldState extends State<IconTextField> {
-  FocusNode _focusNode = FocusNode();
+  FocusNode focusNode = FocusNode();
   bool hasFocus = false;
 
   @override
   void initState() {
-    _focusNode.addListener(() {
+    focusNode.addListener(() {
       setState(() {
-        hasFocus = _focusNode.hasFocus;
+        hasFocus = focusNode.hasFocus;
       });
     });
     super.initState();
@@ -141,7 +133,7 @@ class _IconTextFieldState extends State<IconTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      focusNode: _focusNode,
+      focusNode: focusNode,
       controller: widget.controller,
       obscureText: widget.obscureText,
       cursorColor: StyleConfig.primaryColor,

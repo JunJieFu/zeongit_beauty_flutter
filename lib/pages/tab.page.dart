@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/assets/model/index.model.dart';
 import 'package:zeongitbeautyflutter/pages/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/home.page.dart';
 import 'package:zeongitbeautyflutter/pages/new.page.dart';
@@ -14,9 +15,9 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
-  TabController _tabController;
+  TabController tabController;
 
-  List<TabItemModel> _tabList = [
+  List<TabItemModel> tabList = [
     TabItemModel(view: HomePage(), tab: Tab(icon: Icon(MdiIcons.home))),
     TabItemModel(view: FindPage(), tab: Tab(icon: Icon(MdiIcons.compass))),
     TabItemModel(
@@ -27,8 +28,8 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: _tabList.length,
+    tabController = TabController(
+      length: tabList.length,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
@@ -38,12 +39,12 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
     return Scaffold(
         appBar: HeaderWidget(title: Text("首页")),
         body: TabBarView(
-            controller: _tabController,
-            children: _tabList.map((it) => it.view).toList()),
+            controller: tabController,
+            children: tabList.map((it) => it.view).toList()),
         bottomNavigationBar: BottomAppBar(
           child: TabBar(
-            tabs: _tabList.map((it) => it.tab).toList(),
-            controller: _tabController,
+            tabs: tabList.map((it) => it.tab).toList(),
+            controller: tabController,
             indicatorColor: Colors.transparent,
           ),
         ));
@@ -51,15 +52,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _tabController.dispose();
+    tabController.dispose();
     super.dispose();
   }
-}
-
-class TabItemModel {
-  final Widget view;
-
-  final Widget tab;
-
-  TabItemModel({this.view, this.tab});
 }

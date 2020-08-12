@@ -18,41 +18,40 @@ class SearchResultPage extends StatefulWidget {
 }
 
 class _SearchResultPageState extends State<SearchResultPage> {
-  bool _loading = false;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  PagePictureEntity _page;
-  List<PictureEntity> _list = [];
-  PageableEntity _pageable =
+  bool loading = false;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
+  PagePictureEntity page;
+  List<PictureEntity> list = [];
+  PageableEntity pageable =
       PageableEntity(page: 0, size: 16, sort: "createDate,desc");
 
   Future<void> _refresh() async {
-    _paging(0);
+    paging(0);
   }
 
-  Future<void> _paging(int page) async {
-    _pageable.page = page;
-    if (this._loading || (this._page != null && this._page.last)) return;
-    _loading = true;
-    var result =
-        await PictureService.paging(_pageable, tagList: widget.keyword);
+  Future<void> paging(int pageIndex) async {
+    pageable.page = pageIndex;
+    if (this.loading || (this.page != null && this.page.last)) return;
+    loading = true;
+    var result = await PictureService.paging(pageable, tagList: widget.keyword);
     setState(() {
-      _page = result.data;
-      if (page == 0) {
-        _list = _page.content;
+      page = result.data;
+      if (pageIndex == 0) {
+        list = page.content;
       } else {
-        _list.addAll(_page.content);
+        list.addAll(page.content);
       }
     });
-    _loading = false;
+    loading = false;
   }
 
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _refreshIndicatorKey.currentState?.show();
+      refreshIndicatorKey.currentState?.show();
     });
   }
 
@@ -73,17 +72,17 @@ class _SearchResultPageState extends State<SearchResultPage> {
           ],
         ),
         body: RefreshIndicator(
-            key: _refreshIndicatorKey,
+            key: refreshIndicatorKey,
             onRefresh: _refresh,
             child: _emptyWidget()));
   }
 
   Widget _emptyWidget() {
-    if (_page != null && _page.empty && _page.first && _page.last) {
+    if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
           icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一些标签搜索哦。");
     } else {
-      return ListWaterFallWidget(page: _page, list: _list, paging: _paging);
+      return ListWaterFallWidget(page: page, list: list, paging: paging);
     }
   }
 }

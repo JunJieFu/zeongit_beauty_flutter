@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 
 class VisitorState extends ChangeNotifier {
   VisitorState({UserInfoEntity info}) {
@@ -12,10 +10,8 @@ class VisitorState extends ChangeNotifier {
 
   UserInfoEntity get info => _info;
 
-  getInfo(int id) async {
-    var result = await UserService.getByTargetId(id);
-    await ResultUtil.check(result);
-    _info = result.data;
+  setInfo(UserInfoEntity info) async {
+    _info = info;
     notifyListeners();
   }
 

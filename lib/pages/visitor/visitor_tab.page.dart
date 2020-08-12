@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/index.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
@@ -10,6 +9,7 @@ import 'package:zeongitbeautyflutter/pages/visitor/visitor_following.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_home.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_works.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 
 class VisitorTabPage extends StatefulWidget {
   VisitorTabPage({Key key, @required this.id}) : super(key: key);
@@ -22,9 +22,9 @@ class VisitorTabPage extends StatefulWidget {
 
 class _VisitorTabPageState extends State<VisitorTabPage>
     with TickerProviderStateMixin {
-  TabController _tabController;
+  TabController tabController;
 
-  List<TabItemModel> _tabList = [
+  List<TabItemModel> tabList = [
     TabItemModel(view: VisitorHomePage(), tab: Tab(icon: Icon(MdiIcons.home))),
     TabItemModel(
         view: VisitorWorksPage(), tab: Tab(icon: Icon(MdiIcons.image_outline))),
@@ -39,27 +39,26 @@ class _VisitorTabPageState extends State<VisitorTabPage>
         tab: Tab(icon: Icon(MdiIcons.account_star_outline))),
   ];
 
-  UserInfoEntity _user;
+  bool loading = true;
 
-  bool _loading = true;
-
-  VisitorState _visitorState = VisitorState();
+  VisitorState visitorState = VisitorState();
 
   Future<void> _get() async {
     var result = await UserService.getByTargetId(widget.id);
-    _user = result.data;
+    await ResultUtil.check(result);
     setState(() {
-      _loading = false;
+      loading = false;
     });
+    visitorState.setInfo(result.data);
     return;
   }
 
   @override
   void initState() {
     super.initState();
-    _visitorState.getInfo(widget.id);
-    _tabController = TabController(
-      length: _tabList.length,
+    _get();
+    tabController = TabController(
+      length: tabList.length,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
@@ -67,7 +66,7 @@ class _VisitorTabPageState extends State<VisitorTabPage>
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (context) => _visitorState)],
+        providers: [ChangeNotifierProvider(create: (context) => visitorState)],
         child: Consumer<VisitorState>(
             builder: (ctx, VisitorState visitorState, child) {
           return visitorState.info != null
@@ -76,15 +75,15 @@ class _VisitorTabPageState extends State<VisitorTabPage>
                     elevation: 1,
                     title: Text(visitorState.info.nickname),
                     bottom: TabBar(
-                      controller: _tabController,
-                      tabs: _tabList
+                      controller: tabController,
+                      tabs: tabList
                           .map((it) => it.tab)
                           .toList(), // <-- total of 2 tabs
                     ),
                   ),
                   body: TabBarView(
-                      controller: _tabController,
-                      children: _tabList.map((it) => it.view).toList()),
+                      controller: tabController,
+                      children: tabList.map((it) => it.view).toList()),
                 )
               : Scaffold(body: Container());
         }));
@@ -92,8 +91,8 @@ class _VisitorTabPageState extends State<VisitorTabPage>
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _visitorState.dispose();
     super.dispose();
+    tabController.dispose();
+//    visitorState.dispose();
   }
 }

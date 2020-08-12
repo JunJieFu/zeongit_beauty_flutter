@@ -15,56 +15,54 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TagState _tagState;
-  bool _loading = true;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  TextEditingController _keywordController = TextEditingController();
+  TagState tagState;
+  bool loading = true;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
+  TextEditingController keywordController = TextEditingController();
 
   Future<void> _listTagTop30() async {
     var result = await TagService.listTagTop30();
-    _tagState.setRecommendTagList(result.data);
+    tagState.setRecommendTagList(result.data);
     setState(() {
-      _loading = false;
+      loading = false;
     });
     return;
   }
 
   _search() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (_) {
-          return SearchResultPage(keyword: _keywordController.text);
-        }));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+      return SearchResultPage(keyword: keywordController.text);
+    }));
   }
 
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (_tagState.recommendTagList == null) {
-        _refreshIndicatorKey.currentState?.show();
+      if (tagState.recommendTagList == null) {
+        refreshIndicatorKey.currentState?.show();
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _tagState = Provider.of<TagState>(context, listen: false);
+    tagState = Provider.of<TagState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           elevation: 1,
           title: TextField(
               autofocus: true,
-              controller: _keywordController,
+              controller: keywordController,
               decoration: InputDecoration(
                 hintText: "搜索网站绘画",
                 border: InputBorder.none,
               ),
               onSubmitted: (text) {
                 _search();
-              }
-          ),
+              }),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
@@ -75,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
           ],
         ),
         body: RefreshIndicator(
-          key: _refreshIndicatorKey,
+          key: refreshIndicatorKey,
           onRefresh: _listTagTop30,
           child: ListView(
             children: <Widget>[
@@ -84,17 +82,16 @@ class _SearchPageState extends State<SearchPage> {
                 child: Wrap(
                     spacing: StyleConfig.gap * 2,
                     runSpacing: -StyleConfig.gap,
-                    children: _tagState.recommendTagList
-                        ?.map((e) =>
-                        ActionChip(
-                            label: Text(e),
-                            onPressed: () {
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (_) {
+                    children: tagState.recommendTagList
+                            ?.map((e) => ActionChip(
+                                label: Text(e),
+                                onPressed: () {
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (_) {
                                     return SearchResultPage(keyword: e);
                                   }));
-                            }))
-                        ?.toList() ??
+                                }))
+                            ?.toList() ??
                         <Widget>[]),
               )
             ],
@@ -102,10 +99,9 @@ class _SearchPageState extends State<SearchPage> {
         ));
   }
 
-
   @override
   void dispose() {
-    _keywordController.dispose();
     super.dispose();
+    keywordController.dispose();
   }
 }

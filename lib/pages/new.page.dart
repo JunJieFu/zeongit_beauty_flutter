@@ -13,32 +13,33 @@ class NewPage extends StatefulWidget {
   _NewPageState createState() => _NewPageState();
 }
 
-class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
-  bool _loading = false;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  PagePictureEntity _page;
-  List<PictureEntity> _list = [];
-  PageableEntity _pageable =
-      PageableEntity(page: 0, size: 16, sort: "createDate,desc");
+class _NewPageState extends State<NewPage>
+    with AutomaticKeepAliveClientMixin {
+  bool loading = false;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
+  PagePictureEntity page;
+  List<PictureEntity> list = [];
+  PageableEntity pageable = PageableEntity();
 
-  Future<void> _refresh() async {
-    _paging(0);
+  Future<void> refresh() async {
+    paging(0);
   }
 
-  Future<void> _paging(int page) async {
-    _pageable.page = page;
-    if (this._loading || (this._page != null && this._page.last)) return;
-    _loading = true;
-    var result = await PictureService.paging(_pageable);
+  Future<void> paging(int pageIndex) async {
+    pageable.page = pageIndex;
+    if (this.loading || (this.page != null && this.page.last)) return;
+    loading = true;
+    var result = await PictureService.paging(pageable);
     setState(() {
-      _page = result.data;
-      if (page == 0) {
-        _list = _page.content;
+      page = result.data;
+      if (pageIndex == 0) {
+        list = page.content;
       } else {
-        _list.addAll(_page.content);
+        list.addAll(page.content);
       }
     });
-    _loading = false;
+    loading = false;
   }
 
   @override
@@ -46,7 +47,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _refreshIndicatorKey.currentState?.show();
+      refreshIndicatorKey.currentState?.show();
     });
   }
 
@@ -57,8 +58,8 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _refresh,
-        child: ListWaterFallWidget(page: _page, list: _list, paging: _paging));
+        key: refreshIndicatorKey,
+        onRefresh: refresh,
+        child: ListWaterFallWidget(page: page, list: list, paging: paging));
   }
 }

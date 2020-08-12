@@ -17,21 +17,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
-  bool _loading = true;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  bool loading = true;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  List<PictureEntity> _recommendList = [];
-  List<PictureEntity> _newList = [];
+  List<PictureEntity> recommendList = [];
+  List<PictureEntity> newList = [];
 
-  Future<void> _refresh() async {
+  Future<void> refresh() async {
     var result = await PictureService.pagingByRecommend(
         PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
     var result2 = await PictureService.paging(
         PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
     setState(() {
-      _recommendList.addAll(result.data.content);
-      _newList.addAll(result2.data.content);
-      _loading = false;
+      recommendList.addAll(result.data.content);
+      newList.addAll(result2.data.content);
+      loading = false;
     });
   }
 
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage>
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _refreshIndicatorKey.currentState?.show();
+      refreshIndicatorKey.currentState?.show();
     });
   }
 
@@ -48,31 +48,21 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-      key: _refreshIndicatorKey,
-      onRefresh: _refresh,
+      key: refreshIndicatorKey,
+      onRefresh: refresh,
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
           ListTile(title: Text("推荐作品")),
-          _PictureList(list: _recommendList),
+          buildPictureList(recommendList),
           ListTile(title: Text("最新作品")),
-          _PictureList(list: _newList)
+          buildPictureList(newList)
         ],
       ),
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
-}
-
-class _PictureList extends StatelessWidget {
-  const _PictureList({Key key, @required this.list}) : super(key: key);
-
-  final List<PictureEntity> list;
-
-  @override
-  Widget build(BuildContext context) {
+  buildPictureList(List<PictureEntity> list) {
     var gap = StyleConfig.listGap;
     var gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, //横轴元素个数
@@ -107,4 +97,7 @@ class _PictureList extends StatelessWidget {
           }),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

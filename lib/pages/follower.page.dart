@@ -14,39 +14,39 @@ class FollowerPage extends StatefulWidget {
 }
 
 class _FollowerPageState extends State<FollowerPage> {
-  bool _loading = false;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  PageUserInfoEntity _page;
-  List<UserInfoEntity> _list = [];
-  PageableEntity _pageable = PageableEntity();
+  bool loading = false;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
+  PageUserInfoEntity page;
+  List<UserInfoEntity> list = [];
+  PageableEntity pageable = PageableEntity();
 
-  Future<void> _refresh() async {
-    _paging(0);
+  Future<void> refresh() async {
+    paging(0);
   }
 
-  Future<void> _paging(int page) async {
-    _pageable.page = page;
-    if (this._loading || (this._page != null && this._page.last)) return;
-    _loading = true;
-    var result = await UserService.pagingFollower(_pageable);
+  Future<void> paging(int pageIndex) async {
+    pageable.page = pageIndex;
+    if (this.loading || (this.page != null && this.page.last)) return;
+    loading = true;
+    var result = await UserService.pagingFollower(pageable);
     setState(() {
-      _page = result.data;
-      if (page == 0) {
-        _list = _page.content;
+      page = result.data;
+      if (pageIndex == 0) {
+        list = page.content;
       } else {
-        _list.addAll(_page.content);
+        list.addAll(page.content);
       }
     });
-    _loading = false;
+    loading = false;
   }
 
   @override
   void initState() {
     super.initState();
-    _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _refreshIndicatorKey.currentState?.show();
+      refreshIndicatorKey.currentState?.show();
     });
   }
 
@@ -55,21 +55,20 @@ class _FollowerPageState extends State<FollowerPage> {
     return Scaffold(
         appBar: AppBar(title: Text("粉丝")),
         body: RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: _refresh,
+            key: refreshIndicatorKey,
+            onRefresh: refresh,
             child: _emptyWidget()));
   }
 
   Widget _emptyWidget() {
-    if (_page != null && _page.empty && _page.first && _page.last) {
+    if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
-        icon: MdiIcons.star_outline,
-        title: "没有作品",
-        text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-        btnDesc: "前往发现"
-      );
+          icon: MdiIcons.star_outline,
+          title: "没有作品",
+          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
+          btnDesc: "前往发现");
     } else {
-      return ListUserWidget(page: _page, list: _list, paging: _paging);
+      return ListUserWidget(page: page, list: list, paging: paging);
     }
   }
 }

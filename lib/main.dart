@@ -31,7 +31,7 @@ _init() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var _hasInit = StorageManager.get(KeyConstant.HAD_INIT) ?? false;
+    var hasInit = StorageManager.get(KeyConstant.HAD_INIT) ?? false;
 
     var info = StorageManager.getJson(KeyConstant.USER_INFO) != null
         ? userInfoEntityFromJson(
@@ -45,7 +45,7 @@ class App extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (context) => FragmentState(hadInit: _hasInit)),
+              create: (context) => FragmentState(hadInit: hasInit)),
           ChangeNotifierProvider(create: (context) => TagState()),
           ChangeNotifierProvider(create: (context) => UserState(info: info))
         ],
@@ -77,6 +77,6 @@ class App extends StatelessWidget {
                   labelColor: StyleConfig.primaryColor,
                   unselectedLabelColor: Colors.black45,
                 )),
-            home: _hasInit ? TabPage() : WelcomePage()));
+            home: hasInit ? TabPage() : WelcomePage()));
   }
 }

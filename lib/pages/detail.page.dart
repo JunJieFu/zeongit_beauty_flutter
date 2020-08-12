@@ -23,15 +23,15 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  bool _loading = true;
+  bool loading = true;
 
-  PictureEntity _picture;
+  PictureEntity picture;
 
   Future<void> _get() async {
     var result = await PictureService.get(widget.id);
     setState(() {
-      _picture = result.data;
-      _loading = false;
+      picture = result.data;
+      loading = false;
     });
     return;
   }
@@ -46,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     var queryData = MediaQuery.of(context);
     var pageGap = StyleConfig.gap * 3;
-    return _picture != null
+    return picture != null
         ? Scaffold(
             body: CustomScrollView(
             slivers: <Widget>[
@@ -61,10 +61,10 @@ class _DetailPageState extends State<DetailPage> {
                 //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
                 floating: false,
                 expandedHeight:
-                    queryData.size.width * _picture.height / _picture.width,
+                    queryData.size.width * picture.height / picture.width,
                 //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
                 flexibleSpace: FlexibleSpaceBar(
-                  background: PictureWidget(_picture.url,
+                  background: PictureWidget(picture.url,
                       style: PictureStyle.specifiedHeight1200,
                       fit: BoxFit.cover),
                   collapseMode: CollapseMode.pin,
@@ -79,10 +79,10 @@ class _DetailPageState extends State<DetailPage> {
                         icon: Icon(Icons.comment),
                       ),
                       CollectIconWidget(
-                          picture: _picture,
+                          picture: picture,
                           callback: (picture, String focus) {
                             setState(() {
-                              _picture.focus = focus;
+                              picture.focus = focus;
                             });
                           }),
                       IconButton(
@@ -99,26 +99,26 @@ class _DetailPageState extends State<DetailPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          TitleWidget(_picture.name),
-                          TextWidget("创建于${_picture.createDate}"),
+                          TitleWidget(picture.name),
+                          TextWidget("创建于${picture.createDate}"),
                           Wrap(
                             children: <Widget>[
                               Wrap(children: <Widget>[
-                                LinkWidget("${_picture.viewAmount}"),
+                                LinkWidget("${picture.viewAmount}"),
                                 TextWidget("人阅读")
                               ]),
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: StyleConfig.gap * 3),
                                   child: Wrap(children: <Widget>[
-                                    LinkWidget("${_picture.likeAmount}"),
+                                    LinkWidget("${picture.likeAmount}"),
                                     TextWidget("人喜欢")
                                   ])),
                             ],
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: pageGap),
-                            child: TextWidget(_picture.introduction),
+                            child: TextWidget(picture.introduction),
                           )
                         ],
                       )),
@@ -135,14 +135,14 @@ class _DetailPageState extends State<DetailPage> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: StyleConfig.gap * 2),
-                            child: Text(_picture.user.nickname),
+                            child: Text(picture.user.nickname),
                           ),
                         ),
                         FollowBtn(
-                          user: _picture.user,
+                          user: picture.user,
                           callback: (user, String focus) {
                             setState(() {
-                              _picture.user.focus = focus;
+                              picture.user.focus = focus;
                             });
                           },
                         )
@@ -164,7 +164,7 @@ class _DetailPageState extends State<DetailPage> {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          _picture?.user,
+          picture?.user,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,
@@ -172,21 +172,21 @@ class _DetailPageState extends State<DetailPage> {
       ),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return VisitorTabPage(id: _picture.user.id);
+          return VisitorTabPage(id: picture.user.id);
         }));
       },
     );
   }
 
   buildTagList(double pageGap, BuildContext context) {
-    if (_picture.tagList != null && _picture.tagList.length > 0) {
+    if (picture.tagList != null && picture.tagList.length > 0) {
       return [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: pageGap),
           child: Wrap(
               spacing: pageGap / 2,
               runSpacing: -pageGap / 2,
-              children: _picture.tagList
+              children: picture.tagList
                       ?.map((e) => ActionChip(
                           label: Text(e),
                           onPressed: () {
