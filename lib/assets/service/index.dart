@@ -19,7 +19,7 @@ class UserService {
     return HttpUtil.get("/userInfo/get");
   }
 
-  static getByTargetId(int targetId) {
+  static Future<ResultEntity<UserInfoEntity>> getByTargetId(int targetId) {
     return HttpUtil.get("/userInfo/get", params: {"targetId": targetId});
   }
 

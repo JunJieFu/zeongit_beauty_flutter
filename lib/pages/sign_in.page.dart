@@ -92,10 +92,9 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   _signIn(BuildContext context, UserState userState) async {
     var result = await UserService.signIn(
         _phoneController.text, _passwordController.text);
-    ResultUtil.check(result).then((value) async {
-      await userState.getInfo();
-      Navigator.maybePop(context);
-    });
+    await ResultUtil.check(result);
+    await userState.getInfo();
+    Navigator.maybePop(context);
   }
 }
 

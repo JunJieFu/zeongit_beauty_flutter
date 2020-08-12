@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
+import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
@@ -23,6 +24,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   bool _loading = true;
+
   PictureEntity _picture;
 
   Future<void> _get() async {
@@ -168,7 +170,11 @@ class _DetailPageState extends State<DetailPage> {
           style: AvatarStyle.small50,
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return VisitorTabPage(id: _picture.user.id);
+        }));
+      },
     );
   }
 

@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
+import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/list_user.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-class FollowingPage extends StatefulWidget {
+class VisitorCollectionPage extends StatefulWidget {
   @override
-  _FollowingPageState createState() => _FollowingPageState();
+  _VisitorCollectionPageState createState() => _VisitorCollectionPageState();
 }
 
-class _FollowingPageState extends State<FollowingPage> {
+class _VisitorCollectionPageState extends State<VisitorCollectionPage>
+    with AutomaticKeepAliveClientMixin {
   bool _loading = false;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
-  PageUserInfoEntity _page;
-  List<UserInfoEntity> _list = [];
+  PagePictureEntity _page;
+  List<PictureEntity> _list = [];
   PageableEntity _pageable = PageableEntity();
+  int _targetId;
 
   Future<void> _refresh() async {
     _paging(0);
@@ -28,7 +32,7 @@ class _FollowingPageState extends State<FollowingPage> {
     _pageable.page = page;
     if (this._loading || (this._page != null && this._page.last)) return;
     _loading = true;
-    var result = await UserService.pagingFollowing(_pageable);
+    var result = await CollectionService.paging(_pageable, targetId: _targetId);
     setState(() {
       _page = result.data;
       if (page == 0) {
@@ -52,24 +56,29 @@ class _FollowingPageState extends State<FollowingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text("关注")),
-        body: RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: _refresh,
-            child: _emptyWidget()));
+    super.build(context);
+    return Consumer<VisitorState>(
+        builder: (ctx, VisitorState visitorState, child) {
+      _targetId = visitorState.info.id;
+      return RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: _refresh,
+          child: _emptyWidget());
+    });
   }
 
   Widget _emptyWidget() {
     if (_page != null && _page.empty && _page.first && _page.last) {
       return TipsPageCardWidget(
-        icon: MdiIcons.star_outline,
-        title: "没有作品",
-        text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-        btnDesc: "前往发现"
-      );
+          icon: MdiIcons.star_outline,
+          title: "没有作品",
+          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
+          btnDesc: "前往发现");
     } else {
-      return ListUserWidget(page: _page, list: _list, paging: _paging);
+      return ListWaterFallWidget(page: _page, list: _list, paging: _paging);
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/follower.page.dart';
+import 'package:zeongitbeautyflutter/pages/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/works.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
@@ -13,8 +14,6 @@ import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
-
-import 'following.page.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key key}) : super(key: key);
@@ -38,7 +37,10 @@ class _UserPageState extends State<UserPage>
     super.build(context);
     return Consumer<UserState>(builder: (ctx, UserState userState, child) {
       if (userState.info == null) {
-        return _Unlisted();
+        return SignInPageCardWidget(
+            icon: MdiIcons.account_outline,
+            title: "您的Zeongit Beauty主页",
+            text: "请先登录，才能进入您的Zeongit Beauty主页。");
       } else {
         return ListView(
           children: [
@@ -118,6 +120,7 @@ class _UserPageState extends State<UserPage>
                             child: Text("取消")),
                         FlatButton(
                             onPressed: () {
+                              userState.logout();
                               Navigator.of(context).pop(this);
                             },
                             child: Text("确定"))
@@ -137,13 +140,12 @@ class _UserPageState extends State<UserPage>
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
-      child: AvatarWidget(userState.info,
-          fit: BoxFit.cover, size: size),
+      child: AvatarWidget(userState.info, fit: BoxFit.cover, size: size),
     );
   }
 
-  List<Widget> buildListTile(IconData icon, String title,
-      GestureTapCallback onTap) {
+  List<Widget> buildListTile(
+      IconData icon, String title, GestureTapCallback onTap) {
     return [
       Divider(height: 1),
       ListTile(
@@ -164,17 +166,5 @@ class _UserPageState extends State<UserPage>
         ),
       )
     ];
-  }
-}
-
-class _Unlisted extends StatelessWidget {
-  _Unlisted({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SignInPageCardWidget(
-        icon: MdiIcons.account_outline,
-        title: "您的Zeongit Beauty主页",
-        text: "请先登录，才能进入您的Zeongit Beauty主页。");
   }
 }
