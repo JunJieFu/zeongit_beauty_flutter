@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
@@ -29,6 +30,8 @@ class FollowBtn extends StatelessWidget {
         key: _btnKey,
         highlightElevation: 0,
         elevation: 0,
+        textColor: Colors.white,
+        color: StyleConfig.primaryColor,
         child: Text(focus ? "已关注" : "关注"),
         onPressed: () async {
           if (_userState.info != null) {

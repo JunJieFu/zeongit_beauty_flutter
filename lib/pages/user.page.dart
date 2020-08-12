@@ -119,6 +119,7 @@ class _UserPageState extends State<UserPage>
                             },
                             child: Text("取消")),
                         FlatButton(
+                            textColor: StyleConfig.primaryColor,
                             onPressed: () {
                               userState.logout();
                               Navigator.of(context).pop(this);

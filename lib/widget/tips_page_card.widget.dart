@@ -41,6 +41,7 @@ class TipsPageCardWidget extends StatelessWidget {
 
     if (btnDesc != null) {
       list.add(OutlineButton(
+          textColor: StyleConfig.primaryColor,
           child: Text(btnDesc),
           borderSide: BorderSide(
             color: StyleConfig.primaryColor,

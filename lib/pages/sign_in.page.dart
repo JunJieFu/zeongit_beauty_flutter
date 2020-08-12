@@ -64,6 +64,8 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                       width: double.infinity,
                       height: 45,
                       child: RaisedButton(
+                        textColor: Colors.white,
+                        color: StyleConfig.primaryColor,
                         child: Text("登录"),
                         onPressed: () {
                           signIn(context, _userState);
@@ -90,8 +92,8 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   }
 
   signIn(BuildContext context, UserState userState) async {
-    var result = await UserService.signIn(
-        phoneController.text, passwordController.text);
+    var result =
+        await UserService.signIn(phoneController.text, passwordController.text);
     await ResultUtil.check(result);
     await userState.getInfo();
     Navigator.maybePop(context);

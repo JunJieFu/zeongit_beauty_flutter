@@ -64,9 +64,6 @@ class App extends StatelessWidget {
                     brightness: chipTheme.brightness,
                     elevation: 0,
                     pressElevation: 0),
-                buttonTheme: ButtonThemeData(
-                    buttonColor: StyleConfig.primaryColor,
-                    textTheme: ButtonTextTheme.primary),
                 platform: TargetPlatform.android,
                 scaffoldBackgroundColor: Colors.white,
                 primaryColor: Colors.white,

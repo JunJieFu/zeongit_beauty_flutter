@@ -6,7 +6,7 @@ const _listGap = _gap * 3;
 
 
 class StyleConfig {
-  static const primaryColor = Color(0xFF4CAF50);
+  static const primaryColor = Color(0xFF0B99FF);
   static const accentColor = Color(0xFF82B1FF);
   static const infoColor = Color(0xFF0B99FF);
   static const successColor = Color(0xFF4CAF50);

@@ -39,6 +39,7 @@ void popupSignIn(String title, String text, BuildContext context,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: OutlineButton(
+                        textColor: StyleConfig.primaryColor,
                         child: Text("登录"),
                         borderSide: BorderSide(
                           color: StyleConfig.primaryColor,
