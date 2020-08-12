@@ -28,7 +28,7 @@ class _FootprintPageState extends State<FootprintPage> {
     pageable.page = pageIndex;
     if (this.loading || (this.page != null && this.page.last)) return;
     loading = true;
-    var result = await CollectionService.paging(pageable);
+    var result = await FootprintService.paging(pageable);
     setState(() {
       page = result.data;
       if (pageIndex == 0) {
@@ -53,7 +53,7 @@ class _FootprintPageState extends State<FootprintPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("收藏夹")),
+        appBar: AppBar(title: Text("足迹")),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,

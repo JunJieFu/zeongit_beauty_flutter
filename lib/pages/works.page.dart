@@ -18,7 +18,7 @@ class _WorksPageState extends State<WorksPage> {
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
   PagePictureEntity page;
   List<PictureEntity> list = [];
-  PageableEntity pageable = PageableEntity();
+  PageableEntity pageable = PageableEntity(sort: "lastModifiedDate,desc");
 
   Future<void> refresh() async {
     paging(0);
@@ -28,7 +28,7 @@ class _WorksPageState extends State<WorksPage> {
     pageable.page = pageIndex;
     if (this.loading || (this.page != null && this.page.last)) return;
     loading = true;
-    var result = await CollectionService.paging(pageable);
+    var result = await WorksService.paging(pageable);
     setState(() {
       page = result.data;
       if (pageIndex == 0) {
@@ -63,9 +63,7 @@ class _WorksPageState extends State<WorksPage> {
   Widget emptyWidget() {
     if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.image_outline,
-          title: "没有作品",
-          text: "可以上传一些作品到我们哦。");
+          icon: MdiIcons.image_outline, title: "没有作品", text: "可以上传一些作品到我们哦。");
     } else {
       return ListWaterFallWidget(page: page, list: list, paging: paging);
     }

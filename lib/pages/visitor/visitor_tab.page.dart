@@ -8,6 +8,7 @@ import 'package:zeongitbeautyflutter/pages/visitor/visitor_follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_following.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_home.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_works.page.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 
@@ -76,9 +77,9 @@ class _VisitorTabPageState extends State<VisitorTabPage>
                     title: Text(visitorState.info.nickname),
                     bottom: TabBar(
                       controller: tabController,
-                      tabs: tabList
-                          .map((it) => it.tab)
-                          .toList(), // <-- total of 2 tabs
+                      tabs: tabList.map((it) => it.tab).toList(), //
+                      indicatorColor:
+                          StyleConfig.primaryColor, // <-- total of 2 tabs
                     ),
                   ),
                   body: TabBarView(

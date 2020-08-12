@@ -64,7 +64,7 @@ class _FollowerPageState extends State<FollowerPage> {
     if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.account_heart_outline,
-          title: "没有关注");
+          title: "没有粉丝");
     } else {
       return ListUserWidget(page: page, list: list, paging: paging);
     }
