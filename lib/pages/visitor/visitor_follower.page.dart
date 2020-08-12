@@ -7,7 +7,7 @@ import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/list_user.widget.dart';
+import 'package:zeongitbeautyflutter/widget/list_user.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class VisitorFollowerPage extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search.page.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/list_waterfall.widget.dart';
+import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class SearchResultPage extends StatefulWidget {

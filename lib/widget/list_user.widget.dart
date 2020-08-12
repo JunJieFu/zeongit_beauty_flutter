@@ -4,9 +4,10 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 
-import 'avatar.widget.dart';
+
 
 class ListUserWidget extends StatefulWidget {
   ListUserWidget({Key key, this.page, this.list, this.paging})

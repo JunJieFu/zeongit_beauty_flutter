@@ -29,7 +29,6 @@ _init() async {
 }
 
 class App extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     var _hasInit = StorageManager.get(KeyConstant.HAD_INIT) ?? false;
