@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
@@ -32,7 +33,7 @@ class FollowBtn extends StatelessWidget {
         onPressed: () async {
           if (_userState.info != null) {
             var result = await UserService.follow(user.id);
-            //TODO 处理异常
+            await ResultUtil.check(result);
             callback(user, result.data);
           } else {
             popupSignIn("想要关注这个画师？", "请先登录，然后才能成为该画师的粉丝。", context, _btnKey);

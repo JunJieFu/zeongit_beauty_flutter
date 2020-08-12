@@ -19,8 +19,8 @@ class VisitorState extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateInfo() {
-    _info.nickname = "123";
+  focus(String focus) {
+    info.focus = focus;
     notifyListeners();
   }
 }
