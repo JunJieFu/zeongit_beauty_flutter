@@ -73,8 +73,7 @@ class _VisitorCollectionPageState extends State<VisitorCollectionPage>
       return TipsPageCardWidget(
           icon: MdiIcons.star_outline,
           title: "没有作品",
-          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-          btnDesc: "前往发现");
+          text: "您可以前往发现浏览一些系统推荐给您的作品哦。");
     } else {
       return ListWaterFallWidget(page: page, list: list, paging: paging);
     }

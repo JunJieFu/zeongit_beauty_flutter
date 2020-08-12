@@ -71,10 +71,9 @@ class _VisitorWorksPageState extends State<VisitorWorksPage>
   Widget _emptyWidget() {
     if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.star_outline,
+          icon: MdiIcons.image_outline,
           title: "没有作品",
-          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-          btnDesc: "前往发现");
+          text: "可以上传一些作品到我们哦。");
     } else {
       return ListWaterFallWidget(page: page, list: list, paging: paging);
     }

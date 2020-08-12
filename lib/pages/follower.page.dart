@@ -57,16 +57,14 @@ class _FollowerPageState extends State<FollowerPage> {
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,
-            child: _emptyWidget()));
+            child: emptyWidget()));
   }
 
-  Widget _emptyWidget() {
+  Widget emptyWidget() {
     if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.star_outline,
-          title: "没有作品",
-          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-          btnDesc: "前往发现");
+          icon: MdiIcons.account_heart_outline,
+          title: "没有关注");
     } else {
       return ListUserWidget(page: page, list: list, paging: paging);
     }

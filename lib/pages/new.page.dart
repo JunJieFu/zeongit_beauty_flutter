@@ -4,7 +4,9 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
+import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class NewPage extends StatefulWidget {
   NewPage({Key key}) : super(key: key);
@@ -60,6 +62,17 @@ class _NewPageState extends State<NewPage>
     return RefreshIndicator(
         key: refreshIndicatorKey,
         onRefresh: refresh,
-        child: ListWaterFallWidget(page: page, list: list, paging: paging));
+        child: emptyWidget());
+  }
+
+  Widget emptyWidget() {
+    if (page != null && page.empty && page.first && page.last) {
+      return TipsPageCardWidget(
+          icon: MdiIcons.alpha_n_box_outline,
+          title: "没有作品",
+          text: "难道是系统出现什么问题了。");
+    } else {
+      return ListWaterFallWidget(page: page, list: list, paging: paging);
+    }
   }
 }

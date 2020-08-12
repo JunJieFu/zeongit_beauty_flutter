@@ -53,7 +53,7 @@ class _WorksPageState extends State<WorksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("收藏夹")),
+        appBar: AppBar(title: Text("作品")),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,
@@ -63,10 +63,9 @@ class _WorksPageState extends State<WorksPage> {
   Widget emptyWidget() {
     if (page != null && page.empty && page.first && page.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.star_outline,
+          icon: MdiIcons.image_outline,
           title: "没有作品",
-          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-          btnDesc: "前往发现");
+          text: "可以上传一些作品到我们哦。");
     } else {
       return ListWaterFallWidget(page: page, list: list, paging: paging);
     }

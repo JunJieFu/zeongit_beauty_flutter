@@ -34,8 +34,11 @@ class TipsPageCardWidget extends StatelessWidget {
         child: Icon(icon, size: 100),
       ),
       CardTitleWidget(child: TitleWidget(title)),
-      CardTextWidget(child: TextWidget(text))
     ];
+    if (text != null) {
+      list.add(CardTextWidget(child: TextWidget(text)));
+    }
+
     if (btnDesc != null) {
       list.add(OutlineButton(
           child: Text(btnDesc),
