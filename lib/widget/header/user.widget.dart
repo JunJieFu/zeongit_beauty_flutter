@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-
-import '../popup.fun.dart';
+import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
 class UserWidget extends StatelessWidget {
   UserWidget({Key key}) : super(key: key);

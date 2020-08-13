@@ -1,4 +1,4 @@
-import '../pageable_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 
 class PageBaseEntity<T> {
   List<T> content;

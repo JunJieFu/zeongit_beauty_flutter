@@ -8,7 +8,6 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
-
 class ListWaterFallWidget extends StatefulWidget {
   ListWaterFallWidget({Key key, this.page, this.list, this.paging})
       : super(key: key);
@@ -31,7 +30,7 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent -
-          _scrollController.position.pixels <
+              _scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
           widget.paging(widget.page.pageable.pageNumber + 2);

@@ -4,7 +4,6 @@ import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 
-
 class HttpUtil {
   static Future<ResultEntity<T>> get<T>(String url,
       {Map<String, dynamic> params, String host}) async {

@@ -8,8 +8,7 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-import '../popup.fun.dart';
+import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
 class FollowIconBtn extends StatelessWidget {
   FollowIconBtn({Key key, @required this.user, @required this.callback})

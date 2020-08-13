@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/pages/search.page.dart';
 
-import 'header/user.widget.dart';
-
 class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   HeaderWidget({Key key, this.title}) : super(key: key);
 

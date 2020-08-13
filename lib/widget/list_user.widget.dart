@@ -7,8 +7,6 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 
-
-
 class ListUserWidget extends StatefulWidget {
   ListUserWidget({Key key, this.page, this.list, this.paging})
       : super(key: key);

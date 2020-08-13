@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/pages/sign_in.page.dart';
-
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/card.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';

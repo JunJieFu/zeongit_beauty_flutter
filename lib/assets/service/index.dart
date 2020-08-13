@@ -5,7 +5,6 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
-
 import 'package:zeongitbeautyflutter/plugins/util/http.util.dart';
 
 class UserService {

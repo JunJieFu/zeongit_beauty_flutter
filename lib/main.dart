@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart';
 import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
@@ -10,8 +11,6 @@ import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-import 'assets/entity/user_info_entity.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

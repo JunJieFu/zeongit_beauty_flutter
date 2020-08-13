@@ -8,8 +8,7 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-import '../popup.fun.dart';
+import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
 class CollectIconWidget extends StatelessWidget {
   CollectIconWidget({Key key, @required this.picture, @required this.callback})
@@ -28,11 +27,8 @@ class CollectIconWidget extends StatelessWidget {
 
     return IconButton(
         key: _btnKey,
-        icon: Icon(focus
-            ? Icons.star
-            : Icons.star_border,
-          color: focus ? StyleConfig.errorColor : null
-        ),
+        icon: Icon(focus ? Icons.star : Icons.star_border,
+            color: focus ? StyleConfig.errorColor : null),
         onPressed: () async {
           if (_userState.info != null) {
             var result = await CollectionService.focus(picture.id);
