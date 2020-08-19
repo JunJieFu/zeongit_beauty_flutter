@@ -32,7 +32,7 @@ dependencies:
   provider: ^4.0.0
   webview_flutter: 0.3.22+1
 
-  flutter_svg: 0.18.0
+  flutter_svg: any
   waterfall_flow: 2.0.2
   cached_network_image: ^2.2.0+1
   fluttertoast: ^7.0.2

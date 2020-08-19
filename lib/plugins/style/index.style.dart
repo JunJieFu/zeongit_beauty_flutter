@@ -10,7 +10,7 @@ class StyleConfig {
   static const infoColor = Color(0xFF0B99FF);
   static const successColor = Color(0xFF4CAF50);
   static const warningColor = Color(0xFFFB8C00);
-  static const errorColor = Color(0xFFff5252);
+  static const errorColor = Color(0xFFFF5252);
   static const titleColor = Colors.black87;
   static const textColor = Colors.black54;
   static const lineColor = Colors.black26;
