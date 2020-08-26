@@ -4,6 +4,7 @@ import 'package:zeongitbeautyflutter/pages/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/footprint.page.dart';
+import 'package:zeongitbeautyflutter/pages/setting.page.dart';
 import 'package:zeongitbeautyflutter/pages/works.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -103,31 +104,13 @@ class _UserPageState extends State<UserPage>
               }));
             }),
             ...buildListTile(MdiIcons.upload_outline, "上传", () {}),
-            ...buildListTile(MdiIcons.cog_outline, "设置", () {}),
+            ...buildListTile(MdiIcons.cog_outline, "设置", () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return SettingPage();
+              }));
+            }),
             ...buildListTile(MdiIcons.logout, "退出", () {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return AlertDialog(
-                      title: Text("提示"),
-                      content: Text("您确定退出 Zeongit 吗？"),
-                      actions: <Widget>[
-                        FlatButton(
-                            textColor: StyleConfig.warningColor,
-                            onPressed: () {
-                              Navigator.of(context).pop(this);
-                            },
-                            child: Text("取消")),
-                        FlatButton(
-                            textColor: StyleConfig.primaryColor,
-                            onPressed: () {
-                              userState.logout();
-                              Navigator.of(context).pop(this);
-                            },
-                            child: Text("确定"))
-                      ],
-                    );
-                  });
+              signOut(userState);
             }),
             Divider(),
           ],
@@ -167,5 +150,31 @@ class _UserPageState extends State<UserPage>
         ),
       )
     ];
+  }
+
+   signOut(userState){
+     showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Text("您确定退出 Zeongit 吗？"),
+            actions: <Widget>[
+              FlatButton(
+                  textColor: StyleConfig.warningColor,
+                  onPressed: () {
+                    Navigator.of(context).pop(this);
+                  },
+                  child: Text("取消")),
+              FlatButton(
+                  textColor: StyleConfig.primaryColor,
+                  onPressed: () {
+                    userState.logout();
+                    Navigator.of(context).pop(this);
+                  },
+                  child: Text("确定"))
+            ],
+          );
+        });
   }
 }

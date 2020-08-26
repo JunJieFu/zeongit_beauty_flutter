@@ -1,8 +1,11 @@
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/http.util.dart';
@@ -134,12 +137,61 @@ class FootprintService {
 }
 
 class TagService {
-  static Future<ResultEntity<List<String>>> listTagTop30() async {
+  static Future<ResultEntity<List<TagFrequencyEntity>>> listTagTop30() async {
     return HttpUtil.get("/tag/listTagTop30");
   }
 
   static listTagFrequencyByUserId(int targetId) {
     return HttpUtil.get("/tag/listTagFrequencyByUserId",
         params: {"targetId": targetId});
+  }
+}
+
+class UserBlackHoleService {
+  static Future<ResultEntity<String>> block(String targetId) async {
+    return HttpUtil.get("/userBlackHole/block", params: {"targetId": targetId});
+  }
+
+  static Future<ResultEntity<BlackHoleEntity>> get(int targetId) async {
+    return HttpUtil.get("/userBlackHole/get", params: {"targetId": targetId});
+  }
+
+  static Future<ResultEntity<PageUserBlackHoleEntity>> paging(
+      PageableEntity pageable) {
+    var _ = pageable.toJson();
+    _["page"]--;
+    return HttpUtil.get("/userBlackHole/paging", params: _);
+  }
+}
+
+class PictureBlackHoleService {
+  static Future<ResultEntity<String>> block(String targetId) async {
+    return HttpUtil.get("/pictureBlackHole/block",
+        params: {"targetId": targetId});
+  }
+
+  static Future<ResultEntity<BlackHoleEntity>> get(int targetId) async {
+    return HttpUtil.get("/pictureBlackHole/get",
+        params: {"targetId": targetId});
+  }
+
+  static Future<ResultEntity<PagePictureBlackHoleEntity>> paging(
+      PageableEntity pageable) {
+    var _ = pageable.toJson();
+    _["page"]--;
+    return HttpUtil.get("/pictureBlackHole/paging", params: _);
+  }
+}
+
+class TagBlackHoleService {
+  static Future<ResultEntity<String>> block(String targetId) async {
+    return HttpUtil.get("/tagBlackHole/block", params: {"targetId": targetId});
+  }
+
+  static Future<ResultEntity<PageTagBlackHoleEntity>> paging(
+      PageableEntity pageable) {
+    var _ = pageable.toJson();
+    _["page"]--;
+    return HttpUtil.get("/tagBlackHole/paging", params: _);
   }
 }

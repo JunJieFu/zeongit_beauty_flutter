@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
-import 'package:zeongitbeautyflutter/pages/detail.page.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';

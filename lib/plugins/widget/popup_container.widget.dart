@@ -74,12 +74,16 @@ class PopupContainerRoute extends PopupRoute {
   String get barrierLabel => null;
 
   @override
-  Duration get transitionDuration => Duration(milliseconds: 0);
+  Duration get transitionDuration => Duration(milliseconds: 200);
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    return _child;
+    return FadeTransition(
+      opacity: Tween(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn)),
+      child: _child,
+    );
   }
 
   @override
@@ -93,26 +97,11 @@ class PopupContainer extends StatefulWidget {
   const PopupContainer({
     Key key,
     this.child,
-    this.duration = const Duration(milliseconds: 300),
-    this.onForward,
-    this.onDismissed,
-    this.onReverse,
-    this.onCompleted,
     this.targetRenderKey,
     this.offset = Offset.zero,
   }) : super(key: key);
 
   final Widget child;
-
-  final Duration duration;
-
-  final Function onForward;
-
-  final Function onDismissed;
-
-  final Function onReverse;
-
-  final Function onCompleted;
 
   final GlobalKey targetRenderKey;
 
@@ -124,50 +113,19 @@ class PopupContainer extends StatefulWidget {
 
 class _PopupContainerState extends State<PopupContainer>
     with SingleTickerProviderStateMixin {
-  Animation<Offset> animation;
-  AnimationController _controller;
-
   ///收起弹框
   ///popup window dismiss
   Future _dismiss(BuildContext context) async {
-    await _controller.reverse();
     Navigator.pop(context);
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: widget.duration, vsync: this);
-    _controller.addStatusListener((status) {
-      switch (status) {
-        case AnimationStatus.forward:
-          if (widget.onForward != null) {
-            widget.onForward();
-          }
-          break;
-        case AnimationStatus.dismissed:
-          if (widget.onDismissed != null) {
-            widget.onDismissed();
-          }
-          break;
-        case AnimationStatus.reverse:
-          if (widget.onReverse != null) {
-            widget.onReverse();
-          }
-          break;
-        case AnimationStatus.completed:
-          if (widget.onCompleted != null) {
-            widget.onCompleted();
-          }
-          break;
-      }
-    });
-    _controller.forward();
   }
 
   @override
   dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -208,10 +166,7 @@ class _PopupContainerState extends State<PopupContainer>
                   position,
                   Directionality.of(widget.targetRenderKey.currentContext),
                 ),
-                child: FadeTransition(
-                  opacity: Tween(begin: 0.0, end: 1.0).animate(_controller),
-                  child: widget.child,
-                ),
+                child: widget.child,
               )
             ],
           ),
@@ -222,4 +177,3 @@ class _PopupContainerState extends State<PopupContainer>
         });
   }
 }
-

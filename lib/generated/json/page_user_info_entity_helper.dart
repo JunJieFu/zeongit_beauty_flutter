@@ -1,7 +1,5 @@
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/base/page_base_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 
 pageUserInfoEntityFromJson(PageUserInfoEntity data, Map<String, dynamic> json) {

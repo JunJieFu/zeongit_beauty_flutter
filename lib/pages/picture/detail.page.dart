@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
 import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
@@ -77,6 +78,7 @@ class _DetailPageState extends State<DetailPage> {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(Icons.comment),
+                        onPressed: () {},
                       ),
                       CollectIconWidget(
                           picture: picture,
@@ -87,9 +89,11 @@ class _DetailPageState extends State<DetailPage> {
                           }),
                       IconButton(
                         icon: Icon(Icons.share),
+                        onPressed: () {},
                       ),
-                      IconButton(
-                        icon: Icon(Icons.more_vert),
+                      MoreBtn(
+                        picture: picture,
+                        callback: () {},
                       )
                     ],
                   ),

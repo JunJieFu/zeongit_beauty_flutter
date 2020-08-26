@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 
 class TagState extends ChangeNotifier {
-  List<String> _recommendTagList;
+  List<TagFrequencyEntity> _recommendTagList;
 
-  List<String> get recommendTagList => _recommendTagList;
+  List<TagFrequencyEntity> get recommendTagList => _recommendTagList;
 
-  setRecommendTagList(recommendTagList) {
+  setRecommendTagList(List<TagFrequencyEntity> recommendTagList) {
     this._recommendTagList = recommendTagList;
     notifyListeners();
   }

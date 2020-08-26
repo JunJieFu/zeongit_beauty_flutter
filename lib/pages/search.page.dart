@@ -84,11 +84,11 @@ class _SearchPageState extends State<SearchPage> {
                     runSpacing: -StyleConfig.gap,
                     children: tagState.recommendTagList
                             ?.map((e) => ActionChip(
-                                label: Text(e),
+                                label: Text(e.name),
                                 onPressed: () {
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (_) {
-                                    return SearchResultPage(keyword: e);
+                                    return SearchResultPage(keyword: e.name);
                                   }));
                                 }))
                             ?.toList() ??
