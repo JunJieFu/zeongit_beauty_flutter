@@ -31,7 +31,7 @@ class MoreBtn extends StatelessWidget {
                 targetRenderKey: _btnKey,
                 child: Card(
                   child: Container(
-                    width: 250,
+                    width: 150,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[

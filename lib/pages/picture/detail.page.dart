@@ -5,6 +5,7 @@ import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
 import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
@@ -58,6 +59,14 @@ class _DetailPageState extends State<DetailPage> {
                     Navigator.maybePop(context);
                   },
                 ),
+                actions: <Widget>[
+                  IconButton(
+                    icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.maybePop(context);
+                    },
+                  )
+                ],
                 elevation: 1,
                 //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
                 floating: false,
@@ -77,7 +86,7 @@ class _DetailPageState extends State<DetailPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       IconButton(
-                        icon: Icon(Icons.comment),
+                        icon: Icon(MdiIcons.message_outline),
                         onPressed: () {},
                       ),
                       CollectIconWidget(
@@ -88,7 +97,7 @@ class _DetailPageState extends State<DetailPage> {
                             });
                           }),
                       IconButton(
-                        icon: Icon(Icons.share),
+                        icon: Icon(MdiIcons.share_outline),
                         onPressed: () {},
                       ),
                       MoreBtn(
