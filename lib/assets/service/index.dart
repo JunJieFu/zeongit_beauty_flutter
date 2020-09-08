@@ -58,11 +58,20 @@ class PictureService {
   }
 
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {String tagList, int targetId}) {
+      {String tagList,
+      int targetId,
+      String name,
+      bool precise,
+      DateTime startDate,
+      DateTime endDate}) {
     var _ = pageable.toJson();
     _["page"]--;
     _["tagList"] = tagList;
     _["targetId"] = targetId;
+    _["name"] = name;
+    _["precise"] = precise;
+    _["startDate"] = startDate;
+    _["endDate"] = endDate;
     return HttpUtil.get("/picture/paging", params: _);
   }
 

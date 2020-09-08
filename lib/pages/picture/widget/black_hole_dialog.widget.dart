@@ -28,7 +28,6 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
     return FutureBuilder(
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot<BlackHoleEntity> snapshot) {
-        print(snapshot);
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
             var user = snapshot.data.user;

@@ -4,7 +4,9 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/search.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_tune.page.dart';
+import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
@@ -24,6 +26,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   List<PictureEntity> list = [];
   PageableEntity pageable =
       PageableEntity(page: 0, size: 16, sort: "createDate,desc");
+  SearchTuneParams tune = SearchTuneParams();
 
   Future<void> _refresh() async {
     paging(0);
@@ -31,9 +34,15 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last)) return;
+    if (this.loading || (this.page != null && this.page.last && pageIndex != 0))
+      return;
     loading = true;
-    var result = await PictureService.paging(pageable, tagList: widget.keyword);
+    var result = await PictureService.paging(pageable,
+        tagList: widget.keyword,
+        name: tune.name,
+        precise: tune.precise,
+        startDate: tune.date.startDate,
+        endDate: tune.date.endDate);
     setState(() {
       page = result.data;
       if (pageIndex == 0) {
@@ -61,6 +70,19 @@ class _SearchResultPageState extends State<SearchResultPage> {
         appBar: AppBar(
           title: Text(widget.keyword),
           actions: <Widget>[
+            IconButton(
+              icon: Icon(MdiIcons.tune),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return SearchTunePage(
+                      params: tune,
+                      callback: (SearchTuneParams _) {
+                        tune = _;
+                        paging(0);
+                      });
+                }));
+              },
+            ),
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {

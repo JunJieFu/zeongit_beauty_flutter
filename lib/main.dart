@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
@@ -27,6 +30,13 @@ _init() async {
   runApp(App());
 }
 
+const List<Locale> an = [
+  const Locale('zh', 'CH')
+];
+const List<Locale> ios = [
+  const Locale('en', 'US')
+];
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,30 +59,38 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => UserState(info: info))
         ],
         child: MaterialApp(
-            theme: ThemeData(
-                chipTheme: ChipThemeData(
-                    backgroundColor: chipTheme.backgroundColor,
-                    disabledColor: chipTheme.disabledColor,
-                    selectedColor: chipTheme.selectedColor,
-                    secondarySelectedColor: chipTheme.secondarySelectedColor,
-                    labelPadding: chipTheme.labelPadding,
-                    padding: chipTheme.padding,
-                    shape: chipTheme.shape,
-                    labelStyle: chipTheme.labelStyle,
-                    secondaryLabelStyle: chipTheme.secondaryLabelStyle,
-                    brightness: chipTheme.brightness,
-                    elevation: 0,
-                    pressElevation: 0),
-                platform: TargetPlatform.android,
-                scaffoldBackgroundColor: Colors.white,
-                primaryColor: Colors.white,
-                primaryColorBrightness: Brightness.light,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-                appBarTheme: AppBarTheme(elevation: 1),
-                tabBarTheme: TabBarTheme(
-                  labelColor: StyleConfig.primaryColor,
-                  unselectedLabelColor: Colors.black45,
-                )),
-            home: hasInit ? TabPage() : WelcomePage()));
+          theme: ThemeData(
+              chipTheme: ChipThemeData(
+                  backgroundColor: chipTheme.backgroundColor,
+                  disabledColor: chipTheme.disabledColor,
+                  selectedColor: chipTheme.selectedColor,
+                  secondarySelectedColor: chipTheme.secondarySelectedColor,
+                  labelPadding: chipTheme.labelPadding,
+                  padding: chipTheme.padding,
+                  shape: chipTheme.shape,
+                  labelStyle: chipTheme.labelStyle,
+                  secondaryLabelStyle: chipTheme.secondaryLabelStyle,
+                  brightness: chipTheme.brightness,
+                  elevation: 0,
+                  pressElevation: 0),
+              platform: TargetPlatform.android,
+              scaffoldBackgroundColor: Colors.white,
+              primaryColor: Colors.white,
+              primaryColorBrightness: Brightness.light,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              appBarTheme: AppBarTheme(elevation: 1),
+              tabBarTheme: TabBarTheme(
+                labelColor: StyleConfig.primaryColor,
+                unselectedLabelColor: Colors.black45,
+              )),
+          home: hasInit ? TabPage() : WelcomePage(),
+          localizationsDelegates: [
+            // ... app-specific localization delegate[s] here
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: Platform.isIOS ? ios : an,
+          locale: Locale('zh'),
+        ));
   }
 }

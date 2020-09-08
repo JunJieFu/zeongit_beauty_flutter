@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
-import 'package:zeongitbeautyflutter/pages/search_result.page.dart';
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/pages/search/search_result.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -12,6 +13,7 @@ import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/shadow_icon.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 
@@ -48,6 +50,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     var queryData = MediaQuery.of(context);
     var pageGap = StyleConfig.gap * 3;
+    var userState = Provider.of<UserState>(context, listen: false);
     return picture != null
         ? Scaffold(
             body: CustomScrollView(
@@ -59,14 +62,17 @@ class _DetailPageState extends State<DetailPage> {
                     Navigator.maybePop(context);
                   },
                 ),
-                actions: <Widget>[
-                  IconButton(
-                    icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
-                    onPressed: () {
-                      Navigator.maybePop(context);
-                    },
-                  )
-                ],
+                actions: picture.user.id == userState.info.id
+                    ? <Widget>[
+                        IconButton(
+                          icon: ShadowIconWidget(MdiIcons.image_edit_outline,
+                              color: Colors.white),
+                          onPressed: () {
+                            Navigator.maybePop(context);
+                          },
+                        )
+                      ]
+                    : [],
                 elevation: 1,
                 //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
                 floating: false,

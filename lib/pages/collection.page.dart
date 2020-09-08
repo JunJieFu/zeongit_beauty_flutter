@@ -26,7 +26,7 @@ class _CollectionPageState extends State<CollectionPage> {
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last)) return;
+    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
     loading = true;
     var result = await CollectionService.paging(pageable);
     setState(() {
