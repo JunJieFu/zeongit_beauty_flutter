@@ -157,8 +157,8 @@ class TagService {
 }
 
 class UserBlackHoleService {
-  static Future<ResultEntity<String>> block(String targetId) async {
-    return HttpUtil.get("/userBlackHole/block", params: {"targetId": targetId});
+  static Future<ResultEntity<String>> block(int targetId) async {
+    return HttpUtil.post("/userBlackHole/block", params: {"targetId": targetId});
   }
 
   static Future<ResultEntity<BlackHoleEntity>> get(int targetId) async {
@@ -175,7 +175,7 @@ class UserBlackHoleService {
 
 class PictureBlackHoleService {
   static Future<ResultEntity<String>> block(String targetId) async {
-    return HttpUtil.get("/pictureBlackHole/block",
+    return HttpUtil.post("/pictureBlackHole/block",
         params: {"targetId": targetId});
   }
 
@@ -193,8 +193,8 @@ class PictureBlackHoleService {
 }
 
 class TagBlackHoleService {
-  static Future<ResultEntity<String>> block(String targetId) async {
-    return HttpUtil.get("/tagBlackHole/block", params: {"targetId": targetId});
+  static Future<ResultEntity<String>> block(String name) async {
+    return HttpUtil.post("/tagBlackHole/block", params: {"name": name});
   }
 
   static Future<ResultEntity<PageTagBlackHoleEntity>> paging(

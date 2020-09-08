@@ -27,3 +27,7 @@ const GenderValues = {
 enum PrivacyState { PUBLIC, PRIVATE }
 
 const PrivacyStateValues = {"PUBLIC": "公开", "PRIVATE": "隐藏"};
+
+enum BlockState { NORMAL, SHIELD }
+
+const BlockStateValues = {"NORMAL": "正常", "PRIVATE": "屏蔽"};

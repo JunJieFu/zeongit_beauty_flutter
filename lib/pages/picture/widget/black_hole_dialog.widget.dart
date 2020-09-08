@@ -5,6 +5,8 @@ import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/black_hole_avatar.widget.dart';
+import 'package:zeongitbeautyflutter/widget/btn/block_tag_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
 
 class BlackHoleDialogWidget extends StatefulWidget {
   BlackHoleDialogWidget({Key key, @required this.id}) : super(key: key);
@@ -16,8 +18,6 @@ class BlackHoleDialogWidget extends StatefulWidget {
 }
 
 class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
-  Future<BlackHoleEntity> data;
-
   Future<BlackHoleEntity> fetchData() async {
     await Future.delayed(Duration(milliseconds: 500));
     return (await PictureBlackHoleService.get(widget.id)).data;
@@ -37,7 +37,7 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
               children: <Widget>[
                 Container(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     width: MediaQuery.of(context).size.width,
                     child: Flex(
                       direction: Axis.horizontal,
@@ -51,6 +51,13 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
                             child: Text(user.nickname),
                           ),
                         ),
+                        BlockUserIconBtnWidget(
+                            user: user,
+                            callback: (UserBlackHoleEntity result, String state) {
+                              setState(() {
+                                result.state = state;
+                              });
+                            })
                       ],
                     )),
                 Divider(),
@@ -70,21 +77,28 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
   List<Padding> buildTagList(List<TagBlackHoleEntity> tagList) {
     return tagList
         .map((e) => Padding(
-              padding: EdgeInsets.all(StyleConfig.gap * 3),
-              child: Flex(
-                direction: Axis.horizontal,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-                      child: Text(e.name),
-                    ),
-                  ),
-                ],
-              ),
-            ))
+      padding: EdgeInsets.all(StyleConfig.gap * 3),
+      child: Flex(
+        direction: Axis.horizontal,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding:
+              EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+              child: Text(e.name),
+            ),
+          ),
+          BlockTagIconBtnWidget(
+              tag: e,
+              callback: (TagBlackHoleEntity tag, String state) {
+                setState(() {
+                  tag.state = state;
+                });
+              })
+        ],
+      ),
+    ))
         .toList();
   }
 

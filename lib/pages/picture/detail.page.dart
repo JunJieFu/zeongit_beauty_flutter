@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
-import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/pages/search/search_result.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -16,6 +15,8 @@ import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
+
+import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/pages/search/search_result.page.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -95,7 +96,7 @@ class _DetailPageState extends State<DetailPage> {
                         icon: Icon(MdiIcons.message_outline),
                         onPressed: () {},
                       ),
-                      CollectIconWidget(
+                      CollectIconBtnWidget(
                           picture: picture,
                           callback: (picture, String focus) {
                             setState(() {
