@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 
@@ -8,7 +9,11 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text("设置")),
         body: ListView(children: <Widget>[
-          ...buildListTile(MdiIcons.eye_off_outline, "屏蔽设置", () {}),
+          ...buildListTile(MdiIcons.eye_off_outline, "屏蔽设置", () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return BlackHoleTabPage();
+            }));
+          }),
           Divider(height: 1),
         ]));
   }

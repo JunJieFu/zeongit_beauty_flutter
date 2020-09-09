@@ -35,7 +35,7 @@ userBlackHoleEntityFromJson(UserBlackHoleEntity data, Map<String, dynamic> json)
 		data.id = json['id']?.toInt();
 	}
 	if (json['avatarUrl'] != null) {
-		data.avatarUrl = json['avatarUrl'];
+		data.avatarUrl = json['avatarUrl']?.toString();
 	}
 	if (json['nickname'] != null) {
 		data.nickname = json['nickname']?.toString();

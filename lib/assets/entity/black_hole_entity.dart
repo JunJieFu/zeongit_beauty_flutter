@@ -8,7 +8,7 @@ class BlackHoleEntity with JsonConvert<BlackHoleEntity> {
 
 class UserBlackHoleEntity with JsonConvert<UserBlackHoleEntity> {
 	int id;
-	dynamic avatarUrl;
+	String avatarUrl;
 	String nickname;
 	String state;
 }
