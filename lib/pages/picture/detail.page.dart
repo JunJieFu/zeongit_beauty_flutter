@@ -15,8 +15,8 @@ import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
 
-import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/pages/search/search_result.page.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);

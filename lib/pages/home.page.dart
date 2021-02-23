@@ -3,10 +3,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'file:///D:/project/flutter/zeongit_beauty_flutter/lib/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
+
+import 'picture/detail.page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
