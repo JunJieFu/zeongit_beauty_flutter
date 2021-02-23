@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
@@ -95,6 +97,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
     var result =
         await UserService.signIn(phoneController.text, passwordController.text);
     await ResultUtil.check(result);
+    await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
     await userState.getInfo();
     Navigator.maybePop(context);
   }

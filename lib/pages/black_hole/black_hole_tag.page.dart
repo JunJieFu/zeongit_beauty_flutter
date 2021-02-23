@@ -17,27 +17,25 @@ class _BlackHoleTagPageState extends State<BlackHoleTagPage>
     with AutomaticKeepAliveClientMixin {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PageTagBlackHoleEntity page;
+  PageTagBlackHoleEntity currPage;
   List<TagBlackHoleEntity> list = [];
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0))
+    bool last = this.currPage?.meta != null &&
+        this.currPage.meta.totalPages <= currPage.meta.currentPage;
+    if (this.loading || (last && currPage.meta.currentPage <= pageIndex))
       return;
     loading = true;
     var result = await TagBlackHoleService.paging(pageable);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -63,11 +61,16 @@ class _BlackHoleTagPageState extends State<BlackHoleTagPage>
   bool get wantKeepAlive => true;
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    bool last = this.currPage?.meta != null &&
+        this.currPage.meta.totalPages <= currPage.meta.currentPage;
+    if (currPage != null &&
+        currPage.items.isEmpty &&
+        currPage.meta.currentPage == 1 &&
+        last) {
       return TipsPageCardWidget(
           icon: MdiIcons.account_heart_outline, title: "没有粉丝");
     } else {
-      return ListTagWidget(page: page, list: list, paging: paging);
+      return ListTagWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 }

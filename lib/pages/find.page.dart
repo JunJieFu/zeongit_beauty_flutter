@@ -20,26 +20,22 @@ class _FindPageState extends State<FindPage>
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  PagePictureEntity page;
+  PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
+    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
     loading = true;
     var result = await PictureService.pagingByRecommend(pageable);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -66,13 +62,15 @@ class _FindPageState extends State<FindPage>
   }
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null && currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.compass,
-          title: "没有作品",
-          text: "难道是系统出现什么问题了。");
+      title: "没有作品",
+    text: "难道是系统出现什么问题了。");
     } else {
-      return ListWaterFallWidget(page: page, list: list, paging: paging);
+      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 }

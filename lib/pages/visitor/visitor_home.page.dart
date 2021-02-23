@@ -64,7 +64,7 @@ class _VisitorHomePageState extends State<VisitorHomePage>
             children: <Widget>[
               FollowIconBtn(
                   user: visitorState.info,
-                  callback: (UserInfoEntity user, String focus) {
+                  callback: (UserInfoEntity user, int focus) {
                     visitorState.focus(focus);
                   }),
               ShareUserIconBtn(
@@ -83,7 +83,9 @@ class _VisitorHomePageState extends State<VisitorHomePage>
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
-      child: AvatarWidget(visitorState.info, fit: BoxFit.cover, size: size),
+      child: AvatarWidget(
+          visitorState.info?.avatarUrl, visitorState.info?.nickname,
+          fit: BoxFit.cover, size: size),
     );
   }
 }

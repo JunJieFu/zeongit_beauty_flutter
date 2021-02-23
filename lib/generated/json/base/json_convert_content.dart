@@ -11,6 +11,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/page_black_hole_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/page_user_info_entity_helper.dart';
+import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
+import 'package:zeongitbeautyflutter/generated/json/pagination_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/picture_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
@@ -36,7 +38,8 @@ class JsonConvert<T> {
 			return pageUserBlackHoleEntityFromJson(data as PageUserBlackHoleEntity, json) as T;			case PagePictureBlackHoleEntity:
 			return pagePictureBlackHoleEntityFromJson(data as PagePictureBlackHoleEntity, json) as T;			case PageTagBlackHoleEntity:
 			return pageTagBlackHoleEntityFromJson(data as PageTagBlackHoleEntity, json) as T;			case PageUserInfoEntity:
-			return pageUserInfoEntityFromJson(data as PageUserInfoEntity, json) as T;			case PictureEntity:
+			return pageUserInfoEntityFromJson(data as PageUserInfoEntity, json) as T;			case Meta:
+			return metaFromJson(data as Meta, json) as T;			case PictureEntity:
 			return pictureEntityFromJson(data as PictureEntity, json) as T;			case BlackHoleEntity:
 			return blackHoleEntityFromJson(data as BlackHoleEntity, json) as T;			case UserBlackHoleEntity:
 			return userBlackHoleEntityFromJson(data as UserBlackHoleEntity, json) as T;			case TagBlackHoleEntity:
@@ -56,7 +59,8 @@ class JsonConvert<T> {
 			return pageUserBlackHoleEntityToJson(data as PageUserBlackHoleEntity);			case PagePictureBlackHoleEntity:
 			return pagePictureBlackHoleEntityToJson(data as PagePictureBlackHoleEntity);			case PageTagBlackHoleEntity:
 			return pageTagBlackHoleEntityToJson(data as PageTagBlackHoleEntity);			case PageUserInfoEntity:
-			return pageUserInfoEntityToJson(data as PageUserInfoEntity);			case PictureEntity:
+			return pageUserInfoEntityToJson(data as PageUserInfoEntity);			case Meta:
+			return metaToJson(data as Meta);			case PictureEntity:
 			return pictureEntityToJson(data as PictureEntity);			case BlackHoleEntity:
 			return blackHoleEntityToJson(data as BlackHoleEntity);			case UserBlackHoleEntity:
 			return userBlackHoleEntityToJson(data as UserBlackHoleEntity);			case TagBlackHoleEntity:
@@ -76,7 +80,8 @@ class JsonConvert<T> {
 			return PageUserBlackHoleEntity().fromJson(json);			case 'PagePictureBlackHoleEntity':
 			return PagePictureBlackHoleEntity().fromJson(json);			case 'PageTagBlackHoleEntity':
 			return PageTagBlackHoleEntity().fromJson(json);			case 'PageUserInfoEntity':
-			return PageUserInfoEntity().fromJson(json);			case 'PictureEntity':
+			return PageUserInfoEntity().fromJson(json);			case 'Meta':
+			return Meta().fromJson(json);			case 'PictureEntity':
 			return PictureEntity().fromJson(json);			case 'BlackHoleEntity':
 			return BlackHoleEntity().fromJson(json);			case 'UserBlackHoleEntity':
 			return UserBlackHoleEntity().fromJson(json);			case 'TagBlackHoleEntity':
@@ -97,7 +102,8 @@ class JsonConvert<T> {
 			return List<PageUserBlackHoleEntity>();			case 'PagePictureBlackHoleEntity':
 			return List<PagePictureBlackHoleEntity>();			case 'PageTagBlackHoleEntity':
 			return List<PageTagBlackHoleEntity>();			case 'PageUserInfoEntity':
-			return List<PageUserInfoEntity>();			case 'PictureEntity':
+			return List<PageUserInfoEntity>();			case 'Meta':
+			return List<Meta>();			case 'PictureEntity':
 			return List<PictureEntity>();			case 'BlackHoleEntity':
 			return List<BlackHoleEntity>();			case 'UserBlackHoleEntity':
 			return List<UserBlackHoleEntity>();			case 'TagBlackHoleEntity':

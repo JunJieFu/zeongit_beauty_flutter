@@ -41,7 +41,7 @@ userBlackHoleEntityFromJson(UserBlackHoleEntity data, Map<String, dynamic> json)
 		data.nickname = json['nickname']?.toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state']?.toString();
+		data.state = json['state']?.toInt();
 	}
 	return data;
 }
@@ -60,7 +60,7 @@ tagBlackHoleEntityFromJson(TagBlackHoleEntity data, Map<String, dynamic> json) {
 		data.name = json['name']?.toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state']?.toString();
+		data.state = json['state']?.toInt();
 	}
 	return data;
 }
@@ -83,7 +83,7 @@ pictureBlackHoleEntityFromJson(PictureBlackHoleEntity data, Map<String, dynamic>
 		data.name = json['name']?.toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state']?.toString();
+		data.state = json['state']?.toInt();
 	}
 	return data;
 }

@@ -10,12 +10,13 @@ class UserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    var userState = Provider.of<UserState>(context, listen: false);
 
     return IconButton(
       key: _btnKey,
       icon: AvatarWidget(
-        _userState.info,
+        userState.info?.avatarUrl,
+        userState.info?.nickname,
         size: 30,
         fit: BoxFit.cover,
         style: AvatarStyle.small50,

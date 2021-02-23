@@ -10,10 +10,10 @@ import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 
 class ListWaterFallWidget extends StatefulWidget {
-  ListWaterFallWidget({Key key, this.page, this.list, this.paging})
+  ListWaterFallWidget({Key key, this.currPage, this.list, this.paging})
       : super(key: key);
 
-  final PagePictureEntity page;
+  final PagePictureEntity currPage;
 
   final List<PictureEntity> list;
 
@@ -34,7 +34,7 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
               _scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
-          widget.paging(widget.page.pageable.pageNumber + 2);
+          widget.paging(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -42,6 +42,7 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     return WaterfallFlow.builder(
         controller: _scrollController,
         //cacheExtent: 0.0,

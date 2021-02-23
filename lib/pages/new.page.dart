@@ -15,30 +15,29 @@ class NewPage extends StatefulWidget {
   _NewPageState createState() => _NewPageState();
 }
 
-class _NewPageState extends State<NewPage>
-    with AutomaticKeepAliveClientMixin {
+class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-  GlobalKey<RefreshIndicatorState>();
-  PagePictureEntity page;
+      GlobalKey<RefreshIndicatorState>();
+  PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
+    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
     loading = true;
     var result = await PictureService.paging(pageable);
     setState(() {
-      page = result.data;
+      currPage = result.data;
       if (pageIndex == 0) {
-        list = page.content;
+        list = currPage.items;
       } else {
-        list.addAll(page.content);
+        list.addAll(currPage.items);
       }
     });
     loading = false;
@@ -60,19 +59,19 @@ class _NewPageState extends State<NewPage>
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-        key: refreshIndicatorKey,
-        onRefresh: refresh,
-        child: emptyWidget());
+        key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
   }
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null && currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.alpha_n_box_outline,
           title: "没有作品",
           text: "难道是系统出现什么问题了。");
     } else {
-      return ListWaterFallWidget(page: page, list: list, paging: paging);
+      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 }

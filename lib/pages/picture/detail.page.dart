@@ -63,7 +63,7 @@ class _DetailPageState extends State<DetailPage> {
                     Navigator.maybePop(context);
                   },
                 ),
-                actions: picture.user.id == userState.info.id
+                actions: picture.user.id == userState.info?.id
                     ? <Widget>[
                         IconButton(
                           icon: ShadowIconWidget(MdiIcons.image_edit_outline,
@@ -160,7 +160,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         FollowBtn(
                           user: picture.user,
-                          callback: (user, String focus) {
+                          callback: (user, int focus) {
                             setState(() {
                               picture.user.focus = focus;
                             });
@@ -184,7 +184,8 @@ class _DetailPageState extends State<DetailPage> {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          picture?.user,
+          picture?.user?.avatarUrl,
+          picture?.user?.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

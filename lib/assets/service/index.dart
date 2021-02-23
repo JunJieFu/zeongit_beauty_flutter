@@ -11,7 +11,7 @@ import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/http.util.dart';
 
 class UserService {
-  static Future<ResultEntity<bool>> signIn(String phone, String password) {
+  static Future<ResultEntity<String>> signIn(String phone, String password) {
     return HttpUtil.post("/user/signIn",
         params: {"phone": phone, "password": password},
         host: ConfigConstant.ACCOUNT_HOST);
@@ -24,82 +24,81 @@ class UserService {
   static Future<ResultEntity<UserInfoEntity>> getByTargetId(int targetId) {
     return HttpUtil.get("/userInfo/get", params: {"targetId": targetId});
   }
-
-  static Future<ResultEntity<String>> follow(int followingId) {
-    return HttpUtil.post("/following/focus",
-        params: {"followingId": followingId});
-  }
-
-  static Future<ResultEntity<PageUserInfoEntity>> pagingFollower(
-      PageableEntity pageable,
-      {int targetId}) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["targetId"] = targetId;
-    return HttpUtil.get("/follower/paging", params: _);
-  }
-
-  static Future<ResultEntity<PageUserInfoEntity>> pagingFollowing(
-      PageableEntity pageable,
-      {int targetId}) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["targetId"] = targetId;
-    return HttpUtil.get("/following/paging", params: _);
-  }
 }
 
 class PictureService {
   static Future<ResultEntity<PagePictureEntity>> pagingByRecommend(
       PageableEntity pageable) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    return HttpUtil.get("/picture/pagingByRecommend", params: _);
+    return HttpUtil.get("/picture/pagingByRecommend",
+        params: pageable.toJson());
   }
 
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
       {String tagList,
-      int targetId,
-      String name,
       bool precise,
+      String name,
       DateTime startDate,
-      DateTime endDate}) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["tagList"] = tagList;
-    _["targetId"] = targetId;
-    _["name"] = name;
-    _["precise"] = precise;
-    _["startDate"] = startDate;
-    _["endDate"] = endDate;
-    return HttpUtil.get("/picture/paging", params: _);
+      DateTime endDate,
+      int aspectRatio}) {
+    var params = pageable.toJson();
+    params["tagList"] = tagList;
+//    params["precise"] = precise;
+//    params["name"] = name;
+//    params["startDate"] = startDate;
+//    params["endDate"] = endDate;
+//    params["aspectRatio"] = aspectRatio;
+    return HttpUtil.get("/picture/paging", params: params);
   }
 
   static Future<ResultEntity<PictureEntity>> get(int id) {
     return HttpUtil.get("/picture/get", params: {"id": id});
   }
 
+  static Future<ResultEntity<bool>> hide(int id) {
+    return HttpUtil.post("/picture/hide", params: {"id": id});
+  }
+
   static pagingRecommendById(PageableEntity pageable, int id) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["id"] = id;
-    return HttpUtil.get("/picture/pagingRecommendById", params: _);
+    var params = pageable.toJson();
+    params["id"] = id;
+    return HttpUtil.get("/picture/pagingRecommendById", params: params);
   }
 
   static pagingByFollowing(PageableEntity pageable) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    return HttpUtil.get("/picture/pagingByFollowing", params: _);
+    return HttpUtil.get("/picture/pagingByFollowing",
+        params: pageable.toJson());
+  }
+}
+
+class FollowingService {
+  static Future<ResultEntity<int>> follow(int followingId) {
+    return HttpUtil.post("/following/focus",
+        params: {"followingId": followingId});
+  }
+
+  static Future<ResultEntity<PageUserInfoEntity>> pagingFollowing(
+      PageableEntity pageable, int targetId) {
+    var params = pageable.toJson();
+    params["targetId"] = targetId;
+    return HttpUtil.get("/following/paging", params: params);
+  }
+}
+
+class FollowerService {
+  static Future<ResultEntity<PageUserInfoEntity>> pagingFollower(
+      PageableEntity pageable, targetId) {
+    var params = pageable.toJson();
+    params["targetId"] = targetId;
+    return HttpUtil.get("/follower/paging", params: params);
   }
 }
 
 class CollectionService {
-  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {int targetId}) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["targetId"] = targetId;
-    return HttpUtil.get("/collection/paging", params: _);
+  static Future<ResultEntity<PagePictureEntity>> paging(
+      PageableEntity pageable, targetId) {
+    var params = pageable.toJson();
+    params["targetId"] = targetId;
+    return HttpUtil.get("/collection/paging", params: params);
   }
 
   static Future<ResultEntity<String>> focus(int pictureId) {
@@ -107,30 +106,27 @@ class CollectionService {
   }
 
   pagingUser(PageableEntity pageable, int pictureId) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["pictureId"] = pictureId;
-    return HttpUtil.get("/collection/pagingUser", params: _);
+    var params = pageable.toJson();
+    params["pictureId"] = pictureId;
+    return HttpUtil.get("/collection/pagingUser", params: params);
   }
 }
 
 class WorksService {
-  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {int targetId}) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["targetId"] = targetId;
-    return HttpUtil.get("/works/paging", params: _);
+  static Future<ResultEntity<PagePictureEntity>> paging(
+      PageableEntity pageable, int targetId) {
+    var params = pageable.toJson();
+    params["targetId"] = targetId;
+    return HttpUtil.get("/works/paging", params: params);
   }
 }
 
 class FootprintService {
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {int targetId}) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["targetId"] = targetId;
-    return HttpUtil.get("/footprint/paging", params: _);
+      int targetId) {
+    var params = pageable.toJson();
+    params["targetId"] = targetId;
+    return HttpUtil.get("/footprint/paging", params: params);
   }
 
   static save(int pictureId) {
@@ -138,10 +134,9 @@ class FootprintService {
   }
 
   pagingUser(PageableEntity pageable, int pictureId) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    _["pictureId"] = pictureId;
-    return HttpUtil.get("/footprint/pagingUser", params: _);
+    var params = pageable.toJson();
+    params["pictureId"] = pictureId;
+    return HttpUtil.get("/footprint/pagingUser", params: params);
   }
 }
 
@@ -150,15 +145,17 @@ class TagService {
     return HttpUtil.get("/tag/listTagTop30");
   }
 
-  static listTagFrequencyByUserId(int targetId) {
+  static Future<ResultEntity<List<TagFrequencyEntity>>>
+      listTagFrequencyByUserId(int targetId) {
     return HttpUtil.get("/tag/listTagFrequencyByUserId",
         params: {"targetId": targetId});
   }
 }
 
 class UserBlackHoleService {
-  static Future<ResultEntity<String>> block(int targetId) async {
-    return HttpUtil.post("/userBlackHole/block", params: {"targetId": targetId});
+  static Future<ResultEntity<int>> block(int targetId) async {
+    return HttpUtil.post("/userBlackHole/block",
+        params: {"targetId": targetId});
   }
 
   static Future<ResultEntity<BlackHoleEntity>> get(int targetId) async {
@@ -167,14 +164,12 @@ class UserBlackHoleService {
 
   static Future<ResultEntity<PageUserBlackHoleEntity>> paging(
       PageableEntity pageable) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    return HttpUtil.get("/userBlackHole/paging", params: _);
+    return HttpUtil.get("/userBlackHole/paging", params: pageable.toJson());
   }
 }
 
 class PictureBlackHoleService {
-  static Future<ResultEntity<String>> block(String targetId) async {
+  static Future<ResultEntity<int>> block(String targetId) async {
     return HttpUtil.post("/pictureBlackHole/block",
         params: {"targetId": targetId});
   }
@@ -186,21 +181,17 @@ class PictureBlackHoleService {
 
   static Future<ResultEntity<PagePictureBlackHoleEntity>> paging(
       PageableEntity pageable) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    return HttpUtil.get("/pictureBlackHole/paging", params: _);
+    return HttpUtil.get("/pictureBlackHole/paging", params: pageable.toJson());
   }
 }
 
 class TagBlackHoleService {
-  static Future<ResultEntity<String>> block(String name) async {
-    return HttpUtil.post("/tagBlackHole/block", params: {"name": name});
+  static Future<ResultEntity<int>> block(String tag) {
+    return HttpUtil.post("/tagBlackHole/block", params: {"tag": tag});
   }
 
   static Future<ResultEntity<PageTagBlackHoleEntity>> paging(
       PageableEntity pageable) {
-    var _ = pageable.toJson();
-    _["page"]--;
-    return HttpUtil.get("/tagBlackHole/paging", params: _);
+    return HttpUtil.get("/tagBlackHole/paging", params: pageable.toJson());
   }
 }

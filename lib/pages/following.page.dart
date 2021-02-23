@@ -9,6 +9,9 @@ import 'package:zeongitbeautyflutter/widget/list_user.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class FollowingPage extends StatefulWidget {
+  FollowingPage({Key key, @required this.id}) : super(key: key);
+
+  final int id;
   @override
   _FollowingPageState createState() => _FollowingPageState();
 }
@@ -16,26 +19,22 @@ class FollowingPage extends StatefulWidget {
 class _FollowingPageState extends State<FollowingPage> {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PageUserInfoEntity page;
+  PageUserInfoEntity currPage;
   List<UserInfoEntity> list = [];
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
+    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
     loading = true;
-    var result = await UserService.pagingFollowing(pageable);
+    var result = await FollowingService.pagingFollowing(pageable, widget.id);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -61,12 +60,14 @@ class _FollowingPageState extends State<FollowingPage> {
   }
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.account_star_outline,
-          title: "没有关注");
+          icon: MdiIcons.account_star_outline, title: "没有关注");
     } else {
-      return ListUserWidget(page: page, list: list, paging: paging);
+      return ListUserWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 }

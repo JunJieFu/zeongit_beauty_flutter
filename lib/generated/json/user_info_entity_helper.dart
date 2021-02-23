@@ -5,7 +5,7 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 		data.id = json['id']?.toInt();
 	}
 	if (json['gender'] != null) {
-		data.gender = json['gender']?.toString();
+		data.gender = json['gender']?.toInt();
 	}
 	if (json['birthday'] != null) {
 		data.birthday = json['birthday']?.toString();
@@ -23,7 +23,7 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 		data.background = json['background']?.toString();
 	}
 	if (json['focus'] != null) {
-		data.focus = json['focus']?.toString();
+		data.focus = json['focus']?.toInt();
 	}
 	if (json['country'] != null) {
 		data.country = json['country']?.toString();

@@ -9,6 +9,10 @@ import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class CollectionPage extends StatefulWidget {
+  CollectionPage({Key key, @required this.id}) : super(key: key);
+
+  final int id;
+
   @override
   _CollectionPageState createState() => _CollectionPageState();
 }
@@ -16,26 +20,22 @@ class CollectionPage extends StatefulWidget {
 class _CollectionPageState extends State<CollectionPage> {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PagePictureEntity page;
+  PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
+    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
     loading = true;
-    var result = await CollectionService.paging(pageable);
+    var result = await CollectionService.paging(pageable, widget.id);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -61,13 +61,17 @@ class _CollectionPageState extends State<CollectionPage> {
   }
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.star_outline,
           title: "没有作品",
           text: "您可以前往发现浏览一些系统推荐给您的作品哦。");
     } else {
-      return ListWaterFallWidget(page: page, list: list, paging: paging);
+      return ListWaterFallWidget(
+          currPage: currPage, list: list, paging: paging);
     }
   }
 }

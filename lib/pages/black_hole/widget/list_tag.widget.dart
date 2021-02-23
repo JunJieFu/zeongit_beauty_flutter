@@ -5,14 +5,13 @@ import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/black_hole_avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/block_tag_icon_btn.widget.dart';
 
 class ListTagWidget extends StatefulWidget {
-  ListTagWidget({Key key, this.page, this.list, this.paging})
+  ListTagWidget({Key key, this.currPage, this.list, this.paging})
       : super(key: key);
 
-  final PageTagBlackHoleEntity page;
+  final PageTagBlackHoleEntity currPage;
 
   final List<TagBlackHoleEntity> list;
 
@@ -33,7 +32,7 @@ class _ListTagWidgetState extends State<ListTagWidget> {
               _scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
-          widget.paging(widget.page.pageable.pageNumber + 2);
+          widget.paging(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -65,7 +64,7 @@ class _ListTagWidgetState extends State<ListTagWidget> {
                     ),
                     BlockTagIconBtnWidget(
                       tag: tag,
-                      callback: (user, String state) {
+                      callback: (user, int state) {
                         setState(() {
                           widget.list[index].state = state;
                         });
@@ -87,8 +86,9 @@ class _ListTagWidgetState extends State<ListTagWidget> {
       borderRadius: BorderRadius.all(Radius.circular(size / 2)),
       child: Padding(
         padding: EdgeInsets.all(padding),
-        child: BlackHoleAvatarWidget(
-          user,
+        child: AvatarWidget(
+          user?.avatarUrl,
+          user?.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

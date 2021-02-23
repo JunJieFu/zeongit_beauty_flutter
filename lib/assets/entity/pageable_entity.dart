@@ -2,10 +2,10 @@ import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.da
 
 class PageableEntity with JsonConvert<PageableEntity> {
   int page;
-  int size;
+  int limit;
   String sort;
 
-  PageableEntity({this.page = 0, this.size = 16, this.sort = "createDate,desc"});
+  PageableEntity({this.page = 1, this.limit = 16, this.sort = "createDate,desc"});
 }
 
 class PagePageable with JsonConvert<PagePageable> {

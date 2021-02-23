@@ -29,14 +29,14 @@ class ImageInkWidget extends StatelessWidget {
             )
           : ClipRRect(
               borderRadius: BorderRadius.all(
-                  Radius.circular(borderRadius ?? StyleConfig.listGap)),
+                  Radius.circular(borderRadius ?? StyleConfig.pictureRadius)),
               child: child),
       Positioned.fill(
           child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius:
-              BorderRadius.circular(borderRadius ?? StyleConfig.listGap),
+              BorderRadius.circular(borderRadius ?? StyleConfig.pictureRadius),
           onTap: onTap,
         ),
       ))

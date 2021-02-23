@@ -3,11 +3,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
-
-import 'picture/detail.page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -26,12 +25,12 @@ class _HomePageState extends State<HomePage>
 
   Future<void> refresh() async {
     var result = await PictureService.pagingByRecommend(
-        PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
+        PageableEntity(limit: 10));
     var result2 = await PictureService.paging(
-        PageableEntity(page: 0, size: 10, sort: "createDate,desc"));
+        PageableEntity(limit: 10));
     setState(() {
-      recommendList.addAll(result.data.content);
-      newList.addAll(result2.data.content);
+      recommendList.addAll(result.data.items);
+      newList.addAll(result2.data.items);
       loading = false;
     });
   }
@@ -84,7 +83,7 @@ class _HomePageState extends State<HomePage>
             return ImageInkWidget(
                 constrained: true,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(gap)),
+                    borderRadius: BorderRadius.all(Radius.circular(StyleConfig.pictureRadius)),
                     child: PictureWidget(
                       picture.url,
                       style: PictureStyle.specifiedWidth,

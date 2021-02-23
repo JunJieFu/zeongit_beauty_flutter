@@ -5,14 +5,13 @@ import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/black_hole_avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
 
 class ListUserWidget extends StatefulWidget {
-  ListUserWidget({Key key, this.page, this.list, this.paging})
+  ListUserWidget({Key key, this.currPage, this.list, this.paging})
       : super(key: key);
 
-  final PageUserBlackHoleEntity page;
+  final PageUserBlackHoleEntity currPage;
 
   final List<UserBlackHoleEntity> list;
 
@@ -33,7 +32,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
               _scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
-          widget.paging(widget.page.pageable.pageNumber + 2);
+          widget.paging(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -66,7 +65,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
                     ),
                     BlockUserIconBtnWidget(
                       user: user,
-                      callback: (user, String state) {
+                      callback: (user, int state) {
                         setState(() {
                           widget.list[index].state = state;
                         });
@@ -88,8 +87,9 @@ class _ListUserWidgetState extends State<ListUserWidget> {
       borderRadius: BorderRadius.all(Radius.circular(size / 2)),
       child: Padding(
         padding: EdgeInsets.all(padding),
-        child: BlackHoleAvatarWidget(
-          user,
+        child: AvatarWidget(
+          user?.avatarUrl,
+          user?.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

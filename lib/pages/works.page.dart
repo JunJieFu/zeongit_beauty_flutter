@@ -9,6 +9,10 @@ import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class WorksPage extends StatefulWidget {
+  WorksPage({Key key, @required this.id}) : super(key: key);
+
+  final int id;
+
   @override
   _WorksPageState createState() => _WorksPageState();
 }
@@ -16,26 +20,22 @@ class WorksPage extends StatefulWidget {
 class _WorksPageState extends State<WorksPage> {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PagePictureEntity page;
+  PagePictureEntity currPage;
   List<PictureEntity> list = [];
-  PageableEntity pageable = PageableEntity(sort: "lastModifiedDate,desc");
+  PageableEntity pageable = PageableEntity(sort: "updateDate,desc");
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
+    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
     loading = true;
-    var result = await WorksService.paging(pageable);
+    var result = await WorksService.paging(pageable, widget.id);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -61,11 +61,15 @@ class _WorksPageState extends State<WorksPage> {
   }
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.image_outline, title: "没有作品", text: "可以上传一些作品到我们哦。");
     } else {
-      return ListWaterFallWidget(page: page, list: list, paging: paging);
+      return ListWaterFallWidget(
+          currPage: currPage, list: list, paging: paging);
     }
   }
 }

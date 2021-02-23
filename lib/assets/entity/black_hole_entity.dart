@@ -10,17 +10,17 @@ class UserBlackHoleEntity with JsonConvert<UserBlackHoleEntity> {
 	int id;
 	String avatarUrl;
 	String nickname;
-	String state;
+	int state;
 }
 
 class TagBlackHoleEntity with JsonConvert<TagBlackHoleEntity> {
 	String name;
-	String state;
+	int state;
 }
 
 class PictureBlackHoleEntity with JsonConvert<PictureBlackHoleEntity> {
 	int id;
 	String url;
 	String name;
-	String state;
+	int state;
 }

@@ -13,11 +13,9 @@ class HttpUtil {
     try {
       String token = _getToken();
       Options options =
-          Options(headers: token != null ? {KeyConstant.TOKEN_KEY: token} : {});
+          Options(headers: token != null ? {"Authorization": "Bearer " + token} : {});
       Response response = await Dio()
           .get(host + url, queryParameters: params, options: options);
-
-      _handleToken(response);
 
       var result = ResultEntity.fromJson<T>(response.data);
       return result;
@@ -34,27 +32,14 @@ class HttpUtil {
     try {
       String token = _getToken();
       Options options =
-          Options(headers: token != null ? {KeyConstant.TOKEN_KEY: token} : {});
+          Options(headers: token != null ? {"Authorization": "Bearer " + token} : {});
       Response response =
           await Dio().post(host + url, data: params, options: options);
-
-      _handleToken(response);
       var result = ResultEntity.fromJson<T>(response.data);
       return result;
     } catch (error) {
       return ResultEntity(status: 500, message: "服务器错误", data: null);
     }
-  }
-
-  //统一处理返回token
-  static _handleToken(Response response) {
-    try {
-      var headers = response.headers;
-      String token = headers.value(KeyConstant.TOKEN_KEY);
-      if (token != null) {
-        StorageManager.setString(KeyConstant.TOKEN_KEY, token);
-      }
-    } catch (e) {}
   }
 
   //统一获取缓存token发送

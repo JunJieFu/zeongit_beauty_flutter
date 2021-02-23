@@ -19,28 +19,24 @@ class _VisitorFollowerPageState extends State<VisitorFollowerPage>
     with AutomaticKeepAliveClientMixin {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PageUserInfoEntity page;
+  PageUserInfoEntity currPage;
   List<UserInfoEntity> list = [];
   PageableEntity pageable = PageableEntity();
   int targetId;
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0)) return;
+    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
     loading = true;
     var result =
-        await UserService.pagingFollower(pageable, targetId: targetId);
+        await FollowerService.pagingFollower(pageable, targetId);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -69,12 +65,17 @@ class _VisitorFollowerPageState extends State<VisitorFollowerPage>
   }
 
   Widget _emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    bool last = this.currPage?.meta != null &&
+        this.currPage.meta.totalPages <= currPage.meta.currentPage;
+    if (currPage != null &&
+        currPage.items.isEmpty &&
+        currPage.meta.currentPage == 1 &&
+        last) {
       return TipsPageCardWidget(
           icon: MdiIcons.account_heart_outline,
           title: "没有粉丝");
     } else {
-      return ListUserWidget(page: page, list: list, paging: paging);
+      return ListUserWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 

@@ -4,7 +4,6 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/black_hole_avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/block_tag_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
 
@@ -53,7 +52,7 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
                         ),
                         BlockUserIconBtnWidget(
                             user: user,
-                            callback: (UserBlackHoleEntity result, String state) {
+                            callback: (UserBlackHoleEntity result, int state) {
                               setState(() {
                                 result.state = state;
                               });
@@ -91,7 +90,7 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
           ),
           BlockTagIconBtnWidget(
               tag: e,
-              callback: (TagBlackHoleEntity tag, String state) {
+              callback: (TagBlackHoleEntity tag, int state) {
                 setState(() {
                   tag.state = state;
                 });
@@ -109,8 +108,9 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
       borderRadius: BorderRadius.all(Radius.circular(size / 2)),
       child: Padding(
         padding: EdgeInsets.all(padding),
-        child: BlackHoleAvatarWidget(
-          user,
+        child: AvatarWidget(
+          user?.avatarUrl,
+          user?.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

@@ -8,10 +8,10 @@ import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 
 class ListUserWidget extends StatefulWidget {
-  ListUserWidget({Key key, this.page, this.list, this.paging})
+  ListUserWidget({Key key, this.currPage, this.list, this.paging})
       : super(key: key);
 
-  final PageUserInfoEntity page;
+  final PageUserInfoEntity currPage;
 
   final List<UserInfoEntity> list;
 
@@ -32,7 +32,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
               _scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
-          widget.paging(widget.page.pageable.pageNumber + 2);
+          widget.paging(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -65,7 +65,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
                     ),
                     FollowBtn(
                       user: user,
-                      callback: (user, String focus) {
+                      callback: (user, int focus) {
                         setState(() {
                           widget.list[index].focus = focus;
                         });
@@ -88,7 +88,8 @@ class _ListUserWidgetState extends State<ListUserWidget> {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          user,
+          user?.avatarUrl,
+          user?.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

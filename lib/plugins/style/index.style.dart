@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const _gap = 4.0;
 
-const _listGap = _gap * 3;
+const _listGap = _gap * 2;
 
 class StyleConfig {
   static const primaryColor = Color(0xFF0B99FF);
@@ -16,4 +16,5 @@ class StyleConfig {
   static const lineColor = Colors.black26;
   static final gap = _gap;
   static final listGap = _listGap;
+  static final pictureRadius = 2.0;
 }

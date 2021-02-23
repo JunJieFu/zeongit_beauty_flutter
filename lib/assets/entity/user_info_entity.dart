@@ -2,13 +2,13 @@ import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.da
 
 class UserInfoEntity with JsonConvert<UserInfoEntity> {
 	int id;
-	String gender;
+	int gender;
 	String birthday;
 	String nickname;
 	String introduction;
 	String avatarUrl;
 	String background;
-	String focus;
+	int focus;
 	String country;
 	String province;
 	String city;

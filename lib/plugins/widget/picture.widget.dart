@@ -13,8 +13,7 @@ enum PictureStyle {
 }
 
 class PictureWidget extends StatelessWidget {
-  PictureWidget(this.url,
-      {Key key, this.fit = BoxFit.contain, this.style})
+  PictureWidget(this.url, {Key key, this.fit = BoxFit.contain, this.style})
       : super(key: key);
 
   final String url;
@@ -28,12 +27,16 @@ class PictureWidget extends StatelessWidget {
     var _url = style != null
         ? "${ConfigConstant.QINIU_PICTURE}/$url${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
         : "${ConfigConstant.QINIU_PICTURE}/$url";
-    return CachedNetworkImage(
-        imageUrl: _url,
-        fit: fit,
-        errorWidget: (BuildContext context, String url, dynamic error) {
-          return SvgPicture.asset("assets/images/default-picture.svg",
-              fit: fit);
-        });
+    return url != null
+        ? CachedNetworkImage(
+            imageUrl: _url,
+            fit: fit,
+            errorWidget: (BuildContext context, String url, dynamic error) {
+              return buildSvgPicture();
+            })
+        : buildSvgPicture();
   }
+
+  SvgPicture buildSvgPicture() =>
+      SvgPicture.asset("assets/images/default-picture.svg", fit: fit);
 }

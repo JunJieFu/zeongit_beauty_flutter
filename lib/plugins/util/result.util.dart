@@ -12,7 +12,7 @@ class ResultUtil {
             gravity: ToastGravity.BOTTOM,
             backgroundColor: StyleConfig.errorColor);
       }
-      assert(result.status == 200);
+      assert(result.status == StatusCode.SUCCESS);
     });
   }
 }

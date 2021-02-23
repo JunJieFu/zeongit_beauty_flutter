@@ -3,18 +3,19 @@ import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.da
 
 class PictureEntity with JsonConvert<PictureEntity> {
 	int id;
-	String introduction;
-	String url;
+	String createDate;
+	String updateDate;
 	String name;
-	String privacy;
-	String focus;
+	String introduction;
+	int privacy;
 	int viewAmount;
 	int likeAmount;
 	int width;
 	int height;
-	String sizeType;
+	String url;
+	int aspectRatio;
 	List<String> tagList;
+	int focus;
 	UserInfoEntity user;
-	String createDate;
 }
 

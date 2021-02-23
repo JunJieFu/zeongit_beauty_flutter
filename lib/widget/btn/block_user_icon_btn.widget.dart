@@ -6,7 +6,6 @@ import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
-import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
@@ -24,7 +23,7 @@ class BlockUserIconBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var _userState = Provider.of<UserState>(context, listen: false);
 
-    bool normal = StringUtil.equalsEnum(user.state, BlockState.NORMAL);
+    bool normal = user.state == BlockState.NORMAL.index;
 
     return IconButton(
         key: _btnKey,

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
@@ -18,10 +17,13 @@ const avatarColorList = [
 ];
 
 class AvatarWidget extends StatelessWidget {
-  AvatarWidget(this.info, {Key key, this.size = 50.0, this.fit, this.style})
+  AvatarWidget(this.url, this.nickname,
+      {Key key, this.size = 50.0, this.fit, this.style})
       : super(key: key);
 
-  final UserInfoEntity info;
+  final String url;
+
+  final String nickname;
 
   final BoxFit fit;
 
@@ -32,12 +34,10 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget build = buildSvgPicture();
-    if (info != null) {
-      if (info.avatarUrl != null) {
-        build = buildCachedNetworkImage();
-      } else {
-        build = buildNicknameAvatar();
-      }
+    if (url != null) {
+      build = buildCachedNetworkImage();
+    }else{
+      build = buildNicknameAvatar();
     }
 
     return SizedBox(
@@ -51,15 +51,13 @@ class AvatarWidget extends StatelessWidget {
 
   CachedNetworkImage buildCachedNetworkImage() {
     Widget errorWidget = buildSvgPicture();
-    String url;
-    if (info != null) {
-      errorWidget = buildNicknameAvatar();
-      url = style != null
-          ? "${ConfigConstant.QINIU_AVATAR}/${info.avatarUrl}${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
-          : "${ConfigConstant.QINIU_AVATAR}/${info.avatarUrl}";
-    }
+    String _url;
+    errorWidget = buildNicknameAvatar();
+    _url = style != null
+        ? "${ConfigConstant.QINIU_AVATAR}/$url${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
+        : "${ConfigConstant.QINIU_AVATAR}/$url";
     return CachedNetworkImage(
-        imageUrl: url,
+        imageUrl: _url,
         fit: fit,
         errorWidget: (BuildContext context, String url, dynamic error) {
           return errorWidget;
@@ -70,8 +68,8 @@ class AvatarWidget extends StatelessWidget {
       SvgPicture.asset("assets/images/default-avatar.svg", fit: fit);
 
   Widget buildNicknameAvatar() {
-    var character = info?.nickname?.substring(0, 1) ?? "";
-    var index = (info?.nickname?.codeUnitAt(0) ?? 2) % avatarColorList.length;
+    var character = nickname?.substring(0, 1) ?? "";
+    var index = (nickname?.codeUnitAt(0) ?? 2) % avatarColorList.length;
     return Container(
       color: avatarColorList[index],
       child: Center(

@@ -1,14 +1,14 @@
-enum CollectState { CONCERNED, STRANGE, SElF }
+enum CollectState { STRANGE, CONCERNED, SElF }
 
-const CollectStateValues = {"CONCERNED": "已关注", "STRANGE": "未关注", "SElF": "自己"};
+const CollectStateValues = ["未关注", "已关注", "自己"];
 
-enum FollowState { CONCERNED, STRANGE, SElF }
+enum FollowState { STRANGE, CONCERNED, SElF }
 
-const FollowStateValues = {"CONCERNED": "已关注", "STRANGE": "未关注", "SElF": "自己"};
+const FollowStateValues = ["未关注", "已关注", "自己"];
 
 enum VerificationCodeOperation { REGISTER, FORGET }
 
-const VerificationCodeOperationValues = {"REGISTER": "注册账号", "FORGET": "忘记密码"};
+const VerificationCodeOperationValues = ["注册账号", "忘记密码"];
 
 enum Gender {
   MALE,
@@ -17,17 +17,12 @@ enum Gender {
   INCONVENIENT,
 }
 
-const GenderValues = {
-  "MALE": "男孩",
-  "FEMALE": "女孩",
-  "UNKNOWN": "未知",
-  "INCONVENIENT": "不便透露"
-};
+const GenderValues = ["男孩", "女孩", "未知", "不便透露"];
 
 enum PrivacyState { PUBLIC, PRIVATE }
 
-const PrivacyStateValues = {"PUBLIC": "公开", "PRIVATE": "隐藏"};
+const PrivacyStateValues = ["公开", "隐藏"];
 
 enum BlockState { NORMAL, SHIELD }
 
-const BlockStateValues = {"NORMAL": "正常", "PRIVATE": "屏蔽"};
+const BlockStateValues = ["正常", "屏蔽"];

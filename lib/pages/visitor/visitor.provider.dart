@@ -15,7 +15,7 @@ class VisitorState extends ChangeNotifier {
     notifyListeners();
   }
 
-  focus(String focus) {
+  focus(int focus) {
     info.focus = focus;
     notifyListeners();
   }

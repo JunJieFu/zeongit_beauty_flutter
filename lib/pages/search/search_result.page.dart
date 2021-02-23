@@ -22,20 +22,18 @@ class SearchResultPage extends StatefulWidget {
 class _SearchResultPageState extends State<SearchResultPage> {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PagePictureEntity page;
+  PagePictureEntity currPage;
   List<PictureEntity> list = [];
-  PageableEntity pageable =
-      PageableEntity(page: 0, size: 16, sort: "createDate,desc");
+  PageableEntity pageable = PageableEntity();
   SearchTuneParams tune = SearchTuneParams();
 
   Future<void> _refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0))
-      return;
+    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
     loading = true;
     var result = await PictureService.paging(pageable,
         tagList: widget.keyword,
@@ -44,11 +42,11 @@ class _SearchResultPageState extends State<SearchResultPage> {
         startDate: tune.date.startDate,
         endDate: tune.date.endDate);
     setState(() {
-      page = result.data;
+      currPage = result.data;
       if (pageIndex == 0) {
-        list = page.content;
+        list = currPage.items;
       } else {
-        list.addAll(page.content);
+        list.addAll(currPage.items);
       }
     });
     loading = false;
@@ -78,7 +76,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                       params: tune,
                       callback: (SearchTuneParams _) {
                         tune = _;
-                        paging(0);
+                        paging(1);
                       });
                 }));
               },
@@ -100,11 +98,13 @@ class _SearchResultPageState extends State<SearchResultPage> {
   }
 
   Widget _emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null && currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
           icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一些标签搜索哦。");
     } else {
-      return ListWaterFallWidget(page: page, list: list, paging: paging);
+      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 }

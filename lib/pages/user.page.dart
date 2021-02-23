@@ -80,27 +80,27 @@ class _UserPageState extends State<UserPage>
             ),
             ...buildListTile(Icons.star_border, "收藏", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return CollectionPage();
+                return CollectionPage(id: userState.info.id);
               }));
             }),
             ...buildListTile(MdiIcons.image_outline, "作品", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return WorksPage();
+                return WorksPage(id: userState.info.id);
               }));
             }),
             ...buildListTile(MdiIcons.shoe_print, "足迹", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FootprintPage();
+                return FootprintPage(id: userState.info.id);
               }));
             }),
             ...buildListTile(MdiIcons.account_heart_outline, "粉丝", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FollowerPage();
+                return FollowerPage(id: userState.info.id);
               }));
             }),
             ...buildListTile(MdiIcons.account_star_outline, "关注", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FollowingPage();
+                return FollowingPage(id: userState.info.id);
               }));
             }),
             ...buildListTile(MdiIcons.upload_outline, "上传", () {}),
@@ -124,7 +124,8 @@ class _UserPageState extends State<UserPage>
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
-      child: AvatarWidget(userState.info, fit: BoxFit.cover, size: size),
+      child: AvatarWidget(userState.info?.avatarUrl, userState.info?.nickname,
+          fit: BoxFit.cover, size: size),
     );
   }
 
@@ -152,8 +153,8 @@ class _UserPageState extends State<UserPage>
     ];
   }
 
-   signOut(userState){
-     showDialog(
+  signOut(userState) {
+    showDialog(
         context: context,
         builder: (ctx) {
           return AlertDialog(

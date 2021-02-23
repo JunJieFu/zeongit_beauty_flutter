@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 
 class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
@@ -15,7 +14,6 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(title: title, actions: <Widget>[
-//      UserWidget(),
       IconButton(
         icon: Icon(Icons.search),
         onPressed: () {

@@ -17,27 +17,22 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
     with AutomaticKeepAliveClientMixin {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PageUserBlackHoleEntity page;
+  PageUserBlackHoleEntity currPage;
   List<UserBlackHoleEntity> list = [];
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(0);
+    paging(1);
   }
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (this.page != null && this.page.last && pageIndex != 0))
-      return;
+    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
     loading = true;
     var result = await UserBlackHoleService.paging(pageable);
     setState(() {
-      page = result.data;
-      if (pageIndex == 0) {
-        list = page.content;
-      } else {
-        list.addAll(page.content);
-      }
+      currPage = result.data;
+      list.addAll(currPage.items);
     });
     loading = false;
   }
@@ -63,11 +58,13 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
   bool get wantKeepAlive => true;
 
   Widget emptyWidget() {
-    if (page != null && page.empty && page.first && page.last) {
+    if (currPage?.meta != null && currPage.meta.empty &&
+        currPage.meta.first &&
+        currPage.meta.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.account_heart_outline, title: "没有粉丝");
     } else {
-      return ListUserWidget(page: page, list: list, paging: paging);
+      return ListUserWidget(currPage: currPage, list: list, paging: paging);
     }
   }
 }
