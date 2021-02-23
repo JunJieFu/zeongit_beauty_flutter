@@ -41,12 +41,24 @@ class PictureService {
       DateTime endDate,
       int aspectRatio}) {
     var params = pageable.toJson();
-    params["tagList"] = tagList;
-//    params["precise"] = precise;
-//    params["name"] = name;
-//    params["startDate"] = startDate;
-//    params["endDate"] = endDate;
-//    params["aspectRatio"] = aspectRatio;
+    if(tagList!=null){
+      params["tagList"] = tagList;
+    }
+    if(precise!=null){
+      params["precise"] = precise;
+    }
+    if(name!=null){
+      params["name"] = name;
+    }
+    if(startDate!=null){
+      params["startDate"] = startDate;
+    }
+    if(endDate!=null){
+      params["endDate"] = endDate;
+    }
+    if(aspectRatio!=null){
+      params["aspectRatio"] = aspectRatio;
+    }
     return HttpUtil.get("/picture/paging", params: params);
   }
 

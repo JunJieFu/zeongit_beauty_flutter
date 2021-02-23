@@ -33,7 +33,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
+    if (this.loading || (currPage?.meta != null  && currPage.meta.last && pageIndex != 1)) return;
     loading = true;
     var result = await PictureService.paging(pageable,
         tagList: widget.keyword,
@@ -43,7 +43,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         endDate: tune.date.endDate);
     setState(() {
       currPage = result.data;
-      if (pageIndex == 0) {
+      if (currPage.meta.first) {
         list = currPage.items;
       } else {
         list.addAll(currPage.items);

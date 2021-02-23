@@ -164,7 +164,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-                    child: Text(widget.params.date.endDate != null
+                    child: Text(widget.params.date.startDate != null
                         ? DateFormat('yyyy-MM-dd')
                             .format(widget.params.date.startDate)
                         : ""),
