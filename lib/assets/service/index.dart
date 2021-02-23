@@ -101,7 +101,7 @@ class CollectionService {
     return HttpUtil.get("/collection/paging", params: params);
   }
 
-  static Future<ResultEntity<String>> focus(int pictureId) {
+  static Future<ResultEntity<int>> focus(int pictureId) {
     return HttpUtil.post("/collection/focus", params: {"pictureId": pictureId});
   }
 

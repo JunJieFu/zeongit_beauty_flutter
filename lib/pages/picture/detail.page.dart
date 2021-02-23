@@ -98,7 +98,7 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                       CollectIconBtnWidget(
                           picture: picture,
-                          callback: (picture, String focus) {
+                          callback: (picture, int focus) {
                             setState(() {
                               picture.focus = focus;
                             });
