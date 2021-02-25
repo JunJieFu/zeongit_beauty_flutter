@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
@@ -24,6 +25,17 @@ class BackgroundWidget extends StatelessWidget {
         ? CachedNetworkImage(
             imageUrl: _url,
             fit: fit,
+            progressIndicatorBuilder: (
+              BuildContext context,
+              String url,
+              DownloadProgress progress,
+            ) {
+              return Center(
+                child: Container(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
             errorWidget: (BuildContext context, String url, dynamic error) {
               return buildSvgPicture();
             })

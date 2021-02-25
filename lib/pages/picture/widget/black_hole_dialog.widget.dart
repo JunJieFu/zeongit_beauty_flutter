@@ -137,7 +137,7 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget> {
               top: 20.0,
             ),
             child: Text(
-              "加载中",
+              "加载中...",
               style: TextStyle(fontSize: 16.0),
             ),
           ),

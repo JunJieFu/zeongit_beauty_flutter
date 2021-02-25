@@ -1,3 +1,5 @@
+
+
 enum CollectState { STRANGE, CONCERNED, SElF }
 
 const CollectStateValues = ["未关注", "已关注", "自己"];
@@ -6,9 +8,9 @@ enum FollowState { STRANGE, CONCERNED, SElF }
 
 const FollowStateValues = ["未关注", "已关注", "自己"];
 
-enum VerificationCodeOperation { REGISTER, FORGET }
+enum CodeTypeConstant { SIGN_UP, FORGOT }
 
-const VerificationCodeOperationValues = ["注册账号", "忘记密码"];
+const CodeTypeConstantValues = ["注册账号", "忘记密码"];
 
 enum Gender {
   MALE,

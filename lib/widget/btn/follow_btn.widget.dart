@@ -9,6 +9,7 @@ import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
+
 class FollowBtn extends StatelessWidget {
   FollowBtn({Key key, @required this.user, @required this.callback})
       : super(key: key);
@@ -16,7 +17,7 @@ class FollowBtn extends StatelessWidget {
 
   final UserInfoEntity user;
 
-  final Function callback;
+  final void Function(UserInfoEntity, int) callback;
 
   @override
   Widget build(BuildContext context) {

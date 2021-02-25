@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
@@ -8,29 +9,41 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
+import '../assets/entity/base/result_entity.dart';
+import '../assets/entity/page_picture_entity.dart';
+import '../assets/entity/user_info_entity.dart';
+import '../plugins/style/index.style.dart';
+import '../provider/user.provider.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin {
+class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   bool loading = true;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  ScrollController scrollController = ScrollController();
+  List<PictureEntity> followingPictureList = [];
   List<PictureEntity> recommendList = [];
   List<PictureEntity> newList = [];
+  UserInfoEntity info;
+  PageableEntity pageable = PageableEntity(limit: 10);
 
   Future<void> refresh() async {
-    var result = await PictureService.pagingByRecommend(
-        PageableEntity(limit: 10));
-    var result2 = await PictureService.paging(
-        PageableEntity(limit: 10));
+    var result = await PictureService.pagingByRecommend(pageable);
+    var result2 = await PictureService.paging(pageable);
+    ResultEntity<PagePictureEntity> result3;
+    if (info != null) {
+      result3 = await PictureService.pagingByFollowing(pageable);
+    }
     setState(() {
-      recommendList.addAll(result.data.items);
-      newList.addAll(result2.data.items);
+      recommendList = result.data.items;
+      newList = result2.data.items;
+      followingPictureList = result3?.data?.items ?? [];
       loading = false;
     });
   }
@@ -38,7 +51,6 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -47,20 +59,44 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
-      key: refreshIndicatorKey,
-      onRefresh: refresh,
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          ListTile(title: Text("推荐作品")),
-          buildPictureList(recommendList),
-          ListTile(title: Text("最新作品")),
-          buildPictureList(newList)
-        ],
-      ),
-    );
+    return Consumer<UserState>(builder: (ctx, UserState userState, child) {
+      info = userState.info;
+      return RefreshIndicator(
+        key: refreshIndicatorKey,
+        onRefresh: refresh,
+        child: ListView(
+          controller: scrollController,
+          shrinkWrap: true,
+          children: <Widget>[
+            ...() {
+              return followingPictureList.isEmpty
+                  ? []
+                  : [
+                      ListTile(title: Text("已关注用户的作品")),
+                      buildPictureList(followingPictureList)
+                    ];
+            }(),
+            ...() {
+              return recommendList.isEmpty
+                  ? []
+                  : [
+                      ListTile(title: Text("推荐作品")),
+                      buildPictureList(recommendList)
+                    ];
+            }(),
+            ...() {
+              return newList.isEmpty
+                  ? []
+                  : [ListTile(title: Text("最新作品")), buildPictureList(newList)];
+            }(),
+          ],
+        ),
+      );
+    });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   buildPictureList(List<PictureEntity> list) {
     var gap = StyleConfig.listGap;
@@ -83,7 +119,8 @@ class _HomePageState extends State<HomePage>
             return ImageInkWidget(
                 constrained: true,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(StyleConfig.pictureRadius)),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(StyleConfig.pictureRadius)),
                     child: PictureWidget(
                       picture.url,
                       style: PictureStyle.specifiedWidth,
@@ -98,6 +135,9 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  parentTabTap() {
+    scrollController.animateTo(0,
+        duration: Duration(milliseconds: StyleConfig.durationMilliseconds), curve: Curves.ease);
+    refreshIndicatorKey.currentState?.show();
+  }
 }

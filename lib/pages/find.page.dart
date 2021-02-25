@@ -8,18 +8,22 @@ import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
+import '../plugins/style/index.style.dart';
+
 class FindPage extends StatefulWidget {
   FindPage({Key key}) : super(key: key);
 
   @override
-  _FindPageState createState() => _FindPageState();
+  FindPageState createState() => FindPageState();
 }
 
-class _FindPageState extends State<FindPage>
+class FindPageState extends State<FindPage>
     with AutomaticKeepAliveClientMixin {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  GlobalKey<ListWaterFallWidgetState> pictureListWaterFallWidgetKey =
+      GlobalKey<ListWaterFallWidgetState>();
   PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
@@ -30,7 +34,7 @@ class _FindPageState extends State<FindPage>
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
+    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
     loading = true;
     var result = await PictureService.pagingByRecommend(pageable);
     setState(() {
@@ -56,21 +60,29 @@ class _FindPageState extends State<FindPage>
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-        key: refreshIndicatorKey,
-        onRefresh: refresh,
-        child: emptyWidget());
+        key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
   }
 
   Widget emptyWidget() {
-    if (currPage?.meta != null && currPage.meta.empty &&
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.compass,
-      title: "没有作品",
-    text: "难道是系统出现什么问题了。");
+          icon: MdiIcons.compass, title: "没有作品", text: "难道是系统出现什么问题了。");
     } else {
-      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
+      return ListWaterFallWidget(
+          key: pictureListWaterFallWidgetKey,
+          currPage: currPage,
+          list: list,
+          paging: paging);
     }
+  }
+
+  parentTabTap() {
+    pictureListWaterFallWidgetKey.currentState?.scrollController?.animateTo(0,
+        duration: Duration(milliseconds: StyleConfig.durationMilliseconds),
+        curve: Curves.ease);
+    refreshIndicatorKey.currentState?.show();
   }
 }

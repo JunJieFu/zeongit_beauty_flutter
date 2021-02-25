@@ -34,7 +34,7 @@ class SearchTunePage extends StatefulWidget {
 
   final SearchTuneParams params;
 
-  final Function callback;
+  final void Function(SearchTuneParams) callback;
 
   @override
   _SearchTunePageState createState() => _SearchTunePageState();

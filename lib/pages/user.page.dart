@@ -16,6 +16,9 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
+import '../plugins/style/mdi_icons.style.dart';
+import 'following_new.page.dart';
+
 class UserPage extends StatefulWidget {
   UserPage({Key key}) : super(key: key);
 
@@ -78,6 +81,11 @@ class _UserPageState extends State<UserPage>
                 ),
               ],
             ),
+            ...buildListTile(MdiIcons.account_multiple_outline, "关注最新", () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return FollowingNewPage();
+              }));
+            }),
             ...buildListTile(Icons.star_border, "收藏", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return CollectionPage(id: userState.info.id);

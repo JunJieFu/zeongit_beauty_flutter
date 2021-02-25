@@ -17,7 +17,7 @@ class BlockUserIconBtnWidget extends StatelessWidget {
 
   final UserBlackHoleEntity user;
 
-  final Function callback;
+  final void Function(UserBlackHoleEntity, int) callback;
 
   @override
   Widget build(BuildContext context) {

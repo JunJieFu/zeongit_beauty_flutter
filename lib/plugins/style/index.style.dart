@@ -17,4 +17,5 @@ class StyleConfig {
   static final gap = _gap;
   static final listGap = _listGap;
   static final pictureRadius = 2.0;
+  static final durationMilliseconds = 200;
 }

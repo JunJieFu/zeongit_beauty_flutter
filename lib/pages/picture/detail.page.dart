@@ -122,16 +122,16 @@ class _DetailPageState extends State<DetailPage> {
                         children: <Widget>[
                           TitleWidget(picture.name),
                           TextWidget("创建于${picture.createDate}"),
-                          Wrap(
+                          Row(
                             children: <Widget>[
-                              Wrap(children: <Widget>[
+                              Row(children: <Widget>[
                                 LinkWidget("${picture.viewAmount}"),
                                 TextWidget("人阅读")
                               ]),
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: StyleConfig.gap * 3),
-                                  child: Wrap(children: <Widget>[
+                                  child: Row(children: <Widget>[
                                     LinkWidget("${picture.likeAmount}"),
                                     TextWidget("人喜欢")
                                   ])),

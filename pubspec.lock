@@ -167,6 +167,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.1"
+  flutter_chips_input:
+    dependency: "direct main"
+    description:
+      name: flutter_chips_input
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.9.5"
   flutter_html:
     dependency: "direct main"
     description:
