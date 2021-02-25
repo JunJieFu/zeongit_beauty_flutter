@@ -22,6 +22,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   FocusNode focusNode = FocusNode();
+  bool loading = false;
 
   @override
   void initState() {
@@ -68,7 +69,25 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                       child: RaisedButton(
                         textColor: Colors.white,
                         color: StyleConfig.primaryColor,
-                        child: Text("登录"),
+                        child: loading
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                            Colors.white),
+                                        strokeWidth: 3,
+                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: Text("登陆中..."),
+                                  )
+                                ],
+                              )
+                            : Text("登陆"),
                         onPressed: () {
                           signIn(context, _userState);
                         },
@@ -94,8 +113,15 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   }
 
   signIn(BuildContext context, UserState userState) async {
+    if (loading) return;
+    setState(() {
+      loading = true;
+    });
     var result =
         await UserService.signIn(phoneController.text, passwordController.text);
+    setState(() {
+      loading = false;
+    });
     await ResultUtil.check(result);
     await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
     await userState.getInfo();

@@ -20,10 +20,10 @@ class ListWaterFallWidget extends StatefulWidget {
   final paging;
 
   @override
-  _ListWaterFallWidgetState createState() => _ListWaterFallWidgetState();
+  ListWaterFallWidgetState createState() => ListWaterFallWidgetState();
 }
 
-class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
+class ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -42,7 +42,6 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return WaterfallFlow.builder(
         controller: _scrollController,
         //cacheExtent: 0.0,
@@ -72,5 +71,10 @@ class _ListWaterFallWidgetState extends State<ListWaterFallWidget> {
                 }));
               });
         });
+  }
+
+  goTo() {
+    print(2);
+    _scrollController.jumpTo(0);
   }
 }

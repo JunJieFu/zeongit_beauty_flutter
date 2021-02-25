@@ -26,6 +26,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
   SearchTuneParams tune = SearchTuneParams();
+  GlobalKey<ListWaterFallWidgetState> pictureListWaterFallWidget;
 
   Future<void> _refresh() async {
     paging(1);
@@ -33,7 +34,9 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null  && currPage.meta.last && pageIndex != 1)) return;
+    if (this.loading ||
+        (currPage?.meta != null && currPage.meta.last && pageIndex != 1))
+      return;
     loading = true;
     var result = await PictureService.paging(pageable,
         tagList: widget.keyword,
@@ -44,6 +47,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
     setState(() {
       currPage = result.data;
       if (currPage.meta.first) {
+        pictureListWaterFallWidget?.currentState?.goTo();
         list = currPage.items;
       } else {
         list.addAll(currPage.items);
@@ -56,6 +60,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
   void initState() {
     super.initState();
     refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    pictureListWaterFallWidget = GlobalKey<ListWaterFallWidgetState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
@@ -98,13 +103,19 @@ class _SearchResultPageState extends State<SearchResultPage> {
   }
 
   Widget _emptyWidget() {
-    if (currPage?.meta != null && currPage.meta.empty &&
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(
           icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一些标签搜索哦。");
     } else {
-      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
+
+      return ListWaterFallWidget(
+          key: pictureListWaterFallWidget,
+          currPage: currPage,
+          list: list,
+          paging: paging);
     }
   }
 }

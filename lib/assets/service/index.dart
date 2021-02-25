@@ -41,22 +41,22 @@ class PictureService {
       DateTime endDate,
       int aspectRatio}) {
     var params = pageable.toJson();
-    if(tagList!=null){
+    if (tagList != null) {
       params["tagList"] = tagList;
     }
-    if(precise!=null){
+    if (precise != null) {
       params["precise"] = precise;
     }
-    if(name!=null){
+    if (name != null) {
       params["name"] = name;
     }
-    if(startDate!=null){
+    if (startDate != null) {
       params["startDate"] = startDate;
     }
-    if(endDate!=null){
+    if (endDate != null) {
       params["endDate"] = endDate;
     }
-    if(aspectRatio!=null){
+    if (aspectRatio != null) {
       params["aspectRatio"] = aspectRatio;
     }
     return HttpUtil.get("/picture/paging", params: params);
@@ -134,8 +134,8 @@ class WorksService {
 }
 
 class FootprintService {
-  static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      int targetId) {
+  static Future<ResultEntity<PagePictureEntity>> paging(
+      PageableEntity pageable, int targetId) {
     var params = pageable.toJson();
     params["targetId"] = targetId;
     return HttpUtil.get("/footprint/paging", params: params);

@@ -16,7 +16,7 @@ class FollowIconBtn extends StatelessWidget {
 
   final UserInfoEntity user;
 
-  final Function callback;
+  final void Function(UserInfoEntity, int) callback;
 
   @override
   Widget build(BuildContext context) {
