@@ -76,7 +76,7 @@ class PictureService {
     return HttpUtil.get("/picture/pagingRecommendById", params: params);
   }
 
-  static pagingByFollowing(PageableEntity pageable) {
+  static Future<ResultEntity<PagePictureEntity>> pagingByFollowing(PageableEntity pageable) {
     return HttpUtil.get("/picture/pagingByFollowing",
         params: pageable.toJson());
   }

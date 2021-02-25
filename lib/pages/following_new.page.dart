@@ -8,17 +8,18 @@ import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-class NewPage extends StatefulWidget {
-  NewPage({Key key}) : super(key: key);
+import '../assets/service/index.dart';
+
+class FollowingNewPage extends StatefulWidget {
+  FollowingNewPage({Key key}) : super(key: key);
 
   @override
-  _NewPageState createState() => _NewPageState();
+  _FollowingNewPageState createState() => _FollowingNewPageState();
 }
 
-class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
+class _FollowingNewPageState extends State<FollowingNewPage> {
   bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
   PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
@@ -29,9 +30,9 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
+    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
     loading = true;
-    var result = await PictureService.paging(pageable);
+    var result = await PictureService.pagingByFollowing(pageable);
     setState(() {
       currPage = result.data;
       list.addAll(currPage.items);
@@ -42,6 +43,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
+    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
@@ -49,25 +51,27 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return RefreshIndicator(
-        key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
+    return Scaffold(
+        appBar: AppBar(title: Text("关注最新")),
+        body: RefreshIndicator(
+            key: refreshIndicatorKey,
+            onRefresh: refresh,
+            child: emptyWidget()));
   }
 
   Widget emptyWidget() {
-    if (currPage?.meta != null && currPage.meta.empty &&
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.alpha_n_box_outline,
+          icon: MdiIcons.account_multiple_outline,
           title: "没有作品",
-          text: "难道是系统出现什么问题了。");
+          text: "您可以前往发现浏览一些系统推荐给您的作品哦。");
     } else {
-      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
+      return ListWaterFallWidget(
+          currPage: currPage, list: list, paging: paging);
     }
   }
 }
