@@ -24,14 +24,14 @@ class ListWaterFallWidget extends StatefulWidget {
 }
 
 class ListWaterFallWidgetState extends State<ListWaterFallWidget> {
-  ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent -
-              _scrollController.position.pixels <
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent -
+              scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
           widget.paging(widget.currPage.meta.currentPage + 1);
@@ -43,7 +43,7 @@ class ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   @override
   Widget build(BuildContext context) {
     return WaterfallFlow.builder(
-        controller: _scrollController,
+        controller: scrollController,
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
@@ -74,7 +74,6 @@ class ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   }
 
   goTo() {
-    print(2);
-    _scrollController.jumpTo(0);
+    scrollController.jumpTo(0);
   }
 }

@@ -12,20 +12,21 @@ import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 import '../assets/entity/base/result_entity.dart';
 import '../assets/entity/page_picture_entity.dart';
 import '../assets/entity/user_info_entity.dart';
+import '../plugins/style/index.style.dart';
 import '../provider/user.provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin {
+class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   bool loading = true;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  ScrollController scrollController = ScrollController();
   List<PictureEntity> followingPictureList = [];
   List<PictureEntity> recommendList = [];
   List<PictureEntity> newList = [];
@@ -33,13 +34,11 @@ class _HomePageState extends State<HomePage>
   PageableEntity pageable = PageableEntity(limit: 10);
 
   Future<void> refresh() async {
-    var result =
-        await PictureService.pagingByRecommend(pageable);
+    var result = await PictureService.pagingByRecommend(pageable);
     var result2 = await PictureService.paging(pageable);
     ResultEntity<PagePictureEntity> result3;
     if (info != null) {
-      result3 =
-          await PictureService.pagingByFollowing(pageable);
+      result3 = await PictureService.pagingByFollowing(pageable);
     }
     setState(() {
       recommendList = result.data.items;
@@ -52,7 +51,6 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -67,15 +65,16 @@ class _HomePageState extends State<HomePage>
         key: refreshIndicatorKey,
         onRefresh: refresh,
         child: ListView(
+          controller: scrollController,
           shrinkWrap: true,
           children: <Widget>[
             ...() {
               return followingPictureList.isEmpty
                   ? []
                   : [
-                ListTile(title: Text("已关注用户的作品")),
-                buildPictureList(followingPictureList)
-              ];
+                      ListTile(title: Text("已关注用户的作品")),
+                      buildPictureList(followingPictureList)
+                    ];
             }(),
             ...() {
               return recommendList.isEmpty
@@ -95,6 +94,9 @@ class _HomePageState extends State<HomePage>
       );
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   buildPictureList(List<PictureEntity> list) {
     var gap = StyleConfig.listGap;
@@ -133,6 +135,9 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  parentTabTap() {
+    scrollController.animateTo(0,
+        duration: Duration(milliseconds: StyleConfig.durationMilliseconds), curve: Curves.ease);
+    refreshIndicatorKey.currentState?.show();
+  }
 }
