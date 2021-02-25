@@ -4,6 +4,8 @@ import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 
+import '../constant/status.constant.dart';
+
 class HttpUtil {
   static Future<ResultEntity<T>> get<T>(String url,
       {Map<String, dynamic> params, String host}) async {
@@ -12,13 +14,21 @@ class HttpUtil {
     }
     try {
       String token = _getToken();
-      Options options =
-          Options(headers: token != null ? {"Authorization": "Bearer " + token} : {});
+      Options options = Options(
+          headers: token != null ? {"Authorization": "Bearer " + token} : {});
       Response response = await Dio()
           .get(host + url, queryParameters: params, options: options);
 
-      var result = ResultEntity.fromJson<T>(response.data);
-      return result;
+      var result = ResultEntity(
+          status: response.data["status"],
+          message: response.data["message"],
+          data: response.data["data"]);
+      try {
+        return ResultEntity.fromJson<T>(response.data);
+      } catch (error) {
+        return ResultEntity(
+            status: result.status, message: result.message, data: null);
+      }
     } catch (error) {
       return ResultEntity(status: 500, message: "服务器错误", data: null);
     }
@@ -31,14 +41,24 @@ class HttpUtil {
     }
     try {
       String token = _getToken();
-      Options options =
-          Options(headers: token != null ? {"Authorization": "Bearer " + token} : {});
+      Options options = Options(
+          headers: token != null ? {"Authorization": "Bearer " + token} : {});
       Response response =
           await Dio().post(host + url, data: params, options: options);
-      var result = ResultEntity.fromJson<T>(response.data);
-      return result;
+
+      var result = ResultEntity(
+          status: response.data["status"],
+          message: response.data["message"],
+          data: response.data["data"]);
+      try {
+        return ResultEntity.fromJson<T>(response.data);
+      } catch (error) {
+        return ResultEntity(
+            status: result.status, message: result.message, data: null);
+      }
     } catch (error) {
-      return ResultEntity(status: 500, message: "服务器错误", data: null);
+      return ResultEntity(
+          status: StatusCode.SUCCESS, message: "服务器错误", data: null);
     }
   }
 

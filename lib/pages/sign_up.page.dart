@@ -2,29 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/sign_code.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-import '../assets/constant/enum.constant.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class SignInPage extends StatefulWidget {
-  SignInPage({Key key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  SignUpPage(this.phone, {Key key}) : super(key: key);
+
+  final String phone;
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
-  TextEditingController phoneController = TextEditingController();
+class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
+  TextEditingController codeController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool loading = false;
 
@@ -40,7 +39,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var _userState = Provider.of<UserState>(context, listen: false);
     return Scaffold(
-        appBar: AppBar(title: Text("登录您的账号")),
+        appBar: AppBar(title: Text("注册您的账号")),
         body: ListView(
           children: <Widget>[
             Padding(
@@ -51,18 +50,27 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: phoneController,
-                      icon: MdiIcons.cellphone,
-                      hintText: '手机号码',
+                      controller: codeController,
+                      icon: MdiIcons.check,
+                      hintText: '验证码',
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: _gap * 2),
+                    padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
                       controller: passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _gap * 2),
+                    child: IconTextField(
+                      controller: rePasswordController,
+                      icon: MdiIcons.lock_check,
+                      obscureText: true,
+                      hintText: '确认密码',
                     ),
                   ),
                   Padding(
@@ -87,30 +95,17 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16),
-                                    child: Text("登陆中..."),
+                                    child: Text("注册登录中..."),
                                   )
                                 ],
                               )
-                            : Text("登陆"),
+                            : Text("确认注册并登录"),
                         onPressed: () {
-                          signIn(context, _userState);
+                          signUp(context, _userState);
                         },
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: _gap / 2),
-                    child: LinkWidget("忘记了登录密码？", onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return SignCodePage(CodeTypeConstant.SIGN_UP);
-                      }));
-                    }),
-                  ),
-                  LinkWidget("没有登录账号，立即创建一个！", onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return SignCodePage(CodeTypeConstant.FORGOT);
-                    }));
-                  }),
+                  )
                 ],
               ),
             )
@@ -121,17 +116,18 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    phoneController.dispose();
+    codeController.dispose();
     passwordController.dispose();
+    rePasswordController.dispose();
   }
 
-  signIn(BuildContext context, UserState userState) async {
+  signUp(BuildContext context, UserState userState) async {
     if (loading) return;
     setState(() {
       loading = true;
     });
-    var result =
-        await UserService.signIn(phoneController.text, passwordController.text);
+    var result = await UserService.singUp(
+        codeController.text, widget.phone, passwordController.text);
     setState(() {
       loading = false;
     });

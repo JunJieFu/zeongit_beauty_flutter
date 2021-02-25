@@ -18,7 +18,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   TabController tabController;
 
   List<TabItemModel> tabList = [
-    TabItemModel(view: HomePage(), tab: Tab(icon: Icon(MdiIcons.home))),
+    TabItemModel(view: HomePage(), tab: Tab(child: Text("123"))),
     TabItemModel(view: FindPage(), tab: Tab(icon: Icon(MdiIcons.compass))),
     TabItemModel(
         view: NewPage(), tab: Tab(icon: Icon(MdiIcons.alpha_n_box_outline))),
