@@ -12,7 +12,7 @@
     <!-- You can insert your own image assets here -->
     <item>
         <bitmap
-            android:gravity="clip_vertical"
+            android:gravity="center"
             android:src="@drawable/run" />
     </item>
 </layer-list>
