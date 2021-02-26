@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
@@ -10,6 +11,7 @@ import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart
 import 'package:zeongitbeautyflutter/pages/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
@@ -22,20 +24,17 @@ void main() {
 
 _init() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+//      statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await StorageManager.init();
+  PermissionUtil.storage();
   runApp(App());
 }
 
-const List<Locale> an = [
-  const Locale('zh', 'CH')
-];
-const List<Locale> ios = [
-  const Locale('en', 'US')
-];
+const List<Locale> an = [const Locale('zh', 'CH')];
+const List<Locale> ios = [const Locale('en', 'US')];
 
 class App extends StatelessWidget {
   @override

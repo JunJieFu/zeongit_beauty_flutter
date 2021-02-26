@@ -40,6 +40,9 @@ dependencies:
   path_provider: ^1.6.18
   flutter_html: 1.1.1
   flutter_chips_input: 1.9.5
+  permission_handler: 5.1.0+2
+  image_gallery_saver: 1.6.8
+  photo_view: 0.10.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

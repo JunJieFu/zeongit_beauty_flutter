@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
@@ -17,7 +18,6 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
-
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -82,9 +82,7 @@ class _DetailPageState extends State<DetailPage> {
                     queryData.size.width * picture.height / picture.width,
                 //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
                 flexibleSpace: FlexibleSpaceBar(
-                  background: PictureWidget(picture.url,
-                      style: PictureStyle.specifiedHeight1200,
-                      fit: BoxFit.cover),
+                  background: buildMainPicture(),
                   collapseMode: CollapseMode.pin,
                 ),
               ),
@@ -139,7 +137,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: pageGap),
-                            child: Html(data:picture.introduction),
+                            child: Html(data: picture.introduction),
                           )
                         ],
                       )),
@@ -175,6 +173,23 @@ class _DetailPageState extends State<DetailPage> {
             ],
           ))
         : Scaffold(body: Container());
+  }
+
+  GestureDetector buildMainPicture() {
+    GlobalKey<PictureWidgetState> pictureWidgetKey =
+        GlobalKey<PictureWidgetState>();
+    return GestureDetector(
+      child: PictureWidget(picture.url,
+          key: pictureWidgetKey,
+          style: PictureStyle.specifiedHeight1200,
+          fit: BoxFit.cover),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return ViewPage(picture.url);
+        }));
+//        pictureWidgetKey.currentState.saveStorage();
+      },
+    );
   }
 
   InkWell buildAvatar() {
