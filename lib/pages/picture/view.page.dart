@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
 
@@ -22,40 +22,47 @@ class ViewPage extends StatefulWidget {
 }
 
 class ViewPageState extends State<ViewPage> {
-  CachedNetworkImageProvider cached;
+  String completeUrl;
+
+  @override
+  void initState() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    cached = CachedNetworkImageProvider(
-        "${ConfigConstant.QINIU_PICTURE}/${widget.url}");
+    completeUrl = "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.maybePop(context);
-            },
-          ),
-          actions: [
-            PopupMenuButton(
-              icon: ShadowIconWidget(MdiIcons.dots_horizontal,
-                  color: Colors.white),
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    value: 'save',
-                    child: Text('保存图片'),
-                  ),
-                ];
-              },
-              onSelected: selectMenu,
-            )
-          ],
+      backgroundColor: Colors.black,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        brightness: Brightness.dark,
+        leading: IconButton(
+          icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
         ),
+        actions: [
+          PopupMenuButton(
+            icon:
+                ShadowIconWidget(MdiIcons.dots_horizontal, color: Colors.white),
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  value: 'save',
+                  child: Text('保存图片'),
+                ),
+              ];
+            },
+            onSelected: selectMenu,
+          )
+        ],
+      ),
         body: PhotoView(
-          imageProvider: cached,
+          imageProvider: CachedNetworkImageProvider(completeUrl),
           loadingBuilder: (BuildContext context, ImageChunkEvent event) {
             return Center(
               child: Container(
@@ -63,7 +70,8 @@ class ViewPageState extends State<ViewPage> {
               ),
             );
           },
-        ));
+        )
+    );
   }
 
   selectMenu(String value) {
@@ -76,23 +84,14 @@ class ViewPageState extends State<ViewPage> {
 
   saveStorage() async {
     if (await PermissionUtil.storage()) {
-      DefaultCacheManager manager =
-          cached?.cacheManager ?? DefaultCacheManager();
-      Map<String, String> headers = cached?.headers;
-      var file = await manager.getSingleFile(
-        cached.url,
-        headers: headers,
-      );
-      final result =
-          await ImageGallerySaver.saveImage(await file.readAsBytes());
-
-      if (result == null || result == '') {
+      final success = await GallerySaver.saveImage(completeUrl);
+      if (success) {
+        Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
+      } else {
         Fluttertoast.showToast(
             msg: "保存失败",
             gravity: ToastGravity.BOTTOM,
             backgroundColor: StyleConfig.errorColor);
-      } else {
-        Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
       }
     }
   }

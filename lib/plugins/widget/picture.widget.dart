@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
@@ -34,16 +34,16 @@ class PictureWidget extends StatefulWidget {
 }
 
 class PictureWidgetState extends State<PictureWidget> {
-  CachedNetworkImage cached;
+  String completeUrl;
 
   @override
   Widget build(BuildContext context) {
-    var _url = widget.style != null
-        ? "${ConfigConstant.QINIU_PICTURE}/${widget.url}${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(widget.style)}"
-        : "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
     if (widget.url != null) {
-      cached = CachedNetworkImage(
-          imageUrl: _url,
+      completeUrl = widget.style != null
+          ? "${ConfigConstant.QINIU_PICTURE}/${widget.url}${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(widget.style)}"
+          : "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
+      return  CachedNetworkImage(
+          imageUrl: completeUrl,
           fit: widget.fit,
           progressIndicatorBuilder:
               (BuildContext context, String url, DownloadProgress progress) {
@@ -56,7 +56,6 @@ class PictureWidgetState extends State<PictureWidget> {
           errorWidget: (BuildContext context, String url, dynamic error) {
             return buildSvgPicture();
           });
-      return cached;
     } else {
       return buildSvgPicture();
     }
@@ -66,32 +65,21 @@ class PictureWidgetState extends State<PictureWidget> {
       SvgPicture.asset("assets/images/default-picture.svg", fit: widget.fit);
 
   saveStorage() async {
-    if(await PermissionUtil.storage()){
-      if (cached != null) {
-        DefaultCacheManager manager =
-            cached?.cacheManager ?? DefaultCacheManager();
-        Map<String, String> headers = cached?.httpHeaders;
-        var file = await manager.getSingleFile(
-          cached.imageUrl,
-          headers: headers,
-        );
-        final result =
-        await ImageGallerySaver.saveImage(await file.readAsBytes());
-
-        if (result == null || result == '') {
-          Fluttertoast.showToast(
-              msg: "保存失败",
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: StyleConfig.errorColor);
-        } else {
-          Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
-        }
+    if (await PermissionUtil.storage()) {
+      final success = await GallerySaver.saveImage(completeUrl);
+      if (success) {
+        Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
       } else {
         Fluttertoast.showToast(
             msg: "保存失败",
             gravity: ToastGravity.BOTTOM,
             backgroundColor: StyleConfig.errorColor);
       }
+    } else {
+      Fluttertoast.showToast(
+          msg: "保存失败",
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: StyleConfig.errorColor);
     }
   }
 }
