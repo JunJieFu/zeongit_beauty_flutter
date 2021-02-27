@@ -22,7 +22,6 @@ class _BlackHoleDialogWidgetState
     extends FutureBuildAbstract<BlackHoleDialogWidget, BlackHoleEntity> {
   @override
   Future<ResultEntity<BlackHoleEntity>> fetchData() async {
-    await Future.delayed(Duration(milliseconds: 500));
     return await PictureBlackHoleService.get(widget.id);
   }
 
@@ -30,6 +29,54 @@ class _BlackHoleDialogWidgetState
   Widget build(BuildContext context) {
     return futureBuilder();
   }
+
+  AlertDialog buildLoading() {
+    return AlertDialog(
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CircularProgressIndicator(),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 20.0,
+            ),
+            child: Text(
+              "加载中...",
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildError(BuildContext context) => buildLoading();
+
+  @override
+  Widget buildMain(BuildContext context, ResultEntity<BlackHoleEntity> result) {
+    return _View(blackHole: source);
+  }
+
+  @override
+  Widget buildSkeleton(BuildContext context) => buildLoading();
+}
+
+class _View extends StatefulWidget {
+  _View({Key key, @required this.blackHole}) : super(key: key);
+
+  final BlackHoleEntity blackHole;
+
+  @override
+  _ViewState createState() => _ViewState(blackHole);
+}
+
+class _ViewState extends State<_View> {
+  _ViewState(this.blackHole);
+
+  BlackHoleEntity blackHole;
 
   List<Padding> buildTagList(List<TagBlackHoleEntity> tagList) {
     return tagList
@@ -82,35 +129,10 @@ class _BlackHoleDialogWidgetState
     );
   }
 
-  AlertDialog buildLoading() {
-    return AlertDialog(
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          CircularProgressIndicator(),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20.0,
-            ),
-            child: Text(
-              "加载中...",
-              style: TextStyle(fontSize: 16.0),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
-  Widget buildError(BuildContext context) => buildLoading();
-
-  @override
-  Widget buildMain(BuildContext context, ResultEntity<BlackHoleEntity> result) {
-    var user = source.user;
-    var tagList = source.tagList;
+  Widget build(BuildContext context) {
+    var user = blackHole.user;
+    var tagList = blackHole.tagList;
     return SimpleDialog(
       title: Text("屏蔽设置"),
       children: <Widget>[
@@ -143,7 +165,4 @@ class _BlackHoleDialogWidgetState
       ],
     );
   }
-
-  @override
-  Widget buildSkeleton(BuildContext context) => buildLoading();
 }

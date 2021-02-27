@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
-
-import 'file:///D:/project/my/flutter/zeongit_beauty_flutter/lib/pages/picture/detail/detail.page.dart';
 
 class PictureListWaterfallWidget extends StatefulWidget {
   PictureListWaterfallWidget({Key key, this.currPage, this.list, this.paging})
@@ -20,10 +19,12 @@ class PictureListWaterfallWidget extends StatefulWidget {
   final paging;
 
   @override
-  PictureListWaterfallWidgetState createState() => PictureListWaterfallWidgetState();
+  PictureListWaterfallWidgetState createState() =>
+      PictureListWaterfallWidgetState();
 }
 
-class PictureListWaterfallWidgetState extends State<PictureListWaterfallWidget> {
+class PictureListWaterfallWidgetState
+    extends State<PictureListWaterfallWidget> {
   ScrollController scrollController = ScrollController();
 
   @override
