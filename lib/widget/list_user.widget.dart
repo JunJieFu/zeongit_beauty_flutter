@@ -18,18 +18,18 @@ class ListUserWidget extends StatefulWidget {
   final paging;
 
   @override
-  _ListUserWidgetState createState() => _ListUserWidgetState();
+  ListUserWidgetState createState() => ListUserWidgetState();
 }
 
-class _ListUserWidgetState extends State<ListUserWidget> {
-  ScrollController _scrollController = ScrollController();
+class ListUserWidgetState extends State<ListUserWidget> {
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent -
-              _scrollController.position.pixels <
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent -
+          scrollController.position.pixels <
           150) {
         if (widget.paging != null) {
           widget.paging(widget.currPage.meta.currentPage + 1);
@@ -41,7 +41,8 @@ class _ListUserWidgetState extends State<ListUserWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        controller: _scrollController,
+        controller: scrollController,
+        physics: AlwaysScrollableScrollPhysics(),
         itemCount: widget.list?.length,
         itemBuilder: (BuildContext context, int index) {
           UserInfoEntity user = widget.list[index];
@@ -101,5 +102,9 @@ class _ListUserWidgetState extends State<ListUserWidget> {
         }));
       },
     );
+  }
+
+  goTo() {
+    scrollController.jumpTo(0);
   }
 }
