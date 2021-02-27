@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class FootprintPage extends StatefulWidget {
@@ -17,34 +16,10 @@ class FootprintPage extends StatefulWidget {
   _FootprintPageState createState() => _FootprintPageState();
 }
 
-class _FootprintPageState extends State<FootprintPage> {
-  bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PagePictureEntity currPage;
-  List<PictureEntity> list = [];
-  PageableEntity pageable = PageableEntity();
-
-  Future<void> refresh() async {
-    paging(1);
-  }
-
-  Future<void> paging(int pageIndex) async {
-    pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
-    loading = true;
-    var result = await FootprintService.paging(pageable, widget.id);
-    setState(() {
-      currPage = result.data;
-      list.addAll(currPage.items);
-    });
-    loading = false;
-  }
-
+class _FootprintPageState extends PagePictureAbstract<FootprintPage> {
   @override
   void initState() {
     super.initState();
-    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -53,26 +28,21 @@ class _FootprintPageState extends State<FootprintPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("足迹")),
+        appBar: AppBar(title: Text("收藏夹")),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,
             child: emptyWidget()));
   }
 
-  Widget emptyWidget() {
-    if (currPage?.meta != null &&
-        currPage.meta.empty &&
-        currPage.meta.first &&
-        currPage.meta.last) {
-      return TipsPageCardWidget(
-          icon: MdiIcons.star_outline,
-          title: "没有作品",
-          text: "您可以前往发现浏览一些系统推荐给您的作品哦。",
-          btnDesc: "前往发现");
-    } else {
-      return ListWaterFallWidget(
-          currPage: currPage, list: list, paging: paging);
-    }
+  @override
+  Future<ResultEntity<PagePictureEntity>> dao() => FootprintService.paging(pageable, widget.id);
+
+  @override
+  TipsPageCardWidget buildEmptyType() {
+    return TipsPageCardWidget(
+        icon: MdiIcons.shoe_print,
+        title: "没有作品",
+        text: "您可以前往发现浏览一些系统推荐给您的作品哦。");
   }
 }

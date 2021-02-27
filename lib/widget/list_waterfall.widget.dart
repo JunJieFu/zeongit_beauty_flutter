@@ -44,6 +44,7 @@ class ListWaterFallWidgetState extends State<ListWaterFallWidget> {
   Widget build(BuildContext context) {
     return WaterfallFlow.builder(
         controller: scrollController,
+        physics: AlwaysScrollableScrollPhysics(),
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(

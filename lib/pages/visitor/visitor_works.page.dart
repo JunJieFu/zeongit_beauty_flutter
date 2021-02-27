@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class VisitorWorksPage extends StatefulWidget {
@@ -15,30 +14,9 @@ class VisitorWorksPage extends StatefulWidget {
   _VisitorWorksPageState createState() => _VisitorWorksPageState();
 }
 
-class _VisitorWorksPageState extends State<VisitorWorksPage>
+class _VisitorWorksPageState extends PagePictureAbstract<VisitorWorksPage>
     with AutomaticKeepAliveClientMixin {
-  bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PagePictureEntity currPage;
-  List<PictureEntity> list = [];
-  PageableEntity pageable = PageableEntity();
   int targetId;
-
-  Future<void> refresh() async {
-    paging(1);
-  }
-
-  Future<void> paging(int pageIndex) async {
-    pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
-    loading = true;
-    var result = await WorksService.paging(pageable, targetId);
-    setState(() {
-      currPage = result.data;
-      list.addAll(currPage.items);
-    });
-    loading = false;
-  }
 
   @override
   bool get wantKeepAlive => true;
@@ -46,8 +24,6 @@ class _VisitorWorksPageState extends State<VisitorWorksPage>
   @override
   void initState() {
     super.initState();
-    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -64,16 +40,11 @@ class _VisitorWorksPageState extends State<VisitorWorksPage>
     });
   }
 
-  Widget emptyWidget() {
-    if (currPage?.meta != null && currPage.meta.empty &&
-        currPage.meta.first &&
-        currPage.meta.last) {
-      return TipsPageCardWidget(
-          icon: MdiIcons.image_outline,
-          title: "没有作品",
-          text: "可以上传一些作品到我们哦。");
-    } else {
-      return ListWaterFallWidget(currPage: currPage, list: list, paging: paging);
-    }
-  }
+  @override
+  TipsPageCardWidget buildEmptyType() => TipsPageCardWidget(
+      icon: MdiIcons.image_outline, title: "没有作品", text: "您可以通知作者上传一些作品给我们哦。");
+
+  @override
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      WorksService.paging(pageable, targetId);
 }

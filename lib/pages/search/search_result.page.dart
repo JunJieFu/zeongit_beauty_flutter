@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tune.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class SearchResultPage extends StatefulWidget {
@@ -19,20 +18,8 @@ class SearchResultPage extends StatefulWidget {
   _SearchResultPageState createState() => _SearchResultPageState();
 }
 
-class _SearchResultPageState extends State<SearchResultPage> {
-  bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
-  GlobalKey<ListWaterFallWidgetState> pictureListWaterFallWidgetKey =
-      GlobalKey<ListWaterFallWidgetState>();
-  PagePictureEntity currPage;
-  List<PictureEntity> list = [];
-  PageableEntity pageable = PageableEntity();
+class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
   SearchTuneParams tune = SearchTuneParams();
-
-  Future<void> _refresh() async {
-    paging(1);
-  }
 
   @override
   void initState() {
@@ -74,47 +61,24 @@ class _SearchResultPageState extends State<SearchResultPage> {
         ),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
-            onRefresh: _refresh,
-            child: _emptyWidget()));
+            onRefresh: refresh,
+            child: emptyWidget()));
   }
 
-  Future<void> paging(int pageIndex) async {
-    pageable.page = pageIndex;
-    if (this.loading ||
-        (currPage?.meta != null && currPage.meta.last && pageIndex != 1))
-      return;
-    loading = true;
-    var result = await PictureService.paging(pageable,
-        tagList: widget.keyword,
-        name: tune.name,
-        precise: tune.precise,
-        startDate: tune.date.startDate,
-        endDate: tune.date.endDate);
-    setState(() {
-      currPage = result.data;
-      if (currPage.meta.first) {
-        pictureListWaterFallWidgetKey?.currentState?.goTo();
-        list = currPage.items;
-      } else {
-        list.addAll(currPage.items);
-      }
-    });
-    loading = false;
+  @override
+  TipsPageCardWidget buildEmptyType() {
+    return TipsPageCardWidget(
+        icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一些标签搜索哦。");
   }
 
-  Widget _emptyWidget() {
-    if (currPage?.meta != null &&
-        currPage.meta.empty &&
-        currPage.meta.first &&
-        currPage.meta.last) {
-      return TipsPageCardWidget(
-          icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一些标签搜索哦。");
-    } else {
-      return ListWaterFallWidget(
-          key: pictureListWaterFallWidgetKey,
-          currPage: currPage,
-          list: list,
-          paging: paging);
-    }
-  }
+  @override
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      PictureService.paging(pageable,
+          tagList: widget.keyword,
+          name: tune.name,
+          precise: tune.precise,
+          startDate: tune.date.startDate,
+          endDate: tune.date.endDate);
+
+
 }

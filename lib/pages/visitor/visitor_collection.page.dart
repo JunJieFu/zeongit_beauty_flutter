@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class VisitorCollectionPage extends StatefulWidget {
@@ -15,30 +15,9 @@ class VisitorCollectionPage extends StatefulWidget {
   _VisitorCollectionPageState createState() => _VisitorCollectionPageState();
 }
 
-class _VisitorCollectionPageState extends State<VisitorCollectionPage>
+class _VisitorCollectionPageState extends PagePictureAbstract<CollectionPage>
     with AutomaticKeepAliveClientMixin {
-  bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PagePictureEntity currPage;
-  List<PictureEntity> list = [];
-  PageableEntity pageable = PageableEntity();
   int targetId;
-
-  Future<void> refresh() async {
-    paging(1);
-  }
-
-  Future<void> paging(int pageIndex) async {
-    pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null && currPage.meta.last)) return;
-    loading = true;
-    var result = await CollectionService.paging(pageable, targetId);
-    setState(() {
-      currPage = result.data;
-      list.addAll(currPage.items);
-    });
-    loading = false;
-  }
 
   @override
   bool get wantKeepAlive => true;
@@ -46,7 +25,6 @@ class _VisitorCollectionPageState extends State<VisitorCollectionPage>
   @override
   void initState() {
     super.initState();
-    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
@@ -64,18 +42,13 @@ class _VisitorCollectionPageState extends State<VisitorCollectionPage>
     });
   }
 
-  Widget emptyWidget() {
-    if (currPage?.meta != null &&
-        currPage.meta.empty &&
-        currPage.meta.first &&
-        currPage.meta.last) {
-      return TipsPageCardWidget(
-          icon: MdiIcons.star_outline,
-          title: "没有作品",
-          text: "您可以前往发现浏览一些系统推荐给您的作品哦。");
-    } else {
-      return ListWaterFallWidget(
-          currPage: currPage, list: list, paging: paging);
-    }
-  }
+
+  @override
+  TipsPageCardWidget buildEmptyType() =>TipsPageCardWidget(
+      icon: MdiIcons.star_outline,
+      title: "没有作品",
+      text: "您可以通知作者收藏一些作品哦。");
+
+  @override
+  Future<ResultEntity<PagePictureEntity>> dao() =>CollectionService.paging(pageable, targetId);
 }
