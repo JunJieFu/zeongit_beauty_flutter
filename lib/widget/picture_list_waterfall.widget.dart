@@ -7,7 +7,7 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
-import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
+import 'file:///D:/project/my/flutter/zeongit_beauty_flutter/lib/pages/picture/detail/detail.page.dart';
 
 class PictureListWaterfallWidget extends StatefulWidget {
   PictureListWaterfallWidget({Key key, this.currPage, this.list, this.paging})

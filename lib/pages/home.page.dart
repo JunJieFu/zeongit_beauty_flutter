@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
+import 'file:///D:/project/my/flutter/zeongit_beauty_flutter/lib/pages/picture/detail/detail.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';

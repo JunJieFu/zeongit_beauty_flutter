@@ -10,13 +10,14 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
 class CollectIconBtnWidget extends StatelessWidget {
-  CollectIconBtnWidget({Key key, @required this.picture, @required this.callback})
+  CollectIconBtnWidget(
+      {Key key, @required this.picture, @required this.callback})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
   final PictureEntity picture;
 
-  final Function callback;
+  final void Function(PictureEntity picture, int focus) callback;
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
@@ -16,6 +18,7 @@ import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/simple_bloc_observer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +33,8 @@ _init() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await StorageManager.init();
   PermissionUtil.storage();
+  EquatableConfig.stringify = kDebugMode;
+  Bloc.observer = SimpleBlocObserver();
   runApp(App());
 }
 

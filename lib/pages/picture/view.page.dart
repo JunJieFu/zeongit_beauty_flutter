@@ -34,33 +34,33 @@ class ViewPageState extends State<ViewPage> {
   Widget build(BuildContext context) {
     completeUrl = "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
     return Scaffold(
-      backgroundColor: Colors.black,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        brightness: Brightness.dark,
-        leading: IconButton(
-          icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.maybePop(context);
-          },
-        ),
-        actions: [
-          PopupMenuButton(
-            icon:
-                ShadowIconWidget(MdiIcons.dots_horizontal, color: Colors.white),
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  value: 'save',
-                  child: Text('保存图片'),
-                ),
-              ];
+        backgroundColor: Colors.black,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          brightness: Brightness.dark,
+          leading: IconButton(
+            icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.maybePop(context);
             },
-            onSelected: selectMenu,
-          )
-        ],
-      ),
+          ),
+          actions: [
+            PopupMenuButton(
+              icon: ShadowIconWidget(MdiIcons.dots_horizontal,
+                  color: Colors.white),
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: 'save',
+                    child: Text('保存图片'),
+                  ),
+                ];
+              },
+              onSelected: selectMenu,
+            )
+          ],
+        ),
         body: PhotoView(
           imageProvider: CachedNetworkImageProvider(completeUrl),
           loadingBuilder: (BuildContext context, ImageChunkEvent event) {
@@ -70,8 +70,7 @@ class ViewPageState extends State<ViewPage> {
               ),
             );
           },
-        )
-    );
+        ));
   }
 
   selectMenu(String value) {
