@@ -5,7 +5,6 @@ import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -15,10 +14,9 @@ class VisitorCollectionPage extends StatefulWidget {
   _VisitorCollectionPageState createState() => _VisitorCollectionPageState();
 }
 
-class _VisitorCollectionPageState extends PagePictureAbstract<CollectionPage>
+class _VisitorCollectionPageState extends PagePictureAbstract<VisitorCollectionPage>
     with AutomaticKeepAliveClientMixin {
   int targetId;
-
   @override
   bool get wantKeepAlive => true;
 
