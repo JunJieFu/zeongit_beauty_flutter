@@ -5,15 +5,15 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/widget/list_user.widget.dart';
+import 'package:zeongitbeautyflutter/widget/user_list_normal.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 abstract class PageUserAbstract<T extends StatefulWidget> extends State<T> {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  GlobalKey<ListUserWidgetState> listWidgetKey =
-      GlobalKey<ListUserWidgetState>();
+  GlobalKey<UserListNormalWidgetState> listWidgetKey =
+      GlobalKey<UserListNormalWidgetState>();
   PageUserInfoEntity currPage;
   List<UserInfoEntity> list = [];
   PageableEntity pageable = PageableEntity();
@@ -61,8 +61,8 @@ abstract class PageUserAbstract<T extends StatefulWidget> extends State<T> {
     refreshIndicatorKey.currentState?.show();
   }
 
-  ListUserWidget buildListWaterFall() {
-    return ListUserWidget(
+  UserListNormalWidget buildListWaterFall() {
+    return UserListNormalWidget(
         key: listWidgetKey, currPage: currPage, list: list, paging: paging);
   }
 

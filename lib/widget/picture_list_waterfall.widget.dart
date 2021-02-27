@@ -9,8 +9,8 @@ import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
 import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 
-class ListWaterFallWidget extends StatefulWidget {
-  ListWaterFallWidget({Key key, this.currPage, this.list, this.paging})
+class PictureListWaterfallWidget extends StatefulWidget {
+  PictureListWaterfallWidget({Key key, this.currPage, this.list, this.paging})
       : super(key: key);
 
   final PagePictureEntity currPage;
@@ -20,10 +20,10 @@ class ListWaterFallWidget extends StatefulWidget {
   final paging;
 
   @override
-  ListWaterFallWidgetState createState() => ListWaterFallWidgetState();
+  PictureListWaterfallWidgetState createState() => PictureListWaterfallWidgetState();
 }
 
-class ListWaterFallWidgetState extends State<ListWaterFallWidget> {
+class PictureListWaterfallWidgetState extends State<PictureListWaterfallWidget> {
   ScrollController scrollController = ScrollController();
 
   @override

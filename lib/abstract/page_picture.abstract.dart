@@ -5,15 +5,15 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/widget/list_waterfall.widget.dart';
+import 'package:zeongitbeautyflutter/widget/picture_list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
   bool loading = false;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  GlobalKey<ListWaterFallWidgetState> pictureListWaterFallWidgetKey =
-      GlobalKey<ListWaterFallWidgetState>();
+  GlobalKey<PictureListWaterfallWidgetState> listWidgetKey =
+      GlobalKey<PictureListWaterfallWidgetState>();
   PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
@@ -32,7 +32,7 @@ abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
     setState(() {
       currPage = result.data;
       if (currPage.meta.first) {
-        pictureListWaterFallWidgetKey?.currentState?.goTo();
+        listWidgetKey?.currentState?.goTo();
         list = currPage.items;
       } else {
         list.addAll(currPage.items);
@@ -55,15 +55,15 @@ abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
   }
 
   parentTabTap() {
-    pictureListWaterFallWidgetKey.currentState?.scrollController?.animateTo(0,
+    listWidgetKey.currentState?.scrollController?.animateTo(0,
         duration: Duration(milliseconds: StyleConfig.durationMilliseconds),
         curve: Curves.ease);
     refreshIndicatorKey.currentState?.show();
   }
 
-  ListWaterFallWidget buildListWaterFall() {
-    return ListWaterFallWidget(
-        key: pictureListWaterFallWidgetKey,
+  PictureListWaterfallWidget buildListWaterFall() {
+    return PictureListWaterfallWidget(
+        key: listWidgetKey,
         currPage: currPage,
         list: list,
         paging: paging);
