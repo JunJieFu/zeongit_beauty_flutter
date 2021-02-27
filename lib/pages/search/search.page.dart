@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/chips_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 
 class SearchPage extends StatefulWidget {
@@ -53,16 +54,24 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
         appBar: AppBar(
           elevation: 1,
-          title: TextField(
-              autofocus: true,
-              controller: keywordController,
-              decoration: InputDecoration(
-                hintText: "搜索网站绘画",
-                border: InputBorder.none,
+          title:
+//          TextField(
+//              autofocus: true,
+//              controller: keywordController,
+//              decoration: InputDecoration(
+//                hintText: "搜索网站绘画",
+//                border: InputBorder.none,
+//              ),
+//              onSubmitted: (text) {
+//                _search();
+//              }),
+              ChipsTextFieldWidget(
+                autofocus: true,
+                decoration:InputDecoration(
+                  hintText: "搜索网站绘画",
+                  border: InputBorder.none,
+                ),
               ),
-              onSubmitted: (text) {
-                _search();
-              }),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),

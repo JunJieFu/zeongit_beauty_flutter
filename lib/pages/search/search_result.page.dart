@@ -79,6 +79,4 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
           precise: tune.precise,
           startDate: tune.date.startDate,
           endDate: tune.date.endDate);
-
-
 }
