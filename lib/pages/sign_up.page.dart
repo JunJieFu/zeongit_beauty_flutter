@@ -8,6 +8,7 @@ import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/routes.dart';
 
 final _gap = StyleConfig.gap * 6;
 
@@ -131,9 +132,15 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
     setState(() {
       loading = false;
     });
-    await ResultUtil.check(result);
-    await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
-    await userState.getInfo();
-    Navigator.maybePop(context);
+    try {
+      await ResultUtil.check(result);
+      await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
+      await userState.getInfo();
+      Navigator.popUntil(context, (route) {
+        return route.isFirst;
+      });
+    } catch (e) {
+      Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
+    }
   }
 }

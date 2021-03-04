@@ -6,10 +6,6 @@ import 'package:zeongitbeautyflutter/pages/user.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/header.widget.dart';
 
-import 'find.page.dart';
-import 'home.page.dart';
-import 'new.page.dart';
-
 class TabPage extends StatefulWidget {
   TabPage({Key key}) : super(key: key);
 

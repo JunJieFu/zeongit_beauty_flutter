@@ -1,40 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/sign_up.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-import '../assets/constant/enum.constant.dart';
-
-class _DifferenceModel {
-  _DifferenceModel(this.text, this.linkList);
-
-  final String text;
-
-  final List<Widget> linkList;
-}
 
 final _gap = StyleConfig.gap * 6;
 final _differenceList = {
-  CodeTypeConstant.SIGN_UP: _DifferenceModel("注册您的账号", [
-    Padding(
-      padding: EdgeInsets.only(bottom: _gap / 2),
-      child: LinkWidget("忘记了登录密码？"),
-    ),
-    LinkWidget("已经有登录账号？")
-  ]),
-  CodeTypeConstant.FORGOT: _DifferenceModel("找回您的密码", [
-    Padding(
-      padding: EdgeInsets.only(bottom: _gap / 2),
-      child: LinkWidget("已经有登录账号？"),
-    ),
-    LinkWidget("没有登录账号，立即创建一个！"),
-  ])
+  CodeTypeConstant.SIGN_UP: "注册您的账号",
+  CodeTypeConstant.FORGOT: "找回您的密码"
 };
 
 class SignCodePage extends StatefulWidget {
@@ -63,9 +41,8 @@ class SignCodePageState extends State<SignCodePage>
   @override
   Widget build(BuildContext context) {
     var _userState = Provider.of<UserState>(context, listen: false);
-    var currDifference = _differenceList[widget.codeType];
     return Scaffold(
-        appBar: AppBar(title: Text(currDifference.text)),
+        appBar: AppBar(title: Text(_differenceList[widget.codeType])),
         body: ListView(
           children: <Widget>[
             Padding(
@@ -74,7 +51,7 @@ class SignCodePageState extends State<SignCodePage>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(bottom: _gap),
+                    padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
                       controller: phoneController,
                       icon: MdiIcons.cellphone,
@@ -109,12 +86,11 @@ class SignCodePageState extends State<SignCodePage>
                               )
                             : Text("获取验证码"),
                         onPressed: () {
-                          signIn(context, _userState);
+                          send(context, _userState);
                         },
                       ),
                     ),
                   ),
-                  ...currDifference.linkList
                 ],
               ),
             )
@@ -128,7 +104,7 @@ class SignCodePageState extends State<SignCodePage>
     phoneController.dispose();
   }
 
-  signIn(BuildContext context, UserState userState) async {
+  send(BuildContext context, UserState userState) async {
     if (loading) return;
     setState(() {
       loading = true;
@@ -138,10 +114,11 @@ class SignCodePageState extends State<SignCodePage>
     setState(() {
       loading = false;
     });
-    await ResultUtil.check(result);
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SignUpPage(phoneController.text);
-    }));
-//    Navigator.maybePop(context);
+    try {
+      await ResultUtil.check(result);
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return SignUpPage(phoneController.text);
+      }));
+    } catch (e) {}
   }
 }

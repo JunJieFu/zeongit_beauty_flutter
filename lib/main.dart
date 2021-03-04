@@ -16,6 +16,7 @@ import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.provider.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +59,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => UserState(info: info))
         ],
         child: MaterialApp(
+          routes: routes,
           theme: ThemeData(
               chipTheme: ChipThemeData(
                   backgroundColor: chipTheme.backgroundColor,

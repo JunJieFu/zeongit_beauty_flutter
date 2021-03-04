@@ -6,6 +6,7 @@ import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/routes.dart';
 
 final _gap = StyleConfig.gap * 6;
 
@@ -129,7 +130,9 @@ class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
     setState(() {
       loading = false;
     });
-    await ResultUtil.check(result);
-    Navigator.maybePop(context);
+    try{
+      await ResultUtil.check(result);
+      Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
+    }catch(e){}
   }
 }

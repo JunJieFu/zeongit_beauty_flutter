@@ -7,8 +7,6 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-import '../assets/service/index.dart';
-
 class FollowingNewPage extends StatefulWidget {
   FollowingNewPage({Key key}) : super(key: key);
 

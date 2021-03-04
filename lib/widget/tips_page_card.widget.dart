@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/pages/sign_in.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/card.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/routes.dart';
 
 class TipsPageCardWidget extends StatelessWidget {
   TipsPageCardWidget(
@@ -67,9 +67,7 @@ class SignInPageCardWidget extends StatelessWidget {
       text: text,
       btnDesc: "登录",
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return SignInPage();
-        }));
+        Navigator.pushNamed(context, RoutesKey.SIGN_IN);
       },
     );
   }

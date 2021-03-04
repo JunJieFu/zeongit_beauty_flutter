@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/sign_code.page.dart';
@@ -10,8 +11,6 @@ import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-
-import '../assets/constant/enum.constant.dart';
 
 final _gap = StyleConfig.gap * 6;
 
@@ -102,13 +101,14 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                     padding: EdgeInsets.only(bottom: _gap / 2),
                     child: LinkWidget("忘记了登录密码？", onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return SignCodePage(CodeTypeConstant.SIGN_UP);
+                        return SignCodePage(CodeTypeConstant.FORGOT);
                       }));
                     }),
                   ),
                   LinkWidget("没有登录账号，立即创建一个！", onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return SignCodePage(CodeTypeConstant.FORGOT);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) {
+                      return SignCodePage(CodeTypeConstant.SIGN_UP);
                     }));
                   }),
                 ],
@@ -135,9 +135,11 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
     setState(() {
       loading = false;
     });
-    await ResultUtil.check(result);
-    await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
-    await userState.getInfo();
-    Navigator.maybePop(context);
+    try {
+      await ResultUtil.check(result);
+      await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
+      await userState.getInfo();
+      Navigator.maybePop(context);
+    } catch (e) {}
   }
 }

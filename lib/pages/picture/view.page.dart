@@ -5,12 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
-
-import '../../plugins/constant/config.constant.dart';
-import '../../plugins/style/index.style.dart';
-import '../../plugins/style/mdi_icons.style.dart';
-import '../../plugins/widget/shadow_icon.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/shadow_icon.widget.dart';
 
 class ViewPage extends StatefulWidget {
   ViewPage(this.url, {Key key}) : super(key: key);

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/following.page.dart';
+import 'package:zeongitbeautyflutter/pages/following_new.page.dart';
 import 'package:zeongitbeautyflutter/pages/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/setting.page.dart';
 import 'package:zeongitbeautyflutter/pages/works.page.dart';
@@ -16,8 +17,6 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-import '../plugins/style/mdi_icons.style.dart';
-import 'following_new.page.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key key}) : super(key: key);
