@@ -68,7 +68,7 @@ class _BlackHoleTagPageState extends State<BlackHoleTagPage>
         currPage.meta.currentPage == 1 &&
         last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.account_heart_outline, title: "没有粉丝");
+          icon: MdiIcons.tag_outline, title: "没有屏蔽标签");
     } else {
       return ListTagWidget(currPage: currPage, list: list, paging: paging);
     }

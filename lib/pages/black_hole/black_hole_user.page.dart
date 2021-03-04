@@ -62,7 +62,7 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
         currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(
-          icon: MdiIcons.account_heart_outline, title: "没有粉丝");
+          icon: MdiIcons.account_outline, title: "没有屏蔽用户");
     } else {
       return ListUserWidget(currPage: currPage, list: list, paging: paging);
     }

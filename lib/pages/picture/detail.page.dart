@@ -60,73 +60,74 @@ class _DetailPageState extends FutureBuildAbstract<DetailPage, PictureEntity> {
   Scaffold buildSkeleton(BuildContext context) {
     var queryData = MediaQuery.of(context);
     var pageGap = StyleConfig.gap * 3;
-    return Scaffold(body: Text("123")
-//        CustomScrollView(
-//      slivers: <Widget>[
-//        SliverAppBar(
-//          leading: IconButton(
-//            icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
-//            onPressed: () {
-//              Navigator.maybePop(context);
-//            },
-//          ),
-//          elevation: 1,
-//          //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
-//          floating: false,
-//          expandedHeight: queryData.size.width,
-//          //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
-//          flexibleSpace: FlexibleSpaceBar(
-//            background: Skeleton(
-//              height: queryData.size.width,
-//              width: queryData.size.width,
-//            ),
-//            collapseMode: CollapseMode.pin,
-//          ),
-//        ),
-//        SliverList(
-//          delegate: SliverChildListDelegate([
-//            Padding(
-//                padding: EdgeInsets.all(pageGap),
-//                child: Column(
-//                  crossAxisAlignment: CrossAxisAlignment.start,
-//                  children: [
-//                    Padding(
-//                      padding: EdgeInsets.only(bottom: pageGap / 2),
-//                      child: Skeleton(height: 16, width: 180),
-//                    ),
-//                    Padding(
-//                      padding: EdgeInsets.only(bottom: pageGap / 2),
-//                      child: Skeleton(height: 16, width: 300),
-//                    ),
-//                    Skeleton(height: 16, width: 250),
-//                  ],
-//                )),
-//            Divider(),
-//            Padding(
-//                padding: EdgeInsets.all(pageGap),
-//                child: Column(
-//                  crossAxisAlignment: CrossAxisAlignment.start,
-//                  children: [
-//                    Padding(
-//                      padding: EdgeInsets.only(bottom: pageGap / 2),
-//                      child: Skeleton(height: 16, width: 360),
-//                    ),
-//                    Padding(
-//                      padding: EdgeInsets.only(bottom: pageGap / 2),
-//                      child: Skeleton(height: 16, width: 270),
-//                    ),
-//                    Padding(
-//                      padding: EdgeInsets.only(bottom: pageGap / 2),
-//                      child: Skeleton(height: 16, width: 370),
-//                    ),
-//                    Skeleton(height: 16, width: 300),
-//                  ],
-//                )),
-//          ]),
-//        )
-//      ],
-//    )
-        );
+    return Scaffold(
+        body:
+//    Text("123")
+            CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          leading: IconButton(
+            icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.maybePop(context);
+            },
+          ),
+          elevation: 1,
+          //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
+          floating: false,
+          expandedHeight: queryData.size.width,
+          //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
+          flexibleSpace: FlexibleSpaceBar(
+            background: Skeleton(
+              height: queryData.size.width,
+              width: queryData.size.width,
+            ),
+            collapseMode: CollapseMode.pin,
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            Padding(
+                padding: EdgeInsets.all(pageGap),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: pageGap / 2),
+                      child: Skeleton(height: 16, width: 180),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: pageGap / 2),
+                      child: Skeleton(height: 16, width: 300),
+                    ),
+                    Skeleton(height: 16, width: 250),
+                  ],
+                )),
+            Divider(),
+            Padding(
+                padding: EdgeInsets.all(pageGap),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: pageGap / 2),
+                      child: Skeleton(height: 16, width: 360),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: pageGap / 2),
+                      child: Skeleton(height: 16, width: 270),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: pageGap / 2),
+                      child: Skeleton(height: 16, width: 370),
+                    ),
+                    Skeleton(height: 16, width: 300),
+                  ],
+                )),
+          ]),
+        )
+      ],
+    ));
   }
 
   @override
@@ -244,9 +245,7 @@ class _ViewState extends State<_View> {
                           color: Colors.white),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return EditPage(picture, callback: (picture) {
-
-                          });
+                          return EditPage(picture, callback: (picture) {});
                         }));
                       },
                     )
