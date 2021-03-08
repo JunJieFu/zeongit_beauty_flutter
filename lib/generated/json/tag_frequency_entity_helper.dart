@@ -2,10 +2,12 @@ import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 
 tagFrequencyEntityFromJson(TagFrequencyEntity data, Map<String, dynamic> json) {
 	if (json['name'] != null) {
-		data.name = json['name']?.toString();
+		data.name = json['name'].toString();
 	}
 	if (json['amount'] != null) {
-		data.amount = json['amount']?.toInt();
+		data.amount = json['amount'] is String
+				? int.tryParse(json['amount'])
+				: json['amount'].toInt();
 	}
 	return data;
 }

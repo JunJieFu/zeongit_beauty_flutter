@@ -32,102 +32,161 @@ class JsonConvert<T> {
   }
 
   static _getFromJson<T>(Type type, data, json) {
-    switch (type) {			case UserInfoEntity:
-			return userInfoEntityFromJson(data as UserInfoEntity, json) as T;			case TagFrequencyEntity:
-			return tagFrequencyEntityFromJson(data as TagFrequencyEntity, json) as T;			case PageUserBlackHoleEntity:
-			return pageUserBlackHoleEntityFromJson(data as PageUserBlackHoleEntity, json) as T;			case PagePictureBlackHoleEntity:
-			return pagePictureBlackHoleEntityFromJson(data as PagePictureBlackHoleEntity, json) as T;			case PageTagBlackHoleEntity:
-			return pageTagBlackHoleEntityFromJson(data as PageTagBlackHoleEntity, json) as T;			case PageUserInfoEntity:
-			return pageUserInfoEntityFromJson(data as PageUserInfoEntity, json) as T;			case Meta:
-			return metaFromJson(data as Meta, json) as T;			case PictureEntity:
-			return pictureEntityFromJson(data as PictureEntity, json) as T;			case BlackHoleEntity:
-			return blackHoleEntityFromJson(data as BlackHoleEntity, json) as T;			case UserBlackHoleEntity:
-			return userBlackHoleEntityFromJson(data as UserBlackHoleEntity, json) as T;			case TagBlackHoleEntity:
-			return tagBlackHoleEntityFromJson(data as TagBlackHoleEntity, json) as T;			case PictureBlackHoleEntity:
-			return pictureBlackHoleEntityFromJson(data as PictureBlackHoleEntity, json) as T;			case PagePictureEntity:
-			return pagePictureEntityFromJson(data as PagePictureEntity, json) as T;			case PageableEntity:
-			return pageableEntityFromJson(data as PageableEntity, json) as T;			case PagePageable:
-			return pagePageableFromJson(data as PagePageable, json) as T;			case PageSort:
-			return pageSortFromJson(data as PageSort, json) as T;    }
+    switch (type) {
+			case UserInfoEntity:
+				return userInfoEntityFromJson(data as UserInfoEntity, json) as T;
+			case TagFrequencyEntity:
+				return tagFrequencyEntityFromJson(data as TagFrequencyEntity, json) as T;
+			case PageUserBlackHoleEntity:
+				return pageUserBlackHoleEntityFromJson(data as PageUserBlackHoleEntity, json) as T;
+			case PagePictureBlackHoleEntity:
+				return pagePictureBlackHoleEntityFromJson(data as PagePictureBlackHoleEntity, json) as T;
+			case PageTagBlackHoleEntity:
+				return pageTagBlackHoleEntityFromJson(data as PageTagBlackHoleEntity, json) as T;
+			case PageUserInfoEntity:
+				return pageUserInfoEntityFromJson(data as PageUserInfoEntity, json) as T;
+			case Meta:
+				return metaFromJson(data as Meta, json) as T;
+			case PictureEntity:
+				return pictureEntityFromJson(data as PictureEntity, json) as T;
+			case BlackHoleEntity:
+				return blackHoleEntityFromJson(data as BlackHoleEntity, json) as T;
+			case UserBlackHoleEntity:
+				return userBlackHoleEntityFromJson(data as UserBlackHoleEntity, json) as T;
+			case TagBlackHoleEntity:
+				return tagBlackHoleEntityFromJson(data as TagBlackHoleEntity, json) as T;
+			case PictureBlackHoleEntity:
+				return pictureBlackHoleEntityFromJson(data as PictureBlackHoleEntity, json) as T;
+			case PagePictureEntity:
+				return pagePictureEntityFromJson(data as PagePictureEntity, json) as T;
+			case PageableEntity:
+				return pageableEntityFromJson(data as PageableEntity, json) as T;
+			case PagePageable:
+				return pagePageableFromJson(data as PagePageable, json) as T;
+			case PageSort:
+				return pageSortFromJson(data as PageSort, json) as T;    }
     return data as T;
   }
 
   static _getToJson<T>(Type type, data) {
-		switch (type) {			case UserInfoEntity:
-			return userInfoEntityToJson(data as UserInfoEntity);			case TagFrequencyEntity:
-			return tagFrequencyEntityToJson(data as TagFrequencyEntity);			case PageUserBlackHoleEntity:
-			return pageUserBlackHoleEntityToJson(data as PageUserBlackHoleEntity);			case PagePictureBlackHoleEntity:
-			return pagePictureBlackHoleEntityToJson(data as PagePictureBlackHoleEntity);			case PageTagBlackHoleEntity:
-			return pageTagBlackHoleEntityToJson(data as PageTagBlackHoleEntity);			case PageUserInfoEntity:
-			return pageUserInfoEntityToJson(data as PageUserInfoEntity);			case Meta:
-			return metaToJson(data as Meta);			case PictureEntity:
-			return pictureEntityToJson(data as PictureEntity);			case BlackHoleEntity:
-			return blackHoleEntityToJson(data as BlackHoleEntity);			case UserBlackHoleEntity:
-			return userBlackHoleEntityToJson(data as UserBlackHoleEntity);			case TagBlackHoleEntity:
-			return tagBlackHoleEntityToJson(data as TagBlackHoleEntity);			case PictureBlackHoleEntity:
-			return pictureBlackHoleEntityToJson(data as PictureBlackHoleEntity);			case PagePictureEntity:
-			return pagePictureEntityToJson(data as PagePictureEntity);			case PageableEntity:
-			return pageableEntityToJson(data as PageableEntity);			case PagePageable:
-			return pagePageableToJson(data as PagePageable);			case PageSort:
-			return pageSortToJson(data as PageSort);    }
-    return data as T;
-  }
+		switch (type) {
+			case UserInfoEntity:
+				return userInfoEntityToJson(data as UserInfoEntity);
+			case TagFrequencyEntity:
+				return tagFrequencyEntityToJson(data as TagFrequencyEntity);
+			case PageUserBlackHoleEntity:
+				return pageUserBlackHoleEntityToJson(data as PageUserBlackHoleEntity);
+			case PagePictureBlackHoleEntity:
+				return pagePictureBlackHoleEntityToJson(data as PagePictureBlackHoleEntity);
+			case PageTagBlackHoleEntity:
+				return pageTagBlackHoleEntityToJson(data as PageTagBlackHoleEntity);
+			case PageUserInfoEntity:
+				return pageUserInfoEntityToJson(data as PageUserInfoEntity);
+			case Meta:
+				return metaToJson(data as Meta);
+			case PictureEntity:
+				return pictureEntityToJson(data as PictureEntity);
+			case BlackHoleEntity:
+				return blackHoleEntityToJson(data as BlackHoleEntity);
+			case UserBlackHoleEntity:
+				return userBlackHoleEntityToJson(data as UserBlackHoleEntity);
+			case TagBlackHoleEntity:
+				return tagBlackHoleEntityToJson(data as TagBlackHoleEntity);
+			case PictureBlackHoleEntity:
+				return pictureBlackHoleEntityToJson(data as PictureBlackHoleEntity);
+			case PagePictureEntity:
+				return pagePictureEntityToJson(data as PagePictureEntity);
+			case PageableEntity:
+				return pageableEntityToJson(data as PageableEntity);
+			case PagePageable:
+				return pagePageableToJson(data as PagePageable);
+			case PageSort:
+				return pageSortToJson(data as PageSort);
+			}
+			return data as T;
+		}
   //Go back to a single instance by type
-  static _fromJsonSingle(String type, json) {
-    switch (type) {			case 'UserInfoEntity':
-			return UserInfoEntity().fromJson(json);			case 'TagFrequencyEntity':
-			return TagFrequencyEntity().fromJson(json);			case 'PageUserBlackHoleEntity':
-			return PageUserBlackHoleEntity().fromJson(json);			case 'PagePictureBlackHoleEntity':
-			return PagePictureBlackHoleEntity().fromJson(json);			case 'PageTagBlackHoleEntity':
-			return PageTagBlackHoleEntity().fromJson(json);			case 'PageUserInfoEntity':
-			return PageUserInfoEntity().fromJson(json);			case 'Meta':
-			return Meta().fromJson(json);			case 'PictureEntity':
-			return PictureEntity().fromJson(json);			case 'BlackHoleEntity':
-			return BlackHoleEntity().fromJson(json);			case 'UserBlackHoleEntity':
-			return UserBlackHoleEntity().fromJson(json);			case 'TagBlackHoleEntity':
-			return TagBlackHoleEntity().fromJson(json);			case 'PictureBlackHoleEntity':
-			return PictureBlackHoleEntity().fromJson(json);			case 'PagePictureEntity':
-			return PagePictureEntity().fromJson(json);			case 'PageableEntity':
-			return PageableEntity().fromJson(json);			case 'PagePageable':
-			return PagePageable().fromJson(json);			case 'PageSort':
-			return PageSort().fromJson(json);    }
-    return null;
-  }
+	static _fromJsonSingle<M>( json) {
+		String type = M.toString();
+		if(type == (UserInfoEntity).toString()){
+			return UserInfoEntity().fromJson(json);
+		}	else if(type == (TagFrequencyEntity).toString()){
+			return TagFrequencyEntity().fromJson(json);
+		}	else if(type == (PageUserBlackHoleEntity).toString()){
+			return PageUserBlackHoleEntity().fromJson(json);
+		}	else if(type == (PagePictureBlackHoleEntity).toString()){
+			return PagePictureBlackHoleEntity().fromJson(json);
+		}	else if(type == (PageTagBlackHoleEntity).toString()){
+			return PageTagBlackHoleEntity().fromJson(json);
+		}	else if(type == (PageUserInfoEntity).toString()){
+			return PageUserInfoEntity().fromJson(json);
+		}	else if(type == (Meta).toString()){
+			return Meta().fromJson(json);
+		}	else if(type == (PictureEntity).toString()){
+			return PictureEntity().fromJson(json);
+		}	else if(type == (BlackHoleEntity).toString()){
+			return BlackHoleEntity().fromJson(json);
+		}	else if(type == (UserBlackHoleEntity).toString()){
+			return UserBlackHoleEntity().fromJson(json);
+		}	else if(type == (TagBlackHoleEntity).toString()){
+			return TagBlackHoleEntity().fromJson(json);
+		}	else if(type == (PictureBlackHoleEntity).toString()){
+			return PictureBlackHoleEntity().fromJson(json);
+		}	else if(type == (PagePictureEntity).toString()){
+			return PagePictureEntity().fromJson(json);
+		}	else if(type == (PageableEntity).toString()){
+			return PageableEntity().fromJson(json);
+		}	else if(type == (PagePageable).toString()){
+			return PagePageable().fromJson(json);
+		}	else if(type == (PageSort).toString()){
+			return PageSort().fromJson(json);
+		}	
+		return null;
+	}
 
-  //empty list is returned by type
-  static _getListFromType(String type) {
-    switch (type) {			case 'UserInfoEntity':
-			return List<UserInfoEntity>();			case 'TagFrequencyEntity':
-			return List<TagFrequencyEntity>();			case 'PageUserBlackHoleEntity':
-			return List<PageUserBlackHoleEntity>();			case 'PagePictureBlackHoleEntity':
-			return List<PagePictureBlackHoleEntity>();			case 'PageTagBlackHoleEntity':
-			return List<PageTagBlackHoleEntity>();			case 'PageUserInfoEntity':
-			return List<PageUserInfoEntity>();			case 'Meta':
-			return List<Meta>();			case 'PictureEntity':
-			return List<PictureEntity>();			case 'BlackHoleEntity':
-			return List<BlackHoleEntity>();			case 'UserBlackHoleEntity':
-			return List<UserBlackHoleEntity>();			case 'TagBlackHoleEntity':
-			return List<TagBlackHoleEntity>();			case 'PictureBlackHoleEntity':
-			return List<PictureBlackHoleEntity>();			case 'PagePictureEntity':
-			return List<PagePictureEntity>();			case 'PageableEntity':
-			return List<PageableEntity>();			case 'PagePageable':
-			return List<PagePageable>();			case 'PageSort':
-			return List<PageSort>();    }
-    return null;
-  }
+  //list is returned by type
+	static M _getListChildType<M>(List data) {
+		if(List<UserInfoEntity>() is M){
+			return data.map<UserInfoEntity>((e) => UserInfoEntity().fromJson(e)).toList() as M;
+		}	else if(List<TagFrequencyEntity>() is M){
+			return data.map<TagFrequencyEntity>((e) => TagFrequencyEntity().fromJson(e)).toList() as M;
+		}	else if(List<PageUserBlackHoleEntity>() is M){
+			return data.map<PageUserBlackHoleEntity>((e) => PageUserBlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<PagePictureBlackHoleEntity>() is M){
+			return data.map<PagePictureBlackHoleEntity>((e) => PagePictureBlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<PageTagBlackHoleEntity>() is M){
+			return data.map<PageTagBlackHoleEntity>((e) => PageTagBlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<PageUserInfoEntity>() is M){
+			return data.map<PageUserInfoEntity>((e) => PageUserInfoEntity().fromJson(e)).toList() as M;
+		}	else if(List<Meta>() is M){
+			return data.map<Meta>((e) => Meta().fromJson(e)).toList() as M;
+		}	else if(List<PictureEntity>() is M){
+			return data.map<PictureEntity>((e) => PictureEntity().fromJson(e)).toList() as M;
+		}	else if(List<BlackHoleEntity>() is M){
+			return data.map<BlackHoleEntity>((e) => BlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<UserBlackHoleEntity>() is M){
+			return data.map<UserBlackHoleEntity>((e) => UserBlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<TagBlackHoleEntity>() is M){
+			return data.map<TagBlackHoleEntity>((e) => TagBlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<PictureBlackHoleEntity>() is M){
+			return data.map<PictureBlackHoleEntity>((e) => PictureBlackHoleEntity().fromJson(e)).toList() as M;
+		}	else if(List<PagePictureEntity>() is M){
+			return data.map<PagePictureEntity>((e) => PagePictureEntity().fromJson(e)).toList() as M;
+		}	else if(List<PageableEntity>() is M){
+			return data.map<PageableEntity>((e) => PageableEntity().fromJson(e)).toList() as M;
+		}	else if(List<PagePageable>() is M){
+			return data.map<PagePageable>((e) => PagePageable().fromJson(e)).toList() as M;
+		}	else if(List<PageSort>() is M){
+			return data.map<PageSort>((e) => PageSort().fromJson(e)).toList() as M;
+		}
+		return null;
+	}
 
   static M fromJsonAsT<M>(json) {
-    String type = M.toString();
-    if (json is List && type.contains("List<")) {
-      String itemType = type.substring(5, type.length - 1);
-      List tempList = _getListFromType(itemType);
-      json.forEach((itemJson) {
-        tempList
-            .add(_fromJsonSingle(type.substring(5, type.length - 1), itemJson));
-      });
-      return tempList as M;
+    if (json is List) {
+      return _getListChildType<M>(json);
     } else {
-      return _fromJsonSingle(M.toString(), json) as M;
+      return _fromJsonSingle<M>(json) as M;
     }
   }
 }

@@ -14,6 +14,7 @@ class PictureEntity with JsonConvert<PictureEntity> {
 	int height;
 	String url;
 	int aspectRatio;
+	double ratio;
 	List<String> tagList;
 	int focus;
 	UserInfoEntity user;

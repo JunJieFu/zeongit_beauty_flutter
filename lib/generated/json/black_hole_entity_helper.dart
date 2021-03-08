@@ -32,16 +32,20 @@ Map<String, dynamic> blackHoleEntityToJson(BlackHoleEntity entity) {
 
 userBlackHoleEntityFromJson(UserBlackHoleEntity data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
-		data.id = json['id']?.toInt();
+		data.id = json['id'] is String
+				? int.tryParse(json['id'])
+				: json['id'].toInt();
 	}
 	if (json['avatarUrl'] != null) {
-		data.avatarUrl = json['avatarUrl']?.toString();
+		data.avatarUrl = json['avatarUrl'].toString();
 	}
 	if (json['nickname'] != null) {
-		data.nickname = json['nickname']?.toString();
+		data.nickname = json['nickname'].toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state']?.toInt();
+		data.state = json['state'] is String
+				? int.tryParse(json['state'])
+				: json['state'].toInt();
 	}
 	return data;
 }
@@ -57,10 +61,12 @@ Map<String, dynamic> userBlackHoleEntityToJson(UserBlackHoleEntity entity) {
 
 tagBlackHoleEntityFromJson(TagBlackHoleEntity data, Map<String, dynamic> json) {
 	if (json['name'] != null) {
-		data.name = json['name']?.toString();
+		data.name = json['name'].toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state']?.toInt();
+		data.state = json['state'] is String
+				? int.tryParse(json['state'])
+				: json['state'].toInt();
 	}
 	return data;
 }
@@ -74,16 +80,20 @@ Map<String, dynamic> tagBlackHoleEntityToJson(TagBlackHoleEntity entity) {
 
 pictureBlackHoleEntityFromJson(PictureBlackHoleEntity data, Map<String, dynamic> json) {
 	if (json['id'] != null) {
-		data.id = json['id']?.toInt();
+		data.id = json['id'] is String
+				? int.tryParse(json['id'])
+				: json['id'].toInt();
 	}
 	if (json['url'] != null) {
-		data.url = json['url']?.toString();
+		data.url = json['url'].toString();
 	}
 	if (json['name'] != null) {
-		data.name = json['name']?.toString();
+		data.name = json['name'].toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state']?.toInt();
+		data.state = json['state'] is String
+				? int.tryParse(json['state'])
+				: json['state'].toInt();
 	}
 	return data;
 }

@@ -62,7 +62,12 @@ class PictureService {
       String name,
       DateTime startDate,
       DateTime endDate,
-      int aspectRatio}) {
+      double startWidth,
+      double endWidth,
+      double startHeight,
+      double endHeight,
+      double startRatio,
+      double endRatio}) {
     var params = pageable.toJson();
     if (tagList != null) {
       params["tagList"] = tagList;
@@ -79,9 +84,25 @@ class PictureService {
     if (endDate != null) {
       params["endDate"] = endDate;
     }
-    if (aspectRatio != null) {
-      params["aspectRatio"] = aspectRatio;
+    if (startWidth != null) {
+      params["startWidth"] = startWidth;
     }
+    if (endWidth != null) {
+      params["endWidth"] = endWidth;
+    }
+    if (startHeight != null) {
+      params["startHeight"] = startHeight;
+    }
+    if (endHeight != null) {
+      params["endHeight"] = endHeight;
+    }
+    if (startRatio != null) {
+      params["startRatio"] = startRatio;
+    }
+    if (endRatio != null) {
+      params["endRatio"] = endRatio;
+    }
+
     return HttpUtil.get("/picture/paging", params: params);
   }
 

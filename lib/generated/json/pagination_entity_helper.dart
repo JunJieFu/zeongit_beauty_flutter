@@ -2,19 +2,29 @@ import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
 
 metaFromJson(Meta data, Map<String, dynamic> json) {
 	if (json['itemCount'] != null) {
-		data.itemCount = json['itemCount']?.toInt();
+		data.itemCount = json['itemCount'] is String
+				? int.tryParse(json['itemCount'])
+				: json['itemCount'].toInt();
 	}
 	if (json['totalItems'] != null) {
-		data.totalItems = json['totalItems']?.toInt();
+		data.totalItems = json['totalItems'] is String
+				? int.tryParse(json['totalItems'])
+				: json['totalItems'].toInt();
 	}
 	if (json['itemsPerPage'] != null) {
-		data.itemsPerPage = json['itemsPerPage']?.toInt();
+		data.itemsPerPage = json['itemsPerPage'] is String
+				? int.tryParse(json['itemsPerPage'])
+				: json['itemsPerPage'].toInt();
 	}
 	if (json['totalPages'] != null) {
-		data.totalPages = json['totalPages']?.toInt();
+		data.totalPages = json['totalPages'] is String
+				? int.tryParse(json['totalPages'])
+				: json['totalPages'].toInt();
 	}
 	if (json['currentPage'] != null) {
-		data.currentPage = json['currentPage']?.toInt();
+		data.currentPage = json['currentPage'] is String
+				? int.tryParse(json['currentPage'])
+				: json['currentPage'].toInt();
 	}
 	if (json['empty'] != null) {
 		data.empty = json['empty'];

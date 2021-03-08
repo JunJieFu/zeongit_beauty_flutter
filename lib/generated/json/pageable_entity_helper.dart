@@ -2,13 +2,17 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 
 pageableEntityFromJson(PageableEntity data, Map<String, dynamic> json) {
 	if (json['page'] != null) {
-		data.page = json['page']?.toInt();
+		data.page = json['page'] is String
+				? int.tryParse(json['page'])
+				: json['page'].toInt();
 	}
 	if (json['limit'] != null) {
-		data.limit = json['limit']?.toInt();
+		data.limit = json['limit'] is String
+				? int.tryParse(json['limit'])
+				: json['limit'].toInt();
 	}
 	if (json['sort'] != null) {
-		data.sort = json['sort']?.toString();
+		data.sort = json['sort'].toString();
 	}
 	return data;
 }
@@ -26,13 +30,19 @@ pagePageableFromJson(PagePageable data, Map<String, dynamic> json) {
 		data.sort = new PageSort().fromJson(json['sort']);
 	}
 	if (json['pageSize'] != null) {
-		data.pageSize = json['pageSize']?.toInt();
+		data.pageSize = json['pageSize'] is String
+				? int.tryParse(json['pageSize'])
+				: json['pageSize'].toInt();
 	}
 	if (json['pageNumber'] != null) {
-		data.pageNumber = json['pageNumber']?.toInt();
+		data.pageNumber = json['pageNumber'] is String
+				? int.tryParse(json['pageNumber'])
+				: json['pageNumber'].toInt();
 	}
 	if (json['offset'] != null) {
-		data.offset = json['offset']?.toInt();
+		data.offset = json['offset'] is String
+				? int.tryParse(json['offset'])
+				: json['offset'].toInt();
 	}
 	if (json['paged'] != null) {
 		data.paged = json['paged'];

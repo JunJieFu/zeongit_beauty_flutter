@@ -72,11 +72,18 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
   }
 
   @override
-  Future<ResultEntity<PagePictureEntity>> dao() =>
-      PictureService.paging(pageable,
-          tagList: widget.keyword,
-          name: tune.name,
-          precise: tune.precise,
-          startDate: tune.date.startDate,
-          endDate: tune.date.endDate);
+  Future<ResultEntity<PagePictureEntity>> dao() => PictureService.paging(
+        pageable,
+        tagList: widget.keyword,
+        name: tune.name,
+        precise: tune.precise,
+        startDate: tune.date.startDate,
+        endDate: tune.date.endDate,
+        startWidth: tune.startWidth,
+        endWidth: tune.endWidth,
+        startHeight: tune.startHeight,
+        endHeight: tune.endHeight,
+        startRatio: tune.startRatio,
+        endRatio: tune.endRatio,
+      );
 }
