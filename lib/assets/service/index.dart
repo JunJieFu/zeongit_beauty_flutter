@@ -70,7 +70,7 @@ class PictureService {
       double endRatio}) {
     var params = pageable.toJson();
     if (tagList != null) {
-      params["tagList"] = tagList;
+      params["tagList"] = tagList.split(" ");
     }
     if (precise != null) {
       params["precise"] = precise;
