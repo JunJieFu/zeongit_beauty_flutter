@@ -14,10 +14,12 @@ class NewPage extends StatefulWidget {
   NewPageState createState() => NewPageState();
 }
 
-class NewPageState extends PagePictureAbstract<NewPage> with AutomaticKeepAliveClientMixin {
+class NewPageState extends PagePictureAbstract<NewPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
+    pageable.sort = "updateDate,desc";
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -34,7 +36,8 @@ class NewPageState extends PagePictureAbstract<NewPage> with AutomaticKeepAliveC
   }
 
   @override
-  Future<ResultEntity<PagePictureEntity>> dao() => PictureService.paging(pageable);
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      PictureService.paging(pageable);
 
   @override
   TipsPageCardWidget buildEmptyType() {

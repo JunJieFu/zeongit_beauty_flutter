@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/widget/picture_list_waterfall.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
@@ -63,13 +66,46 @@ abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
 
   PictureListWaterfallWidget buildListWaterFall() {
     return PictureListWaterfallWidget(
-        key: listWidgetKey,
-        currPage: currPage,
-        list: list,
-        paging: paging);
+      key: listWidgetKey,
+      currPage: currPage,
+      list: list,
+      paging: paging,
+      onLongPress: _remove,
+    );
   }
 
   TipsPageCardWidget buildEmptyType();
 
   Future<ResultEntity<PagePictureEntity>> dao();
+
+  _remove(int id) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Text("您确定删除该图片吗？"),
+            actions: <Widget>[
+              FlatButton(
+                  textColor: StyleConfig.warningColor,
+                  onPressed: () {
+                    Navigator.of(context).pop(this);
+                  },
+                  child: Text("取消")),
+              FlatButton(
+                  textColor: StyleConfig.primaryColor,
+                  onPressed: () async {
+                    Navigator.of(context).pop(this);
+                    var result = await PictureService.remove(id);
+                    await ResultUtil.check(result);
+                    Fluttertoast.showToast(
+                        msg: "删除成功",
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: StyleConfig.successColor);
+                  },
+                  child: Text("确定"))
+            ],
+          );
+        });
+  }
 }

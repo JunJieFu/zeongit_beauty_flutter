@@ -9,7 +9,8 @@ import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
 class PictureListWaterfallWidget extends StatefulWidget {
-  PictureListWaterfallWidget({Key key, this.currPage, this.list, this.paging})
+  PictureListWaterfallWidget(
+      {Key key, this.currPage, this.list, this.paging, this.onLongPress})
       : super(key: key);
 
   final PagePictureEntity currPage;
@@ -17,6 +18,8 @@ class PictureListWaterfallWidget extends StatefulWidget {
   final List<PictureEntity> list;
 
   final paging;
+
+  final void Function(int) onLongPress;
 
   @override
   PictureListWaterfallWidgetState createState() =>
@@ -71,6 +74,9 @@ class PictureListWaterfallWidgetState
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return DetailPage(id: picture.id);
                 }));
+              },
+              onLongPress: (){
+                widget.onLongPress(picture.id);
               });
         });
   }

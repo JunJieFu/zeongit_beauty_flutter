@@ -61,6 +61,12 @@ class App extends StatelessWidget {
         child: MaterialApp(
           routes: routes,
           theme: ThemeData(
+              floatingActionButtonTheme: FloatingActionButtonThemeData(
+                  backgroundColor: Colors.white,
+                  foregroundColor: StyleConfig.primaryColor,
+                  elevation: 6,
+                  highlightElevation: 6
+              ),
               chipTheme: ChipThemeData(
                   backgroundColor: chipTheme.backgroundColor,
                   disabledColor: chipTheme.disabledColor,

@@ -125,6 +125,10 @@ class PictureService {
     return HttpUtil.get("/picture/pagingByFollowing",
         params: pageable.toJson());
   }
+
+  static Future<ResultEntity<dynamic>> remove(int id) {
+    return HttpUtil.post("/picture/remove", params: {"id": id});
+  }
 }
 
 class FollowingService {
