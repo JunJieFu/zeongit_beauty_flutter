@@ -44,7 +44,7 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
                       params: tune,
                       callback: (SearchTuneParams _) {
                         tune = _;
-                        paging(1);
+                        refresh();
                       });
                 }));
               },

@@ -27,7 +27,7 @@ abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
 
   Future<void> paging(int pageIndex) async {
     pageable.page = pageIndex;
-    if (this.loading ||
+    if (loading ||
         (currPage?.meta != null && currPage.meta.last && pageIndex != 1))
       return;
     loading = true;

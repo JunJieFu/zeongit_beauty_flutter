@@ -3,6 +3,7 @@ import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/account/home.page.dart';
 import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/user.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/tag.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 
 class TabPage extends StatefulWidget {
@@ -17,12 +18,13 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   GlobalKey<HomePageState> homePageStateKey = GlobalKey<HomePageState>();
   GlobalKey<FindPageState> findPageStateKey = GlobalKey<FindPageState>();
   GlobalKey<NewPageState> newPageStateKey = GlobalKey<NewPageState>();
+  GlobalKey<TagPageState> tagPageStateKey = GlobalKey<TagPageState>();
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(
-      length: 4,
+      length: 5,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
@@ -55,6 +57,11 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                           newPageStateKey.currentState?.parentTabTap();
                         }
                         break;
+                      case 3:
+                        {
+                          tagPageStateKey.currentState?.parentTabTap();
+                        }
+                        break;
                       default:
                         {}
                         break;
@@ -74,6 +81,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
       Tab(text: "首页", icon: Icon(MdiIcons.home),iconMargin: EdgeInsets.all(0)),
       Tab(text: "推荐", icon: Icon(MdiIcons.compass),iconMargin: EdgeInsets.all(0)),
       Tab(text: "最新", icon: Icon(MdiIcons.alpha_n_box_outline),iconMargin: EdgeInsets.all(0)),
+      Tab(text: "搜索", icon: Icon(Icons.search),iconMargin: EdgeInsets.all(0)),
       Tab(text: "更多", icon: Icon(MdiIcons.dots_horizontal),iconMargin: EdgeInsets.all(0))
     ];
   }
@@ -83,6 +91,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
       HomePage(key: homePageStateKey),
       FindPage(key: findPageStateKey),
       NewPage(key: newPageStateKey),
+      TagPage(key: tagPageStateKey),
       UserPage()
     ];
   }
