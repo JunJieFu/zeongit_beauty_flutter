@@ -9,7 +9,6 @@ import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
 
-
 class FollowBtn extends StatelessWidget {
   FollowBtn({Key key, @required this.user, @required this.callback})
       : super(key: key);
@@ -24,12 +23,8 @@ class FollowBtn extends StatelessWidget {
     var _userState = Provider.of<UserState>(context, listen: false);
 
     bool focus = user.focus == FollowState.CONCERNED.index;
-    return RaisedButton(
+    return ElevatedButton(
         key: _btnKey,
-        highlightElevation: 0,
-        elevation: 0,
-        textColor: Colors.white,
-        color: StyleConfig.primaryColor,
         child: Text(focus ? "已关注" : "关注"),
         onPressed: () async {
           if (_userState.info != null) {
