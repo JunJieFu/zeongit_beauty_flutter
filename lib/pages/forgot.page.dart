@@ -78,12 +78,6 @@ class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        style: ButtonStyle(
-                            elevation: MaterialStateProperty.resolveWith(
-                                (states) =>
-                                    states.contains(MaterialState.pressed)
-                                        ? 6
-                                        : null)),
                         child: loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

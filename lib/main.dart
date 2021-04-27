@@ -67,10 +67,16 @@ class App extends StatelessWidget {
                   elevation: 6,
                   highlightElevation: 6),
               elevatedButtonTheme: ElevatedButtonThemeData(
-                  style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(0),
-                      backgroundColor:
-                          MaterialStateProperty.all(StyleConfig.primaryColor))),
+                  style: ElevatedButton.styleFrom(
+                      primary: StyleConfig.primaryColor)),
+              textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                primary: StyleConfig.primaryColor,
+              )),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                  style: OutlinedButton.styleFrom(
+                      primary: StyleConfig.primaryColor,
+                      side: BorderSide(color: StyleConfig.primaryColor))),
               chipTheme: ChipThemeData(
                   backgroundColor: chipTheme.backgroundColor,
                   disabledColor: chipTheme.disabledColor,

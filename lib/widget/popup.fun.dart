@@ -36,12 +36,8 @@ void popupSignIn(String title, String text, BuildContext context,
                       top: StyleConfig.gap),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: OutlineButton(
-                        textColor: StyleConfig.primaryColor,
+                    child: OutlinedButton(
                         child: Text("登录"),
-                        borderSide: BorderSide(
-                          color: StyleConfig.primaryColor,
-                        ),
                         onPressed: () {
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (_) {

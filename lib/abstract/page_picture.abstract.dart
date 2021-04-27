@@ -86,14 +86,15 @@ abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
             title: Text("提示"),
             content: Text("您确定删除该图片吗？"),
             actions: <Widget>[
-              FlatButton(
-                  textColor: StyleConfig.warningColor,
+              TextButton(
+                  style: TextButton.styleFrom(
+                    primary: StyleConfig.warningColor,
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop(this);
                   },
                   child: Text("取消")),
-              FlatButton(
-                  textColor: StyleConfig.primaryColor,
+              TextButton(
                   onPressed: () async {
                     Navigator.of(context).pop(this);
                     var result = await PictureService.remove(id);

@@ -70,12 +70,6 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        style: ButtonStyle(
-                            elevation: MaterialStateProperty.resolveWith(
-                                (states) =>
-                                    states.contains(MaterialState.pressed)
-                                        ? 6
-                                        : null)),
                         child: loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -90,11 +84,11 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16),
-                                    child: Text("登陆中..."),
+                                    child: Text("登录中..."),
                                   )
                                 ],
                               )
-                            : Text("登陆"),
+                            : Text("登录"),
                         onPressed: () {
                           signIn(context, _userState);
                         },

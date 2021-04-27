@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
@@ -25,6 +24,8 @@ class FollowBtn extends StatelessWidget {
     bool focus = user.focus == FollowState.CONCERNED.index;
     return ElevatedButton(
         key: _btnKey,
+        style: ButtonStyle(
+        elevation: MaterialStateProperty.all(0)),
         child: Text(focus ? "已关注" : "关注"),
         onPressed: () async {
           if (_userState.info != null) {

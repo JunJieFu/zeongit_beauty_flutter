@@ -17,7 +17,6 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-
 class UserPage extends StatefulWidget {
   UserPage({Key key}) : super(key: key);
 
@@ -168,14 +167,15 @@ class _UserPageState extends State<UserPage>
             title: Text("提示"),
             content: Text("您确定退出 Zeongit 吗？"),
             actions: <Widget>[
-              FlatButton(
-                  textColor: StyleConfig.warningColor,
+              TextButton(
+                  style: TextButton.styleFrom(
+                    primary: StyleConfig.warningColor,
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop(this);
                   },
                   child: Text("取消")),
-              FlatButton(
-                  textColor: StyleConfig.primaryColor,
+              TextButton(
                   onPressed: () {
                     userState.logout();
                     Navigator.of(context).pop(this);
