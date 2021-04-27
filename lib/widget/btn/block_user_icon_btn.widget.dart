@@ -31,8 +31,7 @@ class BlockUserIconBtnWidget extends StatelessWidget {
         onPressed: () async {
           if (_userState.info != null) {
             var result = await UserBlackHoleService.block(user.id);
-            await ResultUtil.check(result);
-            callback(user, result.data);
+            if (ResultUtil.check(result)) callback(user, result.data);
           } else {
             popupSignIn("屏蔽该用户？", "请先登录，然后才能把屏蔽该用户。", context, _btnKey);
           }

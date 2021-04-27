@@ -17,11 +17,12 @@ class UserState extends ChangeNotifier {
 
   getInfo() async {
     var result = await UserService.getInfo();
-    await ResultUtil.check(result);
-    StorageManager.setJson(
-        KeyConstant.USER_INFO, userInfoEntityToJson(result.data));
-    _info = result.data;
-    notifyListeners();
+    if(ResultUtil.check(result)){
+      StorageManager.setJson(
+          KeyConstant.USER_INFO, userInfoEntityToJson(result.data));
+      _info = result.data;
+      notifyListeners();
+    }
   }
 
   logout() {

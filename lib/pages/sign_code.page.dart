@@ -114,11 +114,10 @@ class SignCodePageState extends State<SignCodePage>
     setState(() {
       loading = false;
     });
-    try {
-      await ResultUtil.check(result);
+    if (ResultUtil.check(result)) {
       Navigator.push(context, MaterialPageRoute(builder: (_) {
         return SignUpPage(phoneController.text);
       }));
-    } catch (e) {}
+    }
   }
 }

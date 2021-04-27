@@ -46,11 +46,12 @@ class _VisitorTabPageState extends State<VisitorTabPage>
 
   Future<void> _get() async {
     var result = await UserService.getByTargetId(widget.id);
-    await ResultUtil.check(result);
-    setState(() {
-      loading = false;
-    });
-    visitorState.setInfo(result.data);
+    if (ResultUtil.check(result)) {
+      setState(() {
+        loading = false;
+      });
+      visitorState.setInfo(result.data);
+    }
     return;
   }
 

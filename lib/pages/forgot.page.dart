@@ -130,9 +130,7 @@ class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
     setState(() {
       loading = false;
     });
-    try{
-      await ResultUtil.check(result);
+    if (ResultUtil.check(result))
       Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
-    }catch(e){}
   }
 }

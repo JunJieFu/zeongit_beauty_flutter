@@ -30,8 +30,7 @@ class BlockTagIconBtnWidget extends StatelessWidget {
         onPressed: () async {
           if (_userState.info != null) {
             var result = await TagBlackHoleService.block(tag.name);
-            await ResultUtil.check(result);
-            callback(tag, result.data);
+            if (ResultUtil.check(result)) callback(tag, result.data);
           } else {
             popupSignIn("屏蔽该标签？", "请先登录，然后才能把屏蔽该标签。", context, _btnKey);
           }

@@ -34,8 +34,7 @@ class FollowBtn extends StatelessWidget {
         onPressed: () async {
           if (_userState.info != null) {
             var result = await FollowingService.follow(user.id);
-            await ResultUtil.check(result);
-            callback(user, result.data);
+            if (ResultUtil.check(result)) callback(user, result.data);
           } else {
             popupSignIn("想要关注这个画师？", "请先登录，然后才能成为该画师的粉丝。", context, _btnKey);
           }

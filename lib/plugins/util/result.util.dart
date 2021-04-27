@@ -4,15 +4,15 @@ import 'package:zeongitbeautyflutter/plugins/constant/status.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 
 class ResultUtil {
-  static Future check(ResultEntity result) {
-    return Future(() {
-      if (result.status != StatusCode.SUCCESS) {
-        Fluttertoast.showToast(
-            msg: result.message,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: StyleConfig.errorColor);
-      }
-      assert(result.status == StatusCode.SUCCESS);
-    });
+  static bool check(ResultEntity result) {
+    if (result.status != StatusCode.SUCCESS) {
+      Fluttertoast.showToast(
+          msg: result.message,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: StyleConfig.errorColor);
+      return false;
+    } else {
+      return true;
+    }
   }
 }

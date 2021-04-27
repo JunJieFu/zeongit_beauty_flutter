@@ -97,11 +97,12 @@ abstract class PagePictureAbstract<T extends StatefulWidget> extends State<T> {
                   onPressed: () async {
                     Navigator.of(context).pop(this);
                     var result = await PictureService.remove(id);
-                    await ResultUtil.check(result);
-                    Fluttertoast.showToast(
-                        msg: "删除成功",
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: StyleConfig.successColor);
+                    if (ResultUtil.check(result)) {
+                      Fluttertoast.showToast(
+                          msg: "删除成功",
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: StyleConfig.successColor);
+                    }
                   },
                   child: Text("确定"))
             ],

@@ -32,8 +32,7 @@ class CollectIconBtnWidget extends StatelessWidget {
         onPressed: () async {
           if (_userState.info != null) {
             var result = await CollectionService.focus(picture.id);
-            await ResultUtil.check(result);
-            callback(picture, result.data);
+            if (ResultUtil.check(result)) callback(picture, result.data);
           } else {
             popupSignIn("喜欢这张绘画？", "请先登录，然后才能把这张绘画添加到收藏夹。", context, _btnKey);
           }
