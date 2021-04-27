@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/pages/find.page.dart';
-import 'package:zeongitbeautyflutter/pages/home.page.dart';
-import 'package:zeongitbeautyflutter/pages/new.page.dart';
-import 'package:zeongitbeautyflutter/pages/user.page.dart';
+import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
+import 'package:zeongitbeautyflutter/pages/account/home.page.dart';
+import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
+import 'package:zeongitbeautyflutter/pages/more/user.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/header.widget.dart';
 
 class TabPage extends StatefulWidget {
   TabPage({Key key}) : super(key: key);
@@ -31,7 +30,6 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: HeaderWidget(title: Text("首页")),
         body:
             TabBarView(controller: tabController, children: buildTabViewList()),
         bottomNavigationBar: BottomAppBar(
@@ -73,12 +71,10 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   buildTabList() {
     return [
-      Tab(
-        child: Icon(MdiIcons.home),
-      ),
-      Tab(icon: Icon(MdiIcons.compass)),
-      Tab(icon: Icon(MdiIcons.alpha_n_box_outline)),
-      Tab(icon: Icon(MdiIcons.account))
+      Tab(text: "首页", icon: Icon(MdiIcons.home),iconMargin: EdgeInsets.all(0)),
+      Tab(text: "推荐", icon: Icon(MdiIcons.compass),iconMargin: EdgeInsets.all(0)),
+      Tab(text: "最新", icon: Icon(MdiIcons.alpha_n_box_outline),iconMargin: EdgeInsets.all(0)),
+      Tab(text: "更多", icon: Icon(MdiIcons.dots_horizontal),iconMargin: EdgeInsets.all(0))
     ];
   }
 

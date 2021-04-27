@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart';
-import 'package:zeongitbeautyflutter/pages/tab.page.dart';
+import 'package:zeongitbeautyflutter/pages/home/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
