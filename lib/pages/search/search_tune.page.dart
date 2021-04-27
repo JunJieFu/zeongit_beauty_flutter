@@ -384,9 +384,10 @@ class _SearchTunePageState extends State<SearchTunePage> {
             child: SizedBox(
               width: double.infinity,
               height: 45,
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: StyleConfig.primaryColor,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    elevation: MaterialStateProperty.resolveWith((states) =>
+                        states.contains(MaterialState.pressed) ? 6 : null)),
                 child: Text("确定"),
                 onPressed: () {
                   try {

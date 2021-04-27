@@ -116,7 +116,7 @@ class _UserPageState extends State<UserPage>
                 return SettingPage();
               }));
             }),
-            ...buildListTile(MdiIcons.logout, "退出", () {
+            ...buildListTile(MdiIcons.logout, "登出", () {
               signOut(userState);
             }),
             Divider(),

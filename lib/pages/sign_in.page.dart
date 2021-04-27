@@ -69,9 +69,13 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                     child: SizedBox(
                       width: double.infinity,
                       height: 45,
-                      child: RaisedButton(
-                        textColor: Colors.white,
-                        color: StyleConfig.primaryColor,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.resolveWith(
+                                (states) =>
+                                    states.contains(MaterialState.pressed)
+                                        ? 6
+                                        : null)),
                         child: loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -106,8 +110,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                     }),
                   ),
                   LinkWidget("没有登录账号，立即创建一个！", onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return SignCodePage(CodeTypeConstant.SIGN_UP);
                     }));
                   }),
@@ -135,7 +138,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
     setState(() {
       loading = false;
     });
-    if(ResultUtil.check(result)){
+    if (ResultUtil.check(result)) {
       await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
       await userState.getInfo();
       Navigator.maybePop(context);
