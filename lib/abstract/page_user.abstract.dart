@@ -19,14 +19,20 @@ abstract class PageUserAbstract<T extends StatefulWidget> extends State<T> {
   PageableEntity pageable = PageableEntity();
 
   Future<void> refresh() async {
-    paging(1);
+    pageable.page = 1;
+    paging();
   }
 
-  Future<void> paging(int pageIndex) async {
-    pageable.page = pageIndex;
-    if (this.loading ||
-        (currPage?.meta != null && currPage.meta.last && pageIndex != 1))
+  Future<void> changePage(int pageIndex) async {
+    if (currPage?.meta != null && currPage.meta.last ||
+        currPage?.meta != null && currPage.meta.currentPage >= pageIndex)
       return;
+    pageable.page = pageIndex;
+    paging();
+  }
+
+  Future<void> paging() async {
+    if (loading) return;
     loading = true;
     var result = await dao();
     setState(() {
@@ -63,7 +69,10 @@ abstract class PageUserAbstract<T extends StatefulWidget> extends State<T> {
 
   UserListNormalWidget buildListWaterFall() {
     return UserListNormalWidget(
-        key: listWidgetKey, currPage: currPage, list: list, paging: paging);
+        key: listWidgetKey,
+        currPage: currPage,
+        list: list,
+        changePage: changePage);
   }
 
   TipsPageCardWidget buildEmptyType();

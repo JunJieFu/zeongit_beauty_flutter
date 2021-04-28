@@ -8,14 +8,14 @@ import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 
 class UserListNormalWidget extends StatefulWidget {
-  UserListNormalWidget({Key key, this.currPage, this.list, this.paging})
+  UserListNormalWidget({Key key, this.currPage, this.list, this.changePage})
       : super(key: key);
 
   final PageUserInfoEntity currPage;
 
   final List<UserInfoEntity> list;
 
-  final paging;
+  final Future<void> Function(int) changePage;
 
   @override
   UserListNormalWidgetState createState() => UserListNormalWidgetState();
@@ -31,8 +31,8 @@ class UserListNormalWidgetState extends State<UserListNormalWidget> {
       if (scrollController.position.maxScrollExtent -
           scrollController.position.pixels <
           150) {
-        if (widget.paging != null) {
-          widget.paging(widget.currPage.meta.currentPage + 1);
+        if (widget.changePage != null) {
+          widget.changePage(widget.currPage.meta.currentPage + 1);
         }
       }
     });

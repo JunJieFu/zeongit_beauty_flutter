@@ -10,14 +10,14 @@ import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
 class PictureListWaterfallWidget extends StatefulWidget {
   PictureListWaterfallWidget(
-      {Key key, this.currPage, this.list, this.paging, this.onLongPress})
+      {Key key, this.currPage, this.list, this.changePage, this.onLongPress})
       : super(key: key);
 
   final PagePictureEntity currPage;
 
   final List<PictureEntity> list;
 
-  final paging;
+  final Future<void> Function(int) changePage;
 
   final void Function(int) onLongPress;
 
@@ -37,8 +37,8 @@ class PictureListWaterfallWidgetState
       if (scrollController.position.maxScrollExtent -
               scrollController.position.pixels <
           150) {
-        if (widget.paging != null) {
-          widget.paging(widget.currPage.meta.currentPage + 1);
+        if (widget.changePage != null) {
+          widget.changePage(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -75,7 +75,7 @@ class PictureListWaterfallWidgetState
                   return DetailPage(id: picture.id);
                 }));
               },
-              onLongPress: (){
+              onLongPress: () {
                 widget.onLongPress(picture.id);
               });
         });
