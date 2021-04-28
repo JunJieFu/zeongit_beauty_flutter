@@ -1,56 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:zeongitbeautyflutter/abstract/refresh.abstract.dart';
-import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/widget/user_list_normal.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/widget/user_list_normal.widget.dart';
 
 abstract class PageUserAbstract<T extends StatefulWidget>
-    extends RefreshAbstract<T> {
-  bool loading = false;
-  GlobalKey<UserListNormalWidgetState> listWidgetKey =
-      GlobalKey<UserListNormalWidgetState>();
-  PageUserInfoEntity currPage;
-  List<UserInfoEntity> list = [];
-  PageableEntity pageable = PageableEntity();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<void> refresh() async {
-    pageable.page = 1;
-    paging();
-  }
-
-  Future<void> changePage(int pageIndex) async {
-    if (currPage?.meta != null && currPage.meta.last ||
-        currPage?.meta != null && currPage.meta.currentPage >= pageIndex)
-      return;
-    pageable.page = pageIndex;
-    paging();
-  }
-
-  Future<void> paging() async {
-    if (loading) return;
-    loading = true;
-    var result = await dao();
-    setState(() {
-      currPage = result.data;
-      if (currPage.meta.first) {
-        scrollController.jumpTo(0);
-        list = currPage.items;
-      } else {
-        list.addAll(currPage.items);
-      }
-    });
-    loading = false;
-  }
-
+    extends PagingAbstract<T, UserInfoEntity, PageUserInfoEntity> {
   Widget emptyWidget() {
     if (currPage?.meta != null &&
         currPage.meta.empty &&
@@ -66,11 +23,8 @@ abstract class PageUserAbstract<T extends StatefulWidget>
 
   TipsPageCardWidget buildEmptyType();
 
-  Future<ResultEntity<PageUserInfoEntity>> dao();
-
   UserListNormalWidget _buildListWaterFall() {
     return UserListNormalWidget(
-        key: listWidgetKey,
         currPage: currPage,
         list: list,
         controller: scrollController,

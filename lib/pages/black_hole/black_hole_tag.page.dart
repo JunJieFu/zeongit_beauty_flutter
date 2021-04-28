@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
@@ -7,7 +8,6 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/black_hole/widget/list_tag.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
-import 'package:zeongitbeautyflutter/abstract/paging.abstract.dart';
 
 class BlackHoleTagPage extends StatefulWidget {
   @override
@@ -44,9 +44,8 @@ class _BlackHoleTagPageState extends PagingAbstract<
       TagBlackHoleService.paging(pageable);
 
   Widget emptyWidget() {
-    if (currPage != null &&
-        currPage.items.isEmpty &&
-        currPage.meta.currentPage == 1 &&
+    if (currPage?.meta != null && currPage.meta.empty &&
+        currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(icon: MdiIcons.tag_outline, title: "没有屏蔽标签");
     } else {

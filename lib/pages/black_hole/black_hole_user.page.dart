@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.abstract.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/black_hole/widget/list_user.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -13,30 +14,10 @@ class BlackHoleUserPage extends StatefulWidget {
   _BlackHoleUserPageState createState() => _BlackHoleUserPageState();
 }
 
-class _BlackHoleUserPageState extends State<BlackHoleUserPage>
-    with AutomaticKeepAliveClientMixin {
-  bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
-  PageUserBlackHoleEntity currPage;
-  List<UserBlackHoleEntity> list = [];
-  PageableEntity pageable = PageableEntity();
-
-  Future<void> refresh() async {
-    paging(1);
-  }
-
-  Future<void> paging(int pageIndex) async {
-    pageable.page = pageIndex;
-    if (this.loading || (currPage?.meta != null  && currPage.meta.last)) return;
-    loading = true;
-    var result = await UserBlackHoleService.paging(pageable);
-    setState(() {
-      currPage = result.data;
-      list.addAll(currPage.items);
-    });
-    loading = false;
-  }
-
+class _BlackHoleUserPageState extends PagingAbstract<
+    BlackHoleUserPage,
+    UserBlackHoleEntity,
+    PageUserBlackHoleEntity> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -57,14 +38,23 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
   @override
   bool get wantKeepAlive => true;
 
+  @override
+  Future<ResultEntity<PageUserBlackHoleEntity>> dao() =>
+      UserBlackHoleService.paging(pageable);
+
   Widget emptyWidget() {
-    if (currPage?.meta != null && currPage.meta.empty &&
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(
           icon: MdiIcons.account_outline, title: "没有屏蔽用户");
     } else {
-      return ListUserWidget(currPage: currPage, list: list, paging: paging);
+      return ListUserWidget(
+          currPage: currPage,
+          list: list,
+          controller: scrollController,
+          changePage: changePage);
     }
   }
 }

@@ -8,31 +8,35 @@ import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
 
 class ListUserWidget extends StatefulWidget {
-  ListUserWidget({Key key, this.currPage, this.list, this.paging})
-      : super(key: key);
+  ListUserWidget(
+      {Key key, this.currPage, this.list, this.controller, this.changePage})
+      : super(key: key) {
+    if (controller == null) this.controller = ScrollController();
+  }
 
   final PageUserBlackHoleEntity currPage;
 
   final List<UserBlackHoleEntity> list;
 
-  final paging;
+  ScrollController controller;
+
+  final Future<void> Function(int) changePage;
 
   @override
   _ListUserWidgetState createState() => _ListUserWidgetState();
 }
 
 class _ListUserWidgetState extends State<ListUserWidget> {
-  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent -
-              _scrollController.position.pixels <
+    widget.controller.addListener(() {
+      if (widget.controller.position.maxScrollExtent -
+              widget.controller.position.pixels <
           150) {
-        if (widget.paging != null) {
-          widget.paging(widget.currPage.meta.currentPage + 1);
+        if (widget.changePage != null) {
+          widget.changePage(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -41,7 +45,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        controller: _scrollController,
+        controller: widget.controller,
         itemCount: widget.list?.length,
         itemBuilder: (BuildContext context, int index) {
           UserBlackHoleEntity user = widget.list[index];
