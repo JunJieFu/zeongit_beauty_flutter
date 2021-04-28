@@ -17,7 +17,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TagState tagState;
   bool loading = true;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
+  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =GlobalKey<RefreshIndicatorState>();
   TextEditingController keywordController = TextEditingController();
 
   Future<void> _listTagTop30() async {
@@ -38,8 +38,6 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (tagState.recommendTagList == null) {
         refreshIndicatorKey.currentState?.show();

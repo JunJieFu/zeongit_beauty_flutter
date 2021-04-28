@@ -44,22 +44,22 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                     switch (index) {
                       case 0:
                         {
-                          homePageStateKey.currentState?.parentTabTap();
+                          homePageStateKey.currentState?.externalRefresh();
                         }
                         break;
                       case 1:
                         {
-                          findPageStateKey.currentState?.parentTabTap();
+                          findPageStateKey.currentState?.externalRefresh();
                         }
                         break;
                       case 2:
                         {
-                          newPageStateKey.currentState?.parentTabTap();
+                          newPageStateKey.currentState?.externalRefresh();
                         }
                         break;
                       case 3:
                         {
-                          tagPageStateKey.currentState?.parentTabTap();
+                          tagPageStateKey.currentState?.externalRefresh();
                         }
                         break;
                       default:

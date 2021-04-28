@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/widget/user_list_normal.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-abstract class PageUserAbstract<T extends StatefulWidget> extends State<T> {
+abstract class PageUserAbstract<T extends StatefulWidget>
+    extends RefreshAbstract<T> {
   bool loading = false;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
   GlobalKey<UserListNormalWidgetState> listWidgetKey =
       GlobalKey<UserListNormalWidgetState>();
   PageUserInfoEntity currPage;
   List<UserInfoEntity> list = [];
   PageableEntity pageable = PageableEntity();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = listWidgetKey?.currentState?.scrollController;
+  }
 
   Future<void> refresh() async {
     pageable.page = 1;
@@ -58,13 +63,6 @@ abstract class PageUserAbstract<T extends StatefulWidget> extends State<T> {
     } else {
       return buildListWaterFall();
     }
-  }
-
-  parentTabTap() {
-    listWidgetKey.currentState?.scrollController?.animateTo(0,
-        duration: Duration(milliseconds: StyleConfig.durationMilliseconds),
-        curve: Curves.ease);
-    refreshIndicatorKey.currentState?.show();
   }
 
   UserListNormalWidget buildListWaterFall() {

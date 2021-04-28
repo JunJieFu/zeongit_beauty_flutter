@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
@@ -13,7 +14,6 @@ import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
-
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -21,10 +21,10 @@ class HomePage extends StatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
+class HomePageState extends RefreshAbstract<HomePage>
+    with AutomaticKeepAliveClientMixin {
   bool loading = true;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  @override
   ScrollController scrollController = ScrollController();
   List<PictureEntity> followingPictureList = [];
   List<PictureEntity> recommendList = [];
@@ -132,12 +132,5 @@ class HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
                 });
           }),
     );
-  }
-
-  parentTabTap() {
-    scrollController.animateTo(0,
-        duration: Duration(milliseconds: StyleConfig.durationMilliseconds),
-        curve: Curves.ease);
-    refreshIndicatorKey.currentState?.show();
   }
 }
