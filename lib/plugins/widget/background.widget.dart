@@ -38,11 +38,11 @@ class BackgroundWidget extends StatelessWidget {
           );
         },
         errorWidget: (BuildContext context, String url, dynamic error) {
-          return buildSvgPicture();
+          return _buildSvgPicture();
         })
-        : buildSvgPicture();
+        : _buildSvgPicture();
   }
 
-  SvgPicture buildSvgPicture() =>
+  SvgPicture _buildSvgPicture() =>
       SvgPicture.asset("assets/images/default-picture.svg", fit: fit);
 }

@@ -33,11 +33,11 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget build = buildSvgPicture();
+    Widget build = _buildSvgPicture();
     if (url != null) {
-      build = buildCachedNetworkImage();
+      build = _buildCachedNetworkImage();
     }else{
-      build = buildNicknameAvatar();
+      build = _buildNicknameAvatar();
     }
 
     return SizedBox(
@@ -49,10 +49,10 @@ class AvatarWidget extends StatelessWidget {
             )));
   }
 
-  CachedNetworkImage buildCachedNetworkImage() {
-    Widget errorWidget = buildSvgPicture();
+  CachedNetworkImage _buildCachedNetworkImage() {
+    Widget errorWidget = _buildSvgPicture();
     String _url;
-    errorWidget = buildNicknameAvatar();
+    errorWidget = _buildNicknameAvatar();
     _url = style != null
         ? "${ConfigConstant.QINIU_AVATAR}/$url${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
         : "${ConfigConstant.QINIU_AVATAR}/$url";
@@ -64,10 +64,10 @@ class AvatarWidget extends StatelessWidget {
         });
   }
 
-  SvgPicture buildSvgPicture() =>
+  SvgPicture _buildSvgPicture() =>
       SvgPicture.asset("assets/images/default-avatar.svg", fit: fit);
 
-  Widget buildNicknameAvatar() {
+  Widget _buildNicknameAvatar() {
     var character = nickname?.substring(0, 1) ?? "";
     var index = (nickname?.codeUnitAt(0) ?? 2) % avatarColorList.length;
     return Container(

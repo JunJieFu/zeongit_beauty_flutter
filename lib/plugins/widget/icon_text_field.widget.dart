@@ -22,14 +22,14 @@ class IconTextField extends StatefulWidget {
 }
 
 class _IconTextFieldState extends State<IconTextField> {
-  FocusNode focusNode = FocusNode();
-  bool hasFocus = false;
+  FocusNode _focusNode = FocusNode();
+  bool _hasFocus = false;
 
   @override
   void initState() {
-    focusNode.addListener(() {
+    _focusNode.addListener(() {
       setState(() {
-        hasFocus = focusNode.hasFocus;
+        _hasFocus = _focusNode.hasFocus;
       });
     });
     super.initState();
@@ -38,7 +38,7 @@ class _IconTextFieldState extends State<IconTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      focusNode: focusNode,
+      focusNode: _focusNode,
       controller: widget.controller,
       obscureText: widget.obscureText,
       cursorColor: StyleConfig.primaryColor,
@@ -46,7 +46,7 @@ class _IconTextFieldState extends State<IconTextField> {
         isDense: false,
         focusColor: StyleConfig.primaryColor,
         prefixIcon: Icon(widget.icon,
-            color: hasFocus ? StyleConfig.primaryColor : null),
+            color: _hasFocus ? StyleConfig.primaryColor : null),
         hintText: widget.hintText,
         focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: StyleConfig.primaryColor)),

@@ -21,21 +21,21 @@ class ChipsTextFieldWidget extends StatefulWidget {
 }
 
 class ChipsTextFieldWidgetState extends State<ChipsTextFieldWidget> {
-  FocusNode focusNode = FocusNode();
-  bool hasFocus = false;
-  List<String> valueList = ["123", "123"];
+  FocusNode _focusNode = FocusNode();
+//  bool _hasFocus = false;
+  List<String> _valueList = ["123", "123"];
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      focusNode: focusNode,
+      focusNode: _focusNode,
       controller: widget.controller,
       autofocus: widget.autofocus,
       obscureText: widget.obscureText,
       cursorColor: StyleConfig.primaryColor,
       decoration: widget.decoration.copyWith(
           icon: Wrap(
-              children: valueList
+              children: _valueList
                   .map((e) => Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: Chip(label: Text(e)),
