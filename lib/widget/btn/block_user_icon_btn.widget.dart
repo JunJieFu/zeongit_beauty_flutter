@@ -21,7 +21,7 @@ class BlockUserIconBtnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    var userState = Provider.of<UserState>(context, listen: false);
 
     bool normal = user.state == BlockState.NORMAL.index;
 
@@ -29,7 +29,7 @@ class BlockUserIconBtnWidget extends StatelessWidget {
         key: _btnKey,
         icon: Icon(normal ? MdiIcons.eye_off_outline : MdiIcons.eye_outline),
         onPressed: () async {
-          if (_userState.info != null) {
+          if (userState.info != null) {
             var result = await UserBlackHoleService.block(user.id);
             if (ResultUtil.check(result)) callback(user, result.data);
           } else {

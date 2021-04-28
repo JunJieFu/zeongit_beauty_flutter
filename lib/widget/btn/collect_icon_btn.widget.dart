@@ -21,7 +21,7 @@ class CollectIconBtnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    var userState = Provider.of<UserState>(context, listen: false);
 
     bool focus = picture.focus == CollectState.CONCERNED.index;
 
@@ -30,7 +30,7 @@ class CollectIconBtnWidget extends StatelessWidget {
         icon: Icon(focus ? Icons.star : Icons.star_border,
             color: focus ? StyleConfig.errorColor : null),
         onPressed: () async {
-          if (_userState.info != null) {
+          if (userState.info != null) {
             var result = await CollectionService.focus(picture.id);
             if (ResultUtil.check(result)) callback(picture, result.data);
           } else {

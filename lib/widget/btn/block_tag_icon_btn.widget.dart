@@ -20,15 +20,13 @@ class BlockTagIconBtnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
-
+    var userState = Provider.of<UserState>(context, listen: false);
     bool normal = tag.state == BlockState.NORMAL.index;
-
     return IconButton(
         key: _btnKey,
         icon: Icon(normal ? MdiIcons.eye_off_outline : MdiIcons.eye_outline),
         onPressed: () async {
-          if (_userState.info != null) {
+          if (userState.info != null) {
             var result = await TagBlackHoleService.block(tag.name);
             if (ResultUtil.check(result)) callback(tag, result.data);
           } else {

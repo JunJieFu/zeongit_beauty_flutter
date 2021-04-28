@@ -19,7 +19,7 @@ class FollowBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    var userState = Provider.of<UserState>(context, listen: false);
 
     bool focus = user.focus == FollowState.CONCERNED.index;
     return ElevatedButton(
@@ -28,7 +28,7 @@ class FollowBtn extends StatelessWidget {
         elevation: MaterialStateProperty.all(0)),
         child: Text(focus ? "已关注" : "关注"),
         onPressed: () async {
-          if (_userState.info != null) {
+          if (userState.info != null) {
             var result = await FollowingService.follow(user.id);
             if (ResultUtil.check(result)) callback(user, result.data);
           } else {
