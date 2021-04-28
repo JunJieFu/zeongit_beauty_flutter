@@ -36,8 +36,8 @@ class SkeletonState extends State<Skeleton>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,7 +49,7 @@ class SkeletonState extends State<Skeleton>
           gradient: LinearGradient(
               begin: Alignment(gradientPosition.value, 0),
               end: Alignment(-1, 0),
-              colors: [Colors.black12, Colors.black26, Colors.black12])),
+              colors: [Colors.black12, Colors.white12, Colors.black12])),
     );
   }
 }
