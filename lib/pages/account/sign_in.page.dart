@@ -22,15 +22,15 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  FocusNode focusNode = FocusNode();
-  bool loading = false;
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+  bool _loading = false;
 
   @override
   void initState() {
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {}
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {}
     });
     super.initState();
   }
@@ -50,7 +50,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: phoneController,
+                      controller: _phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -58,7 +58,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: passwordController,
+                      controller: _passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -70,7 +70,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        child: loading
+                        child: _loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -90,7 +90,7 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
                               )
                             : Text("登录"),
                         onPressed: () {
-                          signIn(context, _userState);
+                          _signIn(context, _userState);
                         },
                       ),
                     ),
@@ -118,19 +118,19 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    phoneController.dispose();
-    passwordController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
   }
 
-  signIn(BuildContext context, UserState userState) async {
-    if (loading) return;
+  _signIn(BuildContext context, UserState userState) async {
+    if (_loading) return;
     setState(() {
-      loading = true;
+      _loading = true;
     });
-    var result =
-        await UserService.signIn(phoneController.text, passwordController.text);
+    var result = await UserService.signIn(
+        _phoneController.text, _passwordController.text);
     setState(() {
-      loading = false;
+      _loading = false;
     });
     if (ResultUtil.check(result)) {
       await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);

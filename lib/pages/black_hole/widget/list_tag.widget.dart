@@ -2,37 +2,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
-import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/block_tag_icon_btn.widget.dart';
 
 class ListTagWidget extends StatefulWidget {
-  ListTagWidget({Key key, this.currPage, this.list, this.paging})
-      : super(key: key);
+  ListTagWidget(
+      {Key key, this.currPage, this.list, this.controller, this.changePage})
+      : super(key: key) {
+    if (controller == null) this.controller = ScrollController();
+  }
 
   final PageTagBlackHoleEntity currPage;
 
   final List<TagBlackHoleEntity> list;
 
-  final paging;
+  ScrollController controller;
+
+  final Future<void> Function(int) changePage;
 
   @override
   _ListTagWidgetState createState() => _ListTagWidgetState();
 }
 
 class _ListTagWidgetState extends State<ListTagWidget> {
-  ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.position.maxScrollExtent -
-              _scrollController.position.pixels <
+    widget.controller.addListener(() {
+      if (widget.controller.position.maxScrollExtent -
+              widget.controller.position.pixels <
           150) {
-        if (widget.paging != null) {
-          widget.paging(widget.currPage.meta.currentPage + 1);
+        if (widget.changePage != null) {
+          widget.changePage(widget.currPage.meta.currentPage + 1);
         }
       }
     });
@@ -41,7 +42,7 @@ class _ListTagWidgetState extends State<ListTagWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        controller: _scrollController,
+        controller: widget.controller,
         itemCount: widget.list?.length,
         itemBuilder: (BuildContext context, int index) {
           TagBlackHoleEntity tag = widget.list[index];
@@ -77,28 +78,5 @@ class _ListTagWidgetState extends State<ListTagWidget> {
             ],
           );
         });
-  }
-
-  InkWell buildAvatar(UserBlackHoleEntity user) {
-    var size = 75.0;
-    var padding = 8.0;
-    return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(size / 2)),
-      child: Padding(
-        padding: EdgeInsets.all(padding),
-        child: AvatarWidget(
-          user?.avatarUrl,
-          user?.nickname,
-          size: size - padding * 2,
-          fit: BoxFit.cover,
-          style: AvatarStyle.small50,
-        ),
-      ),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return VisitorTabPage(id: user.id);
-        }));
-      },
-    );
   }
 }

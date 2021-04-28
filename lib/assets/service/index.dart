@@ -25,7 +25,7 @@ class UserService {
         host: ConfigConstant.ACCOUNT_HOST);
   }
 
-  static Future<ResultEntity<String>> singUp(
+  static Future<ResultEntity<String>> signUp(
       String code, String phone, String password) {
     return HttpUtil.post("/user/signUp",
         params: {"code": code, "phone": phone, "password": password},

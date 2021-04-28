@@ -22,16 +22,16 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
-  TextEditingController codeController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
-  FocusNode focusNode = FocusNode();
-  bool loading = false;
+  TextEditingController _codeController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _rePasswordController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+  bool _loading = false;
 
   @override
   void initState() {
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {}
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {}
     });
     super.initState();
   }
@@ -51,7 +51,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: codeController,
+                      controller: _codeController,
                       icon: MdiIcons.check,
                       hintText: '验证码',
                     ),
@@ -59,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: passwordController,
+                      controller: _passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -68,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: rePasswordController,
+                      controller: _rePasswordController,
                       icon: MdiIcons.lock_check,
                       obscureText: true,
                       hintText: '确认密码',
@@ -80,7 +80,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        child: loading
+                        child: _loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -100,7 +100,7 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
                               )
                             : Text("确认注册并登录"),
                         onPressed: () {
-                          signUp(context, _userState);
+                          _signUp(context, _userState);
                         },
                       ),
                     ),
@@ -115,20 +115,20 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    codeController.dispose();
-    passwordController.dispose();
-    rePasswordController.dispose();
+    _codeController.dispose();
+    _passwordController.dispose();
+    _rePasswordController.dispose();
   }
 
-  signUp(BuildContext context, UserState userState) async {
-    if (loading) return;
+  _signUp(BuildContext context, UserState userState) async {
+    if (_loading) return;
     setState(() {
-      loading = true;
+      _loading = true;
     });
-    var result = await UserService.singUp(
-        codeController.text, widget.phone, passwordController.text);
+    var result = await UserService.signUp(
+        _codeController.text, widget.phone, _passwordController.text);
     setState(() {
-      loading = false;
+      _loading = false;
     });
     if (ResultUtil.check(result)) {
       await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);

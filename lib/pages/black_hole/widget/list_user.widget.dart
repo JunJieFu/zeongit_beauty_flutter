@@ -54,7 +54,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
                 child: Flex(
                   direction: Axis.horizontal,
                   children: <Widget>[
-                    buildAvatar(user),
+                    _buildAvatar(user),
                     Expanded(
                       flex: 1,
                       child: Padding(
@@ -80,7 +80,7 @@ class _ListUserWidgetState extends State<ListUserWidget> {
         });
   }
 
-  InkWell buildAvatar(UserBlackHoleEntity user) {
+  InkWell _buildAvatar(UserBlackHoleEntity user) {
     var size = 75.0;
     var padding = 8.0;
     return InkWell(

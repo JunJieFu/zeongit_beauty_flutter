@@ -5,8 +5,6 @@ import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_user.page.dart'
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 
-
-
 class BlackHoleTabPage extends StatefulWidget {
   BlackHoleTabPage({Key key}) : super(key: key);
 
@@ -16,9 +14,9 @@ class BlackHoleTabPage extends StatefulWidget {
 
 class _BlackHoleTabPageState extends State<BlackHoleTabPage>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController _tabController;
 
-  List<TabItemModel> tabList = [
+  List<TabItemModel> _tabList = [
     TabItemModel(
         view: BlackHoleTagPage(), tab: Tab(icon: Icon(MdiIcons.tag_outline))),
     TabItemModel(
@@ -29,8 +27,8 @@ class _BlackHoleTabPageState extends State<BlackHoleTabPage>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(
-      length: tabList.length,
+    _tabController = TabController(
+      length: _tabList.length,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
@@ -42,20 +40,20 @@ class _BlackHoleTabPageState extends State<BlackHoleTabPage>
         elevation: 1,
         title: Text("屏蔽设置"),
         bottom: TabBar(
-          controller: tabController,
-          tabs: tabList.map((it) => it.tab).toList(), //
+          controller: _tabController,
+          tabs: _tabList.map((it) => it.tab).toList(), //
           indicatorColor: StyleConfig.primaryColor, // <-- total of 2 tabs
         ),
       ),
       body: TabBarView(
-          controller: tabController,
-          children: tabList.map((it) => it.view).toList()),
+          controller: _tabController,
+          children: _tabList.map((it) => it.view).toList()),
     );
   }
 
   @override
   void dispose() {
     super.dispose();
-    tabController.dispose();
+    _tabController.dispose();
   }
 }

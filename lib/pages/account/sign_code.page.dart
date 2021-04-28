@@ -26,14 +26,14 @@ class SignCodePage extends StatefulWidget {
 
 class SignCodePageState extends State<SignCodePage>
     with TickerProviderStateMixin {
-  TextEditingController phoneController = TextEditingController();
-  FocusNode focusNode = FocusNode();
-  bool loading = false;
+  TextEditingController _phoneController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+  bool _loading = false;
 
   @override
   void initState() {
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {}
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {}
     });
     super.initState();
   }
@@ -53,7 +53,7 @@ class SignCodePageState extends State<SignCodePage>
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: phoneController,
+                      controller: _phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -64,7 +64,7 @@ class SignCodePageState extends State<SignCodePage>
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        child: loading
+                        child: _loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -84,7 +84,7 @@ class SignCodePageState extends State<SignCodePage>
                               )
                             : Text("获取验证码"),
                         onPressed: () {
-                          send(context, _userState);
+                          _send(context, _userState);
                         },
                       ),
                     ),
@@ -99,22 +99,22 @@ class SignCodePageState extends State<SignCodePage>
   @override
   void dispose() {
     super.dispose();
-    phoneController.dispose();
+    _phoneController.dispose();
   }
 
-  send(BuildContext context, UserState userState) async {
-    if (loading) return;
+  _send(BuildContext context, UserState userState) async {
+    if (_loading) return;
     setState(() {
-      loading = true;
+      _loading = true;
     });
     var result =
-        await UserService.sendCode(phoneController.text, widget.codeType);
+        await UserService.sendCode(_phoneController.text, widget.codeType);
     setState(() {
-      loading = false;
+      _loading = false;
     });
     if (ResultUtil.check(result)) {
       Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return SignUpPage(phoneController.text);
+        return SignUpPage(_phoneController.text);
       }));
     }
   }
