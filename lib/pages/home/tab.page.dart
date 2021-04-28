@@ -5,6 +5,7 @@ import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/user.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/recommend_tag.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/lazy_indexed_stack.widget.dart';
 
 class TabPage extends StatefulWidget {
   TabPage({Key key}) : super(key: key);
@@ -18,7 +19,8 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   GlobalKey<HomePageState> homePageStateKey = GlobalKey<HomePageState>();
   GlobalKey<FindPageState> findPageStateKey = GlobalKey<FindPageState>();
   GlobalKey<NewPageState> newPageStateKey = GlobalKey<NewPageState>();
-  GlobalKey<RecommendTagPageState> tagPageStateKey = GlobalKey<RecommendTagPageState>();
+  GlobalKey<RecommendTagPageState> tagPageStateKey =
+      GlobalKey<RecommendTagPageState>();
 
   @override
   void initState() {
@@ -29,22 +31,51 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
     );
   }
 
+  var _tabIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body:
-            TabBarView(controller: tabController, children: buildTabViewList()),
+//            TabBarView(controller: tabController, children: buildTabViewList()),
+//            IndexedStack(index: _tabIndex, children: <Widget>[
+//          HomePage(key: homePageStateKey),
+//          FindPage(key: findPageStateKey),
+//          NewPage(key: newPageStateKey),
+//          RecommendTagPage(key: tagPageStateKey),
+//          UserPage()
+//        ]),
+
+            LazyIndexedStack(
+          index: _tabIndex,
+          itemBuilder: (c, i) {
+            if (i == 0)
+              return HomePage(key: homePageStateKey);
+            else if (i == 1)
+              return FindPage(key: findPageStateKey);
+            else if (i == 2)
+              return NewPage(key: newPageStateKey);
+            else if (i == 3)
+              return RecommendTagPage(key: tagPageStateKey);
+            else
+              return UserPage();
+          },
+          itemCount: 5,
+        ),
         bottomNavigationBar: BottomAppBar(
             child: TabBar(
                 tabs: buildTabList(),
                 controller: tabController,
                 indicatorColor: Colors.transparent,
                 onTap: (int index) {
+                  setState(() {
+                    _tabIndex = index;
+                  });
                   if (!tabController.indexIsChanging) {
                     switch (index) {
                       case 0:
                         {
-                          homePageStateKey.currentState?.externalRefresh();
+//                          homePageStateKey.currentState?.externalRefresh();
                         }
                         break;
                       case 1:
@@ -78,11 +109,20 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   buildTabList() {
     return [
-      Tab(text: "首页", icon: Icon(MdiIcons.home),iconMargin: EdgeInsets.all(0)),
-      Tab(text: "推荐", icon: Icon(MdiIcons.compass),iconMargin: EdgeInsets.all(0)),
-      Tab(text: "最新", icon: Icon(MdiIcons.alpha_n_box_outline),iconMargin: EdgeInsets.all(0)),
-      Tab(text: "搜索", icon: Icon(Icons.search),iconMargin: EdgeInsets.all(0)),
-      Tab(text: "更多", icon: Icon(MdiIcons.dots_horizontal),iconMargin: EdgeInsets.all(0))
+      Tab(text: "首页", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
+      Tab(
+          text: "推荐",
+          icon: Icon(MdiIcons.compass),
+          iconMargin: EdgeInsets.all(0)),
+      Tab(
+          text: "最新",
+          icon: Icon(MdiIcons.alpha_n_box_outline),
+          iconMargin: EdgeInsets.all(0)),
+      Tab(text: "搜索", icon: Icon(Icons.search), iconMargin: EdgeInsets.all(0)),
+      Tab(
+          text: "更多",
+          icon: Icon(MdiIcons.dots_horizontal),
+          iconMargin: EdgeInsets.all(0))
     ];
   }
 

@@ -43,7 +43,8 @@ dependencies:
   permission_handler: 5.1.0+2
   photo_view: 0.10.3
   gallery_saver: 2.0.3
-#  extended_nested_scroll_view: 2.0.1
+#  extended_nested_scroll_view: 3.0.0
+#  flutter_easyrefresh: 2.2.1
 #  bloc: ^6.1.1
 #  flutter_bloc: ^6.1.2
 #  equatable: ^1.2.6
