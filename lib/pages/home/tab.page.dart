@@ -35,6 +35,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var queryData = MediaQuery.of(context);
     return Scaffold(
         body:
 //            TabBarView(controller: tabController, children: buildTabViewList()),
@@ -62,43 +63,47 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
           },
           itemCount: 5,
         ),
-        bottomNavigationBar: BottomAppBar(
-            child: TabBar(
-                tabs: buildTabList(),
-                controller: tabController,
-                indicatorColor: Colors.transparent,
-                onTap: (int index) {
-                  setState(() {
-                    _tabIndex = index;
-                  });
-                  if (!tabController.indexIsChanging) {
-                    switch (index) {
-                      case 0:
-                        {
+        bottomNavigationBar: SizedBox(
+          height: 56,
+          child: BottomAppBar(
+              child: TabBar(
+                  labelStyle: TextStyle(fontSize: 12),
+                  tabs: buildTabList(),
+                  controller: tabController,
+                  indicatorColor: Colors.transparent,
+                  onTap: (int index) {
+                    setState(() {
+                      _tabIndex = index;
+                    });
+                    if (!tabController.indexIsChanging) {
+                      switch (index) {
+                        case 0:
+                          {
 //                          homePageStateKey.currentState?.externalRefresh();
-                        }
-                        break;
-                      case 1:
-                        {
-                          findPageStateKey.currentState?.externalRefresh();
-                        }
-                        break;
-                      case 2:
-                        {
-                          newPageStateKey.currentState?.externalRefresh();
-                        }
-                        break;
-                      case 3:
-                        {
-                          tagPageStateKey.currentState?.externalRefresh();
-                        }
-                        break;
-                      default:
-                        {}
-                        break;
+                          }
+                          break;
+                        case 1:
+                          {
+                            findPageStateKey.currentState?.externalRefresh();
+                          }
+                          break;
+                        case 2:
+                          {
+                            newPageStateKey.currentState?.externalRefresh();
+                          }
+                          break;
+                        case 3:
+                          {
+                            tagPageStateKey.currentState?.externalRefresh();
+                          }
+                          break;
+                        default:
+                          {}
+                          break;
+                      }
                     }
-                  }
-                })));
+                  })),
+        ));
   }
 
   @override
