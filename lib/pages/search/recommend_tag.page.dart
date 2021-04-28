@@ -3,23 +3,25 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/provider/tag.provider.dart';
 
-class TagPage extends StatefulWidget {
-  TagPage({Key key}) : super(key: key);
+class RecommendTagPage extends StatefulWidget {
+  RecommendTagPage({Key key}) : super(key: key);
 
   @override
-  TagPageState createState() => TagPageState();
+  RecommendTagPageState createState() => RecommendTagPageState();
 }
 
-class TagPageState extends State<TagPage> {
+class RecommendTagPageState extends State<RecommendTagPage> {
   TagState tagState;
   bool loading = true;
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey;
   TextEditingController keywordController = TextEditingController();
   ScrollController _scrollController = ScrollController();
+
   Future<void> _listTagTop30() async {
     var result = await TagService.listTagTop30();
     tagState.setRecommendTagList(result.data);
@@ -30,8 +32,8 @@ class TagPageState extends State<TagPage> {
   }
 
   _search() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      return SearchResultPage(keyword: keywordController.text);
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return SearchPage();
     }));
   }
 
@@ -51,6 +53,17 @@ class TagPageState extends State<TagPage> {
   Widget build(BuildContext context) {
     tagState = Provider.of<TagState>(context, listen: false);
     return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                _search();
+              },
+            )
+          ],
+        ),
         body: RefreshIndicator(
           key: refreshIndicatorKey,
           onRefresh: _listTagTop30,
@@ -63,15 +76,15 @@ class TagPageState extends State<TagPage> {
                     spacing: StyleConfig.gap * 2,
                     runSpacing: -StyleConfig.gap,
                     children: tagState.recommendTagList
-                        ?.map((e) => ActionChip(
-                        label: Text(e.name),
-                        onPressed: () {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) {
-                                return SearchResultPage(keyword: e.name);
-                              }));
-                        }))
-                        ?.toList() ??
+                            ?.map((e) => ActionChip(
+                                label: Text(e.name),
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return SearchResultPage(keyword: e.name);
+                                  }));
+                                }))
+                            ?.toList() ??
                         <Widget>[]),
               )
             ],

@@ -1,8 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 
 class IconTextField extends StatefulWidget {
   IconTextField(

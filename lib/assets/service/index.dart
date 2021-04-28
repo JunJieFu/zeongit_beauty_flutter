@@ -1,3 +1,4 @@
+import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
@@ -7,11 +8,9 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/http.util.dart';
-
-import '../constant/enum.constant.dart';
-
 class UserService {
   static Future<ResultEntity<String>> signIn(String phone, String password) {
     return HttpUtil.post("/user/signIn",
@@ -57,50 +56,40 @@ class PictureService {
   }
 
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {String tagList,
-      bool precise,
-      String name,
-      DateTime startDate,
-      DateTime endDate,
-      double startWidth,
-      double endWidth,
-      double startHeight,
-      double endHeight,
-      double startRatio,
-      double endRatio}) {
+      {SearchTune criteria}) {
     var params = pageable.toJson();
-    if (tagList != null) {
-      params["tagList"] = tagList.split(" ");
+    if (criteria?.tagList != null) {
+      params["tagList"] = criteria.tagList.split(" ");
     }
-    if (precise != null) {
-      params["precise"] = precise;
+    if (criteria?.precise != null) {
+      params["precise"] = criteria.precise;
     }
-    if (name != null) {
-      params["name"] = name;
+    if (criteria?.name != null) {
+      params["name"] = criteria.name;
     }
-    if (startDate != null) {
-      params["startDate"] = startDate;
+    if (criteria?.date?.startDate != null) {
+      params["startDate"] = criteria.date.startDate;
     }
-    if (endDate != null) {
-      params["endDate"] = endDate;
+    if (criteria?.date?.endDate != null) {
+      params["endDate"] = criteria.date.endDate;
     }
-    if (startWidth != null) {
-      params["startWidth"] = startWidth;
+    if (criteria?.startWidth != null) {
+      params["startWidth"] = criteria.startWidth;
     }
-    if (endWidth != null) {
-      params["endWidth"] = endWidth;
+    if (criteria?.endWidth != null) {
+      params["endWidth"] = criteria.endWidth;
     }
-    if (startHeight != null) {
-      params["startHeight"] = startHeight;
+    if (criteria?.startHeight != null) {
+      params["startHeight"] = criteria.startHeight;
     }
-    if (endHeight != null) {
-      params["endHeight"] = endHeight;
+    if (criteria?.endHeight != null) {
+      params["endHeight"] = criteria.endHeight;
     }
-    if (startRatio != null) {
-      params["startRatio"] = startRatio;
+    if (criteria?.startRatio != null) {
+      params["startRatio"] = criteria.startRatio;
     }
-    if (endRatio != null) {
-      params["endRatio"] = endRatio;
+    if (criteria?.endRatio != null) {
+      params["endRatio"] = criteria.endRatio;
     }
 
     return HttpUtil.get("/picture/paging", params: params);

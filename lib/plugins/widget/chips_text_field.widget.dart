@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 
 class ChipsTextFieldWidget extends StatefulWidget {
   ChipsTextFieldWidget(
@@ -24,7 +23,7 @@ class ChipsTextFieldWidget extends StatefulWidget {
 class ChipsTextFieldWidgetState extends State<ChipsTextFieldWidget> {
   FocusNode focusNode = FocusNode();
   bool hasFocus = false;
-  List<String> valueList = ["123","123"];
+  List<String> valueList = ["123", "123"];
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +35,12 @@ class ChipsTextFieldWidgetState extends State<ChipsTextFieldWidget> {
       cursorColor: StyleConfig.primaryColor,
       decoration: widget.decoration.copyWith(
           icon: Wrap(
-              children: valueList.map((e) => Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Chip(label: Text(e)),
-              )).toList())),
+              children: valueList
+                  .map((e) => Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Chip(label: Text(e)),
+                      ))
+                  .toList())),
     );
   }
 }

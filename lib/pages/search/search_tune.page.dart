@@ -1,44 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:intl/intl.dart';
+import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/popup_container.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
-
-class SearchTuneParams {
-  String name;
-
-  bool precise = false;
-
-  _SearchTuneDateItem date = _SearchTuneDateItem("不限制", null, null);
-
-  double startWidth;
-
-  double endWidth;
-
-  double startHeight;
-
-  double endHeight;
-
-  double startRatio;
-
-  double endRatio;
-
-  SearchTuneParams();
-}
-
-enum _SearchTuneDate { NORMAL, WEEK, MONTH, SIX_MONTHS, YEAR, CUSTOM }
-
-class _SearchTuneDateItem {
-  _SearchTuneDateItem(this.text, this.startDate, this.endDate);
-
-  String text;
-
-  DateTime startDate;
-
-  DateTime endDate;
-}
 
 final _gap = StyleConfig.gap * 6;
 
@@ -46,9 +13,9 @@ class SearchTunePage extends StatefulWidget {
   SearchTunePage({Key key, @required this.params, @required this.callback})
       : super(key: key);
 
-  final SearchTuneParams params;
+  final SearchTune params;
 
-  final void Function(SearchTuneParams) callback;
+  final Function(SearchTune) callback;
 
   @override
   _SearchTunePageState createState() => _SearchTunePageState();
@@ -463,17 +430,17 @@ class _SearchTunePageState extends State<SearchTunePage> {
   }
 
   showSelectDate() {
-    Map<_SearchTuneDate, _SearchTuneDateItem> _searchTuneDateMap = {
-      _SearchTuneDate.NORMAL: _SearchTuneDateItem("不限制", null, null),
-      _SearchTuneDate.WEEK: _SearchTuneDateItem(
+    Map<SearchTuneDate, SearchTuneDateItem> _searchTuneDateMap = {
+      SearchTuneDate.NORMAL: SearchTuneDateItem("不限制", null, null),
+      SearchTuneDate.WEEK: SearchTuneDateItem(
           "一周内", DateTime.now().add(Duration(days: -7)), DateTime.now()),
-      _SearchTuneDate.MONTH: _SearchTuneDateItem(
+      SearchTuneDate.MONTH: SearchTuneDateItem(
           "一个月内", DateTime.now().add(Duration(days: -30)), DateTime.now()),
-      _SearchTuneDate.SIX_MONTHS: _SearchTuneDateItem(
+      SearchTuneDate.SIX_MONTHS: SearchTuneDateItem(
           "半年内", DateTime.now().add(Duration(days: -186)), DateTime.now()),
-      _SearchTuneDate.YEAR: _SearchTuneDateItem(
+      SearchTuneDate.YEAR: SearchTuneDateItem(
           "一年内", DateTime.now().add(Duration(days: -365)), DateTime.now()),
-      _SearchTuneDate.CUSTOM: _SearchTuneDateItem("自定义", null, null),
+      SearchTuneDate.CUSTOM: SearchTuneDateItem("自定义", null, null),
     };
     showDialog(
         context: context,

@@ -3,7 +3,7 @@ import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/account/home.page.dart';
 import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/user.page.dart';
-import 'package:zeongitbeautyflutter/pages/search/tag.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/recommend_tag.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 
 class TabPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   GlobalKey<HomePageState> homePageStateKey = GlobalKey<HomePageState>();
   GlobalKey<FindPageState> findPageStateKey = GlobalKey<FindPageState>();
   GlobalKey<NewPageState> newPageStateKey = GlobalKey<NewPageState>();
-  GlobalKey<TagPageState> tagPageStateKey = GlobalKey<TagPageState>();
+  GlobalKey<RecommendTagPageState> tagPageStateKey = GlobalKey<RecommendTagPageState>();
 
   @override
   void initState() {
@@ -91,7 +91,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
       HomePage(key: homePageStateKey),
       FindPage(key: findPageStateKey),
       NewPage(key: newPageStateKey),
-      TagPage(key: tagPageStateKey),
+      RecommendTagPage(key: tagPageStateKey),
       UserPage()
     ];
   }

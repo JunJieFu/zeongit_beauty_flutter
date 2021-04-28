@@ -6,10 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
-
-import '../style/index.style.dart';
 
 enum PictureStyle {
   specifiedWidth,
@@ -42,7 +41,7 @@ class PictureWidgetState extends State<PictureWidget> {
       completeUrl = widget.style != null
           ? "${ConfigConstant.QINIU_PICTURE}/${widget.url}${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(widget.style)}"
           : "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
-      return  CachedNetworkImage(
+      return CachedNetworkImage(
           imageUrl: completeUrl,
           fit: widget.fit,
           progressIndicatorBuilder:
