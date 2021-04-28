@@ -33,16 +33,16 @@ class PictureWidget extends StatefulWidget {
 }
 
 class PictureWidgetState extends State<PictureWidget> {
-  String completeUrl;
+  String _completeUrl;
 
   @override
   Widget build(BuildContext context) {
     if (widget.url != null) {
-      completeUrl = widget.style != null
+      _completeUrl = widget.style != null
           ? "${ConfigConstant.QINIU_PICTURE}/${widget.url}${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(widget.style)}"
           : "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
       return CachedNetworkImage(
-          imageUrl: completeUrl,
+          imageUrl: _completeUrl,
           fit: widget.fit,
           progressIndicatorBuilder:
               (BuildContext context, String url, DownloadProgress progress) {
@@ -53,19 +53,19 @@ class PictureWidgetState extends State<PictureWidget> {
             );
           },
           errorWidget: (BuildContext context, String url, dynamic error) {
-            return buildSvgPicture();
+            return _buildSvgPicture();
           });
     } else {
-      return buildSvgPicture();
+      return _buildSvgPicture();
     }
   }
 
-  SvgPicture buildSvgPicture() =>
+  SvgPicture _buildSvgPicture() =>
       SvgPicture.asset("assets/images/default-picture.svg", fit: widget.fit);
 
-  saveStorage() async {
+  void _saveStorage() async {
     if (await PermissionUtil.storage()) {
-      final success = await GallerySaver.saveImage(completeUrl);
+      final success = await GallerySaver.saveImage(_completeUrl);
       if (success) {
         Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
       } else {

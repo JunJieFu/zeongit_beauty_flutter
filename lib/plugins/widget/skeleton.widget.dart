@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Skeleton extends StatefulWidget {
+  Skeleton({Key key, this.height = 20, this.width = 200}) : super(key: key);
   final double height;
   final double width;
-
-  Skeleton({Key key, this.height = 20, this.width = 200}) : super(key: key);
 
   createState() => SkeletonState();
 }
@@ -14,7 +13,7 @@ class SkeletonState extends State<Skeleton>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  Animation gradientPosition;
+  Animation _animation;
 
   @override
   void initState() {
@@ -22,7 +21,7 @@ class SkeletonState extends State<Skeleton>
     _controller = AnimationController(
         duration: Duration(milliseconds: 1500), vsync: this);
 
-    gradientPosition = Tween<double>(
+    _animation = Tween<double>(
       begin: -3,
       end: 10,
     ).animate(
@@ -47,7 +46,7 @@ class SkeletonState extends State<Skeleton>
       height: widget.height,
       decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment(gradientPosition.value, 0),
+              begin: Alignment(_animation.value, 0),
               end: Alignment(-1, 0),
               colors: [Colors.black12, Colors.white12, Colors.black12])),
     );

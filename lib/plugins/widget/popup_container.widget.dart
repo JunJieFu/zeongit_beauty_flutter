@@ -58,11 +58,11 @@ class _PopupWindowRouteLayout extends SingleChildLayoutDelegate {
 }
 
 class PopupContainerRoute extends PopupRoute {
-  final Widget _child;
+  final Widget child;
 
   PopupContainerRoute({
-    @required Widget child,
-  }) : _child = child;
+    @required this.child,
+  });
 
   @override
   Color get barrierColor => null;
@@ -82,7 +82,7 @@ class PopupContainerRoute extends PopupRoute {
     return FadeTransition(
       opacity: Tween(begin: 0.0, end: 1.0).animate(
           CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn)),
-      child: _child,
+      child: child,
     );
   }
 

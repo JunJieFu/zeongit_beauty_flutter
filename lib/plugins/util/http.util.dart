@@ -29,7 +29,7 @@ class HttpUtil {
             status: result.status, message: result.message, data: null);
       }
     } catch (error) {
-      return ResultEntity(status: 500, message: "服务器错误", data: null);
+      return ResultEntity(status: StatusCode.PROGRAM, message: "服务器错误", data: null);
     }
   }
 
@@ -57,7 +57,7 @@ class HttpUtil {
       }
     } catch (error) {
       return ResultEntity(
-          status: StatusCode.SUCCESS, message: "服务器错误", data: null);
+          status: StatusCode.PROGRAM, message: "服务器错误", data: null);
     }
   }
 
