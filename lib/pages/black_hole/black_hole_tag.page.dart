@@ -33,7 +33,7 @@ class _BlackHoleTagPageState extends PagingAbstract<
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshIndicator(
-        key: _refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
+        key: _refreshIndicatorKey, onRefresh: refresh, child: _emptyWidget());
   }
 
   @override
@@ -43,7 +43,7 @@ class _BlackHoleTagPageState extends PagingAbstract<
   Future<ResultEntity<PageTagBlackHoleEntity>> dao() =>
       TagBlackHoleService.paging(pageable);
 
-  Widget emptyWidget() {
+  Widget _emptyWidget() {
     if (currPage?.meta != null && currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {

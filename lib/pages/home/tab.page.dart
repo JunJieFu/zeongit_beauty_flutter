@@ -15,49 +15,38 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
-  TabController tabController;
-  GlobalKey<HomePageState> homePageStateKey = GlobalKey<HomePageState>();
-  GlobalKey<FindPageState> findPageStateKey = GlobalKey<FindPageState>();
-  GlobalKey<NewPageState> newPageStateKey = GlobalKey<NewPageState>();
-  GlobalKey<RecommendTagPageState> tagPageStateKey =
+  TabController _tabController;
+  GlobalKey<HomePageState> _homePageStateKey = GlobalKey<HomePageState>();
+  GlobalKey<FindPageState> _findPageStateKey = GlobalKey<FindPageState>();
+  GlobalKey<NewPageState> _newPageStateKey = GlobalKey<NewPageState>();
+  GlobalKey<RecommendTagPageState> _tagPageStateKey =
       GlobalKey<RecommendTagPageState>();
+  var _tabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(
+    _tabController = TabController(
       length: 5,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
 
-  var _tabIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    var queryData = MediaQuery.of(context);
     return Scaffold(
         body:
-//            TabBarView(controller: tabController, children: buildTabViewList()),
-//            IndexedStack(index: _tabIndex, children: <Widget>[
-//          HomePage(key: homePageStateKey),
-//          FindPage(key: findPageStateKey),
-//          NewPage(key: newPageStateKey),
-//          RecommendTagPage(key: tagPageStateKey),
-//          UserPage()
-//        ]),
-
             LazyIndexedStack(
           index: _tabIndex,
           itemBuilder: (c, i) {
             if (i == 0)
-              return HomePage(key: homePageStateKey);
+              return HomePage(key: _homePageStateKey);
             else if (i == 1)
-              return FindPage(key: findPageStateKey);
+              return FindPage(key: _findPageStateKey);
             else if (i == 2)
-              return NewPage(key: newPageStateKey);
+              return NewPage(key: _newPageStateKey);
             else if (i == 3)
-              return RecommendTagPage(key: tagPageStateKey);
+              return RecommendTagPage(key: _tagPageStateKey);
             else
               return UserPage();
           },
@@ -68,33 +57,33 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
           child: BottomAppBar(
               child: TabBar(
                   labelStyle: TextStyle(fontSize: 12),
-                  tabs: buildTabList(),
-                  controller: tabController,
+                  tabs: _buildTabList(),
+                  controller: _tabController,
                   indicatorColor: Colors.transparent,
                   onTap: (int index) {
                     setState(() {
                       _tabIndex = index;
                     });
-                    if (!tabController.indexIsChanging) {
+                    if (!_tabController.indexIsChanging) {
                       switch (index) {
                         case 0:
                           {
-//                          homePageStateKey.currentState?.externalRefresh();
+//                          _homePageStateKey.currentState?.externalRefresh();
                           }
                           break;
                         case 1:
                           {
-                            findPageStateKey.currentState?.externalRefresh();
+                            _findPageStateKey.currentState?.externalRefresh();
                           }
                           break;
                         case 2:
                           {
-                            newPageStateKey.currentState?.externalRefresh();
+                            _newPageStateKey.currentState?.externalRefresh();
                           }
                           break;
                         case 3:
                           {
-                            tagPageStateKey.currentState?.externalRefresh();
+                            _tagPageStateKey.currentState?.externalRefresh();
                           }
                           break;
                         default:
@@ -108,11 +97,11 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    tabController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
-  buildTabList() {
+  _buildTabList() {
     return [
       Tab(text: "首页", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
       Tab(
@@ -128,16 +117,6 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
           text: "更多",
           icon: Icon(MdiIcons.dots_horizontal),
           iconMargin: EdgeInsets.all(0))
-    ];
-  }
-
-  buildTabViewList() {
-    return [
-      HomePage(key: homePageStateKey),
-      FindPage(key: findPageStateKey),
-      NewPage(key: newPageStateKey),
-      RecommendTagPage(key: tagPageStateKey),
-      UserPage()
     ];
   }
 }

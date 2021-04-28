@@ -22,45 +22,45 @@ class SearchTunePage extends StatefulWidget {
 }
 
 class _SearchTunePageState extends State<SearchTunePage> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
 
-  TextEditingController startWidthController = TextEditingController();
-  TextEditingController endWidthController = TextEditingController();
+  TextEditingController _startWidthController = TextEditingController();
+  TextEditingController _endWidthController = TextEditingController();
 
-  TextEditingController startHeightController = TextEditingController();
-  TextEditingController endHeightController = TextEditingController();
+  TextEditingController _startHeightController = TextEditingController();
+  TextEditingController _endHeightController = TextEditingController();
 
-  TextEditingController startRatioController = TextEditingController();
-  TextEditingController endRatioController = TextEditingController();
+  TextEditingController _startRatioController = TextEditingController();
+  TextEditingController _endRatioController = TextEditingController();
 
   final GlobalKey _preciseHelpBtnKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    nameController.text = widget.params.name;
-    startWidthController.text = widget.params.startWidth == null
+    _nameController.text = widget.params.name;
+    _startWidthController.text = widget.params.startWidth == null
         ? ""
         : widget.params.startWidth.toString();
-    endWidthController.text =
+    _endWidthController.text =
         widget.params.endWidth == null ? "" : widget.params.endWidth.toString();
-    startHeightController.text = widget.params.startHeight == null
+    _startHeightController.text = widget.params.startHeight == null
         ? ""
         : widget.params.startHeight.toString();
-    endHeightController.text = widget.params.endHeight == null
+    _endHeightController.text = widget.params.endHeight == null
         ? ""
         : widget.params.endHeight.toString();
-    startRatioController.text = widget.params.startRatio == null
+    _startRatioController.text = widget.params.startRatio == null
         ? ""
         : widget.params.startRatio.toString();
-    endRatioController.text =
+    _endRatioController.text =
         widget.params.endRatio == null ? "" : widget.params.endRatio.toString();
   }
 
   @override
   void dispose() {
     super.dispose();
-    nameController.dispose();
+    _nameController.dispose();
   }
 
   @override
@@ -74,14 +74,14 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("图片名"),
+                _buildLabel("图片名"),
                 Expanded(
                   flex: 1,
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
-                      controller: nameController,
+                      controller: _nameController,
                       decoration: InputDecoration(
                         hintText: "请输入绘画名称",
                         border: InputBorder.none,
@@ -97,7 +97,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("精准搜索"),
+                _buildLabel("精准搜索"),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
@@ -146,7 +146,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("上传日期"),
+                _buildLabel("上传日期"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -157,14 +157,14 @@ class _SearchTunePageState extends State<SearchTunePage> {
                 ),
               ],
             ),
-            onTap: showSelectDate,
+            onTap: _showSelectDate,
           ),
           Divider(height: 1),
           ListTile(
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("开始日期"),
+                _buildLabel("开始日期"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -178,14 +178,14 @@ class _SearchTunePageState extends State<SearchTunePage> {
                 ),
               ],
             ),
-            onTap: showStartDatePicker,
+            onTap: _showStartDatePicker,
           ),
           Divider(height: 1),
           ListTile(
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("结束日期"),
+                _buildLabel("结束日期"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -199,14 +199,14 @@ class _SearchTunePageState extends State<SearchTunePage> {
                 ),
               ],
             ),
-            onTap: showEndDatePicker,
+            onTap: _showEndDatePicker,
           ),
           Divider(height: 1),
           ListTile(
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("最小宽度"),
+                _buildLabel("最小宽度"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -214,7 +214,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: startWidthController,
+                      controller: _startWidthController,
                       decoration: InputDecoration(
                         hintText: "请输入最小宽度",
                         border: InputBorder.none,
@@ -230,7 +230,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("最大宽度"),
+                _buildLabel("最大宽度"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -238,7 +238,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: endWidthController,
+                      controller: _endWidthController,
                       decoration: InputDecoration(
                         hintText: "请输入最大宽度",
                         border: InputBorder.none,
@@ -254,7 +254,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("最小高度"),
+                _buildLabel("最小高度"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -262,7 +262,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: startHeightController,
+                      controller: _startHeightController,
                       decoration: InputDecoration(
                         hintText: "请输入最小高度",
                         border: InputBorder.none,
@@ -278,7 +278,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("最大高度"),
+                _buildLabel("最大高度"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -286,7 +286,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: endHeightController,
+                      controller: _endHeightController,
                       decoration: InputDecoration(
                         hintText: "请输入最大高度",
                         border: InputBorder.none,
@@ -302,7 +302,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("最小比例"),
+                _buildLabel("最小比例"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -310,7 +310,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: startRatioController,
+                      controller: _startRatioController,
                       decoration: InputDecoration(
                         hintText: "请输入最小宽高比例",
                         border: InputBorder.none,
@@ -326,7 +326,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
             title: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
-                buildLabel("最大比例"),
+                _buildLabel("最大比例"),
                 Expanded(
                   flex: 1,
                   child: Padding(
@@ -334,7 +334,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
                         EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
-                      controller: endRatioController,
+                      controller: _endRatioController,
                       decoration: InputDecoration(
                         hintText: "请输入最大宽高比例",
                         border: InputBorder.none,
@@ -355,25 +355,26 @@ class _SearchTunePageState extends State<SearchTunePage> {
                 child: Text("确定"),
                 onPressed: () {
                   try {
-                    widget.params.name = nameController.text;
-                    widget.params.startWidth = startWidthController.text == ""
+                    widget.params.name = _nameController.text;
+                    widget.params.startWidth = _startWidthController.text == ""
                         ? null
-                        : double.parse(startWidthController.text);
-                    widget.params.endWidth = endWidthController.text == ""
+                        : double.parse(_startWidthController.text);
+                    widget.params.endWidth = _endWidthController.text == ""
                         ? null
-                        : double.parse(endWidthController.text);
-                    widget.params.startHeight = startHeightController.text == ""
+                        : double.parse(_endWidthController.text);
+                    widget.params.startHeight =
+                        _startHeightController.text == ""
+                            ? null
+                            : double.parse(_startHeightController.text);
+                    widget.params.endHeight = _endHeightController.text == ""
                         ? null
-                        : double.parse(startHeightController.text);
-                    widget.params.endHeight = endHeightController.text == ""
+                        : double.parse(_endHeightController.text);
+                    widget.params.startRatio = _startRatioController.text == ""
                         ? null
-                        : double.parse(endHeightController.text);
-                    widget.params.startRatio = startRatioController.text == ""
+                        : double.parse(_startRatioController.text);
+                    widget.params.endRatio = _endRatioController.text == ""
                         ? null
-                        : double.parse(startRatioController.text);
-                    widget.params.endRatio = endRatioController.text == ""
-                        ? null
-                        : double.parse(endRatioController.text);
+                        : double.parse(_endRatioController.text);
                     widget.callback(widget.params);
                     Navigator.maybePop(context);
                   } catch (e) {
@@ -389,7 +390,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
         ]));
   }
 
-  SizedBox buildLabel(String text) {
+  SizedBox _buildLabel(String text) {
     return SizedBox(
       width: 70,
       child: Text(text,
@@ -398,7 +399,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
     );
   }
 
-  showStartDatePicker() async {
+  _showStartDatePicker() async {
     var dateTime = await showDatePicker(
         context: context,
         initialDate: widget.params.date.startDate ??
@@ -415,7 +416,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
     }
   }
 
-  showEndDatePicker() async {
+  _showEndDatePicker() async {
     var dateTime = await showDatePicker(
         context: context,
         initialDate: widget.params.date.endDate ?? DateTime.now(),
@@ -429,7 +430,7 @@ class _SearchTunePageState extends State<SearchTunePage> {
     }
   }
 
-  showSelectDate() {
+  _showSelectDate() {
     Map<SearchTuneDate, SearchTuneDateItem> _searchTuneDateMap = {
       SearchTuneDate.NORMAL: SearchTuneDateItem("不限制", null, null),
       SearchTuneDate.WEEK: SearchTuneDateItem(

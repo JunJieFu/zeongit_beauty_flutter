@@ -21,7 +21,7 @@ class ViewPage extends StatefulWidget {
 }
 
 class ViewPageState extends State<ViewPage> {
-  String completeUrl;
+  String _completeUrl;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class ViewPageState extends State<ViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    completeUrl = "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
+    _completeUrl = "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
     return Scaffold(
         backgroundColor: Colors.black,
         extendBodyBehindAppBar: true,
@@ -56,12 +56,12 @@ class ViewPageState extends State<ViewPage> {
                   ),
                 ];
               },
-              onSelected: selectMenu,
+              onSelected: _selectMenu,
             )
           ],
         ),
         body: PhotoView(
-          imageProvider: CachedNetworkImageProvider(completeUrl),
+          imageProvider: CachedNetworkImageProvider(_completeUrl),
           loadingBuilder: (BuildContext context, ImageChunkEvent event) {
             return Center(
               child: Container(
@@ -72,17 +72,17 @@ class ViewPageState extends State<ViewPage> {
         ));
   }
 
-  selectMenu(String value) {
+  _selectMenu(String value) {
     switch (value) {
       case "save":
-        saveStorage();
+        _saveStorage();
         break;
     }
   }
 
-  saveStorage() async {
+  _saveStorage() async {
     if (await PermissionUtil.storage()) {
-      final success = await GallerySaver.saveImage(completeUrl);
+      final success = await GallerySaver.saveImage(_completeUrl);
       if (success) {
         Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
       } else {

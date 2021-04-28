@@ -18,12 +18,12 @@ class MoreBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    var userState = Provider.of<UserState>(context, listen: false);
     return IconButton(
       key: _btnKey,
       icon: Icon(Icons.more_vert),
       onPressed: () {
-        if (_userState.info != null) {
+        if (userState.info != null) {
           Navigator.push(
             context,
             PopupContainerRoute(

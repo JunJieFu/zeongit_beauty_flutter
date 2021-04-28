@@ -14,9 +14,11 @@ class VisitorCollectionPage extends StatefulWidget {
   _VisitorCollectionPageState createState() => _VisitorCollectionPageState();
 }
 
-class _VisitorCollectionPageState extends PagePictureAbstract<VisitorCollectionPage>
+class _VisitorCollectionPageState
+    extends PagePictureAbstract<VisitorCollectionPage>
     with AutomaticKeepAliveClientMixin {
-  int targetId;
+  int _targetId;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -34,19 +36,17 @@ class _VisitorCollectionPageState extends PagePictureAbstract<VisitorCollectionP
     super.build(context);
     return Consumer<VisitorState>(
         builder: (ctx, VisitorState visitorState, child) {
-      targetId = visitorState.info.id;
+      _targetId = visitorState.info.id;
       return RefreshIndicator(
           key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
     });
   }
 
+  @override
+  TipsPageCardWidget buildEmptyType() => TipsPageCardWidget(
+      icon: MdiIcons.star_outline, title: "没有作品", text: "您可以通知作者收藏一些作品哦。");
 
   @override
-  TipsPageCardWidget buildEmptyType() =>TipsPageCardWidget(
-      icon: MdiIcons.star_outline,
-      title: "没有作品",
-      text: "您可以通知作者收藏一些作品哦。");
-
-  @override
-  Future<ResultEntity<PagePictureEntity>> dao() =>CollectionService.paging(pageable, targetId);
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      CollectionService.paging(pageable, _targetId);
 }

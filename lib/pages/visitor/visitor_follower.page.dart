@@ -16,7 +16,7 @@ class VisitorFollowerPage extends StatefulWidget {
 
 class _VisitorFollowerPageState extends PageUserAbstract<VisitorFollowerPage>
     with AutomaticKeepAliveClientMixin {
-  int targetId;
+  int _targetId;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _VisitorFollowerPageState extends PageUserAbstract<VisitorFollowerPage>
     super.build(context);
     return Consumer<VisitorState>(
         builder: (ctx, VisitorState visitorState, child) {
-      targetId = visitorState.info.id;
+      _targetId = visitorState.info.id;
       return RefreshIndicator(
           key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
     });
@@ -46,5 +46,5 @@ class _VisitorFollowerPageState extends PageUserAbstract<VisitorFollowerPage>
 
   @override
   Future<ResultEntity<PageUserInfoEntity>> dao() =>
-      FollowerService.pagingFollower(pageable, targetId);
+      FollowerService.pagingFollower(pageable, _targetId);
 }

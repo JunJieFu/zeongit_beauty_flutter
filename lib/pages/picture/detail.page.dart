@@ -34,16 +34,9 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends FutureBuildAbstract<DetailPage, PictureEntity> {
-  PictureEntity picture;
-
   Future<ResultEntity<PictureEntity>> fetchData() async {
     await Future.delayed(Duration(milliseconds: 500));
     return await PictureService.get(widget.id);
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -142,82 +135,17 @@ class _View extends StatefulWidget {
 }
 
 class _ViewState extends State<_View> {
+  //目的为了脱离上级参数，因为要做识图的更改
   _ViewState(this.pictureResult);
 
-  ResultEntity<PictureEntity> pictureResult;
+  final ResultEntity<PictureEntity> pictureResult;
 
-  PictureEntity picture;
-
-  GestureDetector buildMainPicture() {
-    GlobalKey<PictureWidgetState> pictureWidgetKey =
-        GlobalKey<PictureWidgetState>();
-    return GestureDetector(
-      child: PictureWidget(picture.url,
-          key: pictureWidgetKey,
-          style: PictureStyle.specifiedHeight1200,
-          fit: BoxFit.cover),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return ViewPage(picture.url);
-        }));
-      },
-    );
-  }
-
-  InkWell buildAvatar() {
-    var size = 75.0;
-    var padding = 8.0;
-    return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(size / 2)),
-      child: Padding(
-        padding: EdgeInsets.all(padding),
-        child: AvatarWidget(
-          picture?.user?.avatarUrl,
-          picture?.user?.nickname,
-          size: size - padding * 2,
-          fit: BoxFit.cover,
-          style: AvatarStyle.small50,
-        ),
-      ),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return VisitorTabPage(id: picture.user.id);
-        }));
-      },
-    );
-  }
-
-  buildTagList(double pageGap, BuildContext context) {
-    if (picture.tagList != null && picture.tagList.length > 0) {
-      return [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: pageGap),
-          child: Wrap(
-              spacing: pageGap / 2,
-              runSpacing: -pageGap / 2,
-              children: picture.tagList
-                      ?.map((e) => ActionChip(
-                          label: Text(e),
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return SearchResultPage(keyword: e);
-                            }));
-                          }))
-                      ?.toList() ??
-                  <Widget>[]),
-        ),
-        Divider()
-      ];
-    } else {
-      return [];
-    }
-  }
+  PictureEntity _picture;
 
   @override
   void initState() {
     super.initState();
-    picture = pictureResult.data;
+    _picture = pictureResult.data;
   }
 
   @override
@@ -236,14 +164,14 @@ class _ViewState extends State<_View> {
                 Navigator.maybePop(context);
               },
             ),
-            actions: picture.user.id == userState.info?.id
+            actions: _picture.user.id == userState.info?.id
                 ? [
                     IconButton(
                       icon: ShadowIconWidget(MdiIcons.image_edit_outline,
                           color: Colors.white),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return EditPage(picture, callback: (picture) {});
+                          return EditPage(_picture, callback: (picture) {});
                         }));
                       },
                     )
@@ -253,10 +181,10 @@ class _ViewState extends State<_View> {
             //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
             floating: false,
             expandedHeight:
-                queryData.size.width * picture.height / picture.width,
+                queryData.size.width * _picture.height / _picture.width,
             //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
             flexibleSpace: FlexibleSpaceBar(
-              background: buildMainPicture(),
+              background: _buildMainPicture(),
               collapseMode: CollapseMode.pin,
             ),
           ),
@@ -270,7 +198,7 @@ class _ViewState extends State<_View> {
                     onPressed: () {},
                   ),
                   CollectIconBtnWidget(
-                      picture: picture,
+                      picture: _picture,
                       callback: (picture, int focus) {
                         setState(() {
                           picture.focus = focus;
@@ -281,7 +209,7 @@ class _ViewState extends State<_View> {
                     onPressed: () {},
                   ),
                   MoreBtn(
-                    picture: picture,
+                    picture: _picture,
                     callback: () {},
                   )
                 ],
@@ -292,50 +220,50 @@ class _ViewState extends State<_View> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TitleWidget(picture.name),
-                      TextWidget("创建于${picture.createDate}"),
+                      TitleWidget(_picture.name),
+                      TextWidget("创建于${_picture.createDate}"),
                       Row(
                         children: <Widget>[
                           Row(children: <Widget>[
-                            LinkWidget("${picture.viewAmount}"),
+                            LinkWidget("${_picture.viewAmount}"),
                             TextWidget("人阅读")
                           ]),
                           Padding(
                               padding:
                                   EdgeInsets.only(left: StyleConfig.gap * 3),
                               child: Row(children: <Widget>[
-                                LinkWidget("${picture.likeAmount}"),
+                                LinkWidget("${_picture.likeAmount}"),
                                 TextWidget("人喜欢")
                               ])),
                         ],
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: pageGap),
-                        child: Html(data: picture.introduction),
+                        child: Html(data: _picture.introduction),
                       )
                     ],
                   )),
               Divider(),
-              ...buildTagList(pageGap, context),
+              ..._buildTagList(pageGap, context),
               Padding(
                 padding: EdgeInsets.all(pageGap),
                 child: Flex(
                   direction: Axis.horizontal,
                   children: <Widget>[
-                    buildAvatar(),
+                    _buildAvatar(),
                     Expanded(
                       flex: 1,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: StyleConfig.gap * 2),
-                        child: Text(picture.user.nickname),
+                        child: Text(_picture.user.nickname),
                       ),
                     ),
                     FollowBtn(
-                      user: picture.user,
+                      user: _picture.user,
                       callback: (user, int focus) {
                         setState(() {
-                          picture.user.focus = focus;
+                          _picture.user.focus = focus;
                         });
                       },
                     )
@@ -348,6 +276,72 @@ class _ViewState extends State<_View> {
       ));
     } else {
       return Container();
+    }
+  }
+
+  GestureDetector _buildMainPicture() {
+    GlobalKey<PictureWidgetState> pictureWidgetKey =
+        GlobalKey<PictureWidgetState>();
+    return GestureDetector(
+      child: PictureWidget(_picture.url,
+          key: pictureWidgetKey,
+          style: PictureStyle.specifiedHeight1200,
+          fit: BoxFit.cover),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return ViewPage(_picture.url);
+        }));
+      },
+    );
+  }
+
+  InkWell _buildAvatar() {
+    var size = 75.0;
+    var padding = 8.0;
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(size / 2)),
+      child: Padding(
+        padding: EdgeInsets.all(padding),
+        child: AvatarWidget(
+          _picture?.user?.avatarUrl,
+          _picture?.user?.nickname,
+          size: size - padding * 2,
+          fit: BoxFit.cover,
+          style: AvatarStyle.small50,
+        ),
+      ),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return VisitorTabPage(id: _picture.user.id);
+        }));
+      },
+    );
+  }
+
+  _buildTagList(double pageGap, BuildContext context) {
+    if (_picture.tagList != null && _picture.tagList.length > 0) {
+      return [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: pageGap),
+          child: Wrap(
+              spacing: pageGap / 2,
+              runSpacing: -pageGap / 2,
+              children: _picture.tagList
+                      ?.map((e) => ActionChip(
+                          label: Text(e),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return SearchResultPage(keyword: e);
+                            }));
+                          }))
+                      ?.toList() ??
+                  <Widget>[]),
+        ),
+        Divider()
+      ];
+    } else {
+      return [];
     }
   }
 }

@@ -23,9 +23,9 @@ class VisitorTabPage extends StatefulWidget {
 
 class _VisitorTabPageState extends State<VisitorTabPage>
     with TickerProviderStateMixin {
-  TabController tabController;
+  TabController _tabController;
 
-  List<TabItemModel> tabList = [
+  List<TabItemModel> _tabList = [
     TabItemModel(view: VisitorHomePage(), tab: Tab(icon: Icon(MdiIcons.home))),
     TabItemModel(
         view: VisitorWorksPage(), tab: Tab(icon: Icon(MdiIcons.image_outline))),
@@ -40,17 +40,12 @@ class _VisitorTabPageState extends State<VisitorTabPage>
         tab: Tab(icon: Icon(MdiIcons.account_star_outline))),
   ];
 
-  bool loading = true;
-
-  VisitorState visitorState = VisitorState();
+  VisitorState _visitorState = VisitorState();
 
   Future<void> _get() async {
     var result = await UserService.getByTargetId(widget.id);
     if (ResultUtil.check(result)) {
-      setState(() {
-        loading = false;
-      });
-      visitorState.setInfo(result.data);
+      _visitorState.setInfo(result.data);
     }
     return;
   }
@@ -59,8 +54,8 @@ class _VisitorTabPageState extends State<VisitorTabPage>
   void initState() {
     super.initState();
     _get();
-    tabController = TabController(
-      length: tabList.length,
+    _tabController = TabController(
+      length: _tabList.length,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
@@ -68,24 +63,24 @@ class _VisitorTabPageState extends State<VisitorTabPage>
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (context) => visitorState)],
+        providers: [ChangeNotifierProvider(create: (context) => _visitorState)],
         child: Consumer<VisitorState>(
-            builder: (ctx, VisitorState visitorState, child) {
-          return visitorState.info != null
+            builder: (ctx, VisitorState _visitorState, child) {
+          return _visitorState.info != null
               ? Scaffold(
                   appBar: AppBar(
                     elevation: 1,
-                    title: Text(visitorState.info.nickname),
+                    title: Text(_visitorState.info.nickname),
                     bottom: TabBar(
-                      controller: tabController,
-                      tabs: tabList.map((it) => it.tab).toList(), //
+                      controller: _tabController,
+                      tabs: _tabList.map((it) => it.tab).toList(), //
                       indicatorColor:
                           StyleConfig.primaryColor, // <-- total of 2 tabs
                     ),
                   ),
                   body: TabBarView(
-                      controller: tabController,
-                      children: tabList.map((it) => it.view).toList()),
+                      controller: _tabController,
+                      children: _tabList.map((it) => it.view).toList()),
                 )
               : Scaffold(body: Container());
         }));
@@ -94,7 +89,7 @@ class _VisitorTabPageState extends State<VisitorTabPage>
   @override
   void dispose() {
     super.dispose();
-    tabController.dispose();
-//    visitorState.dispose();
+    _tabController.dispose();
+//    _visitorState.dispose();
   }
 }

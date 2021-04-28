@@ -9,7 +9,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text("设置")),
         body: ListView(children: <Widget>[
-          ...buildListTile(MdiIcons.eye_off_outline, "屏蔽设置", () {
+          ..._buildListTile(MdiIcons.eye_off_outline, "屏蔽设置", () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return BlackHoleTabPage();
             }));
@@ -18,7 +18,7 @@ class SettingPage extends StatelessWidget {
         ]));
   }
 
-  List<Widget> buildListTile(
+  List<Widget> _buildListTile(
       IconData icon, String title, GestureTapCallback onTap) {
     return [
       ListTile(

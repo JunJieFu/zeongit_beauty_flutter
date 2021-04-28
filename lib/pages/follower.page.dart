@@ -44,5 +44,4 @@ class _FollowerPageState extends PageUserAbstract<FollowerPage> {
   @override
   Future<ResultEntity<PageUserInfoEntity>> dao() =>
       FollowerService.pagingFollower(pageable, widget.id);
-
 }

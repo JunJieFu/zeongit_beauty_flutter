@@ -58,7 +58,7 @@ class _UserPageState extends State<UserPage>
               Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: StyleConfig.gap * 35),
-                  child: buildMaterialAvatar(userState),
+                  child: _buildMaterialAvatar(userState),
                 ),
               ),
             ]),
@@ -79,44 +79,44 @@ class _UserPageState extends State<UserPage>
                 ),
               ],
             ),
-            ...buildListTile(MdiIcons.account_multiple_outline, "关注最新", () {
+            ..._buildListTile(MdiIcons.account_multiple_outline, "关注最新", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return FollowingNewPage();
               }));
             }),
-            ...buildListTile(Icons.star_border, "收藏", () {
+            ..._buildListTile(Icons.star_border, "收藏", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return CollectionPage(id: userState.info.id);
               }));
             }),
-            ...buildListTile(MdiIcons.image_outline, "作品", () {
+            ..._buildListTile(MdiIcons.image_outline, "作品", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return WorksPage(id: userState.info.id);
               }));
             }),
-            ...buildListTile(MdiIcons.shoe_print, "足迹", () {
+            ..._buildListTile(MdiIcons.shoe_print, "足迹", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return FootprintPage(id: userState.info.id);
               }));
             }),
-            ...buildListTile(MdiIcons.account_heart_outline, "粉丝", () {
+            ..._buildListTile(MdiIcons.account_heart_outline, "粉丝", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return FollowerPage(id: userState.info.id);
               }));
             }),
-            ...buildListTile(MdiIcons.account_star_outline, "关注", () {
+            ..._buildListTile(MdiIcons.account_star_outline, "关注", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return FollowingPage(id: userState.info.id);
               }));
             }),
-            ...buildListTile(MdiIcons.upload_outline, "上传", () {}),
-            ...buildListTile(MdiIcons.cog_outline, "设置", () {
+            ..._buildListTile(MdiIcons.upload_outline, "上传", () {}),
+            ..._buildListTile(MdiIcons.cog_outline, "设置", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return SettingPage();
               }));
             }),
-            ...buildListTile(MdiIcons.logout, "登出", () {
-              signOut(userState);
+            ..._buildListTile(MdiIcons.logout, "登出", () {
+              _signOut(userState);
             }),
             Divider(),
           ],
@@ -125,7 +125,7 @@ class _UserPageState extends State<UserPage>
     });
   }
 
-  Material buildMaterialAvatar(UserState userState) {
+  _buildMaterialAvatar(UserState userState) {
     var size = 120.0;
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
@@ -135,8 +135,7 @@ class _UserPageState extends State<UserPage>
     );
   }
 
-  List<Widget> buildListTile(
-      IconData icon, String title, GestureTapCallback onTap) {
+  _buildListTile(IconData icon, String title, GestureTapCallback onTap) {
     return [
       Divider(height: 1),
       ListTile(
@@ -159,7 +158,7 @@ class _UserPageState extends State<UserPage>
     ];
   }
 
-  signOut(userState) {
+  _signOut(userState) {
     showDialog(
         context: context,
         builder: (ctx) {

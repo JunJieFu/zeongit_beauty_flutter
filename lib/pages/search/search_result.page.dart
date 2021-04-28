@@ -20,12 +20,12 @@ class SearchResultPage extends StatefulWidget {
 }
 
 class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
-  SearchTune criteria = SearchTune();
+  SearchTune _criteria = SearchTune();
 
   @override
   void initState() {
     super.initState();
-    criteria.tagList = widget.keyword;
+    _criteria.tagList = widget.keyword;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
@@ -35,13 +35,13 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(criteria.tagList),
+          title: Text(_criteria.tagList),
           actions: <Widget>[
             IconButton(
               icon: Icon(MdiIcons.tune),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SearchTunePage(params: criteria, callback: query);
+                  return SearchTunePage(params: _criteria, callback: _query);
                 }));
               },
             ),
@@ -69,10 +69,10 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
 
   @override
   Future<ResultEntity<PagePictureEntity>> dao() =>
-      PictureService.paging(pageable, criteria: criteria);
+      PictureService.paging(pageable, criteria: _criteria);
 
-  query(SearchTune _) {
-    criteria = _;
+  _query(SearchTune _) {
+    _criteria = _;
     refresh();
   }
 }

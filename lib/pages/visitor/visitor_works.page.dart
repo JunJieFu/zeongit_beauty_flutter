@@ -16,7 +16,7 @@ class VisitorWorksPage extends StatefulWidget {
 
 class _VisitorWorksPageState extends PagePictureAbstract<VisitorWorksPage>
     with AutomaticKeepAliveClientMixin {
-  int targetId;
+  int _targetId;
 
   @override
   bool get wantKeepAlive => true;
@@ -34,7 +34,7 @@ class _VisitorWorksPageState extends PagePictureAbstract<VisitorWorksPage>
     super.build(context);
     return Consumer<VisitorState>(
         builder: (ctx, VisitorState visitorState, child) {
-      targetId = visitorState.info.id;
+      _targetId = visitorState.info.id;
       return RefreshIndicator(
           key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
     });
@@ -46,5 +46,5 @@ class _VisitorWorksPageState extends PagePictureAbstract<VisitorWorksPage>
 
   @override
   Future<ResultEntity<PagePictureEntity>> dao() =>
-      WorksService.paging(pageable, targetId);
+      WorksService.paging(pageable, _targetId);
 }

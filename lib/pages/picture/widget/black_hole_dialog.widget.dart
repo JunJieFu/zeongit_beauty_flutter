@@ -30,7 +30,7 @@ class _BlackHoleDialogWidgetState
     return futureBuilder();
   }
 
-  AlertDialog buildLoading() {
+  _buildLoading() {
     return AlertDialog(
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +53,7 @@ class _BlackHoleDialogWidgetState
   }
 
   @override
-  Widget buildError(BuildContext context) => buildLoading();
+  Widget buildError(BuildContext context) => _buildLoading();
 
   @override
   Widget buildMain(BuildContext context, ResultEntity<BlackHoleEntity> result) {
@@ -61,7 +61,7 @@ class _BlackHoleDialogWidgetState
   }
 
   @override
-  Widget buildSkeleton(BuildContext context) => buildLoading();
+  Widget buildSkeleton(BuildContext context) => _buildLoading();
 }
 
 class _View extends StatefulWidget {
@@ -74,11 +74,49 @@ class _View extends StatefulWidget {
 }
 
 class _ViewState extends State<_View> {
+  //目的为了脱离上级参数，因为要做识图的更改
   _ViewState(this.blackHole);
 
   BlackHoleEntity blackHole;
 
-  List<Padding> buildTagList(List<TagBlackHoleEntity> tagList) {
+  @override
+  Widget build(BuildContext context) {
+    var user = blackHole.user;
+    var tagList = blackHole.tagList;
+    return SimpleDialog(
+      title: Text("屏蔽设置"),
+      children: <Widget>[
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+            width: MediaQuery.of(context).size.width,
+            child: Flex(
+              direction: Axis.horizontal,
+              children: <Widget>[
+                _buildAvatar(user),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    child: Text(user.nickname),
+                  ),
+                ),
+                BlockUserIconBtnWidget(
+                    user: user,
+                    callback: (UserBlackHoleEntity result, int state) {
+                      setState(() {
+                        result.state = state;
+                      });
+                    })
+              ],
+            )),
+        Divider(),
+        ..._buildTagList(tagList),
+      ],
+    );
+  }
+
+  List<Padding> _buildTagList(List<TagBlackHoleEntity> tagList) {
     return tagList
         .map((e) => Padding(
               padding: EdgeInsets.all(StyleConfig.gap * 3),
@@ -106,7 +144,7 @@ class _ViewState extends State<_View> {
         .toList();
   }
 
-  InkWell buildAvatar(UserBlackHoleEntity user) {
+  InkWell _buildAvatar(UserBlackHoleEntity user) {
     var size = 75.0;
     var padding = 8.0;
     return InkWell(
@@ -126,43 +164,6 @@ class _ViewState extends State<_View> {
           return VisitorTabPage(id: user.id);
         }));
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var user = blackHole.user;
-    var tagList = blackHole.tagList;
-    return SimpleDialog(
-      title: Text("屏蔽设置"),
-      children: <Widget>[
-        Container(
-            padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-            width: MediaQuery.of(context).size.width,
-            child: Flex(
-              direction: Axis.horizontal,
-              children: <Widget>[
-                buildAvatar(user),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-                    child: Text(user.nickname),
-                  ),
-                ),
-                BlockUserIconBtnWidget(
-                    user: user,
-                    callback: (UserBlackHoleEntity result, int state) {
-                      setState(() {
-                        result.state = state;
-                      });
-                    })
-              ],
-            )),
-        Divider(),
-        ...buildTagList(tagList),
-      ],
     );
   }
 }

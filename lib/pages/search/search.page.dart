@@ -15,23 +15,19 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TagState tagState;
-  bool loading = true;
-  GlobalKey<RefreshIndicatorState> refreshIndicatorKey =GlobalKey<RefreshIndicatorState>();
-  TextEditingController keywordController = TextEditingController();
+  TagState _tagState;
+  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =GlobalKey<RefreshIndicatorState>();
+  TextEditingController _keywordController = TextEditingController();
 
   Future<void> _listTagTop30() async {
     var result = await TagService.listTagTop30();
-    tagState.setRecommendTagList(result.data);
-    setState(() {
-      loading = false;
-    });
+    _tagState.setRecommendTagList(result.data);
     return;
   }
 
   _search() {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      return SearchResultPage(keyword: keywordController.text);
+      return SearchResultPage(keyword: _keywordController.text);
     }));
   }
 
@@ -39,22 +35,22 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      if (tagState.recommendTagList == null) {
-        refreshIndicatorKey.currentState?.show();
+      if (_tagState.recommendTagList == null) {
+        _refreshIndicatorKey.currentState?.show();
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    tagState = Provider.of<TagState>(context, listen: false);
+    _tagState = Provider.of<TagState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           elevation: 1,
           title:
           TextField(
               autofocus: true,
-              controller: keywordController,
+              controller: _keywordController,
               decoration: InputDecoration(
                 hintText: "搜索网站绘画",
                 border: InputBorder.none,
@@ -72,7 +68,7 @@ class _SearchPageState extends State<SearchPage> {
           ],
         ),
         body: RefreshIndicator(
-          key: refreshIndicatorKey,
+          key: _refreshIndicatorKey,
           onRefresh: _listTagTop30,
           child: ListView(
             children: <Widget>[
@@ -81,7 +77,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: Wrap(
                     spacing: StyleConfig.gap * 2,
                     runSpacing: -StyleConfig.gap,
-                    children: tagState.recommendTagList
+                    children: _tagState.recommendTagList
                             ?.map((e) => ActionChip(
                                 label: Text(e.name),
                                 onPressed: () {
@@ -101,6 +97,6 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void dispose() {
     super.dispose();
-    keywordController.dispose();
+    _keywordController.dispose();
   }
 }

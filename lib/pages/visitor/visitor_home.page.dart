@@ -21,11 +21,6 @@ class VisitorHomePage extends StatefulWidget {
 class _VisitorHomePageState extends State<VisitorHomePage>
     with AutomaticKeepAliveClientMixin {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   bool get wantKeepAlive => true;
 
   @override
@@ -47,7 +42,7 @@ class _VisitorHomePageState extends State<VisitorHomePage>
             Align(
               child: Padding(
                 padding: EdgeInsets.only(top: StyleConfig.gap * 35),
-                child: buildMaterialAvatar(visitorState),
+                child: _buildMaterialAvatar(visitorState),
               ),
             ),
           ]),
@@ -78,7 +73,7 @@ class _VisitorHomePageState extends State<VisitorHomePage>
     });
   }
 
-  Material buildMaterialAvatar(VisitorState visitorState) {
+  _buildMaterialAvatar(VisitorState visitorState) {
     var size = 120.0;
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),

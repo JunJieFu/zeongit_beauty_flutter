@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 
 class EditPage extends StatefulWidget {
-  EditPage(this.picture, {Key key,@required this.callback}) : super(key: key);
+  EditPage(this.picture, {Key key, @required this.callback}) : super(key: key);
 
   final PictureEntity picture;
 
@@ -14,9 +14,10 @@ class EditPage extends StatefulWidget {
 }
 
 class EditPageState extends State<EditPage> {
+  //目的为了脱离上级参数，因为要做识图的更改
   EditPageState(this.picture);
 
-  PictureEntity picture;
+  final PictureEntity picture;
 
   @override
   void initState() {

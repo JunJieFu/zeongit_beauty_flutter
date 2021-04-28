@@ -18,28 +18,13 @@ class RecommendTagPage extends StatefulWidget {
 class RecommendTagPageState extends RefreshAbstract<RecommendTagPage>
     with AutomaticKeepAliveClientMixin {
   List<TagFrequencyEntity> _recommendTagList;
-  bool loading = true;
+
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       refreshIndicatorKey.currentState?.show();
     });
-  }
-
-  Future<void> _listTagTop30() async {
-    var result = await TagService.listTagTop30();
-    setState(() {
-      _recommendTagList = result.data;
-    });
-    loading = false;
-    return;
-  }
-
-  _search() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SearchPage();
-    }));
   }
 
   @override
@@ -88,4 +73,18 @@ class RecommendTagPageState extends RefreshAbstract<RecommendTagPage>
 
   @override
   bool get wantKeepAlive => true;
+
+  Future<void> _listTagTop30() async {
+    var result = await TagService.listTagTop30();
+    setState(() {
+      _recommendTagList = result.data;
+    });
+    return;
+  }
+
+  _search() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return SearchPage();
+    }));
+  }
 }
