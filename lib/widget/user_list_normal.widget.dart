@@ -32,13 +32,12 @@ class UserListNormalWidget extends StatefulWidget {
 }
 
 class UserListNormalWidgetState extends State<UserListNormalWidget> {
-
   @override
   void initState() {
     super.initState();
     widget.controller.addListener(() {
       if (widget.controller.position.maxScrollExtent -
-          widget.controller.position.pixels <
+              widget.controller.position.pixels <
           150) {
         if (widget.changePage != null) {
           widget.changePage(widget.currPage.meta.currentPage + 1);

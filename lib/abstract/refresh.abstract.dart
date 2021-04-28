@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 abstract class RefreshAbstract<T extends StatefulWidget> extends State<T> {
   GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  ScrollController scrollController;
+  ScrollController scrollController = ScrollController();
 
   externalRefresh() {
     scrollController?.animateTo(0,

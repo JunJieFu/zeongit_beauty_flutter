@@ -19,8 +19,6 @@ abstract class PagePictureAbstract<T extends StatefulWidget>
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
   @override
-  ScrollController scrollController = ScrollController();
-  @override
   void initState() {
     super.initState();
   }

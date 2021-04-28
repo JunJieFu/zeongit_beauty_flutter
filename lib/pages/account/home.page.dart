@@ -24,8 +24,6 @@ class HomePage extends StatefulWidget {
 class HomePageState extends RefreshAbstract<HomePage>
     with AutomaticKeepAliveClientMixin {
   bool loading = true;
-  @override
-  ScrollController scrollController = ScrollController();
   List<PictureEntity> followingPictureList = [];
   List<PictureEntity> recommendList = [];
   List<PictureEntity> newList = [];

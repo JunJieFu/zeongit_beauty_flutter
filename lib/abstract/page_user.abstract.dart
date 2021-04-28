@@ -16,8 +16,7 @@ abstract class PageUserAbstract<T extends StatefulWidget>
   PageUserInfoEntity currPage;
   List<UserInfoEntity> list = [];
   PageableEntity pageable = PageableEntity();
-  @override
-  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -74,6 +73,7 @@ abstract class PageUserAbstract<T extends StatefulWidget>
         key: listWidgetKey,
         currPage: currPage,
         list: list,
+        controller: scrollController,
         changePage: changePage);
   }
 }
