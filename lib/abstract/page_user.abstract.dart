@@ -16,11 +16,11 @@ abstract class PageUserAbstract<T extends StatefulWidget>
   PageUserInfoEntity currPage;
   List<UserInfoEntity> list = [];
   PageableEntity pageable = PageableEntity();
-
+  @override
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-    scrollController = listWidgetKey?.currentState?.scrollController;
   }
 
   Future<void> refresh() async {
@@ -43,7 +43,7 @@ abstract class PageUserAbstract<T extends StatefulWidget>
     setState(() {
       currPage = result.data;
       if (currPage.meta.first) {
-        listWidgetKey?.currentState?.goTo();
+        scrollController.jumpTo(0);
         list = currPage.items;
       } else {
         list.addAll(currPage.items);
@@ -61,19 +61,19 @@ abstract class PageUserAbstract<T extends StatefulWidget>
           physics: AlwaysScrollableScrollPhysics(),
           children: [buildEmptyType()]);
     } else {
-      return buildListWaterFall();
+      return _buildListWaterFall();
     }
   }
 
-  UserListNormalWidget buildListWaterFall() {
+  TipsPageCardWidget buildEmptyType();
+
+  Future<ResultEntity<PageUserInfoEntity>> dao();
+
+  UserListNormalWidget _buildListWaterFall() {
     return UserListNormalWidget(
         key: listWidgetKey,
         currPage: currPage,
         list: list,
         changePage: changePage);
   }
-
-  TipsPageCardWidget buildEmptyType();
-
-  Future<ResultEntity<PageUserInfoEntity>> dao();
 }

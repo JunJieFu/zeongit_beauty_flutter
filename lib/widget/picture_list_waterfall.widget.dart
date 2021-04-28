@@ -8,16 +8,26 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
 
+// ignore: must_be_immutable
 class PictureListWaterfallWidget extends StatefulWidget {
   PictureListWaterfallWidget(
-      {Key key, this.currPage, this.list, this.changePage, this.onLongPress})
-      : super(key: key);
+      {Key key,
+      this.currPage,
+      this.list,
+      this.changePage,
+      this.controller,
+      this.onLongPress})
+      : super(key: key) {
+    if (controller == null) this.controller = ScrollController();
+  }
 
   final PagePictureEntity currPage;
 
   final List<PictureEntity> list;
 
   final Future<void> Function(int) changePage;
+
+  ScrollController controller;
 
   final void Function(int) onLongPress;
 
@@ -28,14 +38,12 @@ class PictureListWaterfallWidget extends StatefulWidget {
 
 class PictureListWaterfallWidgetState
     extends State<PictureListWaterfallWidget> {
-  ScrollController scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent -
-              scrollController.position.pixels <
+    widget.controller.addListener(() {
+      if (widget.controller.position.maxScrollExtent -
+              widget.controller.position.pixels <
           150) {
         if (widget.changePage != null) {
           widget.changePage(widget.currPage.meta.currentPage + 1);
@@ -47,7 +55,7 @@ class PictureListWaterfallWidgetState
   @override
   Widget build(BuildContext context) {
     return WaterfallFlow.builder(
-        controller: scrollController,
+        controller: widget.controller,
         physics: AlwaysScrollableScrollPhysics(),
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
@@ -81,7 +89,7 @@ class PictureListWaterfallWidgetState
         });
   }
 
-  goTo() {
-    scrollController.jumpTo(0);
+  jumpTo() {
+    widget.controller.jumpTo(0);
   }
 }

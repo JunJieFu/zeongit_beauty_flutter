@@ -15,16 +15,14 @@ import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 abstract class PagePictureAbstract<T extends StatefulWidget>
     extends RefreshAbstract<T> {
   bool loading = false;
-  GlobalKey<PictureListWaterfallWidgetState> listWidgetKey =
-      GlobalKey<PictureListWaterfallWidgetState>();
   PagePictureEntity currPage;
   List<PictureEntity> list = [];
   PageableEntity pageable = PageableEntity();
-
+  @override
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-    scrollController = listWidgetKey?.currentState?.scrollController;
   }
 
   Future<void> refresh() async {
@@ -48,7 +46,7 @@ abstract class PagePictureAbstract<T extends StatefulWidget>
       print(pageable.page);
       currPage = result.data;
       if (currPage.meta.first) {
-        listWidgetKey?.currentState?.goTo();
+        scrollController.jumpTo(0);
         list = currPage.items;
       } else {
         list.addAll(currPage.items);
@@ -66,23 +64,23 @@ abstract class PagePictureAbstract<T extends StatefulWidget>
           physics: AlwaysScrollableScrollPhysics(),
           children: [buildEmptyType()]);
     } else {
-      return buildListWaterFall();
+      return _buildListWaterFall();
     }
   }
 
-  PictureListWaterfallWidget buildListWaterFall() {
+  TipsPageCardWidget buildEmptyType();
+
+  Future<ResultEntity<PagePictureEntity>> dao();
+
+  PictureListWaterfallWidget _buildListWaterFall() {
     return PictureListWaterfallWidget(
-      key: listWidgetKey,
+      controller: scrollController,
       currPage: currPage,
       list: list,
       changePage: changePage,
       onLongPress: _remove,
     );
   }
-
-  TipsPageCardWidget buildEmptyType();
-
-  Future<ResultEntity<PagePictureEntity>> dao();
 
   _remove(int id) {
     showDialog(

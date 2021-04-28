@@ -7,9 +7,17 @@ import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
 
+// ignore: must_be_immutable
 class UserListNormalWidget extends StatefulWidget {
-  UserListNormalWidget({Key key, this.currPage, this.list, this.changePage})
-      : super(key: key);
+  UserListNormalWidget({
+    Key key,
+    this.currPage,
+    this.list,
+    this.changePage,
+    this.controller,
+  }) : super(key: key) {
+    if (controller == null) this.controller = ScrollController();
+  }
 
   final PageUserInfoEntity currPage;
 
@@ -17,19 +25,20 @@ class UserListNormalWidget extends StatefulWidget {
 
   final Future<void> Function(int) changePage;
 
+  ScrollController controller;
+
   @override
   UserListNormalWidgetState createState() => UserListNormalWidgetState();
 }
 
 class UserListNormalWidgetState extends State<UserListNormalWidget> {
-  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent -
-          scrollController.position.pixels <
+    widget.controller.addListener(() {
+      if (widget.controller.position.maxScrollExtent -
+          widget.controller.position.pixels <
           150) {
         if (widget.changePage != null) {
           widget.changePage(widget.currPage.meta.currentPage + 1);
@@ -41,7 +50,7 @@ class UserListNormalWidgetState extends State<UserListNormalWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        controller: scrollController,
+        controller: widget.controller,
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: widget.list?.length,
         itemBuilder: (BuildContext context, int index) {
@@ -55,7 +64,7 @@ class UserListNormalWidgetState extends State<UserListNormalWidget> {
                 child: Flex(
                   direction: Axis.horizontal,
                   children: <Widget>[
-                    buildAvatar(user),
+                    _buildAvatar(user),
                     Expanded(
                       flex: 1,
                       child: Padding(
@@ -81,7 +90,7 @@ class UserListNormalWidgetState extends State<UserListNormalWidget> {
         });
   }
 
-  InkWell buildAvatar(UserInfoEntity user) {
+  InkWell _buildAvatar(UserInfoEntity user) {
     var size = 75.0;
     var padding = 8.0;
     return InkWell(
@@ -104,7 +113,7 @@ class UserListNormalWidgetState extends State<UserListNormalWidget> {
     );
   }
 
-  goTo() {
-    scrollController.jumpTo(0);
+  jumpTo() {
+    widget.controller.jumpTo(0);
   }
 }
