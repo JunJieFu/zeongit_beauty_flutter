@@ -28,7 +28,7 @@ class _FootprintPageState extends PagePictureAbstract<FootprintPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("收藏夹")),
+        appBar: AppBar(title: Text("足迹")),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,

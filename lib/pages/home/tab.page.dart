@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/convenient_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
+import 'package:zeongitbeautyflutter/pages/more/more.page.dart';
 import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
-import 'package:zeongitbeautyflutter/pages/more/user.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/recommend_tag.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/lazy_indexed_stack.widget.dart';
@@ -47,7 +47,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
             else if (i == 3)
               return RecommendTagPage(key: _tagPageStateKey);
             else
-              return UserPage();
+              return MorePage();
           },
           itemCount: 5,
         ),
