@@ -40,6 +40,14 @@ class _DetailPageState extends FutureBuildAbstract<DetailPage, PictureEntity> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    try {
+      FootprintService.save(widget.id);
+    } catch (e) {}
+  }
+
+  @override
   Widget build(BuildContext context) {
     return futureBuilder();
   }
