@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/pages/collection.page.dart';
+import 'package:zeongitbeautyflutter/pages/convenient/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/follower.page.dart';
-import 'package:zeongitbeautyflutter/pages/following.page.dart';
-import 'package:zeongitbeautyflutter/pages/following_new.page.dart';
+import 'package:zeongitbeautyflutter/pages/convenient/following.page.dart';
+import 'package:zeongitbeautyflutter/pages/convenient/following_new.page.dart';
 import 'package:zeongitbeautyflutter/pages/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/setting.page.dart';
 import 'package:zeongitbeautyflutter/pages/works.page.dart';

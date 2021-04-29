@@ -26,7 +26,6 @@ class _FollowingNewPageState extends PagePictureAbstract<FollowingNewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("关注最新")),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,

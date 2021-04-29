@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/pages/convenient/convenient_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
-import 'package:zeongitbeautyflutter/pages/account/home.page.dart';
 import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/user.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/recommend_tag.page.dart';
@@ -16,7 +16,6 @@ class TabPage extends StatefulWidget {
 
 class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   TabController _tabController;
-  GlobalKey<HomePageState> _homePageStateKey = GlobalKey<HomePageState>();
   GlobalKey<FindPageState> _findPageStateKey = GlobalKey<FindPageState>();
   GlobalKey<NewPageState> _newPageStateKey = GlobalKey<NewPageState>();
   GlobalKey<RecommendTagPageState> _tagPageStateKey =
@@ -40,11 +39,11 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
           index: _tabIndex,
           itemBuilder: (c, i) {
             if (i == 0)
-              return HomePage(key: _homePageStateKey);
-            else if (i == 1)
               return FindPage(key: _findPageStateKey);
-            else if (i == 2)
+            else if (i == 1)
               return NewPage(key: _newPageStateKey);
+            else if (i == 2)
+              return ConvenientTabPage();
             else if (i == 3)
               return RecommendTagPage(key: _tagPageStateKey);
             else
@@ -68,17 +67,17 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                       switch (index) {
                         case 0:
                           {
-//                          _homePageStateKey.currentState?.externalRefresh();
+                            _findPageStateKey.currentState?.externalRefresh();
                           }
                           break;
                         case 1:
                           {
-                            _findPageStateKey.currentState?.externalRefresh();
+                            _newPageStateKey.currentState?.externalRefresh();
                           }
                           break;
                         case 2:
                           {
-                            _newPageStateKey.currentState?.externalRefresh();
+
                           }
                           break;
                         case 3:
@@ -103,15 +102,15 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   _buildTabList() {
     return [
-      Tab(text: "首页", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
       Tab(
-          text: "推荐",
+          text: "发现",
           icon: Icon(MdiIcons.compass),
           iconMargin: EdgeInsets.all(0)),
       Tab(
           text: "最新",
           icon: Icon(MdiIcons.alpha_n_box_outline),
           iconMargin: EdgeInsets.all(0)),
+      Tab(text: "首页", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
       Tab(text: "搜索", icon: Icon(Icons.search), iconMargin: EdgeInsets.all(0)),
       Tab(
           text: "更多",
