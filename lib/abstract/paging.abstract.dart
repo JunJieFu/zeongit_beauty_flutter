@@ -40,7 +40,6 @@ abstract class PagingAbstract<T extends StatefulWidget, M, P extends dynamic>
     loading = true;
     var result = await dao();
     setState(() {
-      print(pageable.page);
       currPage = result.data;
       if (currPage.meta.first) {
         scrollController.jumpTo(0);
