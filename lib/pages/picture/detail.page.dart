@@ -8,6 +8,7 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/status.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
@@ -22,7 +23,6 @@ import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
-import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -332,7 +332,7 @@ class _ViewState extends State<_View> {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) {
-                              return SearchResultPage(keyword: e);
+                              return SearchTabPage(keyword: e);
                             }));
                           }))
                       ?.toList() ??

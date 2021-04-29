@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/abstract/refresh.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
-import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 
 class RecommendTagPage extends StatefulWidget {
@@ -60,7 +60,7 @@ class RecommendTagPageState extends RefreshAbstract<RecommendTagPage>
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (_) {
-                                    return SearchResultPage(keyword: e.name);
+                                    return SearchTabPage(keyword: e.name);
                                   }));
                                 }))
                             ?.toList() ??

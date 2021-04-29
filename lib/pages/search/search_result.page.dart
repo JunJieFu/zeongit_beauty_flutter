@@ -5,7 +5,6 @@ import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tune.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -34,8 +33,35 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_criteria.tagList),
+//        appBar: AppBar(
+//          title: Text(_criteria.tagList),
+//          actions: <Widget>[
+//            IconButton(
+//              icon: Icon(MdiIcons.tune),
+//              onPressed: () {
+//                Navigator.push(context, MaterialPageRoute(builder: (_) {
+//                  return SearchTunePage(params: _criteria, callback: _query);
+//                }));
+//              },
+//            ),
+//            IconButton(
+//              icon: Icon(Icons.search),
+//              onPressed: () {
+//                Navigator.push(context, MaterialPageRoute(builder: (_) {
+//                  return SearchPage();
+//                }));
+//              },
+//            )
+//          ],
+//        ),
+        body: Stack(
+      children: [
+        AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            _criteria.tagList,
+            style: TextStyle(fontSize: 18),
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(MdiIcons.tune),
@@ -44,21 +70,18 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
                   return SearchTunePage(params: _criteria, callback: _query);
                 }));
               },
-            ),
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SearchPage();
-                }));
-              },
             )
           ],
         ),
-        body: RefreshIndicator(
-            key: refreshIndicatorKey,
-            onRefresh: refresh,
-            child: emptyWidget()));
+        Padding(
+          padding: const EdgeInsets.only(top: 56),
+          child: RefreshIndicator(
+              key: refreshIndicatorKey,
+              onRefresh: refresh,
+              child: emptyWidget()),
+        )
+      ],
+    ));
   }
 
   @override
