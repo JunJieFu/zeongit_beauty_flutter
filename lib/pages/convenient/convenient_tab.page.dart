@@ -72,8 +72,8 @@ class ConvenientTabPageState extends State<ConvenientTabPage>
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
+    super.dispose();
   }
 
   _buildTabList() {
@@ -81,7 +81,6 @@ class ConvenientTabPageState extends State<ConvenientTabPage>
   }
 
   externalRefresh() {
-    print(12);
     if (_tabController.index == 0)
       followingNewPageKey?.currentState?.externalRefresh();
     if (_tabController.index == 1)

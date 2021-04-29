@@ -21,7 +21,7 @@ class SignInPage extends StatefulWidget {
   _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
+class _SignInPageState extends State<SignInPage> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   FocusNode _focusNode = FocusNode();
@@ -117,9 +117,9 @@ class _SignInPageState extends State<SignInPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _phoneController.dispose();
     _passwordController.dispose();
+    super.dispose();
   }
 
   _signIn(BuildContext context, UserState userState) async {

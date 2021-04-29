@@ -53,7 +53,7 @@ class _BlackHoleTabPageState extends State<BlackHoleTabPage>
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
+    super.dispose();
   }
 }

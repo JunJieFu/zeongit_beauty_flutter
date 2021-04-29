@@ -20,11 +20,52 @@ class UserTabPage extends StatefulWidget {
   _UserTabPageState createState() => _UserTabPageState();
 }
 
-class _UserTabPageState extends FutureBuildAbstract<UserTabPage, UserInfoEntity>
+class _UserTabPageState
+    extends FutureBuildAbstract<UserTabPage, UserInfoEntity> {
+  @override
+  Future<ResultEntity<UserInfoEntity>> fetchData() async {
+    var result = await UserService.getByTargetId(widget.id);
+    return result;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return futureBuilder();
+  }
+
+  _buildLoading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  @override
+  Widget buildError(BuildContext context) => _buildScaffold(_buildLoading());
+
+  @override
+  Widget buildMain(BuildContext context, ResultEntity<UserInfoEntity> result) {
+    return _UserTabBuildPage(info: result.data);
+  }
+
+  @override
+  Widget buildSkeleton(BuildContext context) => _buildScaffold(_buildLoading());
+
+  _buildScaffold(Widget body) {
+    return Scaffold(body: body);
+  }
+}
+
+class _UserTabBuildPage extends StatefulWidget {
+  _UserTabBuildPage({Key key, @required this.info}) : super(key: key);
+
+  final UserInfoEntity info;
+
+  @override
+  _UserTabBuildPageState createState() => _UserTabBuildPageState();
+}
+
+// 由于TickerProviderStateMixin和FutureBuild有一些莫名其妙的问题
+class _UserTabBuildPageState extends State<_UserTabBuildPage>
     with TickerProviderStateMixin {
   TabController _tabController;
-
-  UserModuleState _userModuleState = UserModuleState();
 
   @override
   void initState() {
@@ -42,57 +83,7 @@ class _UserTabPageState extends FutureBuildAbstract<UserTabPage, UserInfoEntity>
   }
 
   @override
-  Future<ResultEntity<UserInfoEntity>> fetchData() async {
-    var result =  await UserService.getByTargetId(widget.id);
-    _userModuleState.setInfo(result.data);
-    return result;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return _buildScaffold(futureBuilder());
-  }
-
-  _buildLoading() {
-    return Center(child: CircularProgressIndicator());
-  }
-
-  @override
-  Widget buildError(BuildContext context) => _buildLoading();
-
-  @override
-  Widget buildMain(BuildContext context, ResultEntity<UserInfoEntity> result) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => _userModuleState)
-      ],
-      child: TabBarView(
-        controller: _tabController,
-        children: [
-          WorksPage(id: result.data.id),
-          CollectionPage(id: result.data.id),
-          FollowingPage(id: result.data.id),
-          FollowerPage(id: result.data.id),
-          UserDetailPage(),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget buildSkeleton(BuildContext context) => _buildLoading();
-
-  _buildTabList() {
-    return [
-      Tab(text: "作品"),
-      Tab(text: "收藏"),
-      Tab(text: "关注"),
-      Tab(text: "粉丝"),
-      Tab(text: "详情")
-    ];
-  }
-
-  _buildScaffold(Widget body) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -104,6 +95,31 @@ class _UserTabPageState extends FutureBuildAbstract<UserTabPage, UserInfoEntity>
           ),
           elevation: 0,
         ),
-        body: body);
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+                create: (context) => UserModuleState(info: widget.info))
+          ],
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              WorksPage(id: widget.info.id),
+              CollectionPage(id: widget.info.id),
+              FollowingPage(id: widget.info.id),
+              FollowerPage(id: widget.info.id),
+              UserDetailPage(),
+            ],
+          ),
+        ));
+  }
+
+  _buildTabList() {
+    return [
+      Tab(text: "作品"),
+      Tab(text: "收藏"),
+      Tab(text: "关注"),
+      Tab(text: "粉丝"),
+      Tab(text: "详情")
+    ];
   }
 }

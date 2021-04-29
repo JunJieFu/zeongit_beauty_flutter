@@ -10,7 +10,8 @@ import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 final _gap = StyleConfig.gap * 6;
 
 class SearchPictureTunePage extends StatefulWidget {
-  SearchPictureTunePage({Key key, @required this.params, @required this.callback})
+  SearchPictureTunePage(
+      {Key key, @required this.params, @required this.callback})
       : super(key: key);
 
   final SearchTune params;
@@ -59,8 +60,8 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
 
   @override
   void dispose() {
-    super.dispose();
     _nameController.dispose();
+    super.dispose();
   }
 
   @override

@@ -48,8 +48,8 @@ class _SearchTabPageState extends State<SearchTabPage>
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
+    super.dispose();
   }
 
   _buildTabList() {

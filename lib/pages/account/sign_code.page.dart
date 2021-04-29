@@ -24,8 +24,7 @@ class SignCodePage extends StatefulWidget {
   SignCodePageState createState() => SignCodePageState();
 }
 
-class SignCodePageState extends State<SignCodePage>
-    with TickerProviderStateMixin {
+class SignCodePageState extends State<SignCodePage> {
   TextEditingController _phoneController = TextEditingController();
   FocusNode _focusNode = FocusNode();
   bool _loading = false;
@@ -98,8 +97,8 @@ class SignCodePageState extends State<SignCodePage>
 
   @override
   void dispose() {
-    super.dispose();
     _phoneController.dispose();
+    super.dispose();
   }
 
   _send(BuildContext context, UserState userState) async {

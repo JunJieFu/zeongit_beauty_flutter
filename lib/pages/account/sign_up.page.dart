@@ -21,7 +21,7 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
+class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _codeController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _rePasswordController = TextEditingController();
@@ -114,10 +114,10 @@ class _SignUpPageState extends State<SignUpPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _codeController.dispose();
     _passwordController.dispose();
     _rePasswordController.dispose();
+    super.dispose();
   }
 
   _signUp(BuildContext context, UserState userState) async {

@@ -23,6 +23,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   GlobalKey<RecommendTagPageState> _tagPageStateKey =
       GlobalKey<RecommendTagPageState>();
   var _tabIndex = 0;
+  DateTime _preTime;
 
   @override
   void initState() {
@@ -35,65 +36,80 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: LazyIndexedStack(
-          index: _tabIndex,
-          itemBuilder: (c, i) {
-            if (i == 0)
-              return FindPage(key: _findPageStateKey);
-            else if (i == 1)
-              return NewPage(key: _newPageStateKey);
-            else if (i == 2)
-              return ConvenientTabPage(key: _convenientPageStateKey);
-            else if (i == 3)
-              return RecommendTagPage(key: _tagPageStateKey);
-            else
-              return MorePage();
-          },
-          itemCount: 5,
-        ),
-        bottomNavigationBar: SizedBox(
-          height: 56,
-          child: BottomAppBar(
-              child: TabBar(
-                  labelStyle: TextStyle(fontSize: 12),
-                  tabs: _buildTabList(),
-                  controller: _tabController,
-                  indicatorColor: Colors.transparent,
-                  onTap: (int index) {
-                    setState(() {
-                      _tabIndex = index;
-                    });
-                    if (!_tabController.indexIsChanging) {
-                      switch (index) {
-                        case 0:
-                          {
-                            _findPageStateKey.currentState?.externalRefresh();
-                          }
-                          break;
-                        case 1:
-                          {
-                            _newPageStateKey.currentState?.externalRefresh();
-                          }
-                          break;
-                        case 2:
-                          {
-                            _convenientPageStateKey.currentState
-                                ?.externalRefresh();
-                          }
-                          break;
-                        case 3:
-                          {
-                            _tagPageStateKey.currentState?.externalRefresh();
-                          }
-                          break;
-                        default:
-                          {}
-                          break;
+    return WillPopScope(
+      onWillPop: () async {
+        if (_preTime == null ||
+            DateTime.now().difference(_preTime) > Duration(seconds: 2)) {
+          _preTime = DateTime.now();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: Duration(seconds: 1),
+            content: Text("再一次返回退出！"),
+          ));
+          // BotToast.showText(text: I18n.of(context).return_again_to_exit);
+          return Future.value(false);
+        }
+        return Future.value(true);
+      },
+      child: Scaffold(
+          body: LazyIndexedStack(
+            index: _tabIndex,
+            itemBuilder: (c, i) {
+              if (i == 0)
+                return FindPage(key: _findPageStateKey);
+              else if (i == 1)
+                return NewPage(key: _newPageStateKey);
+              else if (i == 2)
+                return ConvenientTabPage(key: _convenientPageStateKey);
+              else if (i == 3)
+                return RecommendTagPage(key: _tagPageStateKey);
+              else
+                return MorePage();
+            },
+            itemCount: 5,
+          ),
+          bottomNavigationBar: SizedBox(
+            height: 56,
+            child: BottomAppBar(
+                child: TabBar(
+                    labelStyle: TextStyle(fontSize: 12),
+                    tabs: _buildTabList(),
+                    controller: _tabController,
+                    indicatorColor: Colors.transparent,
+                    onTap: (int index) {
+                      setState(() {
+                        _tabIndex = index;
+                      });
+                      if (!_tabController.indexIsChanging) {
+                        switch (index) {
+                          case 0:
+                            {
+                              _findPageStateKey.currentState?.externalRefresh();
+                            }
+                            break;
+                          case 1:
+                            {
+                              _newPageStateKey.currentState?.externalRefresh();
+                            }
+                            break;
+                          case 2:
+                            {
+                              _convenientPageStateKey.currentState
+                                  ?.externalRefresh();
+                            }
+                            break;
+                          case 3:
+                            {
+                              _tagPageStateKey.currentState?.externalRefresh();
+                            }
+                            break;
+                          default:
+                            {}
+                            break;
+                        }
                       }
-                    }
-                  })),
-        ));
+                    })),
+          )),
+    );
   }
 
   @override
