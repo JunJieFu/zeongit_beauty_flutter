@@ -10,6 +10,18 @@ abstract class PagingAbstract<T extends StatefulWidget, M, P extends dynamic>
   List<M> list = [];
   PageableEntity pageable = PageableEntity();
 
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent -
+              scrollController.position.pixels <
+          150) {
+        changePage(currPage.meta.currentPage + 1);
+      }
+    });
+  }
+
   Future<void> refresh() async {
     pageable.page = 1;
     paging();

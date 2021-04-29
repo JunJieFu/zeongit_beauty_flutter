@@ -31,8 +31,14 @@ class NewPageState extends PagePictureAbstract<NewPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
-        key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("最新"),
+        elevation: 0,
+      ),
+      body: RefreshIndicator(
+          key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget()),
+    );
   }
 
   @override

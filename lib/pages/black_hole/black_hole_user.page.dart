@@ -5,8 +5,11 @@ import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/black_hole/widget/list_user.widget.dart';
+import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
+import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
+import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class BlackHoleUserPage extends StatefulWidget {
@@ -50,11 +53,67 @@ class _BlackHoleUserPageState extends PagingAbstract<
       return TipsPageCardWidget(
           icon: MdiIcons.account_outline, title: "没有屏蔽用户");
     } else {
-      return ListUserWidget(
-          currPage: currPage,
-          list: list,
+      return ListView.builder(
           controller: scrollController,
-          changePage: changePage);
+          itemCount: list.length,
+          itemBuilder: (BuildContext context, int index) {
+            UserBlackHoleEntity user = list[index];
+            return Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: StyleConfig.gap * 3,
+                      vertical: StyleConfig.gap * 2),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      _buildAvatar(user),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: StyleConfig.gap * 2),
+                          child: Text(user.nickname),
+                        ),
+                      ),
+                      BlockUserIconBtnWidget(
+                        user: user,
+                        callback: (user, int state) {
+                          setState(() {
+                            list[index].state = state;
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Divider(height: 1)
+              ],
+            );
+          });
     }
+  }
+
+  InkWell _buildAvatar(UserBlackHoleEntity user) {
+    var size = 75.0;
+    var padding = 8.0;
+    return InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(size / 2)),
+      child: Padding(
+        padding: EdgeInsets.all(padding),
+        child: AvatarWidget(
+          user?.avatarUrl,
+          user?.nickname,
+          size: size - padding * 2,
+          fit: BoxFit.cover,
+          style: AvatarStyle.small50,
+        ),
+      ),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return VisitorTabPage(id: user.id);
+        }));
+      },
+    );
   }
 }

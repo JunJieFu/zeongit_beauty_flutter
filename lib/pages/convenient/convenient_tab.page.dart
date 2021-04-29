@@ -72,6 +72,6 @@ class _ConvenientTabPageState extends State<ConvenientTabPage>
   }
 
   _buildTabList() {
-    return [Tab(text: "新作"), Tab(text: "收藏"), Tab(text: "关注")];
+    return [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
   }
 }
