@@ -34,6 +34,12 @@ class NewPageState extends PagePictureAbstract<NewPage>
     return Scaffold(
       appBar: AppBar(
         title: Text("最新"),
+        actions: [
+          IconButton(
+            icon: Icon(MdiIcons.calendar_month_outline),
+            onPressed: () {},
+          )
+        ],
         elevation: 0,
       ),
       body: RefreshIndicator(

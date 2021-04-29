@@ -30,8 +30,14 @@ class FindPageState extends PagePictureAbstract<FindPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
-        key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: Text("发现"),
+      ),
+      body: RefreshIndicator(
+          key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget()),
+    );
   }
 
   @override
