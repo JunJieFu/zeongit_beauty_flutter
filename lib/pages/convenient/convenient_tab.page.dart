@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/collection.page.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/following.page.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/following_new.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/following_new.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';

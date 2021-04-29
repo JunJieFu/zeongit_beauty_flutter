@@ -4,10 +4,10 @@ import 'package:zeongitbeautyflutter/abstract/future_builder_abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/collection.page.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/follower.page.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/following.page.dart';
-import 'package:zeongitbeautyflutter/pages/convenient/works.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/follower.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/works.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_detail.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_module.provider.dart';
 
