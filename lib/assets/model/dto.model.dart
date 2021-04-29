@@ -19,15 +19,14 @@ class SearchTune {
 
   double endRatio;
 
-  SearchTune({
-    this.tagList,
-    this.name,
-    this.precise,
-    this.startWidth,
-    this.endWidth,
-    this.startHeight,
-    this.endHeight
-  }) {
+  SearchTune(
+      {this.tagList,
+      this.name,
+      this.precise,
+      this.startWidth,
+      this.endWidth,
+      this.startHeight,
+      this.endHeight}) {
     if (this.precise == null) precise = false;
   }
 }
@@ -44,8 +43,16 @@ class SearchTuneDateItem {
   DateTime endDate;
 }
 
-class DateRange{
+class DateRange {
   DateTime startDate;
 
   DateTime endDate;
+}
+
+class SearchUserTune {
+  String nicknameList;
+
+  bool precise;
+
+  SearchTuneDateItem date = SearchTuneDateItem("不限制", null, null);
 }

@@ -31,7 +31,7 @@ class _SearchPageState extends State<SearchPage> {
           autofocus: true,
           controller: _keywordController,
           decoration: InputDecoration(
-            hintText: "搜索网站绘画",
+            hintText: "搜索",
             border: InputBorder.none,
           ),
           onSubmitted: (text) {

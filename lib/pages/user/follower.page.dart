@@ -16,7 +16,11 @@ class FollowerPage extends StatefulWidget {
   _FollowerPageState createState() => _FollowerPageState();
 }
 
-class _FollowerPageState extends PageUserAbstract<FollowerPage> {
+class _FollowerPageState extends PageUserAbstract<FollowerPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
@@ -36,9 +40,7 @@ class _FollowerPageState extends PageUserAbstract<FollowerPage> {
 
   @override
   TipsPageCardWidget buildEmptyType() =>
-      TipsPageCardWidget(
-          icon: MdiIcons.account_heart_outline,
-          title: "没有粉丝");
+      TipsPageCardWidget(icon: MdiIcons.account_heart_outline, title: "没有粉丝");
 
   @override
   Future<ResultEntity<PageUserInfoEntity>> dao() =>

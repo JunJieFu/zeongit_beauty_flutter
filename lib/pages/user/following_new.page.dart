@@ -11,10 +11,14 @@ class FollowingNewPage extends StatefulWidget {
   FollowingNewPage({Key key}) : super(key: key);
 
   @override
-  _FollowingNewPageState createState() => _FollowingNewPageState();
+  FollowingNewPageState createState() => FollowingNewPageState();
 }
 
-class _FollowingNewPageState extends PagePictureAbstract<FollowingNewPage> {
+class FollowingNewPageState extends PagePictureAbstract<FollowingNewPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +37,8 @@ class _FollowingNewPageState extends PagePictureAbstract<FollowingNewPage> {
   }
 
   @override
-  Future<ResultEntity<PagePictureEntity>> dao() => PictureService.pagingByFollowing(pageable);
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      PictureService.pagingByFollowing(pageable);
 
   @override
   TipsPageCardWidget buildEmptyType() {

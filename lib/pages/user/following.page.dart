@@ -13,10 +13,14 @@ class FollowingPage extends StatefulWidget {
   final int id;
 
   @override
-  _FollowingPageState createState() => _FollowingPageState();
+  FollowingPageState createState() => FollowingPageState();
 }
 
-class _FollowingPageState extends PageUserAbstract<FollowingPage> {
+class FollowingPageState extends PageUserAbstract<FollowingPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();

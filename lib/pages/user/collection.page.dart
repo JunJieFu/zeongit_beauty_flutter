@@ -16,7 +16,11 @@ class CollectionPage extends StatefulWidget {
   CollectionPageState createState() => CollectionPageState();
 }
 
-class CollectionPageState extends PagePictureAbstract<CollectionPage> {
+class CollectionPageState extends PagePictureAbstract<CollectionPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();

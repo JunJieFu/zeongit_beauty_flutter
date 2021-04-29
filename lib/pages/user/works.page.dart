@@ -17,8 +17,12 @@ class WorksPage extends StatefulWidget {
   _WorksPageState createState() => _WorksPageState();
 }
 
-class _WorksPageState extends PagePictureAbstract<WorksPage> {
+class _WorksPageState extends PagePictureAbstract<WorksPage>
+    with AutomaticKeepAliveClientMixin {
   PageableEntity pageable = PageableEntity(sort: "updateDate,desc");
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {

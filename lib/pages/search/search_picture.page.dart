@@ -5,21 +5,25 @@ import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/search/search_tune.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_picture_tune.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-class SearchResultPage extends StatefulWidget {
-  SearchResultPage({Key key, @required this.keyword}) : super(key: key);
+class SearchPicturePage extends StatefulWidget {
+  SearchPicturePage({Key key, @required this.keyword}) : super(key: key);
 
   final String keyword;
 
   @override
-  _SearchResultPageState createState() => _SearchResultPageState();
+  _SearchPicturePageState createState() => _SearchPicturePageState();
 }
 
-class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
+class _SearchPicturePageState extends PagePictureAbstract<SearchPicturePage>
+    with AutomaticKeepAliveClientMixin {
   SearchTune _criteria = SearchTune();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -67,7 +71,8 @@ class _SearchResultPageState extends PagePictureAbstract<SearchResultPage> {
               icon: Icon(MdiIcons.tune),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SearchTunePage(params: _criteria, callback: _query);
+                  return SearchPictureTunePage(
+                      params: _criteria, callback: _query);
                 }));
               },
             )

@@ -11,12 +11,18 @@ class ConvenientTabPage extends StatefulWidget {
   ConvenientTabPage({Key key}) : super(key: key);
 
   @override
-  _ConvenientTabPageState createState() => _ConvenientTabPageState();
+  ConvenientTabPageState createState() => ConvenientTabPageState();
 }
 
-class _ConvenientTabPageState extends State<ConvenientTabPage>
+class ConvenientTabPageState extends State<ConvenientTabPage>
     with TickerProviderStateMixin {
   TabController _tabController;
+  GlobalKey<FollowingNewPageState> followingNewPageKey =
+      GlobalKey<FollowingNewPageState>();
+  GlobalKey<CollectionPageState> collectionPageKey =
+      GlobalKey<CollectionPageState>();
+  GlobalKey<FollowingPageState> followingPageKey =
+      GlobalKey<FollowingPageState>();
 
   @override
   void initState() {
@@ -55,9 +61,9 @@ class _ConvenientTabPageState extends State<ConvenientTabPage>
             body: TabBarView(
               controller: _tabController,
               children: [
-                FollowingNewPage(),
-                CollectionPage(id: userState.info.id),
-                FollowingPage(id: userState.info.id),
+                FollowingNewPage(key: followingNewPageKey),
+                CollectionPage(key: collectionPageKey, id: userState.info.id),
+                FollowingPage(key: followingPageKey, id: userState.info.id),
               ],
             ));
       }
@@ -72,5 +78,15 @@ class _ConvenientTabPageState extends State<ConvenientTabPage>
 
   _buildTabList() {
     return [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
+  }
+
+  externalRefresh() {
+    print(12);
+    if (_tabController.index == 0)
+      followingNewPageKey?.currentState?.externalRefresh();
+    if (_tabController.index == 1)
+      collectionPageKey?.currentState?.externalRefresh();
+    if (_tabController.index == 2)
+      followingPageKey?.currentState?.externalRefresh();
   }
 }

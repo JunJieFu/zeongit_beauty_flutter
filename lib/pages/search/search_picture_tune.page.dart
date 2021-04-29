@@ -9,8 +9,8 @@ import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class SearchTunePage extends StatefulWidget {
-  SearchTunePage({Key key, @required this.params, @required this.callback})
+class SearchPictureTunePage extends StatefulWidget {
+  SearchPictureTunePage({Key key, @required this.params, @required this.callback})
       : super(key: key);
 
   final SearchTune params;
@@ -18,10 +18,10 @@ class SearchTunePage extends StatefulWidget {
   final Function(SearchTune) callback;
 
   @override
-  _SearchTunePageState createState() => _SearchTunePageState();
+  _SearchPictureTunePageState createState() => _SearchPictureTunePageState();
 }
 
-class _SearchTunePageState extends State<SearchTunePage> {
+class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
   TextEditingController _nameController = TextEditingController();
 
   TextEditingController _startWidthController = TextEditingController();

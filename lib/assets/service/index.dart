@@ -47,6 +47,26 @@ class UserService {
   static Future<ResultEntity<UserInfoEntity>> getByTargetId(int targetId) {
     return HttpUtil.get("/userInfo/get", params: {"targetId": targetId});
   }
+
+  static Future<ResultEntity<PageUserInfoEntity>> paging(
+      PageableEntity pageable,{
+        SearchUserTune criteria
+}) {
+    var params =  pageable.toJson();
+    if (criteria?.nicknameList != null) {
+      params["nicknameList"] = criteria.nicknameList.split(" ");
+    }
+    if (criteria?.precise != null) {
+      params["precise"] = criteria.precise;
+    }
+    if (criteria?.date?.startDate != null) {
+      params["startDate"] = criteria.date.startDate;
+    }
+    if (criteria?.date?.endDate != null) {
+      params["endDate"] = criteria.date.endDate;
+    }
+    return HttpUtil.get("/userInfo/paging", params: params);
+  }
 }
 
 class PictureService {

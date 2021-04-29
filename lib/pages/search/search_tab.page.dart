@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/pages/search/search_result.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_picture.page.dart';
+import 'package:zeongitbeautyflutter/pages/search/search_user.page.dart';
 
 class SearchTabPage extends StatefulWidget {
   SearchTabPage({Key key, @required this.keyword}) : super(key: key);
@@ -18,7 +19,7 @@ class _SearchTabPageState extends State<SearchTabPage>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 1,
+      length: 2,
       vsync: this, //动画效果的异步处理，默认格式，背下来即可
     );
   }
@@ -38,7 +39,10 @@ class _SearchTabPageState extends State<SearchTabPage>
         ),
         body: TabBarView(
           controller: _tabController,
-          children: [SearchResultPage(keyword: widget.keyword)],
+          children: [
+            SearchPicturePage(keyword: widget.keyword),
+            SearchUserPage(keyword: widget.keyword)
+          ],
         ));
   }
 
@@ -49,6 +53,6 @@ class _SearchTabPageState extends State<SearchTabPage>
   }
 
   _buildTabList() {
-    return [Tab(text: "作品")];
+    return [Tab(text: "作品"), Tab(text: "用户")];
   }
 }

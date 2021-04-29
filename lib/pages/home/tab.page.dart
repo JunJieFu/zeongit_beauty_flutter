@@ -18,6 +18,8 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   TabController _tabController;
   GlobalKey<FindPageState> _findPageStateKey = GlobalKey<FindPageState>();
   GlobalKey<NewPageState> _newPageStateKey = GlobalKey<NewPageState>();
+  GlobalKey<ConvenientTabPageState> _convenientPageStateKey =
+      GlobalKey<ConvenientTabPageState>();
   GlobalKey<RecommendTagPageState> _tagPageStateKey =
       GlobalKey<RecommendTagPageState>();
   var _tabIndex = 0;
@@ -34,8 +36,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:
-            LazyIndexedStack(
+        body: LazyIndexedStack(
           index: _tabIndex,
           itemBuilder: (c, i) {
             if (i == 0)
@@ -43,7 +44,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
             else if (i == 1)
               return NewPage(key: _newPageStateKey);
             else if (i == 2)
-              return ConvenientTabPage();
+              return ConvenientTabPage(key: _convenientPageStateKey);
             else if (i == 3)
               return RecommendTagPage(key: _tagPageStateKey);
             else
@@ -77,7 +78,8 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                           break;
                         case 2:
                           {
-
+                            _convenientPageStateKey.currentState
+                                ?.externalRefresh();
                           }
                           break;
                         case 3:
@@ -110,7 +112,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
           text: "最新",
           icon: Icon(MdiIcons.alpha_n_box_outline),
           iconMargin: EdgeInsets.all(0)),
-      Tab(text: "首页", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
+      Tab(text: "速览", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
       Tab(text: "搜索", icon: Icon(Icons.search), iconMargin: EdgeInsets.all(0)),
       Tab(
           text: "更多",
