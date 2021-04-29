@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_tab.page.dart';
-import 'package:zeongitbeautyflutter/pages/footprint.page.dart';
+import 'package:zeongitbeautyflutter/pages/fragment/about.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/footprint.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/upload.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
@@ -79,13 +81,21 @@ class _MorePageState extends State<MorePage>
                 return FootprintPage(id: userState.info.id);
               }));
             }),
-            ..._buildListTile(MdiIcons.upload_outline, "上传", () {}),
+            ..._buildListTile(MdiIcons.upload_outline, "上传", () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return UploadPage();
+              }));
+            }),
             ..._buildListTile(MdiIcons.eye_off_outline, "屏蔽设置", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return BlackHoleTabPage();
               }));
             }),
-            ..._buildListTile(MdiIcons.information_outline, "关于", () {}),
+            ..._buildListTile(MdiIcons.information_outline, "关于", () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return AboutPage();
+              }));
+            }),
             ..._buildListTile(MdiIcons.logout, "登出", () {
               _signOut(userState);
             }),
