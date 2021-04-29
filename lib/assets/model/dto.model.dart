@@ -43,3 +43,9 @@ class SearchTuneDateItem {
 
   DateTime endDate;
 }
+
+class DateRange{
+  DateTime startDate;
+
+  DateTime endDate;
+}

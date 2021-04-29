@@ -11,6 +11,7 @@ import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/util/http.util.dart';
+
 class UserService {
   static Future<ResultEntity<String>> signIn(String phone, String password) {
     return HttpUtil.post("/user/signIn",
@@ -50,9 +51,16 @@ class UserService {
 
 class PictureService {
   static Future<ResultEntity<PagePictureEntity>> pagingByRecommend(
-      PageableEntity pageable) {
-    return HttpUtil.get("/picture/pagingByRecommend",
-        params: pageable.toJson());
+      PageableEntity pageable,
+      {DateRange dateRange}) {
+    var params = pageable.toJson();
+    if (dateRange?.startDate != null) {
+      params["startDate"] = dateRange.startDate;
+    }
+    if (dateRange?.endDate != null) {
+      params["endDate"] = dateRange.endDate;
+    }
+    return HttpUtil.get("/picture/pagingByRecommend", params: params);
   }
 
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
@@ -91,7 +99,6 @@ class PictureService {
     if (criteria?.endRatio != null) {
       params["endRatio"] = criteria.endRatio;
     }
-
     return HttpUtil.get("/picture/paging", params: params);
   }
 
