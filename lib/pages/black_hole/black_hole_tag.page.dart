@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/paging.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
@@ -15,10 +16,8 @@ class BlackHoleTagPage extends StatefulWidget {
   _BlackHoleTagPageState createState() => _BlackHoleTagPageState();
 }
 
-class _BlackHoleTagPageState extends PagingAbstract<
-    BlackHoleTagPage,
-    TagBlackHoleEntity,
-    PageTagBlackHoleEntity> with AutomaticKeepAliveClientMixin {
+class _BlackHoleTagPageState extends State<BlackHoleTagPage>
+    with AutomaticKeepAliveClientMixin, RefreshMixin, PagingMixin {
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -45,7 +44,8 @@ class _BlackHoleTagPageState extends PagingAbstract<
       TagBlackHoleService.paging(pageable);
 
   Widget _emptyWidget() {
-    if (currPage?.meta != null && currPage.meta.empty &&
+    if (currPage?.meta != null &&
+        currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {
       return TipsPageCardWidget(icon: MdiIcons.tag_outline, title: "没有屏蔽标签");

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/refresh.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
@@ -15,8 +15,8 @@ class RecommendTagPage extends StatefulWidget {
   RecommendTagPageState createState() => RecommendTagPageState();
 }
 
-class RecommendTagPageState extends RefreshAbstract<RecommendTagPage>
-    with AutomaticKeepAliveClientMixin {
+class RecommendTagPageState extends State<RecommendTagPage>
+    with AutomaticKeepAliveClientMixin, RefreshMixin {
   List<TagFrequencyEntity> _recommendTagList;
 
   @override
