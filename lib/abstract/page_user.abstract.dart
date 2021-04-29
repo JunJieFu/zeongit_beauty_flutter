@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:zeongitbeautyflutter/abstract/paging.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
@@ -85,7 +85,7 @@ abstract class PageUserAbstract<T extends StatefulWidget>
       ),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return VisitorTabPage(id: user.id);
+          return UserTabPage(id: user.id);
         }));
       },
     );

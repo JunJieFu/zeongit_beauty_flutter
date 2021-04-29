@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 
-class VisitorState extends ChangeNotifier {
-  VisitorState({UserInfoEntity info}) {
+class UserModuleState extends ChangeNotifier {
+  UserModuleState({UserInfoEntity info}) {
     this._info = info;
   }
 

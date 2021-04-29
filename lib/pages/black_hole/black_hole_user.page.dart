@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
@@ -111,7 +111,7 @@ class _BlackHoleUserPageState extends PagingAbstract<
       ),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return VisitorTabPage(id: user.id);
+          return UserTabPage(id: user.id);
         }));
       },
     );

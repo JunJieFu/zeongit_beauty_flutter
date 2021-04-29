@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/abstract/page_user.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/visitor/visitor.provider.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-class VisitorFollowerPage extends StatefulWidget {
+class FollowerPage extends StatefulWidget {
+  FollowerPage({Key key, @required this.id}) : super(key: key);
+
+  final int id;
+
   @override
-  _VisitorFollowerPageState createState() => _VisitorFollowerPageState();
+  _FollowerPageState createState() => _FollowerPageState();
 }
 
-class _VisitorFollowerPageState extends PageUserAbstract<VisitorFollowerPage>
-    with AutomaticKeepAliveClientMixin {
-  int _targetId;
-
+class _FollowerPageState extends PageUserAbstract<FollowerPage> {
   @override
   void initState() {
     super.initState();
@@ -28,23 +27,20 @@ class _VisitorFollowerPageState extends PageUserAbstract<VisitorFollowerPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return Consumer<VisitorState>(
-        builder: (ctx, VisitorState visitorState, child) {
-      _targetId = visitorState.info.id;
-      return RefreshIndicator(
-          key: refreshIndicatorKey, onRefresh: refresh, child: emptyWidget());
-    });
+    return Scaffold(
+        body: RefreshIndicator(
+            key: refreshIndicatorKey,
+            onRefresh: refresh,
+            child: emptyWidget()));
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   TipsPageCardWidget buildEmptyType() =>
-      TipsPageCardWidget(icon: MdiIcons.account_heart_outline, title: "没有粉丝");
+      TipsPageCardWidget(
+          icon: MdiIcons.account_heart_outline,
+          title: "没有粉丝");
 
   @override
   Future<ResultEntity<PageUserInfoEntity>> dao() =>
-      FollowerService.pagingFollower(pageable, _targetId);
+      FollowerService.pagingFollower(pageable, widget.id);
 }

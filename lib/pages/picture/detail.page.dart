@@ -8,7 +8,7 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
-import 'package:zeongitbeautyflutter/pages/visitor/visitor_tab.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/constant/status.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -312,7 +312,7 @@ class _ViewState extends State<_View> {
       ),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return VisitorTabPage(id: _picture.user.id);
+          return UserTabPage(id: _picture.user.id);
         }));
       },
     );

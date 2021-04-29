@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/collection.page.dart';
-import 'package:zeongitbeautyflutter/pages/follower.page.dart';
+import 'package:zeongitbeautyflutter/pages/convenient/follower.page.dart';
+import 'package:zeongitbeautyflutter/pages/convenient/works.page.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/following_new.page.dart';
 import 'package:zeongitbeautyflutter/pages/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/setting.page.dart';
-import 'package:zeongitbeautyflutter/pages/works.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';

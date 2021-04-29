@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_user.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
-class FollowerPage extends StatefulWidget {
-  FollowerPage({Key key, @required this.id}) : super(key: key);
+class WorksPage extends StatefulWidget {
+  WorksPage({Key key, @required this.id}) : super(key: key);
 
   final int id;
 
   @override
-  _FollowerPageState createState() => _FollowerPageState();
+  _WorksPageState createState() => _WorksPageState();
 }
 
-class _FollowerPageState extends PageUserAbstract<FollowerPage> {
+class _WorksPageState extends PagePictureAbstract<WorksPage> {
+  PageableEntity pageable = PageableEntity(sort: "updateDate,desc");
+
   @override
   void initState() {
     super.initState();
@@ -28,7 +31,6 @@ class _FollowerPageState extends PageUserAbstract<FollowerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("粉丝")),
         body: RefreshIndicator(
             key: refreshIndicatorKey,
             onRefresh: refresh,
@@ -36,12 +38,12 @@ class _FollowerPageState extends PageUserAbstract<FollowerPage> {
   }
 
   @override
-  TipsPageCardWidget buildEmptyType() =>
-      TipsPageCardWidget(
-          icon: MdiIcons.account_heart_outline,
-          title: "没有粉丝");
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      WorksService.paging(pageable, widget.id);
 
   @override
-  Future<ResultEntity<PageUserInfoEntity>> dao() =>
-      FollowerService.pagingFollower(pageable, widget.id);
+  TipsPageCardWidget buildEmptyType() {
+    return TipsPageCardWidget(
+        icon: MdiIcons.image_outline, title: "没有作品", text: "可以上传一些作品到我们哦。");
+  }
 }
