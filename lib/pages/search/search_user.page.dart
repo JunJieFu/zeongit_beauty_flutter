@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/page_user.mixin.dart';
-import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh.mixin.dart';
+import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class SearchUserPage extends StatefulWidget {
@@ -34,13 +32,11 @@ class _SearchUserPageState extends State<SearchUserPage>
   void initState() {
     super.initState();
     _criteria.nicknameList = widget.keyword;
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshIndicatorKey.currentState?.show();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         body: Stack(
       children: [
@@ -52,22 +48,28 @@ class _SearchUserPageState extends State<SearchUserPage>
             )),
         Padding(
           padding: const EdgeInsets.only(top: 56),
-          child: RefreshIndicator(
-              key: refreshIndicatorKey,
-              onRefresh: refresh,
-              child: emptyWidget()),
+          child: SmartRefresher(
+            controller: refreshController,
+            enablePullDown: true,
+            enablePullUp: currPage != null && !currPage.meta.last,
+            onRefresh: refresh,
+            onLoading: () async {
+              await changePage(currPage.meta.currentPage + 1);
+            },
+            child: emptyWidget(),
+          ),
         )
       ],
     ));
   }
 
   @override
+  Future<ResultEntity<PageUserInfoEntity>> dao() =>
+      UserService.paging(pageable, criteria: _criteria);
+
+  @override
   TipsPageCardWidget buildEmptyType() {
     return TipsPageCardWidget(
         icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一个名称搜索哦。");
   }
-
-  @override
-  Future<ResultEntity<PageUserInfoEntity>> dao() =>
-      UserService.paging(pageable, criteria: _criteria);
 }

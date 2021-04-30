@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh.mixin.dart';
+import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -25,20 +24,18 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
         PagingMixin<BlackHoleUserPage, UserBlackHoleEntity,
             PageUserBlackHoleEntity> {
   @override
-  void initState() {
-    super.initState();
-    refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshIndicatorKey.currentState?.show();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
-    return RefreshIndicator(
-        key: refreshIndicatorKey, onRefresh: refresh, child: _emptyWidget());
+    return SmartRefresher(
+      controller: refreshController,
+      enablePullDown: true,
+      enablePullUp: currPage != null && !currPage.meta.last,
+      onRefresh: refresh,
+      onLoading: () async {
+        await changePage(currPage.meta.currentPage + 1);
+      },
+      child: _emptyWidget(),
+    );
   }
 
   @override
@@ -57,7 +54,6 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
           icon: MdiIcons.account_outline, title: "没有屏蔽用户");
     } else {
       return ListView.builder(
-          controller: scrollController,
           itemCount: list.length,
           itemBuilder: (BuildContext context, int index) {
             UserBlackHoleEntity user = list[index];

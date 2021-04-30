@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh.mixin.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
@@ -20,14 +20,6 @@ class RecommendTagPageState extends State<RecommendTagPage>
   List<TagFrequencyEntity> _recommendTagList;
 
   @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshIndicatorKey.currentState?.show();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
@@ -42,11 +34,12 @@ class RecommendTagPageState extends State<RecommendTagPage>
             )
           ],
         ),
-        body: RefreshIndicator(
-          key: refreshIndicatorKey,
+        body: SmartRefresher(
+          controller: refreshController,
+          enablePullDown: true,
+          enablePullUp: false,
           onRefresh: _listTagTop30,
           child: ListView(
-            controller: scrollController,
             physics: AlwaysScrollableScrollPhysics(),
             children: <Widget>[
               Padding(
@@ -79,6 +72,7 @@ class RecommendTagPageState extends State<RecommendTagPage>
     setState(() {
       _recommendTagList = result.data;
     });
+    refreshController.refreshCompleted();
     return;
   }
 

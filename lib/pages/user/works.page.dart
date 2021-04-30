@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/page_picture.mixin.dart';
-import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh.mixin.dart';
+import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
@@ -32,20 +30,19 @@ class _WorksPageState extends State<WorksPage>
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshIndicatorKey.currentState?.show();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-        body: RefreshIndicator(
-            key: refreshIndicatorKey,
-            onRefresh: refresh,
-            child: emptyWidget()));
+        body: SmartRefresher(
+      controller: refreshController,
+      enablePullDown: true,
+      enablePullUp: currPage != null && !currPage.meta.last,
+      onRefresh: refresh,
+      onLoading: () async {
+        await changePage(currPage.meta.currentPage + 1);
+      },
+      child: emptyWidget(),
+    ));
   }
 
   @override

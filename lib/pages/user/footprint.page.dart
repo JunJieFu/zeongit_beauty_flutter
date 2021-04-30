@@ -38,9 +38,11 @@ class _FootprintPageState extends State<FootprintPage>
         ));
   }
 
+  @override
   Future<ResultEntity<PagePictureEntity>> dao() =>
       FootprintService.paging(pageable, widget.id);
 
+  @override
   TipsPageCardWidget buildEmptyType() {
     return TipsPageCardWidget(
         icon: MdiIcons.shoe_print,
