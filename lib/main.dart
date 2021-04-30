@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart';
@@ -58,56 +59,63 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => TagState()),
           ChangeNotifierProvider(create: (context) => UserState(info: info))
         ],
-        child: MaterialApp(
-          routes: routes,
-          theme: ThemeData(
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                  backgroundColor: Colors.white,
-                  foregroundColor: StyleConfig.primaryColor,
-                  elevation: 6,
-                  highlightElevation: 6),
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                  style: ElevatedButton.styleFrom(
-                      primary: StyleConfig.primaryColor)),
-              textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                primary: StyleConfig.primaryColor,
-              )),
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                  style: OutlinedButton.styleFrom(
-                      primary: StyleConfig.primaryColor,
-                      side: BorderSide(color: StyleConfig.primaryColor))),
-              chipTheme: ChipThemeData(
-                  backgroundColor: chipTheme.backgroundColor,
-                  disabledColor: chipTheme.disabledColor,
-                  selectedColor: chipTheme.selectedColor,
-                  secondarySelectedColor: chipTheme.secondarySelectedColor,
-                  labelPadding: chipTheme.labelPadding,
-                  padding: chipTheme.padding,
-                  shape: chipTheme.shape,
-                  labelStyle: chipTheme.labelStyle,
-                  secondaryLabelStyle: chipTheme.secondaryLabelStyle,
-                  brightness: chipTheme.brightness,
-                  elevation: 0,
-                  pressElevation: 0),
-              platform: TargetPlatform.android,
-              scaffoldBackgroundColor: Colors.white,
-              primaryColor: Colors.white,
-              primaryColorBrightness: Brightness.light,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              appBarTheme: AppBarTheme(elevation: 1),
-              tabBarTheme: TabBarTheme(
-                labelColor: StyleConfig.primaryColor,
-                unselectedLabelColor: Colors.black45,
-              )),
-          home: hasInit ? TabPage() : WelcomePage(),
-          localizationsDelegates: [
-            // ... app-specific localization delegate[s] here
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: Platform.isIOS ? ios : an,
-          locale: Locale('zh'),
+        child: RefreshConfiguration(
+          headerBuilder: () => MaterialClassicHeader(
+            color: StyleConfig.primaryColor,
+          ),
+          footerBuilder: () => CustomFooter(
+              builder: (BuildContext context, LoadStatus mode) => Container()),
+          child: MaterialApp(
+            routes: routes,
+            theme: ThemeData(
+                floatingActionButtonTheme: FloatingActionButtonThemeData(
+                    backgroundColor: Colors.white,
+                    foregroundColor: StyleConfig.primaryColor,
+                    elevation: 6,
+                    highlightElevation: 6),
+                elevatedButtonTheme: ElevatedButtonThemeData(
+                    style: ElevatedButton.styleFrom(
+                        primary: StyleConfig.primaryColor)),
+                textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                  primary: StyleConfig.primaryColor,
+                )),
+                outlinedButtonTheme: OutlinedButtonThemeData(
+                    style: OutlinedButton.styleFrom(
+                        primary: StyleConfig.primaryColor,
+                        side: BorderSide(color: StyleConfig.primaryColor))),
+                chipTheme: ChipThemeData(
+                    backgroundColor: chipTheme.backgroundColor,
+                    disabledColor: chipTheme.disabledColor,
+                    selectedColor: chipTheme.selectedColor,
+                    secondarySelectedColor: chipTheme.secondarySelectedColor,
+                    labelPadding: chipTheme.labelPadding,
+                    padding: chipTheme.padding,
+                    shape: chipTheme.shape,
+                    labelStyle: chipTheme.labelStyle,
+                    secondaryLabelStyle: chipTheme.secondaryLabelStyle,
+                    brightness: chipTheme.brightness,
+                    elevation: 0,
+                    pressElevation: 0),
+                platform: TargetPlatform.android,
+                scaffoldBackgroundColor: Colors.white,
+                primaryColor: Colors.white,
+                primaryColorBrightness: Brightness.light,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                appBarTheme: AppBarTheme(elevation: 1),
+                tabBarTheme: TabBarTheme(
+                  labelColor: StyleConfig.primaryColor,
+                  unselectedLabelColor: Colors.black45,
+                )),
+            home: hasInit ? TabPage() : WelcomePage(),
+            localizationsDelegates: [
+              // ... app-specific localization delegate[s] here
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: Platform.isIOS ? ios : an,
+            locale: Locale('zh'),
+          ),
         ));
   }
 }
