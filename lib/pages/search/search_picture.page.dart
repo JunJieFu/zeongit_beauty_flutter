@@ -89,6 +89,6 @@ class _SearchPicturePageState extends State<SearchPicturePage>
 
   _query(SearchTune _) {
     _criteria = _;
-    refresh();
+    refreshController.requestRefresh(needMove: false);
   }
 }

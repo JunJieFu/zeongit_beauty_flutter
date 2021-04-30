@@ -44,7 +44,7 @@ class FindPageState extends State<FindPage>
               onPressed: () {
                 _dateRange.startDate = null;
                 _dateRange.endDate = null;
-                refresh();
+                refreshController.requestRefresh(needMove: false);
               },
             )
           ],
@@ -80,7 +80,7 @@ class FindPageState extends State<FindPage>
     if (dateTime != null) {
       _dateRange.startDate = dateTime;
       _dateRange.endDate = dateTime;
-      refresh();
+      refreshController.requestRefresh(needMove: false);
     }
   }
 }

@@ -51,7 +51,7 @@ class NewPageState extends State<NewPage>
               onPressed: () {
                 _criteria.date.startDate = null;
                 _criteria.date.endDate = null;
-                refresh();
+                refreshController.requestRefresh(needMove: false);
               },
             )
           ],
@@ -90,7 +90,7 @@ class NewPageState extends State<NewPage>
     if (dateTime != null) {
       _criteria.date.startDate = dateTime;
       _criteria.date.endDate = dateTime;
-      refresh();
+      refreshController.requestRefresh(needMove: false);
     }
   }
 }
