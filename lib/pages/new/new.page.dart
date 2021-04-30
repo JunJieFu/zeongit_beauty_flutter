@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
@@ -15,8 +18,12 @@ class NewPage extends StatefulWidget {
   NewPageState createState() => NewPageState();
 }
 
-class NewPageState extends PagePictureAbstract<NewPage>
-    with AutomaticKeepAliveClientMixin {
+class NewPageState extends State<NewPage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<NewPage, PictureEntity, PagePictureEntity>,
+        PagePictureMixin {
   SearchTune _criteria = SearchTune();
 
   @override
@@ -45,7 +52,7 @@ class NewPageState extends PagePictureAbstract<NewPage>
           ),
           IconButton(
             icon: Icon(MdiIcons.refresh),
-            onPressed: (){
+            onPressed: () {
               _criteria.date.startDate = null;
               _criteria.date.endDate = null;
               refresh();

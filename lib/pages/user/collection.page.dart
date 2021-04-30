@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -16,8 +19,12 @@ class CollectionPage extends StatefulWidget {
   CollectionPageState createState() => CollectionPageState();
 }
 
-class CollectionPageState extends PagePictureAbstract<CollectionPage>
-    with AutomaticKeepAliveClientMixin {
+class CollectionPageState extends State<CollectionPage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<CollectionPage, PictureEntity, PagePictureEntity>,
+        PagePictureMixin {
   @override
   bool get wantKeepAlive => true;
 

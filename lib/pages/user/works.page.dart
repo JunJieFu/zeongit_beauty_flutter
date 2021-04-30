@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -17,8 +20,12 @@ class WorksPage extends StatefulWidget {
   _WorksPageState createState() => _WorksPageState();
 }
 
-class _WorksPageState extends PagePictureAbstract<WorksPage>
-    with AutomaticKeepAliveClientMixin {
+class _WorksPageState extends State<WorksPage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<WorksPage, PictureEntity, PagePictureEntity>,
+        PagePictureMixin {
   PageableEntity pageable = PageableEntity(sort: "updateDate,desc");
 
   @override

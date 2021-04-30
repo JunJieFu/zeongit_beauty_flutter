@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_user.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_user.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -16,8 +19,12 @@ class FollowingPage extends StatefulWidget {
   FollowingPageState createState() => FollowingPageState();
 }
 
-class FollowingPageState extends PageUserAbstract<FollowingPage>
-    with AutomaticKeepAliveClientMixin {
+class FollowingPageState extends State<FollowingPage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<FollowingPage, UserInfoEntity, PageUserInfoEntity>,
+        PageUserMixin {
   @override
   bool get wantKeepAlive => true;
 

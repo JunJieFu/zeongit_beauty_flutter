@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/abstract/future_builder_abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
-import 'package:zeongitbeautyflutter/pages/user/works.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_detail.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_module.provider.dart';
+import 'package:zeongitbeautyflutter/pages/user/works.page.dart';
 
 class UserTabPage extends StatefulWidget {
   UserTabPage({Key key, @required this.id}) : super(key: key);
@@ -20,8 +20,8 @@ class UserTabPage extends StatefulWidget {
   _UserTabPageState createState() => _UserTabPageState();
 }
 
-class _UserTabPageState
-    extends FutureBuildAbstract<UserTabPage, UserInfoEntity> {
+class _UserTabPageState extends State<UserTabPage>
+    with FutureBuilderMixin<UserTabPage, UserInfoEntity> {
   @override
   Future<ResultEntity<UserInfoEntity>> fetchData() async {
     var result = await UserService.getByTargetId(widget.id);

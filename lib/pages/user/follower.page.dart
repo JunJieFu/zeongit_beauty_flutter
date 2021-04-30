@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_user.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_user.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -16,8 +19,12 @@ class FollowerPage extends StatefulWidget {
   _FollowerPageState createState() => _FollowerPageState();
 }
 
-class _FollowerPageState extends PageUserAbstract<FollowerPage>
-    with AutomaticKeepAliveClientMixin {
+class _FollowerPageState extends State<FollowerPage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<FollowerPage, UserInfoEntity, PageUserInfoEntity>,
+        PageUserMixin {
   @override
   bool get wantKeepAlive => true;
 

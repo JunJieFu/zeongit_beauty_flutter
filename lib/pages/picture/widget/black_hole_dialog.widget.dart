@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/abstract/future_builder_abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
@@ -18,8 +18,8 @@ class BlackHoleDialogWidget extends StatefulWidget {
   _BlackHoleDialogWidgetState createState() => _BlackHoleDialogWidgetState();
 }
 
-class _BlackHoleDialogWidgetState
-    extends FutureBuildAbstract<BlackHoleDialogWidget, BlackHoleEntity> {
+class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget>
+    with FutureBuilderMixin<BlackHoleDialogWidget, BlackHoleEntity> {
   @override
   Future<ResultEntity<BlackHoleEntity>> fetchData() async {
     return await PictureBlackHoleService.get(widget.id);

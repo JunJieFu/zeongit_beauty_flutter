@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_user.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_user.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -16,8 +19,12 @@ class SearchUserPage extends StatefulWidget {
   _SearchUserPageState createState() => _SearchUserPageState();
 }
 
-class _SearchUserPageState extends PageUserAbstract<SearchUserPage>
-    with AutomaticKeepAliveClientMixin {
+class _SearchUserPageState extends State<SearchUserPage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<SearchUserPage, UserInfoEntity, PageUserInfoEntity>,
+        PageUserMixin {
   SearchUserTune _criteria = SearchUserTune();
 
   @override

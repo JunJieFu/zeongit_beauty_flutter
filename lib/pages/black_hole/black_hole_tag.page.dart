@@ -17,7 +17,11 @@ class BlackHoleTagPage extends StatefulWidget {
 }
 
 class _BlackHoleTagPageState extends State<BlackHoleTagPage>
-    with AutomaticKeepAliveClientMixin, RefreshMixin, PagingMixin {
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<BlackHoleTagPage, TagBlackHoleEntity,
+            PageTagBlackHoleEntity> {
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 

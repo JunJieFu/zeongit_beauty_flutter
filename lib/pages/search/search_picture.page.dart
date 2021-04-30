@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_picture_tune.page.dart';
@@ -18,8 +21,12 @@ class SearchPicturePage extends StatefulWidget {
   _SearchPicturePageState createState() => _SearchPicturePageState();
 }
 
-class _SearchPicturePageState extends PagePictureAbstract<SearchPicturePage>
-    with AutomaticKeepAliveClientMixin {
+class _SearchPicturePageState extends State<SearchPicturePage>
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<SearchPicturePage, PictureEntity, PagePictureEntity>,
+        PagePictureMixin {
   SearchTune _criteria = SearchTune();
 
   @override

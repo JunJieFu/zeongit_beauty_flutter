@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/page_picture.abstract.dart';
+import 'package:zeongitbeautyflutter/abstract/page_picture.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
@@ -16,7 +19,11 @@ class FootprintPage extends StatefulWidget {
   _FootprintPageState createState() => _FootprintPageState();
 }
 
-class _FootprintPageState extends PagePictureAbstract<FootprintPage> {
+class _FootprintPageState extends State<FootprintPage>
+    with
+        RefreshMixin,
+        PagingMixin<FootprintPage, PictureEntity, PagePictureEntity>,
+        PagePictureMixin {
   @override
   void initState() {
     super.initState();
@@ -36,7 +43,8 @@ class _FootprintPageState extends PagePictureAbstract<FootprintPage> {
   }
 
   @override
-  Future<ResultEntity<PagePictureEntity>> dao() => FootprintService.paging(pageable, widget.id);
+  Future<ResultEntity<PagePictureEntity>> dao() =>
+      FootprintService.paging(pageable, widget.id);
 
   @override
   TipsPageCardWidget buildEmptyType() {

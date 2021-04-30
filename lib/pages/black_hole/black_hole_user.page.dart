@@ -19,7 +19,11 @@ class BlackHoleUserPage extends StatefulWidget {
 }
 
 class _BlackHoleUserPageState extends State<BlackHoleUserPage>
-    with AutomaticKeepAliveClientMixin, RefreshMixin, PagingMixin {
+    with
+        AutomaticKeepAliveClientMixin,
+        RefreshMixin,
+        PagingMixin<BlackHoleUserPage, UserBlackHoleEntity,
+            PageUserBlackHoleEntity> {
   @override
   void initState() {
     super.initState();
