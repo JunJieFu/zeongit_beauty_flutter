@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
+import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
 class SearchUserPage extends StatefulWidget {

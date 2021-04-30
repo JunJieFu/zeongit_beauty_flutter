@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
+import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
@@ -39,35 +39,34 @@ class NewPageState extends State<NewPage>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("最新"),
-        actions: [
-          IconButton(
-            icon: Icon(MdiIcons.calendar_month_outline),
-            onPressed: _showStartDatePicker,
-          ),
-          IconButton(
-            icon: Icon(MdiIcons.refresh),
-            onPressed: () {
-              _criteria.date.startDate = null;
-              _criteria.date.endDate = null;
-              refresh();
-            },
-          )
-        ],
-        elevation: 0,
-      ),
-      body: SmartRefresher(
-        controller: refreshController,
-        enablePullDown: true,
-        enablePullUp: currPage != null && !currPage.meta.last,
-        onRefresh: refresh,
-        onLoading: () async {
-          await changePage(currPage.meta.currentPage + 1);
-        },
-        child: emptyWidget(),
-      )
-    );
+        appBar: AppBar(
+          title: Text("最新"),
+          actions: [
+            IconButton(
+              icon: Icon(MdiIcons.calendar_month_outline),
+              onPressed: _showStartDatePicker,
+            ),
+            IconButton(
+              icon: Icon(MdiIcons.refresh),
+              onPressed: () {
+                _criteria.date.startDate = null;
+                _criteria.date.endDate = null;
+                refresh();
+              },
+            )
+          ],
+          elevation: 0,
+        ),
+        body: SmartRefresher(
+          controller: refreshController,
+          enablePullDown: true,
+          enablePullUp: currPage != null && !currPage.meta.last,
+          onRefresh: refresh,
+          onLoading: () async {
+            await changePage(currPage.meta.currentPage + 1);
+          },
+          child: emptyWidget(),
+        ));
   }
 
   @override

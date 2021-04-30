@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/refresh2.dart';
+import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
 import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
 
