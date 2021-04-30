@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/abstract/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/mixins/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
@@ -33,7 +33,8 @@ class DetailPage extends StatefulWidget {
   _DetailPageState createState() => _DetailPageState();
 }
 
-class _DetailPageState extends State<DetailPage> with FutureBuilderMixin<DetailPage, PictureEntity> {
+class _DetailPageState extends State<DetailPage>
+    with FutureBuilderMixin<DetailPage, PictureEntity> {
   Future<ResultEntity<PictureEntity>> fetchData() async {
     await Future.delayed(Duration(milliseconds: 500));
     return await PictureService.get(widget.id);

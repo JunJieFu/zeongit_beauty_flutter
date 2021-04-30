@@ -20,6 +20,7 @@ mixin FutureBuilderMixin<T extends StatefulWidget, S> on State<T>
     implements FutureBuilderAbstract<T, S> {
   @override
   S source;
+
   @override
   futureBuilder() {
     return FutureBuilder(

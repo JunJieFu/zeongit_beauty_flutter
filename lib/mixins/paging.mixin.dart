@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
+import 'package:zeongitbeautyflutter/mixins/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:zeongitbeautyflutter/abstract/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/abstract/refresh.mixin.dart';
+import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/mixins/refresh.mixin.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
