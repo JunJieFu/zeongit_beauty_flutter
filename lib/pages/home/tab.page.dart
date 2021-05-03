@@ -61,7 +61,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
               else if (i == 2)
                 return ConvenientTabPage(key: _convenientPageStateKey);
               else if (i == 3)
-                return RecommendTagPage(key: _tagPageStateKey);
+                return RecommendTagPage2(key: _tagPageStateKey);
               else
                 return MorePage();
             },
@@ -99,7 +99,7 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                             break;
                           case 3:
                             {
-                              _tagPageStateKey.currentState?.externalRefresh();
+//                              _tagPageStateKey.currentState?.externalRefresh();
                             }
                             break;
                           default:
