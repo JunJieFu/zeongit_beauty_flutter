@@ -1,15 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
 class RecommendTagPage extends StatefulWidget {
   RecommendTagPage({Key key}) : super(key: key);

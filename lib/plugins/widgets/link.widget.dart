@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
-class LinkWidget extends StatelessWidget {
-  LinkWidget(this.text, {Key key, this.onTap}) : super(key: key);
+class Link extends StatelessWidget {
+  Link(this.text, {Key key, this.onTap}) : super(key: key);
 
   final String text;
 

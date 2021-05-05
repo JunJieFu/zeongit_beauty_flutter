@@ -1,4 +1,5 @@
-import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
+
+import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
@@ -8,9 +9,9 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/util/http.util.dart';
+import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/http.util.dart';
 
 class UserService {
   static Future<ResultEntity<String>> signIn(String phone, String password) {

@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/hooks/paging.hook.dart';
-import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/keep_alive_client.widget.dart';
-import 'package:zeongitbeautyflutter/widget/btn/block_tag_icon_btn.widget.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class BlackHoleTagPage extends HookWidget {
-  BlackHoleTagPage({Key key, this.controller}) :super(key: key);
+  BlackHoleTagPage({Key key, this.controller}) : super(key: key);
 
   final CustomRefreshController controller;
 
   @override
   Widget build(BuildContext context) {
     var pagingHookResult =
-    usePaging<TagBlackHoleEntity, PageTagBlackHoleEntity>(
-        context, (pageable) => TagBlackHoleService.paging(pageable));
+        usePaging<TagBlackHoleEntity, PageTagBlackHoleEntity>(
+            context, (pageable) => TagBlackHoleService.paging(pageable));
 
     var refreshController = pagingHookResult.refreshController;
     var list = pagingHookResult.list;
@@ -37,7 +35,7 @@ class BlackHoleTagPage extends HookWidget {
           currPage.value.meta.empty &&
           currPage.value.meta.first &&
           currPage.value.meta.last) {
-        return TipsPageCardWidget(icon: MdiIcons.tag_outline, title: "没有屏蔽标签");
+        return TipsPageCard(icon: MdiIcons.tag_outline, title: "没有屏蔽标签");
       } else {
         return ListView.builder(
             itemCount: list.value.length,
@@ -60,7 +58,7 @@ class BlackHoleTagPage extends HookWidget {
                             child: Text(tag.name),
                           ),
                         ),
-                        BlockTagIconBtnWidget(
+                        BlockTagIconBtn(
                           tag: tag,
                           callback: (user, int state) {
                             list.value[index].state = state;

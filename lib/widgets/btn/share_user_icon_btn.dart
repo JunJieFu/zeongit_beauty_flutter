@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 
 class ShareUserIconBtn extends StatelessWidget {
   ShareUserIconBtn({Key key, @required this.user, @required this.callback})

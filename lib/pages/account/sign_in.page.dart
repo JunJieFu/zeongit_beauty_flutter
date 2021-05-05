@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
-import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
+import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/account/sign_code.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
-import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
 final _gap = StyleConfig.gap * 6;
@@ -97,13 +97,13 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap / 2),
-                    child: LinkWidget("忘记了登录密码？", onTap: () {
+                    child: Link("忘记了登录密码？", onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return SignCodePage(CodeTypeConstant.FORGOT);
                       }));
                     }),
                   ),
-                  LinkWidget("没有登录账号，立即创建一个！", onTap: () {
+                  Link("没有登录账号，立即创建一个！", onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return SignCodePage(CodeTypeConstant.SIGN_UP);
                     }));

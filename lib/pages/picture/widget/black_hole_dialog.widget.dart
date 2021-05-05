@@ -4,10 +4,10 @@ import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/btn/block_tag_icon_btn.widget.dart';
-import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart';
 
 class BlackHoleDialogWidget extends StatefulWidget {
   BlackHoleDialogWidget({Key key, @required this.id}) : super(key: key);
@@ -101,7 +101,7 @@ class _ViewState extends State<_View> {
                     child: Text(user.nickname),
                   ),
                 ),
-                BlockUserIconBtnWidget(
+                BlockUserIconBtn(
                     user: user,
                     callback: (UserBlackHoleEntity result, int state) {
                       setState(() {
@@ -131,7 +131,7 @@ class _ViewState extends State<_View> {
                       child: Text(e.name),
                     ),
                   ),
-                  BlockTagIconBtnWidget(
+                  BlockTagIconBtn(
                       tag: e,
                       callback: (TagBlackHoleEntity tag, int state) {
                         setState(() {

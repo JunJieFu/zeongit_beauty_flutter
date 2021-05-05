@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/util/permission.util.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/shadow_icon.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 
 class ViewPage extends StatefulWidget {
   ViewPage(this.url, {Key key}) : super(key: key);
@@ -39,14 +39,14 @@ class ViewPageState extends State<ViewPage> {
           backgroundColor: Colors.transparent,
           brightness: Brightness.dark,
           leading: IconButton(
-            icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+            icon: ShadowIcon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.maybePop(context);
             },
           ),
           actions: [
             PopupMenuButton(
-              icon: ShadowIconWidget(MdiIcons.dots_horizontal,
+              icon: ShadowIcon(MdiIcons.dots_horizontal,
                   color: Colors.white),
               itemBuilder: (context) {
                 return [

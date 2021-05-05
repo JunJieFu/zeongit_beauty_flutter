@@ -3,11 +3,11 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
+import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class FindPage extends StatefulWidget {
   FindPage({Key key}) : super(key: key);
@@ -66,8 +66,8 @@ class FindPageState extends State<FindPage>
       PictureService.pagingByRecommend(pageable, dateRange: _dateRange);
 
   @override
-  TipsPageCardWidget buildEmptyType() {
-    return TipsPageCardWidget(
+  TipsPageCard buildEmptyType() {
+    return TipsPageCard(
         icon: MdiIcons.compass, title: "没有作品", text: "难道是系统出现什么问题了。");
   }
 

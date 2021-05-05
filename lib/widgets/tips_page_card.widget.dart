@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/card.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 import 'package:zeongitbeautyflutter/routes.dart';
 
-class TipsPageCardWidget extends StatelessWidget {
-  TipsPageCardWidget(
+class TipsPageCard extends StatelessWidget {
+  TipsPageCard(
       {Key key, this.icon, this.title, this.text, this.btnDesc, this.onPressed})
       : super(key: key);
 
@@ -32,10 +32,10 @@ class TipsPageCardWidget extends StatelessWidget {
         padding: EdgeInsets.only(top: StyleConfig.gap * 12),
         child: Icon(icon, size: 100),
       ),
-      CardTitleWidget(child: TitleWidget(title)),
+      CardTitle(child: TitleWidget(title)),
     ];
     if (text != null) {
-      list.add(CardTextWidget(child: TextWidget(text)));
+      list.add(CardText(child: TextWidget(text)));
     }
 
     if (btnDesc != null) {
@@ -55,7 +55,7 @@ class SignInPageCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TipsPageCardWidget(
+    return TipsPageCard(
       icon: icon,
       title: title,
       text: text,

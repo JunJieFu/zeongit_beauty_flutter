@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
-import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/icon_text_field.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/routes.dart';
 

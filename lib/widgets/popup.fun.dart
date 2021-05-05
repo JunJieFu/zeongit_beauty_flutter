@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:zeongitbeautyflutter/pages/account/sign_in.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/card.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/popup_container.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 
 void popupSignIn(String title, String text, BuildContext context,
     GlobalKey targetRenderKey) {
@@ -20,7 +20,7 @@ void popupSignIn(String title, String text, BuildContext context,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CardTitleWidget(
+                CardTitle(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
-class ImageInkWidget extends StatelessWidget {
-  const ImageInkWidget({Key key,
+class ImageInk extends StatelessWidget {
+  const ImageInk({Key key,
     this.child,
     this.constrained = false,
     this.borderRadius,

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/status.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/status.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 
 class HttpUtil {
   static Future<ResultEntity<T>> get<T>(String url,
@@ -29,7 +29,8 @@ class HttpUtil {
             status: result.status, message: result.message, data: null);
       }
     } catch (error) {
-      return ResultEntity(status: StatusCode.PROGRAM, message: "服务器错误", data: null);
+      return ResultEntity(
+          status: StatusCode.PROGRAM, message: "服务器错误", data: null);
     }
   }
 

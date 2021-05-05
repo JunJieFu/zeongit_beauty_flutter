@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/util/string.util.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/string.util.dart';
 
 enum AvatarStyle { small50, small100, small200 }
 
@@ -36,7 +36,7 @@ class AvatarWidget extends StatelessWidget {
     Widget build = _buildSvgPicture();
     if (url != null) {
       build = _buildCachedNetworkImage();
-    }else{
+    } else {
       build = _buildNicknameAvatar();
     }
 

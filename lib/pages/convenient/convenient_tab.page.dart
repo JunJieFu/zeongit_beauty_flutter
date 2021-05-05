@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following_new.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class ConvenientTabPage extends StatefulWidget {
   ConvenientTabPage({Key key}) : super(key: key);

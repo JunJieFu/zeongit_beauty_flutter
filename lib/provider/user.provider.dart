@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zeongitbeautyflutter/assets/constant/key.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/generated/json/user_info_entity_helper.dart';
-import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
-import 'package:zeongitbeautyflutter/plugins/util/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 
 class UserState extends ChangeNotifier {
   UserState({UserInfoEntity info}) {
@@ -17,7 +17,7 @@ class UserState extends ChangeNotifier {
 
   getInfo() async {
     var result = await UserService.getInfo();
-    if(ResultUtil.check(result)){
+    if (ResultUtil.check(result)) {
       StorageManager.setJson(
           KeyConstant.USER_INFO, userInfoEntityToJson(result.data));
       _info = result.data;

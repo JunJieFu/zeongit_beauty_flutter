@@ -3,10 +3,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
+import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class SearchUserPage extends StatefulWidget {
   SearchUserPage({Key key, @required this.keyword}) : super(key: key);
@@ -68,8 +68,8 @@ class _SearchUserPageState extends State<SearchUserPage>
       UserService.paging(pageable, criteria: _criteria);
 
   @override
-  TipsPageCardWidget buildEmptyType() {
-    return TipsPageCardWidget(
+  TipsPageCard buildEmptyType() {
+    return TipsPageCard(
         icon: Icons.search, title: "什么都搜不到哦", text: "您可以再换一个名称搜索哦。");
   }
 }

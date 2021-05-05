@@ -10,19 +10,19 @@ import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/status.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/link.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/shadow_icon.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/skeleton.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/status.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/picture.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/skeleton.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/btn/collect_icon_btn.widget.dart';
-import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -67,7 +67,7 @@ class _DetailPageState extends State<DetailPage>
       slivers: <Widget>[
         SliverAppBar(
           leading: IconButton(
-            icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+            icon: ShadowIcon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.maybePop(context);
             },
@@ -168,7 +168,7 @@ class _ViewState extends State<_View> {
         slivers: <Widget>[
           SliverAppBar(
             leading: IconButton(
-              icon: ShadowIconWidget(Icons.arrow_back, color: Colors.white),
+              icon: ShadowIcon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
                 Navigator.maybePop(context);
               },
@@ -176,7 +176,7 @@ class _ViewState extends State<_View> {
             actions: _picture.user.id == userState.info?.id
                 ? [
                     IconButton(
-                      icon: ShadowIconWidget(MdiIcons.image_edit_outline,
+                      icon: ShadowIcon(MdiIcons.image_edit_outline,
                           color: Colors.white),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -206,7 +206,7 @@ class _ViewState extends State<_View> {
                     icon: Icon(MdiIcons.message_outline),
                     onPressed: () {},
                   ),
-                  CollectIconBtnWidget(
+                  CollectIconBtn(
                       picture: _picture,
                       callback: (picture, int focus) {
                         setState(() {
@@ -234,14 +234,14 @@ class _ViewState extends State<_View> {
                       Row(
                         children: <Widget>[
                           Row(children: <Widget>[
-                            LinkWidget("${_picture.viewAmount}"),
+                            Link("${_picture.viewAmount}"),
                             TextWidget("人阅读")
                           ]),
                           Padding(
                               padding:
                                   EdgeInsets.only(left: StyleConfig.gap * 3),
                               child: Row(children: <Widget>[
-                                LinkWidget("${_picture.likeAmount}"),
+                                Link("${_picture.likeAmount}"),
                                 TextWidget("人喜欢")
                               ])),
                         ],

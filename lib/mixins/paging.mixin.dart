@@ -12,13 +12,13 @@ import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/image_ink.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/picture.widget.dart';
-import 'package:zeongitbeautyflutter/widget/btn/follow_btn.widget.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/image_ink.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/picture.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 abstract class RefreshAbstract<T extends StatefulWidget> extends State<T> {
   RefreshController refreshController;
@@ -107,7 +107,7 @@ abstract class PagePictureAbstract<T extends StatefulWidget>
     extends PagingAbstract<T, PictureEntity, PagePictureEntity> {
   Widget emptyWidget();
 
-  TipsPageCardWidget buildEmptyType();
+  TipsPageCard buildEmptyType();
 }
 
 mixin PagePictureMixin<T extends StatefulWidget> on State<T>
@@ -141,7 +141,7 @@ mixin PagePictureMixin<T extends StatefulWidget> on State<T>
           if (picture.width != 0 && picture.height != 0) {
             aspectRatio = picture.width / picture.height;
           }
-          return ImageInkWidget(
+          return ImageInk(
               child: AspectRatio(
                   aspectRatio: aspectRatio,
                   child: PictureWidget(
@@ -198,7 +198,7 @@ abstract class PageUserAbstract<T extends StatefulWidget>
     extends PagingAbstract<T, UserInfoEntity, PageUserInfoEntity> {
   Widget emptyWidget();
 
-  TipsPageCardWidget buildEmptyType();
+  TipsPageCard buildEmptyType();
 }
 
 mixin PageUserMixin<T extends StatefulWidget> on State<T>

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:zeongitbeautyflutter/assets/model/dto.model.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/popup_container.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
+import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 
 final _gap = StyleConfig.gap * 6;
 

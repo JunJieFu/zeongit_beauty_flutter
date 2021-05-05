@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/constant/enum.constant.dart';
+import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/plugins/util/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
+import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowBtn extends StatelessWidget {
   FollowBtn({Key key, @required this.user, @required this.callback})

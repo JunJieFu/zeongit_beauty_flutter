@@ -1,7 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
-import 'package:zeongitbeautyflutter/plugins/constant/status.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/status.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
 class ResultUtil {
   static bool check(ResultEntity result) {

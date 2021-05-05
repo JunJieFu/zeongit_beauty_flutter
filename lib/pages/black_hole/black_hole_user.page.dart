@@ -6,11 +6,11 @@ import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/widget/btn/block_user_icon_btn.widget.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class BlackHoleUserPage extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
         currPage.meta.empty &&
         currPage.meta.first &&
         currPage.meta.last) {
-      return TipsPageCardWidget(
+      return TipsPageCard(
           icon: MdiIcons.account_outline, title: "没有屏蔽用户");
     } else {
       return ListView.builder(
@@ -75,7 +75,7 @@ class _BlackHoleUserPageState extends State<BlackHoleUserPage>
                           child: Text(user.nickname),
                         ),
                       ),
-                      BlockUserIconBtnWidget(
+                      BlockUserIconBtn(
                         user: user,
                         callback: (user, int state) {
                           setState(() {

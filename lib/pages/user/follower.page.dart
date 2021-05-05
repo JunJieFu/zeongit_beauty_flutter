@@ -5,8 +5,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class FollowerPage extends StatefulWidget {
   FollowerPage({Key key, @required this.id}) : super(key: key);
@@ -47,6 +47,6 @@ class _FollowerPageState extends State<FollowerPage>
       FollowerService.pagingFollower(pageable, widget.id);
 
   @override
-  TipsPageCardWidget buildEmptyType() =>
-      TipsPageCardWidget(icon: MdiIcons.account_heart_outline, title: "没有粉丝");
+  TipsPageCard buildEmptyType() =>
+      TipsPageCard(icon: MdiIcons.account_heart_outline, title: "没有粉丝");
 }

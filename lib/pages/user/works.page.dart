@@ -6,8 +6,8 @@ import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class WorksPage extends StatefulWidget {
   WorksPage({Key key, @required this.id}) : super(key: key);
@@ -50,8 +50,8 @@ class _WorksPageState extends State<WorksPage>
       WorksService.paging(pageable, widget.id);
 
   @override
-  TipsPageCardWidget buildEmptyType() {
-    return TipsPageCardWidget(
+  TipsPageCard buildEmptyType() {
+    return TipsPageCard(
         icon: MdiIcons.image_outline, title: "没有作品", text: "可以上传一些作品到我们哦。");
   }
 }

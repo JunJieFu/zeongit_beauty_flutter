@@ -4,15 +4,15 @@ import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/fragment/about.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/upload.page.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/background.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/text.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/title.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/background.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/btn/share_user_icon_btn.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class MorePage extends StatefulWidget {
   MorePage({Key key}) : super(key: key);

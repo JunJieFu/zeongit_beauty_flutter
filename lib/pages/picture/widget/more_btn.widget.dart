@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/pages/picture/widget/black_hole_dialog.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widget/popup_container.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
-import 'package:zeongitbeautyflutter/widget/popup.fun.dart';
+import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class MoreBtn extends StatelessWidget {
   MoreBtn({Key key, @required this.picture, @required this.callback})

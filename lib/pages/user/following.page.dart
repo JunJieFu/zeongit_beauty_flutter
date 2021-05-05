@@ -5,8 +5,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class FollowingPage extends StatefulWidget {
   FollowingPage({Key key, @required this.id}) : super(key: key);
@@ -43,8 +43,8 @@ class FollowingPageState extends State<FollowingPage>
   }
 
   @override
-  TipsPageCardWidget buildEmptyType() =>
-      TipsPageCardWidget(icon: MdiIcons.account_star_outline, title: "没有关注");
+  TipsPageCard buildEmptyType() =>
+      TipsPageCard(icon: MdiIcons.account_star_outline, title: "没有关注");
 
   @override
   Future<ResultEntity<PageUserInfoEntity>> dao() =>

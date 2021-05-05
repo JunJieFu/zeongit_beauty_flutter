@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zeongitbeautyflutter/plugins/style/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
-class CardTitleWidget extends StatelessWidget {
-  CardTitleWidget({Key key, this.child}) : super(key: key);
+class CardTitle extends StatelessWidget {
+  CardTitle({Key key, this.child}) : super(key: key);
 
   final Widget child;
 
@@ -15,8 +15,8 @@ class CardTitleWidget extends StatelessWidget {
   }
 }
 
-class CardTextWidget extends StatelessWidget {
-  CardTextWidget({
+class CardText extends StatelessWidget {
+  CardText({
     Key key,
     this.child
   }) : super(key: key);

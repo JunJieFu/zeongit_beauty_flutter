@@ -5,8 +5,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
-import 'package:zeongitbeautyflutter/plugins/style/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/widget/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class CollectionPage extends StatefulWidget {
   CollectionPage({Key key, @required this.id}) : super(key: key);
@@ -47,8 +47,8 @@ class CollectionPageState extends State<CollectionPage>
       CollectionService.paging(pageable, widget.id);
 
   @override
-  TipsPageCardWidget buildEmptyType() {
-    return TipsPageCardWidget(
+  TipsPageCard buildEmptyType() {
+    return TipsPageCard(
         icon: MdiIcons.star_outline,
         title: "没有作品",
         text: "您可以前往发现浏览一些系统推荐给您的作品哦。");
