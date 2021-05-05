@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following_new.page.dart';
+import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
@@ -21,8 +22,7 @@ class ConvenientTabPageState extends State<ConvenientTabPage>
       GlobalKey<FollowingNewPageState>();
   GlobalKey<CollectionPageState> collectionPageKey =
       GlobalKey<CollectionPageState>();
-  GlobalKey<FollowingPageState> followingPageKey =
-      GlobalKey<FollowingPageState>();
+  var _followingController = CustomRefreshController();
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class ConvenientTabPageState extends State<ConvenientTabPage>
               children: [
                 FollowingNewPage(key: followingNewPageKey),
                 CollectionPage(key: collectionPageKey, id: userState.info.id),
-                FollowingPage(key: followingPageKey, id: userState.info.id),
+                FollowingPage(controller: _followingController, id: userState.info.id),
               ],
             ));
       }
@@ -86,6 +86,6 @@ class ConvenientTabPageState extends State<ConvenientTabPage>
     if (_tabController.index == 1)
       collectionPageKey?.currentState?.externalRefresh();
     if (_tabController.index == 2)
-      followingPageKey?.currentState?.externalRefresh();
+      _followingController.refresh();
   }
 }
