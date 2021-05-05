@@ -7,8 +7,8 @@ import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
-class MoreBtn extends StatelessWidget {
-  MoreBtn({Key key, @required this.picture, @required this.callback})
+class MoreIconBtn extends StatelessWidget {
+  MoreIconBtn({Key key, @required this.picture, @required this.callback})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
@@ -35,16 +35,18 @@ class MoreBtn extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        ListTile(title: Text("屏蔽"), onTap: () {
-                          Navigator.of(context).pop(this);
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return BlackHoleDialogWidget(
-                                  id: picture.id,
-                                );
-                              });
-                        }),
+                        ListTile(
+                            title: Text("屏蔽"),
+                            onTap: () {
+                              Navigator.of(context).pop(this);
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) {
+                                    return BlackHoleDialogWidget(
+                                      id: picture.id,
+                                    );
+                                  });
+                            }),
                         Divider(height: 1),
                         ListTile(
                           title: Text("举报"),
@@ -57,7 +59,7 @@ class MoreBtn extends StatelessWidget {
             ),
           );
         } else {
-          popupSignIn("想要关注这个画师？", "请先登录，然后才能成为该画师的粉丝。", context, _btnKey);
+          popupSignIn("想要关于绘画的更多操作？", "请先登录，然后才能获取更多绘画操作。", context, _btnKey);
         }
       },
     );

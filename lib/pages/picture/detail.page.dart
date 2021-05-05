@@ -7,7 +7,6 @@ import 'package:zeongitbeautyflutter/assets/service/index.dart';
 import 'package:zeongitbeautyflutter/mixins/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
-import 'package:zeongitbeautyflutter/pages/picture/widget/more_btn.widget.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/status.constant.dart';
@@ -23,6 +22,7 @@ import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
 
 class DetailPage extends StatefulWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -217,7 +217,7 @@ class _ViewState extends State<_View> {
                     icon: Icon(MdiIcons.share_outline),
                     onPressed: () {},
                   ),
-                  MoreBtn(
+                  MoreIconBtn(
                     picture: _picture,
                     callback: () {},
                   )
