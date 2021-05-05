@@ -1,57 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
+import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
+import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class WorksPage extends StatefulWidget {
-  WorksPage({Key key, @required this.id}) : super(key: key);
+class WorksPage extends HookWidget {
+  WorksPage({Key key, @required this.id, this.controller}) : super(key: key);
 
   final int id;
 
-  @override
-  _WorksPageState createState() => _WorksPageState();
-}
+  final CustomRefreshController controller;
 
-class _WorksPageState extends State<WorksPage>
-    with
-        AutomaticKeepAliveClientMixin,
-        RefreshMixin,
-        PagingMixin<WorksPage, PictureEntity, PagePictureEntity>,
-        PagePictureMixin {
-  PageableEntity pageable = PageableEntity(sort: "updateDate,desc");
-
-  @override
-  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return Scaffold(
-        body: SmartRefresher(
-      controller: refreshController,
-      enablePullDown: true,
-      enablePullUp: currPage != null && !currPage.meta.last,
-      onRefresh: refresh,
-      onLoading: () async {
-        await changePage(currPage.meta.currentPage + 1);
-      },
-      child: emptyWidget(),
-    ));
-  }
+    var pagingHookResult = usePaging<PictureEntity, PagePictureEntity>(
+        context,
+            (pageable) =>
+                WorksService.paging(pageable, id));
 
-  @override
-  Future<ResultEntity<PagePictureEntity>> dao() =>
-      WorksService.paging(pageable, widget.id);
+    var refreshController = pagingHookResult.refreshController;
+    var list = pagingHookResult.list;
+    var currPage = pagingHookResult.currPage;
+    var refresh = pagingHookResult.refresh;
+    var changePage = pagingHookResult.changePage;
 
-  @override
-  TipsPageCard buildEmptyType() {
-    return TipsPageCard(
-        icon: MdiIcons.image_outline, title: "没有作品", text: "可以上传一些作品到我们哦。");
+    controller?.refresh = () {
+      refreshController.value
+          .requestRefresh(duration: const Duration(milliseconds: 200));
+    };
+
+    return KeepAliveClient(
+      child: Scaffold(
+          body: PagePicture(
+            currPage: currPage.value,
+            list: list.value,
+            refreshController: refreshController.value,
+            refresh: refresh,
+            changePage: changePage,
+            emptyChild: TipsPageCard(
+                icon: MdiIcons.image_outline, title: "没有作品", text: "可以上传一些作品到我们哦。"),
+          )),
+    );
   }
 }

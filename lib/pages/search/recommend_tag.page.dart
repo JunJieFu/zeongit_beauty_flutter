@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/paging.mixin.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
+import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
-class RecommendTagPage extends StatefulWidget {
-  RecommendTagPage({Key key}) : super(key: key);
+class RecommendTagPage extends HookWidget {
+  RecommendTagPage({Key key, this.controller}) : super(key: key);
 
-  @override
-  RecommendTagPageState createState() => RecommendTagPageState();
-}
+  final CustomRefreshController controller;
 
-class RecommendTagPageState extends State<RecommendTagPage>
-    with AutomaticKeepAliveClientMixin, RefreshMixin {
-  List<TagFrequencyEntity> _recommendTagList;
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    var recommendTagList = useState<List<TagFrequencyEntity>>([]);
+
+    Future<void> _listTagTop30() async {
+      var result = await TagService.listTagTop30();
+      recommendTagList.value = result.data;
+      _refreshController.refreshCompleted();
+      return;
+    }
+
+    controller?.refresh = () {
+      _refreshController
+          .requestRefresh(duration: const Duration(milliseconds: 200));
+    };
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -29,13 +40,13 @@ class RecommendTagPageState extends State<RecommendTagPage>
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                _search();
+                _search(context);
               },
             )
           ],
         ),
         body: SmartRefresher(
-          controller: refreshController,
+          controller: _refreshController,
           enablePullDown: true,
           enablePullUp: false,
           onRefresh: _listTagTop30,
@@ -47,7 +58,7 @@ class RecommendTagPageState extends State<RecommendTagPage>
                 child: Wrap(
                     spacing: StyleConfig.gap * 2,
                     runSpacing: -StyleConfig.gap,
-                    children: _recommendTagList
+                    children: recommendTagList.value
                             ?.map((e) => ActionChip(
                                 label: Text(e.name),
                                 onPressed: () {
@@ -64,19 +75,7 @@ class RecommendTagPageState extends State<RecommendTagPage>
         ));
   }
 
-  @override
-  bool get wantKeepAlive => true;
-
-  Future<void> _listTagTop30() async {
-    var result = await TagService.listTagTop30();
-    setState(() {
-      _recommendTagList = result.data;
-    });
-    refreshController.refreshCompleted();
-    return;
-  }
-
-  _search() {
+  _search(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return SearchPage();
     }));

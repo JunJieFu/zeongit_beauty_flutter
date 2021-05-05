@@ -19,7 +19,7 @@ PagingHookResult<M, P> usePaging<M, P extends dynamic>(BuildContext context,
   var currPage = useState<P>(null);
   var list = useState<List<M>>([]);
   PageableEntity pageable =
-      buildPageable != null ? buildPageable() : PageableEntity(limit: 2);
+      buildPageable != null ? buildPageable() : PageableEntity();
 
   Future<void> paging() async {
     if (loading) return;

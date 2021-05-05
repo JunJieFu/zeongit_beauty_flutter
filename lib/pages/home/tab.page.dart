@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/convenient_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/more.page.dart';
@@ -8,40 +9,42 @@ import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/lazy_indexed_stack.widget.dart';
 
-class TabPage extends StatefulWidget {
+class TabPage extends HookWidget {
   TabPage({Key key}) : super(key: key);
 
-  @override
-  _TabPageState createState() => _TabPageState();
-}
+  final _tabList = [
+    Tab(
+        text: "发现",
+        icon: Icon(MdiIcons.compass),
+        iconMargin: EdgeInsets.all(0)),
+    Tab(
+        text: "最新",
+        icon: Icon(MdiIcons.alpha_n_box_outline),
+        iconMargin: EdgeInsets.all(0)),
+    Tab(text: "速览", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
+    Tab(text: "搜索", icon: Icon(Icons.search), iconMargin: EdgeInsets.all(0)),
+    Tab(
+        text: "更多",
+        icon: Icon(MdiIcons.dots_horizontal),
+        iconMargin: EdgeInsets.all(0))
+  ];
 
-class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
-  TabController _tabController;
-  var _findPageController = CustomRefreshController();
-  var _newPageController = CustomRefreshController();
-  GlobalKey<ConvenientTabPageState> _convenientPageStateKey =
-      GlobalKey<ConvenientTabPageState>();
-  GlobalKey<RecommendTagPageState> _tagPageStateKey =
-      GlobalKey<RecommendTagPageState>();
-  var _tabIndex = 0;
-  DateTime _preTime;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: 5,
-      vsync: this, //动画效果的异步处理，默认格式，背下来即可
-    );
-  }
+  final _findPageController = CustomRefreshController();
+  final _newPageController = CustomRefreshController();
+  final _tagPageController = CustomRefreshController();
+  final _convenientPageController = CustomRefreshController();
 
   @override
   Widget build(BuildContext context) {
+    var tabController = useTabController(initialLength: _tabList.length);
+
+    var preTime = useState<DateTime>(null);
+    var tabIndex = useState(0);
     return WillPopScope(
       onWillPop: () async {
-        if (_preTime == null ||
-            DateTime.now().difference(_preTime) > Duration(seconds: 2)) {
-          _preTime = DateTime.now();
+        if (preTime.value == null ||
+            DateTime.now().difference(preTime.value) > Duration(seconds: 2)) {
+          preTime.value = DateTime.now();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: Duration(seconds: 1),
             content: Text("再一次返回退出！"),
@@ -53,16 +56,16 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
       },
       child: Scaffold(
           body: LazyIndexedStack(
-            index: _tabIndex,
+            index: tabIndex.value,
             itemBuilder: (c, i) {
               if (i == 0)
                 return FindPage(controller: _findPageController);
               else if (i == 1)
                 return NewPage(controller: _newPageController);
               else if (i == 2)
-                return ConvenientTabPage(key: _convenientPageStateKey);
+                return ConvenientTabPage(controller: _convenientPageController);
               else if (i == 3)
-                return RecommendTagPage(key: _tagPageStateKey);
+                return RecommendTagPage(controller: _tagPageController);
               else
                 return MorePage();
             },
@@ -73,14 +76,12 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
             child: BottomAppBar(
                 child: TabBar(
                     labelStyle: TextStyle(fontSize: 12),
-                    tabs: _buildTabList(),
-                    controller: _tabController,
+                    tabs: _tabList,
+                    controller: tabController,
                     indicatorColor: Colors.transparent,
                     onTap: (int index) {
-                      setState(() {
-                        _tabIndex = index;
-                      });
-                      if (!_tabController.indexIsChanging) {
+                      tabIndex.value = index;
+                      if (!tabController.indexIsChanging) {
                         switch (index) {
                           case 0:
                             {
@@ -94,13 +95,12 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                             break;
                           case 2:
                             {
-                              _convenientPageStateKey.currentState
-                                  ?.externalRefresh();
+                              _convenientPageController.refresh();
                             }
                             break;
                           case 3:
                             {
-                              _tagPageStateKey.currentState?.externalRefresh();
+                              _tagPageController.refresh();
                             }
                             break;
                           default:
@@ -111,30 +111,5 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                     })),
           )),
     );
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  _buildTabList() {
-    return [
-      Tab(
-          text: "发现",
-          icon: Icon(MdiIcons.compass),
-          iconMargin: EdgeInsets.all(0)),
-      Tab(
-          text: "最新",
-          icon: Icon(MdiIcons.alpha_n_box_outline),
-          iconMargin: EdgeInsets.all(0)),
-      Tab(text: "速览", icon: Icon(MdiIcons.home), iconMargin: EdgeInsets.all(0)),
-      Tab(text: "搜索", icon: Icon(Icons.search), iconMargin: EdgeInsets.all(0)),
-      Tab(
-          text: "更多",
-          icon: Icon(MdiIcons.dots_horizontal),
-          iconMargin: EdgeInsets.all(0))
-    ];
   }
 }

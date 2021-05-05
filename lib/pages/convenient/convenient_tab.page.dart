@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
@@ -8,33 +9,24 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class ConvenientTabPage extends StatefulWidget {
-  ConvenientTabPage({Key key}) : super(key: key);
+class ConvenientTabPage extends HookWidget {
+  ConvenientTabPage({Key key, this.controller}) : super(key: key);
 
-  @override
-  ConvenientTabPageState createState() => ConvenientTabPageState();
-}
+  final CustomRefreshController controller;
 
-class ConvenientTabPageState extends State<ConvenientTabPage>
-    with TickerProviderStateMixin {
-  TabController _tabController;
-  GlobalKey<FollowingNewPageState> followingNewPageKey =
-      GlobalKey<FollowingNewPageState>();
-  GlobalKey<CollectionPageState> collectionPageKey =
-      GlobalKey<CollectionPageState>();
-  var _followingController = CustomRefreshController();
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(
-      length: 3,
-      vsync: this, //动画效果的异步处理，默认格式，背下来即可
-    );
-  }
+  final _tabList = [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
 
   @override
   Widget build(BuildContext context) {
+    var tabController = useTabController(initialLength: _tabList.length);
+    var followingNewController = CustomRefreshController();
+    var collectionController = CustomRefreshController();
+    var followingController = CustomRefreshController();
+    controller?.refresh = () {
+      if (tabController.index == 0) followingNewController.refresh();
+      if (tabController.index == 1) collectionController.refresh();
+      if (tabController.index == 2) followingController.refresh();
+    };
     return Consumer<UserState>(builder: (ctx, UserState userState, child) {
       if (userState.info == null) {
         return Scaffold(
@@ -53,39 +45,22 @@ class ConvenientTabPageState extends State<ConvenientTabPage>
               title: TabBar(
                 indicatorSize: TabBarIndicatorSize.label,
                 isScrollable: true,
-                tabs: _buildTabList(),
-                controller: _tabController,
+                tabs: _tabList,
+                controller: tabController,
               ),
               elevation: 0,
             ),
             body: TabBarView(
-              controller: _tabController,
+              controller: tabController,
               children: [
-                FollowingNewPage(key: followingNewPageKey),
-                CollectionPage(key: collectionPageKey, id: userState.info.id),
-                FollowingPage(controller: _followingController, id: userState.info.id),
+                FollowingNewPage(controller: followingNewController),
+                CollectionPage(
+                    controller: collectionController, id: userState.info.id),
+                FollowingPage(
+                    controller: followingController, id: userState.info.id),
               ],
             ));
       }
     });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  _buildTabList() {
-    return [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
-  }
-
-  externalRefresh() {
-    if (_tabController.index == 0)
-      followingNewPageKey?.currentState?.externalRefresh();
-    if (_tabController.index == 1)
-      collectionPageKey?.currentState?.externalRefresh();
-    if (_tabController.index == 2)
-      _followingController.refresh();
   }
 }
