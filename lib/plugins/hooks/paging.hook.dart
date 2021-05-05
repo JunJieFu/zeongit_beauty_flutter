@@ -74,7 +74,3 @@ class PagingHookResult<M, P extends dynamic> {
   Future<void> Function() refresh;
   Future<void> Function(int pageIndex) changePage;
 }
-
-class CustomRefreshController {
-  void Function() refresh;
-}
