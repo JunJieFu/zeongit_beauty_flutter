@@ -17,7 +17,7 @@ class NewPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var criteria = useState(SearchTune());
+    var criteria = useState(SearchPictureTune());
     criteria.value.precise = null;
     var pagingHookResult = usePaging<PictureEntity, PagePictureEntity>(
         context,

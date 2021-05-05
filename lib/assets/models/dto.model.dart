@@ -1,4 +1,4 @@
-class SearchTune {
+class SearchPictureTune {
   String tagList;
 
   String name;
@@ -19,7 +19,7 @@ class SearchTune {
 
   double endRatio;
 
-  SearchTune(
+  SearchPictureTune(
       {this.tagList,
       this.name,
       this.precise,

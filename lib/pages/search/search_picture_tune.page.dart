@@ -14,9 +14,9 @@ class SearchPictureTunePage extends StatefulWidget {
       {Key key, @required this.params, @required this.callback})
       : super(key: key);
 
-  final SearchTune params;
+  final SearchPictureTune params;
 
-  final Function(SearchTune) callback;
+  final Function(SearchPictureTune) callback;
 
   @override
   _SearchPictureTunePageState createState() => _SearchPictureTunePageState();

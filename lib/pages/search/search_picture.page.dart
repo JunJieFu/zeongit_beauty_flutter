@@ -22,7 +22,7 @@ class SearchPicturePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var criteria = useState(SearchTune());
+    var criteria = useState(SearchPictureTune());
 
     criteria.value.tagList = keyword;
     var pagingHookResult = usePaging<PictureEntity, PagePictureEntity>(
@@ -41,7 +41,7 @@ class SearchPicturePage extends HookWidget {
           .requestRefresh(duration: const Duration(milliseconds: 200));
     };
 
-    _query(SearchTune _) {
+    _query(SearchPictureTune _) {
       criteria.value = _;
       refreshController.value.requestRefresh(needMove: false);
     }

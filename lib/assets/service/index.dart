@@ -85,7 +85,7 @@ class PictureService {
   }
 
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {SearchTune criteria}) {
+      {SearchPictureTune criteria}) {
     var params = pageable.toJson();
     if (criteria?.tagList != null) {
       params["tagList"] = criteria.tagList.split(" ");
