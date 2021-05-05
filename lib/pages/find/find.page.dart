@@ -53,16 +53,16 @@ class FindPage extends HookWidget {
         appBar: AppBar(
           elevation: 0,
           title: Text("发现"),
-          actions: [
-            IconButton(
-              icon: Icon(MdiIcons.calendar_month_outline),
-              onPressed: showStartDatePicker,
-            ),
-            IconButton(
-              icon: Icon(MdiIcons.refresh),
-              onPressed: dateRefresh,
-            )
-          ],
+//          actions: [
+//            IconButton(
+//              icon: Icon(MdiIcons.calendar_month_outline),
+//              onPressed: showStartDatePicker,
+//            ),
+//            IconButton(
+//              icon: Icon(MdiIcons.refresh),
+//              onPressed: dateRefresh,
+//            )
+//          ],
         ),
         body: PagePicture(
           currPage: currPage.value,

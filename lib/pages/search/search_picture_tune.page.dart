@@ -351,7 +351,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
             padding: EdgeInsets.symmetric(vertical: _gap * 3, horizontal: _gap),
             child: SizedBox(
               width: double.infinity,
-              height: 45,
+              height: StyleConfig.buttonHeight,
               child: ElevatedButton(
                 child: Text("确定"),
                 onPressed: () {

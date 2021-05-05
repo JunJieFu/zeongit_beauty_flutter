@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/fragment/about.page.dart';
+import 'package:zeongitbeautyflutter/pages/fragment/feedback.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/upload.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
@@ -74,6 +75,11 @@ class MorePage extends StatelessWidget {
             ..._buildListTile(MdiIcons.eye_off_outline, "屏蔽设置", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return BlackHoleTabPage();
+              }));
+            }),
+            ..._buildListTile(MdiIcons.message_alert_outline, "反馈", () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return FeedbackPage();
               }));
             }),
             ..._buildListTile(MdiIcons.information_outline, "关于", () {

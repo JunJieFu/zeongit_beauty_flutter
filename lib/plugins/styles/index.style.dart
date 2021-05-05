@@ -18,4 +18,5 @@ class StyleConfig {
   static final listGap = _listGap;
   static final pictureRadius = 2.0;
   static final durationMilliseconds = 200;
+  static final buttonHeight = 46.0;
 }

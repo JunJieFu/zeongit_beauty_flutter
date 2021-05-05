@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -5,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
@@ -223,7 +225,23 @@ class _ViewState extends State<_View> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       TitleWidget(_picture.name),
-                      TextWidget("创建于${_picture.createDate}"),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              TextWidget("创建于："),
+                              TextWidget(formatDate(DateTime.parse(_picture.createDate), [yyyy, '-', mm, '-', dd])),
+                            ],
+                          ),
+                          Padding(
+                              padding:
+                              EdgeInsets.only(left: StyleConfig.gap * 6),
+                              child: Row(children: <Widget>[
+                                TextWidget("分辨率："),
+                                TextWidget("${_picture.width}×${_picture.height}")
+                              ])),
+                        ],
+                      ),
                       Row(
                         children: <Widget>[
                           Row(children: <Widget>[
@@ -273,7 +291,7 @@ class _ViewState extends State<_View> {
                 ),
               ),
             ]),
-          )
+          ),
         ],
       ));
     } else {

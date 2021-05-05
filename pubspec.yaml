@@ -45,6 +45,7 @@ dependencies:
   gallery_saver: 2.0.3
   pull_to_refresh: ^1.6.5
   flutter_hooks: ^0.16.0
+  date_format: ^2.0.2
 #  md2_tab_indicator: 1.0.2
 #  extended_nested_scroll_view: 3.0.0
 #  flutter_easyrefresh: 2.2.1

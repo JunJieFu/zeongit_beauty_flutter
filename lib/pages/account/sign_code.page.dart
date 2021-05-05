@@ -61,7 +61,7 @@ class SignCodePageState extends State<SignCodePage> {
                     padding: EdgeInsets.only(bottom: _gap),
                     child: SizedBox(
                       width: double.infinity,
-                      height: 45,
+                      height: StyleConfig.buttonHeight,
                       child: ElevatedButton(
                         child: _loading
                             ? Row(
