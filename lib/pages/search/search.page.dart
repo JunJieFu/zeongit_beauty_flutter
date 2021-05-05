@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 
-class SearchPage extends StatefulWidget {
-  SearchPage({Key key}) : super(key: key);
-
-  @override
-  _SearchPageState createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  TextEditingController _keywordController = TextEditingController();
-
-  _search() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      return SearchTabPage(keyword: _keywordController.text);
-    }));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
+class SearchPage extends HookWidget {
+  SearchPage({Key key, this.keyword, this.index}) : super(key: key);
+  final String keyword;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    var keywordController = useTextEditingController();
+    keywordController.text = keyword;
+    _search() {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        return SearchTabPage(
+          keyword: keywordController.text,
+          index: index,
+        );
+      }));
+    }
+
     return Scaffold(
         appBar: AppBar(
       elevation: 1,
       title: TextField(
           autofocus: true,
-          controller: _keywordController,
+          controller: keywordController,
           decoration: InputDecoration(
             hintText: "搜索",
             border: InputBorder.none,
@@ -46,11 +42,5 @@ class _SearchPageState extends State<SearchPage> {
         )
       ],
     ));
-  }
-
-  @override
-  void dispose() {
-    _keywordController.dispose();
-    super.dispose();
   }
 }

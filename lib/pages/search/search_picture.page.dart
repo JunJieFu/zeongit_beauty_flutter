@@ -4,6 +4,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_picture_tune.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
@@ -52,9 +53,16 @@ class SearchPicturePage extends HookWidget {
         children: [
           AppBar(
             automaticallyImplyLeading: false,
-            title: Text(
-              criteria.value.tagList,
-              style: TextStyle(fontSize: 18),
+            title: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return SearchPage(keyword: keyword, index: 0);
+                }));
+              },
+              child: Text(
+                criteria.value.tagList,
+                style: TextStyle(fontSize: 18),
+              ),
             ),
             actions: <Widget>[
               IconButton(
@@ -69,7 +77,7 @@ class SearchPicturePage extends HookWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 56),
+            padding: const EdgeInsets.only(top: kToolbarHeight),
             child: PagePicture(
               currPage: currPage.value,
               list: list.value,

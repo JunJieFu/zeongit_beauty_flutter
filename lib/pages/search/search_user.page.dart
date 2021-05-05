@@ -4,6 +4,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
@@ -41,14 +42,21 @@ class SearchUserPage extends HookWidget {
       child: Scaffold(
           body: Stack(
         children: [
-          AppBar(
-              automaticallyImplyLeading: false,
-              title: Text(
-                criteria.value.nicknameList,
-                style: TextStyle(fontSize: 18),
-              )),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return SearchPage(keyword: keyword, index: 1);
+              }));
+            },
+            child: AppBar(
+                automaticallyImplyLeading: false,
+                title: Text(
+                  criteria.value.nicknameList,
+                  style: TextStyle(fontSize: 18),
+                )),
+          ),
           Padding(
-            padding: const EdgeInsets.only(top: 56),
+            padding: const EdgeInsets.only(top: kToolbarHeight),
             child: PageUser(
               currPage: currPage.value,
               list: list.value,
