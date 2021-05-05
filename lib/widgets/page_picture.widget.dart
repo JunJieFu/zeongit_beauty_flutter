@@ -5,7 +5,7 @@ import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
+import 'package:zeongitbeautyflutter/pages/picture/detail_tab_view.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/image_ink.widget.dart';
@@ -55,7 +55,7 @@ class PagePicture extends StatelessWidget {
                   )),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return DetailPage(id: picture.id);
+                  return DetailTabViewPage(list:list.map((it)=>it.id).toList(),index:index);
                 }));
               },
               onLongPress: () {
