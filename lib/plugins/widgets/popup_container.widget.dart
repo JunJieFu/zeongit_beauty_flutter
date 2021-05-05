@@ -93,7 +93,7 @@ class PopupContainerRoute extends PopupRoute {
   }
 }
 
-class PopupContainer extends StatefulWidget {
+class PopupContainer extends StatelessWidget {
   const PopupContainer({
     Key key,
     this.child,
@@ -107,38 +107,22 @@ class PopupContainer extends StatefulWidget {
 
   final Offset offset;
 
-  @override
-  State<StatefulWidget> createState() => _PopupContainerState();
-}
-
-class _PopupContainerState extends State<PopupContainer>
-    with SingleTickerProviderStateMixin {
   ///收起弹框
   ///popup window dismiss
-  Future _dismiss(BuildContext context) async {
+  void _dismiss(BuildContext context) {
     Navigator.pop(context);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  dispose() {
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final RenderBox button =
-        widget.targetRenderKey.currentContext.findRenderObject() as RenderBox;
-    final RenderBox overlay = Overlay.of(widget.targetRenderKey.currentContext)
+        targetRenderKey.currentContext.findRenderObject() as RenderBox;
+    final RenderBox overlay = Overlay.of(targetRenderKey.currentContext)
         .context
         .findRenderObject() as RenderBox;
     final RelativeRect position = RelativeRect.fromRect(
       Rect.fromPoints(
-        button.localToGlobal(widget.offset, ancestor: overlay),
+        button.localToGlobal(offset, ancestor: overlay),
         button.localToGlobal(button.size.bottomRight(Offset.zero),
             ancestor: overlay),
       ),
@@ -149,7 +133,6 @@ class _PopupContainerState extends State<PopupContainer>
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Stack(
-            overflow: Overflow.visible,
             children: <Widget>[
               Positioned(
                 child: GestureDetector(
@@ -164,9 +147,9 @@ class _PopupContainerState extends State<PopupContainer>
               CustomSingleChildLayout(
                 delegate: _PopupWindowRouteLayout(
                   position,
-                  Directionality.of(widget.targetRenderKey.currentContext),
+                  Directionality.of(targetRenderKey.currentContext),
                 ),
-                child: widget.child,
+                child: child,
               )
             ],
           ),

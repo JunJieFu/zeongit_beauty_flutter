@@ -289,11 +289,8 @@ class _ViewState extends State<_View> {
   }
 
   GestureDetector _buildMainPicture() {
-    GlobalKey<PictureWidgetState> pictureWidgetKey =
-        GlobalKey<PictureWidgetState>();
     return GestureDetector(
       child: PictureWidget(_picture.url,
-          key: pictureWidgetKey,
           style: PictureStyle.specifiedHeight1200,
           fit: BoxFit.cover),
       onTap: () {

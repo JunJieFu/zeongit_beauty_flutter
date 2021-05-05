@@ -3,11 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/string.util.dart';
 
 enum PictureStyle {
@@ -18,7 +14,7 @@ enum PictureStyle {
   specifiedHeight1200
 }
 
-class PictureWidget extends StatefulWidget {
+class PictureWidget extends StatelessWidget {
   PictureWidget(this.url, {Key key, this.fit = BoxFit.contain, this.style})
       : super(key: key);
 
@@ -29,21 +25,15 @@ class PictureWidget extends StatefulWidget {
   final PictureStyle style;
 
   @override
-  PictureWidgetState createState() => PictureWidgetState();
-}
-
-class PictureWidgetState extends State<PictureWidget> {
-  String _completeUrl;
-
-  @override
   Widget build(BuildContext context) {
-    if (widget.url != null) {
-      _completeUrl = widget.style != null
-          ? "${ConfigConstant.QINIU_PICTURE}/${widget.url}${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(widget.style)}"
-          : "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
+    String _completeUrl;
+    if (url != null) {
+      _completeUrl = style != null
+          ? "${ConfigConstant.QINIU_PICTURE}/$url${ConfigConstant.QINIU_SEPARATOR}${StringUtil.enumToString(style)}"
+          : "${ConfigConstant.QINIU_PICTURE}/$url";
       return CachedNetworkImage(
           imageUrl: _completeUrl,
-          fit: widget.fit,
+          fit: fit,
           progressIndicatorBuilder:
               (BuildContext context, String url, DownloadProgress progress) {
             return Center(
@@ -61,24 +51,5 @@ class PictureWidgetState extends State<PictureWidget> {
   }
 
   SvgPicture _buildSvgPicture() =>
-      SvgPicture.asset("assets/images/default-picture.svg", fit: widget.fit);
-
-  void _saveStorage() async {
-    if (await PermissionUtil.storage()) {
-      final success = await GallerySaver.saveImage(_completeUrl);
-      if (success) {
-        Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
-      } else {
-        Fluttertoast.showToast(
-            msg: "保存失败",
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: StyleConfig.errorColor);
-      }
-    } else {
-      Fluttertoast.showToast(
-          msg: "保存失败",
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: StyleConfig.errorColor);
-    }
-  }
+      SvgPicture.asset("assets/images/default-picture.svg", fit: fit);
 }

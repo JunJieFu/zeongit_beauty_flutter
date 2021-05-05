@@ -1,17 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 class LazyIndexedStack extends StatefulWidget {
-  final AlignmentGeometry alignment;
-  final TextDirection textDirection;
-  final StackFit sizing;
-  final int index;
-
-  //reuse the created view
-  final bool reuse;
-
-  final int itemCount;
-  final IndexedWidgetBuilder itemBuilder;
-
   LazyIndexedStack(
       {Key key,
       this.alignment = AlignmentDirectional.topStart,
@@ -22,6 +11,14 @@ class LazyIndexedStack extends StatefulWidget {
       @required this.itemBuilder,
       this.itemCount = 0})
       : super(key: key);
+
+  final AlignmentGeometry alignment;
+  final TextDirection textDirection;
+  final StackFit sizing;
+  final int index;
+  final bool reuse;
+  final int itemCount;
+  final IndexedWidgetBuilder itemBuilder;
 
   @override
   _LazyIndexedStackState createState() => _LazyIndexedStackState();
@@ -62,7 +59,6 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
         }
       }
     }
-
     super.didUpdateWidget(oldWidget);
   }
 
