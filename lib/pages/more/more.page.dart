@@ -14,26 +14,11 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class MorePage extends StatefulWidget {
+class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
   @override
-  _MorePageState createState() => _MorePageState();
-}
-
-class _MorePageState extends State<MorePage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Consumer<UserState>(builder: (ctx, UserState userState, child) {
       if (userState.info == null) {
         return SignInPageCardWidget(
@@ -97,7 +82,7 @@ class _MorePageState extends State<MorePage>
               }));
             }),
             ..._buildListTile(MdiIcons.logout, "登出", () {
-              _signOut(userState);
+              _signOut(context, userState);
             }),
             Divider(),
           ],
@@ -139,7 +124,7 @@ class _MorePageState extends State<MorePage>
     ];
   }
 
-  _signOut(userState) {
+  _signOut(BuildContext context, userState) {
     showDialog(
         context: context,
         builder: (ctx) {

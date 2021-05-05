@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class UploadPage extends StatefulWidget {
+class UploadPage extends StatelessWidget {
   UploadPage({Key key}) : super(key: key);
 
-  @override
-  _UploadPageState createState() => _UploadPageState();
-}
-
-class _UploadPageState extends State<UploadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
