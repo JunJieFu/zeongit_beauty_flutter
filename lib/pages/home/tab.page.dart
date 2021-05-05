@@ -4,6 +4,7 @@ import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/more.page.dart';
 import 'package:zeongitbeautyflutter/pages/new/new.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/recommend_tag.page.dart';
+import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/lazy_indexed_stack.widget.dart';
 
@@ -16,8 +17,8 @@ class TabPage extends StatefulWidget {
 
 class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
   TabController _tabController;
-  GlobalKey<FindPageState> _findPageStateKey = GlobalKey<FindPageState>();
-  GlobalKey<NewPageState> _newPageStateKey = GlobalKey<NewPageState>();
+  var _findPageController = CustomRefreshController();
+  var _newPageController = CustomRefreshController();
   GlobalKey<ConvenientTabPageState> _convenientPageStateKey =
       GlobalKey<ConvenientTabPageState>();
   GlobalKey<RecommendTagPageState> _tagPageStateKey =
@@ -55,9 +56,9 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
             index: _tabIndex,
             itemBuilder: (c, i) {
               if (i == 0)
-                return FindPage(key: _findPageStateKey);
+                return FindPage(controller: _findPageController);
               else if (i == 1)
-                return NewPage(key: _newPageStateKey);
+                return NewPage(controller: _newPageController);
               else if (i == 2)
                 return ConvenientTabPage(key: _convenientPageStateKey);
               else if (i == 3)
@@ -83,12 +84,12 @@ class _TabPageState extends State<TabPage> with TickerProviderStateMixin {
                         switch (index) {
                           case 0:
                             {
-                              _findPageStateKey.currentState?.externalRefresh();
+                              _findPageController.refresh();
                             }
                             break;
                           case 1:
                             {
-                              _newPageStateKey.currentState?.externalRefresh();
+                              _newPageController.refresh();
                             }
                             break;
                           case 2:

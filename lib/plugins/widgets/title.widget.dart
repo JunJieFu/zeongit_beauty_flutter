@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TitleWidget extends StatelessWidget {
   TitleWidget(
-      this.text, {
-        Key key,
-      }) : super(key: key);
+    this.text, {
+    Key key,
+  }) : super(key: key);
 
   final String text;
 

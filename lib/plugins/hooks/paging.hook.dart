@@ -1,19 +1,25 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 
+typedef RefreshControllerCallback = RefreshController Function();
+typedef PageableEntityCallback = PageableEntity Function();
+
 PagingHookResult<M, P> usePaging<M, P extends dynamic>(BuildContext context,
     Future<ResultEntity<P>> Function(PageableEntity pageable) dao,
-    {RefreshController Function() buildController}) {
+    {RefreshControllerCallback buildController,
+    PageableEntityCallback buildPageable}) {
   var refreshController = useState(buildController != null
       ? buildController()
       : RefreshController(initialRefresh: true));
   bool loading = false;
   var currPage = useState<P>(null);
   var list = useState<List<M>>([]);
-  PageableEntity pageable = PageableEntity(limit: 2);
+  PageableEntity pageable =
+      buildPageable != null ? buildPageable() : PageableEntity(limit: 6);
 
   Future<void> paging() async {
     if (loading) return;
