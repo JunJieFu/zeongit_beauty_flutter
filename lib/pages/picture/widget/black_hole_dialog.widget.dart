@@ -1,36 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/mixins/future_builder_mixin.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart';
 
-class BlackHoleDialogWidget extends StatefulWidget {
+class BlackHoleDialogWidget extends HookWidget {
   BlackHoleDialogWidget({Key key, @required this.id}) : super(key: key);
 
   final int id;
 
-  @override
-  _BlackHoleDialogWidgetState createState() => _BlackHoleDialogWidgetState();
-}
-
-class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget>
-    with FutureBuilderMixin<BlackHoleDialogWidget, BlackHoleEntity> {
-  @override
-  Future<ResultEntity<BlackHoleEntity>> fetchData() async {
-    return await PictureBlackHoleService.get(widget.id);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return futureBuilder();
-  }
-
-  _buildLoading() {
+  _buildLoading(BuildContext context) {
     return AlertDialog(
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -52,16 +36,28 @@ class _BlackHoleDialogWidgetState extends State<BlackHoleDialogWidget>
     );
   }
 
-  @override
-  Widget buildError(BuildContext context) => _buildLoading();
-
-  @override
-  Widget buildMain(BuildContext context, ResultEntity<BlackHoleEntity> result) {
-    return _View(blackHole: source);
+  _buildMain(BuildContext context, ResultEntity<BlackHoleEntity> result) {
+    return _View(blackHole: result.data);
   }
 
+  _buildError(BuildContext context) => _buildLoading(context);
+
   @override
-  Widget buildSkeleton(BuildContext context) => _buildLoading();
+  Widget build(BuildContext context) {
+    Widget widget = _buildLoading(context);
+
+    var snapshot =
+        useFuture<ResultEntity<BlackHoleEntity>>(useMemoized(() async {
+      await Future.delayed(Duration(milliseconds: 500));
+      return PictureBlackHoleService.get(id);
+    }), initialData: null);
+    if (snapshot.hasData) {
+      widget = _buildMain(context, snapshot.data);
+    } else {
+      widget = _buildError(context);
+    }
+    return widget;
+  }
 }
 
 class _View extends StatefulWidget {

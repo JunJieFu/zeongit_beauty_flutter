@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_view/photo_view.dart';
@@ -11,27 +12,37 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 
-class ViewPage extends StatefulWidget {
+class ViewPage extends HookWidget {
   ViewPage(this.url, {Key key}) : super(key: key);
 
   final String url;
 
   @override
-  ViewPageState createState() => ViewPageState();
-}
-
-class ViewPageState extends State<ViewPage> {
-  String _completeUrl;
-
-  @override
-  void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _completeUrl = "${ConfigConstant.QINIU_PICTURE}/${widget.url}";
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    final completeUrl = "${ConfigConstant.QINIU_PICTURE}/$url";
+    saveStorage() async {
+      if (await PermissionUtil.storage()) {
+        final success = await GallerySaver.saveImage(completeUrl);
+        if (success) {
+          Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
+        } else {
+          Fluttertoast.showToast(
+              msg: "保存失败",
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: StyleConfig.errorColor);
+        }
+      }
+    }
+
+    selectMenu(String value) {
+      switch (value) {
+        case "save":
+          saveStorage();
+          break;
+      }
+    }
+
     return Scaffold(
         backgroundColor: Colors.black,
         extendBodyBehindAppBar: true,
@@ -46,8 +57,7 @@ class ViewPageState extends State<ViewPage> {
           ),
           actions: [
             PopupMenuButton(
-              icon: ShadowIcon(MdiIcons.dots_horizontal,
-                  color: Colors.white),
+              icon: ShadowIcon(MdiIcons.dots_horizontal, color: Colors.white),
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(
@@ -56,12 +66,12 @@ class ViewPageState extends State<ViewPage> {
                   ),
                 ];
               },
-              onSelected: _selectMenu,
+              onSelected: selectMenu,
             )
           ],
         ),
         body: PhotoView(
-          imageProvider: CachedNetworkImageProvider(_completeUrl),
+          imageProvider: CachedNetworkImageProvider(completeUrl),
           loadingBuilder: (BuildContext context, ImageChunkEvent event) {
             return Center(
               child: Container(
@@ -70,27 +80,5 @@ class ViewPageState extends State<ViewPage> {
             );
           },
         ));
-  }
-
-  _selectMenu(String value) {
-    switch (value) {
-      case "save":
-        _saveStorage();
-        break;
-    }
-  }
-
-  _saveStorage() async {
-    if (await PermissionUtil.storage()) {
-      final success = await GallerySaver.saveImage(_completeUrl);
-      if (success) {
-        Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
-      } else {
-        Fluttertoast.showToast(
-            msg: "保存失败",
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: StyleConfig.errorColor);
-      }
-    }
   }
 }

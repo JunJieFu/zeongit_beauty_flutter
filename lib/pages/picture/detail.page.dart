@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
@@ -24,42 +25,12 @@ import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
 
-class DetailPage extends StatefulWidget {
+class DetailPage extends HookWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
 
   final int id;
 
-  @override
-  _DetailPageState createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage>
-    with FutureBuilderMixin<DetailPage, PictureEntity> {
-  Future<ResultEntity<PictureEntity>> fetchData() async {
-    await Future.delayed(Duration(milliseconds: 500));
-    return await PictureService.get(widget.id);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    try {
-      FootprintService.save(widget.id);
-    } catch (e) {}
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return futureBuilder();
-  }
-
-  @override
-  Widget buildMain(BuildContext context, ResultEntity<PictureEntity> result) {
-    return _View(pictureResult: result);
-  }
-
-  @override
-  Scaffold buildSkeleton(BuildContext context) {
+  _buildLoading(BuildContext context) {
     var queryData = MediaQuery.of(context);
     var pageGap = StyleConfig.gap * 3;
     return Scaffold(
@@ -130,8 +101,27 @@ class _DetailPageState extends State<DetailPage>
     ));
   }
 
+  _buildMain(BuildContext context, ResultEntity<PictureEntity> result) {
+    return _View(pictureResult: result);
+  }
+
+  _buildError(BuildContext context) => _buildLoading(context);
+
   @override
-  Widget buildError(BuildContext context) => buildSkeleton(context);
+  Widget build(BuildContext context) {
+    Widget widget = _buildLoading(context);
+
+    var snapshot = useFuture<ResultEntity<PictureEntity>>(useMemoized(() async {
+      await Future.delayed(Duration(milliseconds: 500));
+      return await PictureService.get(id);
+    }), initialData: null);
+    if (snapshot.hasData) {
+      widget = _buildMain(context, snapshot.data);
+    } else {
+      widget = _buildError(context);
+    }
+    return widget;
+  }
 }
 
 class _View extends StatefulWidget {
@@ -155,6 +145,9 @@ class _ViewState extends State<_View> {
   void initState() {
     super.initState();
     _picture = pictureResult.data;
+    try {
+      FootprintService.save(_picture.id);
+    } catch (e) {}
   }
 
   @override
@@ -284,15 +277,14 @@ class _ViewState extends State<_View> {
         ],
       ));
     } else {
-      return Container();
+      return Scaffold(body: Container());
     }
   }
 
   GestureDetector _buildMainPicture() {
     return GestureDetector(
       child: PictureWidget(_picture.url,
-          style: PictureStyle.specifiedHeight1200,
-          fit: BoxFit.cover),
+          style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return ViewPage(_picture.url);
