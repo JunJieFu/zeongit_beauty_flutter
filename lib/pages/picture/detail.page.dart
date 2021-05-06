@@ -25,6 +25,7 @@ import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/share_picture_icon_btn.dart';
 
 class DetailPage extends HookWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -207,14 +208,8 @@ class _ViewState extends State<_View> {
                           picture.focus = focus;
                         });
                       }),
-                  IconButton(
-                    icon: Icon(MdiIcons.share_outline),
-                    onPressed: () {},
-                  ),
-                  MoreIconBtn(
-                    picture: _picture,
-                    callback: () {},
-                  )
+                  SharePictureIconBtn(picture: _picture),
+                  MoreIconBtn(picture: _picture)
                 ],
               ),
               Divider(),

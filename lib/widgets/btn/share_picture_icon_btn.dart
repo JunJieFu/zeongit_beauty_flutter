@@ -2,18 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 
-class ShareUserIconBtn extends StatelessWidget {
-  ShareUserIconBtn({Key key, @required this.user, @required this.callback})
+class SharePictureIconBtn extends StatelessWidget {
+  SharePictureIconBtn(
+      {Key key, @required this.picture, @required this.callback})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
-  final UserInfoEntity user;
+  final PictureEntity picture;
 
   final Function callback;
 
@@ -36,10 +37,10 @@ class ShareUserIconBtn extends StatelessWidget {
                       children: <Widget>[
                         ListTile(
                             title: Text("链接"),
-                            onTap: () async {
+                            onTap: () {
                               Clipboard.setData(ClipboardData(
                                   text:
-                                      '${ConfigConstant.BEAUTY_HOST}/user/${user.id}'));
+                                      '${ConfigConstant.BEAUTY_HOST}/picture/${picture.id}'));
                               Fluttertoast.showToast(
                                   msg: "复制成功",
                                   gravity: ToastGravity.BOTTOM,

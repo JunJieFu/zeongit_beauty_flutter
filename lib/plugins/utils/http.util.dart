@@ -9,7 +9,7 @@ class HttpUtil {
   static Future<ResultEntity<T>> get<T>(String url,
       {Map<String, dynamic> params, String host}) async {
     if (host == null) {
-      host = ConfigConstant.BEAUTY_HOST;
+      host = ConfigConstant.BEAUTY_API_HOST;
     }
     try {
       String token = _getToken();
@@ -37,7 +37,7 @@ class HttpUtil {
   static Future<ResultEntity<T>> post<T>(String url,
       {Map<String, dynamic> params, String host}) async {
     if (host == null) {
-      host = ConfigConstant.BEAUTY_HOST;
+      host = ConfigConstant.BEAUTY_API_HOST;
     }
     try {
       String token = _getToken();

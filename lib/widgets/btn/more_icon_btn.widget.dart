@@ -9,7 +9,7 @@ import 'package:zeongitbeautyflutter/widgets/complaint.dialog.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class MoreIconBtn extends StatelessWidget {
-  MoreIconBtn({Key key, @required this.picture, @required this.callback})
+  MoreIconBtn({Key key, @required this.picture, this.callback})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 

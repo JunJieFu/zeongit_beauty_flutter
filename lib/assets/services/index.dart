@@ -18,28 +18,28 @@ class UserService {
   static Future<ResultEntity<String>> signIn(String phone, String password) {
     return HttpUtil.post("/user/signIn",
         params: {"phone": phone, "password": password},
-        host: ConfigConstant.ACCOUNT_HOST);
+        host: ConfigConstant.ACCOUNT_API_HOST);
   }
 
   static Future<ResultEntity<int>> sendCode(
       String phone, CodeTypeConstant type) {
     return HttpUtil.post("/user/sendCode",
         params: {"phone": phone, "type": type.index},
-        host: ConfigConstant.ACCOUNT_HOST);
+        host: ConfigConstant.ACCOUNT_API_HOST);
   }
 
   static Future<ResultEntity<String>> signUp(
       String code, String phone, String password) {
     return HttpUtil.post("/user/signUp",
         params: {"code": code, "phone": phone, "password": password},
-        host: ConfigConstant.ACCOUNT_HOST);
+        host: ConfigConstant.ACCOUNT_API_HOST);
   }
 
   static Future<ResultEntity<dynamic>> forgot(
       String code, String phone, String password) {
     return HttpUtil.post("/user/forgot",
         params: {"code": code, "phone": phone, "password": password},
-        host: ConfigConstant.ACCOUNT_HOST);
+        host: ConfigConstant.ACCOUNT_API_HOST);
   }
 }
 
