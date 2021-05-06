@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
-import 'package:zeongitbeautyflutter/pages/account/forgot.page.dart';
-import 'package:zeongitbeautyflutter/pages/account/sign_up.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/routes.dart';
 
 final _gap = StyleConfig.gap * 6;
-final _differenceList = {
-  CodeTypeConstant.SIGN_UP: "注册您的账号",
-  CodeTypeConstant.FORGOT: "找回您的密码"
-};
 
-class SignCodePage extends StatefulWidget {
-  SignCodePage(this.codeType, {Key key}) : super(key: key);
+class ForgetPage extends StatefulWidget {
+  ForgetPage(this.phone, {Key key}) : super(key: key);
 
-  final CodeTypeConstant codeType;
+  final String phone;
 
   @override
-  SignCodePageState createState() => SignCodePageState();
+  _ForgetPageState createState() => _ForgetPageState();
 }
 
-class SignCodePageState extends State<SignCodePage> {
-  TextEditingController _phoneController = TextEditingController();
-  FocusNode _focusNode = FocusNode();
-  bool _loading = false;
+class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
+  TextEditingController codeController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
+  FocusNode focusNode = FocusNode();
+  bool loading = false;
 
   @override
   void initState() {
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {}
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {}
     });
     super.initState();
   }
@@ -42,7 +38,7 @@ class SignCodePageState extends State<SignCodePage> {
   Widget build(BuildContext context) {
     var _userState = Provider.of<UserState>(context, listen: false);
     return Scaffold(
-        appBar: AppBar(title: Text(_differenceList[widget.codeType])),
+        appBar: AppBar(title: Text("找回您的密码")),
         body: ListView(
           children: <Widget>[
             Padding(
@@ -51,20 +47,38 @@ class SignCodePageState extends State<SignCodePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
+                    padding: EdgeInsets.only(bottom: _gap),
+                    child: IconTextField(
+                      controller: codeController,
+                      icon: MdiIcons.check,
+                      hintText: '验证码',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: _gap),
+                    child: IconTextField(
+                      controller: passwordController,
+                      icon: MdiIcons.lock,
+                      obscureText: true,
+                      hintText: '密码',
+                    ),
+                  ),
+                  Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _phoneController,
-                      icon: MdiIcons.cellphone,
-                      hintText: '手机号码',
+                      controller: rePasswordController,
+                      icon: MdiIcons.lock_check,
+                      obscureText: true,
+                      hintText: '确认密码',
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: SizedBox(
                       width: double.infinity,
-                      height: StyleConfig.buttonHeight,
+                      height: 45,
                       child: ElevatedButton(
-                        child: _loading
+                        child: loading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -78,17 +92,17 @@ class SignCodePageState extends State<SignCodePage> {
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16),
-                                    child: Text("发送中..."),
+                                    child: Text("注册登录中..."),
                                   )
                                 ],
                               )
-                            : Text("获取验证码"),
+                            : Text("确认注册并登录"),
                         onPressed: () {
-                          _send(context, _userState);
+                          _forget(context, _userState);
                         },
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             )
@@ -98,30 +112,25 @@ class SignCodePageState extends State<SignCodePage> {
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    codeController.dispose();
+    passwordController.dispose();
+    rePasswordController.dispose();
     super.dispose();
   }
 
-  _send(BuildContext context, UserState userState) async {
-    if (_loading) return;
+  _forget(BuildContext context, UserState userState) async {
+    if (loading) return;
     setState(() {
-      _loading = true;
+      loading = true;
     });
-    var result =
-        await UserService.sendCode(_phoneController.text, widget.codeType);
+    var result = await UserService.forgot(
+        codeController.text, widget.phone, passwordController.text);
     setState(() {
-      _loading = false;
+      loading = false;
     });
-    if (ResultUtil.check(result)) {
-      if (widget.codeType == CodeTypeConstant.SIGN_UP) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return SignUpPage(_phoneController.text);
-        }));
-      } else if (widget.codeType == CodeTypeConstant.FORGOT) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return ForgetPage(_phoneController.text);
-        }));
-      }
-    }
+    try {
+      await ResultUtil.check(result);
+      Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
+    } catch (e) {}
   }
 }
