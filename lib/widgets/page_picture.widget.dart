@@ -4,7 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail_tab_view.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';

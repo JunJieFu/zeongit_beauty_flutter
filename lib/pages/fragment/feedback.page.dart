@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 
 final _gap = StyleConfig.gap * 6;
 
@@ -9,6 +12,8 @@ class FeedbackPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var loading = useState(false);
+
     var emailFocusNode = useFocusNode();
     var emailController = useTextEditingController();
     var emailHasFocus = useState(false);
@@ -23,6 +28,29 @@ class FeedbackPage extends HookWidget {
     contentFocusNode.addListener(() {
       contentHasFocus.value = contentFocusNode.hasFocus;
     });
+
+    save() async {
+      final content = contentController.text;
+      final email = emailController.text;
+      if (loading.value) return;
+
+      if (content == null || content == '') {
+        Fluttertoast.showToast(
+            msg: "请输入反馈内容",
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: StyleConfig.errorColor);
+        return;
+      }
+      loading.value = true;
+      final result = await FeedbackService.save(content, email: email);
+      loading.value = false;
+      if (!ResultUtil.check(result)) return;
+      Fluttertoast.showToast(
+          msg: "提交成功",
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: StyleConfig.successColor);
+      Navigator.maybePop(context);
+    }
 
     return Scaffold(
         appBar: AppBar(title: Text("反馈")),
@@ -69,7 +97,27 @@ class FeedbackPage extends HookWidget {
             padding: EdgeInsets.fromLTRB(_gap, 0, _gap, _gap),
             child: SizedBox(
                 height: StyleConfig.buttonHeight,
-                child: ElevatedButton(onPressed: () {}, child: Text("提交"))),
+                child: ElevatedButton(
+                    onPressed: save,
+                    child: loading.value
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white),
+                                    strokeWidth: 3,
+                                  )),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: Text("提交中..."),
+                              )
+                            ],
+                          )
+                        : Text("提交"))),
           )
         ]));
   }

@@ -1,7 +1,7 @@
-
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/feedback.entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
@@ -40,8 +40,10 @@ class UserService {
         params: {"code": code, "phone": phone, "password": password},
         host: ConfigConstant.ACCOUNT_HOST);
   }
+}
 
-  static Future<ResultEntity<UserInfoEntity>> getInfo() {
+class UserInfoService {
+  static Future<ResultEntity<UserInfoEntity>> get() {
     return HttpUtil.get("/userInfo/get");
   }
 
@@ -50,10 +52,9 @@ class UserService {
   }
 
   static Future<ResultEntity<PageUserInfoEntity>> paging(
-      PageableEntity pageable,{
-        SearchUserTune criteria
-}) {
-    var params =  pageable.toJson();
+      PageableEntity pageable,
+      {SearchUserTune criteria}) {
+    var params = pageable.toJson();
     if (criteria?.nicknameList != null) {
       params["nicknameList"] = criteria.nicknameList.split(" ");
     }
@@ -271,5 +272,13 @@ class TagBlackHoleService {
   static Future<ResultEntity<PageTagBlackHoleEntity>> paging(
       PageableEntity pageable) {
     return HttpUtil.get("/tagBlackHole/paging", params: pageable.toJson());
+  }
+}
+
+class FeedbackService {
+  static Future<ResultEntity<FeedbackEntity>> save(String content,
+      {String email}) {
+    return HttpUtil.post("/feedback/save",
+        params: {"content": content, "email": email});
   }
 }

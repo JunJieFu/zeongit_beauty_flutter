@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
@@ -29,7 +29,7 @@ class UserTabPage extends HookWidget {
     Widget widget = _buildScaffold(_buildLoading());
     var controller = useTabController(initialLength: _tabList.length);
     var snapshot = useFuture<ResultEntity<UserInfoEntity>>(
-        useMemoized(() => UserService.getByTargetId(id)),
+        useMemoized(() => UserInfoService.getByTargetId(id)),
         initialData: null);
     if (snapshot.hasData) {
       widget = _buildMain(snapshot.data.data, controller);

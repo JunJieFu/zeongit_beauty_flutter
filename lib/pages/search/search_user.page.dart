@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
@@ -25,7 +25,7 @@ class SearchUserPage extends HookWidget {
     criteria.value.nicknameList = keyword;
     var pagingHookResult = usePaging<UserInfoEntity, PageUserInfoEntity>(
         context,
-        (pageable) => UserService.paging(pageable, criteria: criteria.value));
+        (pageable) => UserInfoService.paging(pageable, criteria: criteria.value));
 
     var refreshController = pagingHookResult.refreshController;
     var list = pagingHookResult.list;

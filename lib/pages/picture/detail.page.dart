@@ -7,7 +7,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';

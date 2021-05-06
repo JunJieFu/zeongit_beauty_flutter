@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';

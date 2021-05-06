@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';

@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:waterfall_flow/waterfall_flow.dart';
-import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
-import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widgets/image_ink.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widgets/picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 
 typedef ChangePageCallback = Future<void> Function(int pageIndex);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/account/sign_code.page.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';

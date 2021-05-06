@@ -11,6 +11,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/page_black_hole_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/page_user_info_entity_helper.dart';
+import 'package:zeongitbeautyflutter/assets/entity/feedback.entity.dart';
+import 'package:zeongitbeautyflutter/generated/json/feedback.entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/pagination_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -45,6 +47,8 @@ class JsonConvert<T> {
 				return pageTagBlackHoleEntityFromJson(data as PageTagBlackHoleEntity, json) as T;
 			case PageUserInfoEntity:
 				return pageUserInfoEntityFromJson(data as PageUserInfoEntity, json) as T;
+			case FeedbackEntity:
+				return feedbackEntityFromJson(data as FeedbackEntity, json) as T;
 			case Meta:
 				return metaFromJson(data as Meta, json) as T;
 			case PictureEntity:
@@ -82,6 +86,8 @@ class JsonConvert<T> {
 				return pageTagBlackHoleEntityToJson(data as PageTagBlackHoleEntity);
 			case PageUserInfoEntity:
 				return pageUserInfoEntityToJson(data as PageUserInfoEntity);
+			case FeedbackEntity:
+				return feedbackEntityToJson(data as FeedbackEntity);
 			case Meta:
 				return metaToJson(data as Meta);
 			case PictureEntity:
@@ -120,6 +126,8 @@ class JsonConvert<T> {
 			return PageTagBlackHoleEntity().fromJson(json);
 		}	else if(type == (PageUserInfoEntity).toString()){
 			return PageUserInfoEntity().fromJson(json);
+		}	else if(type == (FeedbackEntity).toString()){
+			return FeedbackEntity().fromJson(json);
 		}	else if(type == (Meta).toString()){
 			return Meta().fromJson(json);
 		}	else if(type == (PictureEntity).toString()){
@@ -158,6 +166,8 @@ class JsonConvert<T> {
 			return data.map<PageTagBlackHoleEntity>((e) => PageTagBlackHoleEntity().fromJson(e)).toList() as M;
 		}	else if(List<PageUserInfoEntity>() is M){
 			return data.map<PageUserInfoEntity>((e) => PageUserInfoEntity().fromJson(e)).toList() as M;
+		}	else if(List<FeedbackEntity>() is M){
+			return data.map<FeedbackEntity>((e) => FeedbackEntity().fromJson(e)).toList() as M;
 		}	else if(List<Meta>() is M){
 			return data.map<Meta>((e) => Meta().fromJson(e)).toList() as M;
 		}	else if(List<PictureEntity>() is M){

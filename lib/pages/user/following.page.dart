@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/service/index.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
