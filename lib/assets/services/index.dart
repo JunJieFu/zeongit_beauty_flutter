@@ -184,7 +184,8 @@ class CollectionService {
     return HttpUtil.post("/collection/focus", params: {"pictureId": pictureId});
   }
 
-  pagingUser(PageableEntity pageable, int pictureId) {
+  static Future<ResultEntity<PageUserInfoEntity>> pagingUser(
+      PageableEntity pageable, int pictureId) {
     var params = pageable.toJson();
     params["pictureId"] = pictureId;
     return HttpUtil.get("/collection/pagingUser", params: params);
@@ -212,7 +213,8 @@ class FootprintService {
     return HttpUtil.post("/footprint/save", params: {"pictureId": pictureId});
   }
 
-  pagingUser(PageableEntity pageable, int pictureId) {
+  static Future<ResultEntity<PageUserInfoEntity>> pagingUser(
+      PageableEntity pageable, int pictureId) {
     var params = pageable.toJson();
     params["pictureId"] = pictureId;
     return HttpUtil.get("/footprint/pagingUser", params: params);

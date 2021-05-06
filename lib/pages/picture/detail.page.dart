@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
+import 'package:zeongitbeautyflutter/pages/picture/detail_user_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
@@ -230,29 +229,50 @@ class _ViewState extends State<_View> {
                           Row(
                             children: [
                               TextWidget("创建于："),
-                              TextWidget(formatDate(DateTime.parse(_picture.createDate), [yyyy, '-', mm, '-', dd])),
+                              TextWidget(formatDate(
+                                  DateTime.parse(_picture.createDate),
+                                  [yyyy, '-', mm, '-', dd])),
                             ],
                           ),
                           Padding(
                               padding:
-                              EdgeInsets.only(left: StyleConfig.gap * 6),
+                                  EdgeInsets.only(left: StyleConfig.gap * 6),
                               child: Row(children: <Widget>[
                                 TextWidget("分辨率："),
-                                TextWidget("${_picture.width}×${_picture.height}")
+                                TextWidget(
+                                    "${_picture.width}×${_picture.height}")
                               ])),
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           Row(children: <Widget>[
-                            Link("${_picture.viewAmount}"),
+                            Link(
+                              "${_picture.viewAmount}",
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (_) {
+                                  return DetailUserTabPage(
+                                      picture: _picture, index: 0);
+                                }));
+                              },
+                            ),
                             TextWidget("人阅读")
                           ]),
                           Padding(
                               padding:
                                   EdgeInsets.only(left: StyleConfig.gap * 3),
                               child: Row(children: <Widget>[
-                                Link("${_picture.likeAmount}"),
+                                Link(
+                                  "${_picture.likeAmount}",
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return DetailUserTabPage(
+                                          picture: _picture, index: 1);
+                                    }));
+                                  },
+                                ),
                                 TextWidget("人喜欢")
                               ])),
                         ],
