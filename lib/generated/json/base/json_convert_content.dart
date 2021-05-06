@@ -17,6 +17,8 @@ import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/pagination_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/picture_entity_helper.dart';
+import 'package:zeongitbeautyflutter/assets/entity/complaint.entity.dart';
+import 'package:zeongitbeautyflutter/generated/json/complaint.entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/black_hole_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
@@ -53,6 +55,8 @@ class JsonConvert<T> {
 				return metaFromJson(data as Meta, json) as T;
 			case PictureEntity:
 				return pictureEntityFromJson(data as PictureEntity, json) as T;
+			case ComplaintEntity:
+				return complaintEntityFromJson(data as ComplaintEntity, json) as T;
 			case BlackHoleEntity:
 				return blackHoleEntityFromJson(data as BlackHoleEntity, json) as T;
 			case UserBlackHoleEntity:
@@ -92,6 +96,8 @@ class JsonConvert<T> {
 				return metaToJson(data as Meta);
 			case PictureEntity:
 				return pictureEntityToJson(data as PictureEntity);
+			case ComplaintEntity:
+				return complaintEntityToJson(data as ComplaintEntity);
 			case BlackHoleEntity:
 				return blackHoleEntityToJson(data as BlackHoleEntity);
 			case UserBlackHoleEntity:
@@ -132,6 +138,8 @@ class JsonConvert<T> {
 			return Meta().fromJson(json);
 		}	else if(type == (PictureEntity).toString()){
 			return PictureEntity().fromJson(json);
+		}	else if(type == (ComplaintEntity).toString()){
+			return ComplaintEntity().fromJson(json);
 		}	else if(type == (BlackHoleEntity).toString()){
 			return BlackHoleEntity().fromJson(json);
 		}	else if(type == (UserBlackHoleEntity).toString()){
@@ -172,6 +180,8 @@ class JsonConvert<T> {
 			return data.map<Meta>((e) => Meta().fromJson(e)).toList() as M;
 		}	else if(List<PictureEntity>() is M){
 			return data.map<PictureEntity>((e) => PictureEntity().fromJson(e)).toList() as M;
+		}	else if(List<ComplaintEntity>() is M){
+			return data.map<ComplaintEntity>((e) => ComplaintEntity().fromJson(e)).toList() as M;
 		}	else if(List<BlackHoleEntity>() is M){
 			return data.map<BlackHoleEntity>((e) => BlackHoleEntity().fromJson(e)).toList() as M;
 		}	else if(List<UserBlackHoleEntity>() is M){

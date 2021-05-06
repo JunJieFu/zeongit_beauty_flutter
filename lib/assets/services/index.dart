@@ -1,6 +1,7 @@
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/complaint.entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/feedback.entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
@@ -282,5 +283,12 @@ class FeedbackService {
       {String email}) {
     return HttpUtil.post("/feedback/save",
         params: {"content": content, "email": email});
+  }
+}
+
+class ComplaintService {
+  static Future<ResultEntity<ComplaintEntity>> save(int pictureId, String content) {
+    return HttpUtil.post("/complaint/save",
+        params: {"content": content, "pictureId": pictureId});
   }
 }

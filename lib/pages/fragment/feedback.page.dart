@@ -30,10 +30,9 @@ class FeedbackPage extends HookWidget {
     });
 
     save() async {
+      if (loading.value) return;
       final content = contentController.text;
       final email = emailController.text;
-      if (loading.value) return;
-
       if (content == null || content == '') {
         Fluttertoast.showToast(
             msg: "请输入反馈内容",

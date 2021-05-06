@@ -9,8 +9,8 @@ import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart';
 
-class BlackHoleDialogWidget extends HookWidget {
-  BlackHoleDialogWidget({Key key, @required this.id}) : super(key: key);
+class BlackHoleDialog extends HookWidget {
+  BlackHoleDialog({Key key, @required this.id}) : super(key: key);
 
   final int id;
 

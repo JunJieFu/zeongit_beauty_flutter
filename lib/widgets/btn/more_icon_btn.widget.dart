@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
-import 'package:zeongitbeautyflutter/pages/picture/widget/black_hole_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/widgets/black_hole_dialog.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/complaint.dialog.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class MoreIconBtn extends StatelessWidget {
@@ -42,7 +43,7 @@ class MoreIconBtn extends StatelessWidget {
                               showDialog(
                                   context: context,
                                   builder: (ctx) {
-                                    return BlackHoleDialogWidget(
+                                    return BlackHoleDialog(
                                       id: picture.id,
                                     );
                                   });
@@ -50,6 +51,16 @@ class MoreIconBtn extends StatelessWidget {
                         Divider(height: 1),
                         ListTile(
                           title: Text("举报"),
+                          onTap: () {
+                            Navigator.of(context).pop(this);
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return ComplaintDialog(
+                                    picture: picture,
+                                  );
+                                });
+                          },
                         )
                       ],
                     ),
