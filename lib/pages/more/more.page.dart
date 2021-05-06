@@ -7,6 +7,7 @@ import 'package:zeongitbeautyflutter/pages/user/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/upload.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/background.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
@@ -111,22 +112,10 @@ class MorePage extends StatelessWidget {
     return [
       Divider(height: 1),
       ListTile(
-        onTap: onTap,
-        title: Flex(
-          direction: Axis.horizontal,
-          children: <Widget>[
-            Icon(icon),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-                child: Text(title),
-              ),
-            ),
-            Icon(Icons.keyboard_arrow_right),
-          ],
-        ),
-      )
+          onTap: onTap,
+          title: buildListTileTitle(title,
+              leftIcon: icon, rightIcon: Icons.keyboard_arrow_right)
+          )
     ];
   }
 

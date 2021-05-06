@@ -168,19 +168,6 @@ class _ViewState extends State<_View> {
                 Navigator.maybePop(context);
               },
             ),
-            actions: _picture.user.id == userState.info?.id
-                ? [
-                    IconButton(
-                      icon: ShadowIcon(MdiIcons.image_edit_outline,
-                          color: Colors.white),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return EditPage(_picture, callback: (picture) {});
-                        }));
-                      },
-                    )
-                  ]
-                : [],
             elevation: 1,
             //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
             floating: false,

@@ -6,6 +6,7 @@ import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 
 class SharePictureIconBtn extends StatelessWidget {
@@ -36,7 +37,8 @@ class SharePictureIconBtn extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         ListTile(
-                            title: Text("链接"),
+                            title: buildListTileTitle("链接",
+                                leftIcon: MdiIcons.link),
                             onTap: () {
                               Clipboard.setData(ClipboardData(
                                   text:
@@ -49,7 +51,8 @@ class SharePictureIconBtn extends StatelessWidget {
                             }),
                         Divider(height: 1),
                         ListTile(
-                          title: Text("分享"),
+                          title: buildListTileTitle("分享",
+                              leftIcon: MdiIcons.share_variant),
                         )
                       ],
                     ),
