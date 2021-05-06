@@ -10,8 +10,7 @@ import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 
 class SharePictureIconBtn extends StatelessWidget {
-  SharePictureIconBtn(
-      {Key key, @required this.picture, @required this.callback})
+  SharePictureIconBtn({Key key, @required this.picture, this.callback})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 

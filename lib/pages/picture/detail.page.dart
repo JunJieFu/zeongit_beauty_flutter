@@ -26,6 +26,7 @@ import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_picture_icon_btn.dart';
+import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class DetailPage extends HookWidget {
   DetailPage({Key key, @required this.id}) : super(key: key);
@@ -297,7 +298,12 @@ class _ViewState extends State<_View> {
         ],
       ));
     } else {
-      return Scaffold(body: Container());
+      return Scaffold(
+          appBar: AppBar(title: Text("详情")),
+          body: TipsPageCard(
+              icon: MdiIcons.image_outline,
+              title: "获取图片有误",
+              text: pictureResult.message));
     }
   }
 
