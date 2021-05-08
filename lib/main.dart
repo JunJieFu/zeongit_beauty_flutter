@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/pages/home/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/theme.util.dart';
@@ -56,6 +57,7 @@ class App extends StatelessWidget {
           return RefreshConfiguration(
             headerBuilder: () => MaterialClassicHeader(
               color: primaryColor,
+              backgroundColor: themeGetxCtrl.isDark ? Theme.of(ctx).cardColor : Colors.white,
             ),
             footerBuilder: () =>
                 CustomFooter(builder: (BuildContext context, LoadStatus mode) {

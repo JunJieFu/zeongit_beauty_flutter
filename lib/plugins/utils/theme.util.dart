@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/color.util.dart';
 
 final _defaultLightThemeData = ThemeData();
