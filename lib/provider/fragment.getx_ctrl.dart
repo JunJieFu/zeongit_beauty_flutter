@@ -12,8 +12,4 @@ class FragmentGetxCtrl extends GetxController {
     StorageManager.setBool(KeyConstant.HAD_INIT, true);
     _hasInit.value = true;
   }
-
-  test() {
-    _hasInit.value = !_hasInit.value;
-  }
 }

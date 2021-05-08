@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.getx_ctrl.dart';
 
 class WelcomePage extends StatelessWidget {
-  final fragmentGetxCtrl = Get.find<FragmentGetxCtrl>();
+  final _fragmentGetxCtrl = Get.find<FragmentGetxCtrl>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class WelcomePage extends StatelessWidget {
                               side:
                                   BorderSide(color: Colors.white, width: 1.5)),
                           onPressed: () {
-                            fragmentGetxCtrl.updateHadInit();
+                            _fragmentGetxCtrl.updateHadInit();
                             Navigator.pushReplacement(context,
                                 MaterialPageRoute(builder: (_) {
                               return TabPage();

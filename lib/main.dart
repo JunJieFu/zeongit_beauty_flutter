@@ -10,6 +10,7 @@ import 'package:zeongitbeautyflutter/pages/home/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/theme.util.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/provider/theme.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
@@ -47,7 +48,9 @@ class App extends StatelessWidget {
     return Obx(
       () => GetMaterialApp(
         routes: routes,
-        theme: themeGetxCtrl.light,
+        theme: themeGetxCtrl.isDark
+            ? darkThemeData(themeGetxCtrl.primaryColor)
+            : lightThemeData(themeGetxCtrl.primaryColor),
         home: Builder(builder: (ctx) {
           var primaryColor = Theme.of(ctx).primaryColor;
           return RefreshConfiguration(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/fragment/about.page.dart';
 import 'package:zeongitbeautyflutter/pages/fragment/feedback.page.dart';
+import 'package:zeongitbeautyflutter/pages/palette.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/upload.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
@@ -88,7 +89,9 @@ class MorePage extends StatelessWidget {
               }));
             }),
             ..._buildListTile(MdiIcons.palette, "调色板", () {
-              Get.changeTheme(Get.isDarkMode? _themeGetxCtrl.light: _themeGetxCtrl.dark);
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return PalettePage();
+              }));
             }),
             ..._buildListTile(MdiIcons.information_outline, "关于", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -122,8 +125,7 @@ class MorePage extends StatelessWidget {
       ListTile(
           onTap: onTap,
           title: buildListTileTitle(title,
-              leftIcon: icon, rightIcon: Icons.keyboard_arrow_right)
-      )
+              leftIcon: icon, rightIcon: Icons.keyboard_arrow_right))
     ];
   }
 
