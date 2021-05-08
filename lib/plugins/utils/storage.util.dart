@@ -14,6 +14,10 @@ class StorageManager {
     sharedPreferences.setString(key, value);
   }
 
+  static setInt(String key, int value) {
+    sharedPreferences.setInt(key, value);
+  }
+
   static setBool(String key, bool value) {
     sharedPreferences.setBool(key, value);
   }
