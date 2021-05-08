@@ -10,7 +10,7 @@ class Link extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).primaryColor;
     return GestureDetector(
       onTap: onTap,
       child: Text(

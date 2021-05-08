@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/color.util.dart';
 
-final themeData = ThemeData();
-
-final chipTheme = themeData.chipTheme;
+final defaultThemeData = ThemeData();
 
 class ThemeGetxCtrl extends GetxController {
   final _primaryColor = Rx<Color>(StyleConfig.primaryColor);
@@ -12,7 +11,7 @@ class ThemeGetxCtrl extends GetxController {
   Color get primaryColor => _primaryColor.value;
 
   ThemeData get light => ThemeData(
-      accentColor: _primaryColor.value,
+      accentColor: lighten(_primaryColor.value, 0.08),
       platform: TargetPlatform.android,
       scaffoldBackgroundColor: Colors.white,
       primaryColor: _primaryColor.value,
@@ -34,16 +33,17 @@ class ThemeGetxCtrl extends GetxController {
               primary: _primaryColor.value,
               side: BorderSide(color: _primaryColor.value))),
       chipTheme: ChipThemeData(
-          backgroundColor: chipTheme.backgroundColor,
-          disabledColor: chipTheme.disabledColor,
-          selectedColor: chipTheme.selectedColor,
-          secondarySelectedColor: chipTheme.secondarySelectedColor,
-          labelPadding: chipTheme.labelPadding,
-          padding: chipTheme.padding,
-          shape: chipTheme.shape,
-          labelStyle: chipTheme.labelStyle,
-          secondaryLabelStyle: chipTheme.secondaryLabelStyle,
-          brightness: chipTheme.brightness,
+          backgroundColor: defaultThemeData.chipTheme.backgroundColor,
+          disabledColor: defaultThemeData.chipTheme.disabledColor,
+          selectedColor: defaultThemeData.chipTheme.selectedColor,
+          secondarySelectedColor:
+              defaultThemeData.chipTheme.secondarySelectedColor,
+          labelPadding: defaultThemeData.chipTheme.labelPadding,
+          padding: defaultThemeData.chipTheme.padding,
+          shape: defaultThemeData.chipTheme.shape,
+          labelStyle: defaultThemeData.chipTheme.labelStyle,
+          secondaryLabelStyle: defaultThemeData.chipTheme.secondaryLabelStyle,
+          brightness: defaultThemeData.chipTheme.brightness,
           elevation: 0,
           pressElevation: 0),
       appBarTheme: AppBarTheme(elevation: 1, backgroundColor: Colors.white),

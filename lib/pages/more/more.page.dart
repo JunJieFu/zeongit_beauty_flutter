@@ -12,6 +12,7 @@ import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/background.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
+import 'package:zeongitbeautyflutter/provider/theme.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
@@ -20,6 +21,7 @@ class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _themeGetxCtrl = Get.find<ThemeGetxCtrl>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +86,9 @@ class MorePage extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return FeedbackPage();
               }));
+            }),
+            ..._buildListTile(MdiIcons.palette, "调色板", () {
+              _themeGetxCtrl.updatePrimaryColor(StyleConfig.errorColor);
             }),
             ..._buildListTile(MdiIcons.information_outline, "关于", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {

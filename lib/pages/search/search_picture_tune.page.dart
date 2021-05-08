@@ -392,7 +392,6 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
     return SizedBox(
       width: 70,
       child: Text(text,
-          style: TextStyle(color: StyleConfig.titleColor),
           textScaleFactor: .85),
     );
   }

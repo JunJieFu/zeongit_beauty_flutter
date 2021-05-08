@@ -7,8 +7,8 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 class BlackHoleTabPage extends HookWidget{
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Theme.of(context).primaryColor;
-    var tabController = useTabController(initialLength: 2);
+    final primaryColor = Theme.of(context).primaryColor;
+    final tabController = useTabController(initialLength: 2);
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
