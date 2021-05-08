@@ -10,6 +10,6 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, textScaleFactor: 1.25);
+    return Text(text, style: Theme.of(context).textTheme.headline6);
   }
 }

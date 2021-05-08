@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
+import 'package:flutter/material.dart';
 
 class TextWidget extends StatelessWidget {
   TextWidget(
@@ -11,9 +11,9 @@ class TextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(color: StyleConfig.textColor),
-    );
+    return Text(text,
+        style: TextStyle(
+            color:
+                Theme.of(context).textTheme.bodyText1.color.withOpacity(.56)));
   }
 }

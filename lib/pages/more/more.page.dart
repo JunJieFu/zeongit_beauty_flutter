@@ -88,7 +88,7 @@ class MorePage extends StatelessWidget {
               }));
             }),
             ..._buildListTile(MdiIcons.palette, "调色板", () {
-              _themeGetxCtrl.updatePrimaryColor(StyleConfig.errorColor);
+              Get.changeTheme(Get.isDarkMode? _themeGetxCtrl.light: _themeGetxCtrl.dark);
             }),
             ..._buildListTile(MdiIcons.information_outline, "关于", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
