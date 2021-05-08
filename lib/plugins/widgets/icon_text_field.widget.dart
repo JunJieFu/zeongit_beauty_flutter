@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
 class IconTextField extends HookWidget {
   IconTextField(
@@ -19,6 +18,7 @@ class IconTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var primaryColor = Theme.of(context).primaryColor;
     var focusNode = useFocusNode();
     var hasFocus = useState(false);
     focusNode.addListener(() {
@@ -28,15 +28,14 @@ class IconTextField extends HookWidget {
       focusNode: focusNode,
       controller: controller,
       obscureText: obscureText,
-      cursorColor: StyleConfig.primaryColor,
+      cursorColor: primaryColor,
       decoration: InputDecoration(
         isDense: false,
-        focusColor: StyleConfig.primaryColor,
-        prefixIcon:
-            Icon(icon, color: hasFocus.value ? StyleConfig.primaryColor : null),
+        focusColor: primaryColor,
+        prefixIcon: Icon(icon, color: hasFocus.value ? primaryColor : null),
         hintText: hintText,
-        focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: StyleConfig.primaryColor)),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: primaryColor)),
       ),
     );
   }

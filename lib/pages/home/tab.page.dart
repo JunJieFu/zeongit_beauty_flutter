@@ -95,7 +95,9 @@ class TabPage extends HookWidget {
                             break;
                           case 2:
                             {
-                              _convenientPageController.refresh();
+                              try{
+                                _convenientPageController.refresh();
+                              }catch(e){}
                             }
                             break;
                           case 3:

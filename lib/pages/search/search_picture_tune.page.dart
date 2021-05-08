@@ -1,6 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
@@ -379,10 +379,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                     widget.callback(widget.params);
                     Navigator.maybePop(context);
                   } catch (e) {
-                    Fluttertoast.showToast(
-                        msg: "输入有误",
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: StyleConfig.errorColor);
+                    BotToast.showText(text: "输入有误");
                   }
                 },
               ),

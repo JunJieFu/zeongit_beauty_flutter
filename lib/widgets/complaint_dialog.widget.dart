@@ -1,6 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
@@ -49,10 +49,7 @@ class ComplaintDialog extends HookWidget {
       if (loading.value) return;
       final content = contentController.text;
       if (content == null || content == '') {
-        Fluttertoast.showToast(
-            msg: "请输入举报内容",
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: StyleConfig.errorColor);
+        BotToast.showText(text: "请输入举报内容");
         return;
       }
       loading.value = true;
@@ -62,10 +59,7 @@ class ComplaintDialog extends HookWidget {
         loading.value = false;
         return;
       } else {
-        Fluttertoast.showToast(
-            msg: "提交成功",
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: StyleConfig.successColor);
+        BotToast.showText(text: "提交成功");
         Navigator.of(context).pop(this);
       }
     }

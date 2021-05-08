@@ -1,5 +1,5 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
@@ -55,7 +55,8 @@ class PagePicture extends StatelessWidget {
                   )),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return DetailTabViewPage(list:list.map((it)=>it.id).toList(),index:index);
+                  return DetailTabViewPage(
+                      list: list.map((it) => it.id).toList(), index: index);
                 }));
               },
               onLongPress: () {
@@ -85,10 +86,7 @@ class PagePicture extends StatelessWidget {
                     Navigator.of(context).pop(this);
                     var result = await PictureService.remove(id);
                     if (ResultUtil.check(result)) {
-                      Fluttertoast.showToast(
-                          msg: "删除成功",
-                          gravity: ToastGravity.BOTTOM,
-                          backgroundColor: StyleConfig.successColor);
+                      BotToast.showText(text: "删除成功");
                     }
                   },
                   child: Text("确定"))

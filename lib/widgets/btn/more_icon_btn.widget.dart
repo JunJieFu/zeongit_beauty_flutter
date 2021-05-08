@@ -1,6 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -52,10 +52,7 @@ class MoreIconBtn extends StatelessWidget {
 //                          gravity: ToastGravity.BOTTOM,
 //                          backgroundColor: StyleConfig.successColor);
 //                    }
-                    Fluttertoast.showToast(
-                        msg: "网站作者不让删",
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: StyleConfig.successColor);
+                    BotToast.showText(text: "网站作者不让删");
                   },
                   child: Text("确定"))
             ],
@@ -83,10 +80,7 @@ class MoreIconBtn extends StatelessWidget {
               TextButton(
                   onPressed: () async {
                     Navigator.of(context).pop(this);
-                    Fluttertoast.showToast(
-                        msg: "尚未开发",
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: StyleConfig.successColor);
+                    BotToast.showText(text: "尚未开发");
                   },
                   child: Text("确定"))
             ],

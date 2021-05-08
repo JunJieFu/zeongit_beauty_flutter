@@ -1,13 +1,12 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
@@ -25,12 +24,9 @@ class ViewPage extends HookWidget {
       if (await PermissionUtil.storage()) {
         final success = await GallerySaver.saveImage(completeUrl);
         if (success) {
-          Fluttertoast.showToast(msg: "保存成功", gravity: ToastGravity.BOTTOM);
+          BotToast.showText(text: "保存成功");
         } else {
-          Fluttertoast.showToast(
-              msg: "保存失败",
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: StyleConfig.errorColor);
+          BotToast.showText(text: "保存失败");
         }
       }
     }

@@ -1,6 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
@@ -34,20 +34,14 @@ class FeedbackPage extends HookWidget {
       final content = contentController.text;
       final email = emailController.text;
       if (content == null || content == '') {
-        Fluttertoast.showToast(
-            msg: "请输入反馈内容",
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: StyleConfig.errorColor);
+        BotToast.showText(text: "请输入反馈内容");
         return;
       }
       loading.value = true;
       final result = await FeedbackService.save(content, email: email);
       loading.value = false;
       if (!ResultUtil.check(result)) return;
-      Fluttertoast.showToast(
-          msg: "提交成功",
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: StyleConfig.successColor);
+      BotToast.showText(text: "提交成功");
       Navigator.maybePop(context);
     }
 

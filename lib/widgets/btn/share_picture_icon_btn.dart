@@ -1,10 +1,9 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
-import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
@@ -42,10 +41,7 @@ class SharePictureIconBtn extends StatelessWidget {
                               Clipboard.setData(ClipboardData(
                                   text:
                                       '${ConfigConstant.BEAUTY_HOST}/picture/${picture.id}'));
-                              Fluttertoast.showToast(
-                                  msg: "复制成功",
-                                  gravity: ToastGravity.BOTTOM,
-                                  backgroundColor: StyleConfig.successColor);
+                              BotToast.showText(text: "复制成功");
                               Navigator.of(context).pop(this);
                             }),
                         Divider(height: 1),
