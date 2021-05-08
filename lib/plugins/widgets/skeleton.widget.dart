@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 
 class Skeleton extends HookWidget {
   Skeleton({Key key, this.height = 20, this.width = 200}) : super(key: key);
@@ -9,6 +10,7 @@ class Skeleton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     var controller =
         useAnimationController(duration: Duration(milliseconds: 1500));
     var animation = useAnimation(Tween<double>(
@@ -26,7 +28,9 @@ class Skeleton extends HookWidget {
           gradient: LinearGradient(
               begin: Alignment(animation, 0),
               end: Alignment(-1, 0),
-              colors: [Colors.black12, Colors.white12, Colors.black12])),
+              colors: isDark
+                  ? [Colors.white24, Colors.black12, Colors.white24]
+                  : [Colors.black12, Colors.white12, Colors.black12])),
     );
   }
 }

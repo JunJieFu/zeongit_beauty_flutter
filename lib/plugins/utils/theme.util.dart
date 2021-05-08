@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/color.util.dart';
 
 final _defaultLightThemeData = ThemeData();
 final _defaultDarkThemeData = ThemeData(brightness: Brightness.dark);
-lightThemeData(Color color){
+
+lightThemeData(Color color) {
   return ThemeData(
       brightness: Brightness.light,
       accentColor: lighten(color, 0.08),
@@ -22,24 +24,23 @@ lightThemeData(Color color){
           style: ElevatedButton.styleFrom(primary: color)),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            primary: color,
-          )),
+        primary: color,
+      )),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              primary: color,
-              side: BorderSide(color: color))),
+              primary: color, side: BorderSide(color: color))),
       chipTheme: ChipThemeData(
           backgroundColor: _defaultLightThemeData.chipTheme.backgroundColor,
           disabledColor: _defaultLightThemeData.chipTheme.disabledColor,
           selectedColor: _defaultLightThemeData.chipTheme.selectedColor,
           secondarySelectedColor:
-          _defaultLightThemeData.chipTheme.secondarySelectedColor,
+              _defaultLightThemeData.chipTheme.secondarySelectedColor,
           labelPadding: _defaultLightThemeData.chipTheme.labelPadding,
           padding: _defaultLightThemeData.chipTheme.padding,
           shape: _defaultLightThemeData.chipTheme.shape,
           labelStyle: _defaultLightThemeData.chipTheme.labelStyle,
           secondaryLabelStyle:
-          _defaultLightThemeData.chipTheme.secondaryLabelStyle,
+              _defaultLightThemeData.chipTheme.secondaryLabelStyle,
           brightness: _defaultLightThemeData.chipTheme.brightness,
           elevation: 0,
           pressElevation: 0),
@@ -49,10 +50,13 @@ lightThemeData(Color color){
       tabBarTheme: TabBarTheme(
         labelColor: color,
         unselectedLabelColor: Colors.black45,
+      ),
+      colorScheme: ColorScheme.light(
+        primary: color,
       ));
 }
 
-darkThemeData(Color color){
+darkThemeData(Color color) {
   return ThemeData(
       brightness: Brightness.dark,
       accentColor: lighten(color, 0.08),
@@ -65,24 +69,23 @@ darkThemeData(Color color){
           style: ElevatedButton.styleFrom(primary: color)),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            primary: color,
-          )),
+        primary: color,
+      )),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-              primary: color,
-              side: BorderSide(color: color))),
+              primary: color, side: BorderSide(color: color))),
       chipTheme: ChipThemeData(
           backgroundColor: _defaultDarkThemeData.chipTheme.backgroundColor,
           disabledColor: _defaultDarkThemeData.chipTheme.disabledColor,
           selectedColor: _defaultDarkThemeData.chipTheme.selectedColor,
           secondarySelectedColor:
-          _defaultDarkThemeData.chipTheme.secondarySelectedColor,
+              _defaultDarkThemeData.chipTheme.secondarySelectedColor,
           labelPadding: _defaultDarkThemeData.chipTheme.labelPadding,
           padding: _defaultDarkThemeData.chipTheme.padding,
           shape: _defaultDarkThemeData.chipTheme.shape,
           labelStyle: _defaultDarkThemeData.chipTheme.labelStyle,
           secondaryLabelStyle:
-          _defaultDarkThemeData.chipTheme.secondaryLabelStyle,
+              _defaultDarkThemeData.chipTheme.secondaryLabelStyle,
           brightness: _defaultDarkThemeData.chipTheme.brightness,
           elevation: 0,
           pressElevation: 0),
@@ -92,5 +95,9 @@ darkThemeData(Color color){
       tabBarTheme: TabBarTheme(
         labelColor: color,
         unselectedLabelColor: Colors.white54,
-      ));
+      ),
+      colorScheme: ColorScheme.dark(
+          surface: Colors.transparent,
+          primary: color,
+          onPrimary: Colors.white));
 }

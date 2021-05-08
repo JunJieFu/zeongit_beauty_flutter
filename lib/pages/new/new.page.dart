@@ -35,10 +35,12 @@ class NewPage extends HookWidget {
           .requestRefresh(duration: const Duration(milliseconds: 200));
     };
 
-    dateRefresh({DateTime dateTime}) {
+    dateRefresh({DateTime dateTime, bool force = false}) {
       criteria.value.date.startDate = dateTime;
       criteria.value.date.endDate = dateTime;
-      refreshController.value.requestRefresh(needMove: false);
+      if (dateTime != null || force) {
+        refreshController.value.requestRefresh(needMove: false);
+      }
     }
 
     showStartDatePicker() async {
@@ -61,7 +63,9 @@ class NewPage extends HookWidget {
             ),
             IconButton(
               icon: Icon(MdiIcons.refresh),
-              onPressed: dateRefresh,
+              onPressed: () {
+                dateRefresh(force: true);
+              },
             )
           ],
         ),
