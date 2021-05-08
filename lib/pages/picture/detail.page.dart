@@ -2,12 +2,10 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail_user_tab.page.dart';
-import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
@@ -21,7 +19,6 @@ import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/skeleton.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
@@ -158,7 +155,6 @@ class _ViewState extends State<_View> {
     if (pictureResult.status == StatusCode.SUCCESS) {
       var queryData = MediaQuery.of(context);
       var pageGap = StyleConfig.gap * 3;
-      var userState = Provider.of<UserState>(context, listen: false);
       return Scaffold(
           body: CustomScrollView(
         slivers: <Widget>[

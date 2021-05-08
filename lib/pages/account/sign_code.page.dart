@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/account/forgot.page.dart';
@@ -8,7 +7,6 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 
 final _gap = StyleConfig.gap * 6;
 final _differenceList = {
@@ -40,7 +38,6 @@ class SignCodePageState extends State<SignCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(title: Text(_differenceList[widget.codeType])),
         body: ListView(
@@ -84,7 +81,7 @@ class SignCodePageState extends State<SignCodePage> {
                               )
                             : Text("获取验证码"),
                         onPressed: () {
-                          _send(context, _userState);
+                          _send(context);
                         },
                       ),
                     ),
@@ -102,7 +99,7 @@ class SignCodePageState extends State<SignCodePage> {
     super.dispose();
   }
 
-  _send(BuildContext context, UserState userState) async {
+  _send(BuildContext context) async {
     if (_loading) return;
     setState(() {
       _loading = true;

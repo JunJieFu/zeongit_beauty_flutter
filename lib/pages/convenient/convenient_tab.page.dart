@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following_new.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class ConvenientTabPage extends HookWidget {
@@ -14,21 +14,28 @@ class ConvenientTabPage extends HookWidget {
 
   final CustomRefreshController controller;
 
+  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+
   final _tabList = [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
 
   @override
   Widget build(BuildContext context) {
-    var tabController = useTabController(initialLength: _tabList.length);
-    var followingNewController = CustomRefreshController();
-    var collectionController = CustomRefreshController();
-    var followingController = CustomRefreshController();
-    controller?.refresh = () {
-      if (tabController.index == 0) followingNewController.refresh();
-      if (tabController.index == 1) collectionController.refresh();
-      if (tabController.index == 2) followingController.refresh();
-    };
-    return Consumer<UserState>(builder: (ctx, UserState userState, child) {
-      if (userState.info == null) {
+    final tabController = useTabController(initialLength: _tabList.length);
+    final followingNewController = CustomRefreshController();
+    final collectionController = CustomRefreshController();
+    final followingController = CustomRefreshController();
+    useEffect(() {
+      controller?.refresh = () {
+        if (tabController.index == 0) followingNewController.refresh();
+        if (tabController.index == 1) collectionController.refresh();
+        if (tabController.index == 2) followingController.refresh();
+      };
+      return () {
+        controller?.refresh = null;
+      };
+    }, []);
+    return Obx(() {
+      if (_userGetxCtrl.info == null) {
         return Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -55,9 +62,10 @@ class ConvenientTabPage extends HookWidget {
               children: [
                 FollowingNewPage(controller: followingNewController),
                 CollectionPage(
-                    controller: collectionController, id: userState.info.id),
+                    controller: collectionController,
+                    id: _userGetxCtrl.info.id),
                 FollowingPage(
-                    controller: followingController, id: userState.info.id),
+                    controller: followingController, id: _userGetxCtrl.info.id),
               ],
             ));
       }

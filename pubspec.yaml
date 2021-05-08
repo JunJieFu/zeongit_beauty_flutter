@@ -30,7 +30,6 @@ dependencies:
   cupertino_icons: ^1.0.0
   dio: ^3.0.0
   shared_preferences: ^0.5.12+4
-  provider: ^4.0.0
   webview_flutter: 1.0.7
   flutter_svg: ^0.20.0-nullsafety.3
   waterfall_flow: 2.0.2
@@ -46,6 +45,7 @@ dependencies:
   pull_to_refresh: ^1.6.5
   flutter_hooks: ^0.16.0
   date_format: ^2.0.2
+  get: ^4.1.4
 #  md2_tab_indicator: 1.0.2
 #  extended_nested_scroll_view: 3.0.0
 #  flutter_easyrefresh: 2.2.1

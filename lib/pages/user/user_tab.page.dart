@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
@@ -8,7 +8,7 @@ import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_detail.dart';
-import 'package:zeongitbeautyflutter/pages/user/user_module.provider.dart';
+import 'package:zeongitbeautyflutter/pages/user/user_module.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/pages/user/works.page.dart';
 
 class UserTabPage extends HookWidget {
@@ -26,6 +26,13 @@ class UserTabPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      Get.lazyPut(() => UserModuleGetxCtrl(), tag: TAG_PREFIX + id.toString());
+      return () {
+        Get.delete(tag: TAG_PREFIX + id.toString());
+      };
+    });
+
     Widget widget = _buildScaffold(_buildLoading());
     var controller = useTabController(initialLength: _tabList.length);
     var snapshot = useFuture<ResultEntity<UserInfoEntity>>(
@@ -40,6 +47,9 @@ class UserTabPage extends HookWidget {
   }
 
   _buildMain(UserInfoEntity info, TabController controller) {
+    final userModuleGetxCtrl =
+        Get.find<UserModuleGetxCtrl>(tag: TAG_PREFIX + id.toString());
+    userModuleGetxCtrl.setInfo(info);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -51,21 +61,15 @@ class UserTabPage extends HookWidget {
           ),
           elevation: 0,
         ),
-        body: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-                create: (context) => UserModuleState(info: info))
+        body: TabBarView(
+          controller: controller,
+          children: [
+            WorksPage(id: info.id),
+            CollectionPage(id: info.id),
+            FollowingPage(id: info.id),
+            FollowerPage(id: info.id),
+            UserDetailPage(id: info.id),
           ],
-          child: TabBarView(
-            controller: controller,
-            children: [
-              WorksPage(id: info.id),
-              CollectionPage(id: info.id),
-              FollowingPage(id: info.id),
-              FollowerPage(id: info.id),
-              UserDetailPage(),
-            ],
-          ),
         ));
   }
 

@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
 import 'package:zeongitbeautyflutter/routes.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class ForgetPage extends StatefulWidget {
+class ForgetPage extends HookWidget {
   ForgetPage(this.phone, {Key key}) : super(key: key);
 
   final String phone;
 
   @override
-  _ForgetPageState createState() => _ForgetPageState();
-}
-
-class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
-  TextEditingController codeController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
-  FocusNode focusNode = FocusNode();
-  bool loading = false;
-
-  @override
-  void initState() {
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {}
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    final TextEditingController codeController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController rePasswordController = TextEditingController();
+    final loading = useState(false);
+    forget() async {
+      if (loading.value) return;
+      loading.value = true;
+      var result = await UserService.forgot(
+          codeController.text, phone, passwordController.text);
+      if (ResultUtil.check(result)) {
+        Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
+      }
+      loading.value = false;
+    }
+
     return Scaffold(
         appBar: AppBar(title: Text("找回您的密码")),
         body: ListView(
@@ -78,7 +72,7 @@ class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
-                        child: loading
+                        child: loading.value
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -97,9 +91,7 @@ class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
                                 ],
                               )
                             : Text("确认注册并登录"),
-                        onPressed: () {
-                          _forget(context, _userState);
-                        },
+                        onPressed: forget,
                       ),
                     ),
                   )
@@ -108,29 +100,5 @@ class _ForgetPageState extends State<ForgetPage> with TickerProviderStateMixin {
             )
           ],
         ));
-  }
-
-  @override
-  void dispose() {
-    codeController.dispose();
-    passwordController.dispose();
-    rePasswordController.dispose();
-    super.dispose();
-  }
-
-  _forget(BuildContext context, UserState userState) async {
-    if (loading) return;
-    setState(() {
-      loading = true;
-    });
-    var result = await UserService.forgot(
-        codeController.text, widget.phone, passwordController.text);
-    setState(() {
-      loading = false;
-    });
-    try {
-      await ResultUtil.check(result);
-      Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
-    } catch (e) {}
   }
 }

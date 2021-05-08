@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/black_hole/black_hole_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/fragment/about.page.dart';
 import 'package:zeongitbeautyflutter/pages/fragment/feedback.page.dart';
@@ -12,17 +12,19 @@ import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/background.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
+  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserState>(builder: (ctx, UserState userState, child) {
-      if (userState.info == null) {
+    return Obx(() {
+      if (_userGetxCtrl.info == null) {
         return SignInPageCardWidget(
             icon: MdiIcons.dots_horizontal,
             title: "更多",
@@ -34,7 +36,7 @@ class MorePage extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 2,
                 child: BackgroundWidget(
-                  userState.info?.background,
+                  _userGetxCtrl.info?.background,
                   fit: BoxFit.cover,
                   style: BackgroundStyle.backCard,
                 ),
@@ -42,30 +44,30 @@ class MorePage extends StatelessWidget {
               Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: StyleConfig.gap * 35),
-                  child: _buildMaterialAvatar(userState),
+                  child: _buildMaterialAvatar(),
                 ),
               ),
             ]),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap * 3),
-              child: Center(child: TitleWidget(userState.info.nickname)),
+              child: Center(child: TitleWidget(_userGetxCtrl.info.nickname)),
             ),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap),
-              child: Center(child: TextWidget(userState.info.introduction)),
+              child: Center(child: TextWidget(_userGetxCtrl.info.introduction)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ShareUserIconBtn(
-                  user: userState.info,
+                  user: _userGetxCtrl.info,
                   callback: () {},
                 ),
               ],
             ),
             ..._buildListTile(MdiIcons.shoe_print, "足迹", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FootprintPage(id: userState.info.id);
+                return FootprintPage(id: _userGetxCtrl.info.id);
               }));
             }),
             ..._buildListTile(MdiIcons.upload_outline, "上传", () {
@@ -89,7 +91,7 @@ class MorePage extends StatelessWidget {
               }));
             }),
             ..._buildListTile(MdiIcons.logout, "登出", () {
-              _signOut(context, userState);
+              _signOut(context);
             }),
             Divider(),
           ],
@@ -98,12 +100,13 @@ class MorePage extends StatelessWidget {
     });
   }
 
-  _buildMaterialAvatar(UserState userState) {
+  _buildMaterialAvatar() {
     var size = 120.0;
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
-      child: AvatarWidget(userState.info?.avatarUrl, userState.info?.nickname,
+      child: AvatarWidget(
+          _userGetxCtrl.info?.avatarUrl, _userGetxCtrl.info?.nickname,
           fit: BoxFit.cover, size: size),
     );
   }
@@ -115,11 +118,11 @@ class MorePage extends StatelessWidget {
           onTap: onTap,
           title: buildListTileTitle(title,
               leftIcon: icon, rightIcon: Icons.keyboard_arrow_right)
-          )
+      )
     ];
   }
 
-  _signOut(BuildContext context, userState) {
+  _signOut(BuildContext context) {
     showDialog(
         context: context,
         builder: (ctx) {
@@ -137,7 +140,7 @@ class MorePage extends StatelessWidget {
                   child: Text("取消")),
               TextButton(
                   onPressed: () {
-                    userState.logout();
+                    _userGetxCtrl.logout();
                     Navigator.of(context).pop(this);
                   },
                   child: Text("确定"))

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
@@ -9,7 +9,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/black_hole_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/complaint_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
@@ -23,6 +23,8 @@ class MoreIconBtn extends StatelessWidget {
   final PictureEntity picture;
 
   final Function callback;
+
+  final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
   _remove(BuildContext context) {
     showDialog(
@@ -94,78 +96,12 @@ class MoreIconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userState = Provider.of<UserState>(context, listen: false);
     final privacy = picture.privacy == PrivacyState.PRIVATE.index;
-    var widgetList = userState.info.id == picture.user.id
-        ? [
-            Divider(height: 1),
-            ListTile(
-              title: buildListTileTitle("编辑",
-                  leftIcon: MdiIcons.image_edit_outline),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return EditPage(picture, callback: (picture) {});
-                }));
-              },
-            ),
-            Divider(height: 1),
-            ListTile(
-              title: buildListTileTitle(privacy ? "公开" : "隐藏",
-                  leftIcon: privacy
-                      ? MdiIcons.eye_outline
-                      : MdiIcons.eye_off_outline),
-              onTap: () {
-                Navigator.of(context).pop(this);
-                _hide(context);
-              },
-            ),
-            Divider(height: 1),
-            ListTile(
-              title: buildListTileTitle("删除",
-                  leftIcon: privacy
-                      ? MdiIcons.eye_off_outline
-                      : MdiIcons.delete_outline),
-              onTap: () {
-                Navigator.of(context).pop(this);
-                _remove(context);
-              },
-            )
-          ]
-        : [
-            ListTile(
-                title: buildListTileTitle("屏蔽",
-                    leftIcon: MdiIcons.shield_off_outline),
-                onTap: () {
-                  Navigator.of(context).pop(this);
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return BlackHoleDialog(
-                          id: picture.id,
-                        );
-                      });
-                }),
-            Divider(height: 1),
-            ListTile(
-              title: buildListTileTitle("举报",
-                  leftIcon: MdiIcons.alert_octagon_outline),
-              onTap: () {
-                Navigator.of(context).pop(this);
-                showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return ComplaintDialog(
-                        picture: picture,
-                      );
-                    });
-              },
-            )
-          ];
     return IconButton(
       key: _btnKey,
       icon: Icon(Icons.more_vert),
       onPressed: () {
-        if (userState.info != null) {
+        if (_userGetxCtrl.info != null) {
           Navigator.push(
             context,
             PopupContainerRoute(
@@ -174,9 +110,78 @@ class MoreIconBtn extends StatelessWidget {
                 child: Card(
                   child: Container(
                     width: 150,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: widgetList,
+                    child: Obx(
+                      () => Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: _userGetxCtrl.info.id == picture.user.id
+                            ? [
+                                Divider(height: 1),
+                                ListTile(
+                                  title: buildListTileTitle("编辑",
+                                      leftIcon: MdiIcons.image_edit_outline),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return EditPage(picture,
+                                          callback: (picture) {});
+                                    }));
+                                  },
+                                ),
+                                Divider(height: 1),
+                                ListTile(
+                                  title: buildListTileTitle(
+                                      privacy ? "公开" : "隐藏",
+                                      leftIcon: privacy
+                                          ? MdiIcons.eye_outline
+                                          : MdiIcons.eye_off_outline),
+                                  onTap: () {
+                                    Navigator.of(context).pop(this);
+                                    _hide(context);
+                                  },
+                                ),
+                                Divider(height: 1),
+                                ListTile(
+                                  title: buildListTileTitle("删除",
+                                      leftIcon: privacy
+                                          ? MdiIcons.eye_off_outline
+                                          : MdiIcons.delete_outline),
+                                  onTap: () {
+                                    Navigator.of(context).pop(this);
+                                    _remove(context);
+                                  },
+                                )
+                              ]
+                            : [
+                                ListTile(
+                                    title: buildListTileTitle("屏蔽",
+                                        leftIcon: MdiIcons.shield_off_outline),
+                                    onTap: () {
+                                      Navigator.of(context).pop(this);
+                                      showDialog(
+                                          context: context,
+                                          builder: (ctx) {
+                                            return BlackHoleDialog(
+                                              id: picture.id,
+                                            );
+                                          });
+                                    }),
+                                Divider(height: 1),
+                                ListTile(
+                                  title: buildListTileTitle("举报",
+                                      leftIcon: MdiIcons.alert_octagon_outline),
+                                  onTap: () {
+                                    Navigator.of(context).pop(this);
+                                    showDialog(
+                                        context: context,
+                                        builder: (ctx) {
+                                          return ComplaintDialog(
+                                            picture: picture,
+                                          );
+                                        });
+                                  },
+                                )
+                              ],
+                      ),
                     ),
                   ),
                 ),

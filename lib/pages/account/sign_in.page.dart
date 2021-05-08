@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/account/sign_code.page.dart';
@@ -10,34 +11,31 @@ import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.provider.dart';
+import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class SignInPage extends StatefulWidget {
-  SignInPage({Key key}) : super(key: key);
-
-  @override
-  _SignInPageState createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  FocusNode _focusNode = FocusNode();
-  bool _loading = false;
-
-  @override
-  void initState() {
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {}
-    });
-    super.initState();
-  }
+class SignInPage extends HookWidget {
+  final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
   @override
   Widget build(BuildContext context) {
-    var _userState = Provider.of<UserState>(context, listen: false);
+    final phoneController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final loading = useState(false);
+    signIn() async {
+      if (loading.value) return;
+      loading.value = true;
+      var result = await UserService.signIn(
+          phoneController.text, passwordController.text);
+      if (ResultUtil.check(result)) {
+        await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
+        await _userGetxCtrl.getInfo();
+        Navigator.maybePop(context);
+      }
+      loading.value = false;
+    }
+
     return Scaffold(
         appBar: AppBar(title: Text("登录您的账号")),
         body: ListView(
@@ -50,7 +48,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: _phoneController,
+                      controller: phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -58,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _passwordController,
+                      controller: passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -70,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
                       width: double.infinity,
                       height: StyleConfig.buttonHeight,
                       child: ElevatedButton(
-                        child: _loading
+                        child: loading.value
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -89,9 +87,7 @@ class _SignInPageState extends State<SignInPage> {
                                 ],
                               )
                             : Text("登录"),
-                        onPressed: () {
-                          _signIn(context, _userState);
-                        },
+                        onPressed: signIn,
                       ),
                     ),
                   ),
@@ -113,29 +109,5 @@ class _SignInPageState extends State<SignInPage> {
             )
           ],
         ));
-  }
-
-  @override
-  void dispose() {
-    _phoneController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  _signIn(BuildContext context, UserState userState) async {
-    if (_loading) return;
-    setState(() {
-      _loading = true;
-    });
-    var result = await UserService.signIn(
-        _phoneController.text, _passwordController.text);
-    setState(() {
-      _loading = false;
-    });
-    if (ResultUtil.check(result)) {
-      await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
-      await userState.getInfo();
-      Navigator.maybePop(context);
-    }
   }
 }

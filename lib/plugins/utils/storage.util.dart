@@ -22,8 +22,8 @@ class StorageManager {
     sharedPreferences.setString(key, json.encode(value));
   }
 
-  static get(String key) {
-    return sharedPreferences.get(key);
+  static T get<T>(String key) {
+    return sharedPreferences.get(key) as T;
   }
 
   static getJson(String key) {
