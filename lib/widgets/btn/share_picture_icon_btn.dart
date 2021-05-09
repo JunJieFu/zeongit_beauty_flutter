@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
@@ -42,7 +43,7 @@ class SharePictureIconBtn extends StatelessWidget {
                                   text:
                                       '${ConfigConstant.BEAUTY_HOST}/picture/${picture.id}'));
                               BotToast.showText(text: "复制成功");
-                              Navigator.of(context).pop(this);
+                              Get.back();
                             }),
                         Divider(height: 1),
                         ListTile(

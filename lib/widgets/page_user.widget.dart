@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
@@ -29,7 +30,7 @@ class PageUser extends StatelessWidget {
   final ChangePageCallback changePage;
   final FollowCallback followCallback;
 
-  _buildListWaterFall(BuildContext context) {
+  _buildListWaterFall() {
     return ListView.builder(
         itemCount: list?.length,
         itemBuilder: (BuildContext context, int index) {
@@ -43,7 +44,7 @@ class PageUser extends StatelessWidget {
                 child: Flex(
                   direction: Axis.horizontal,
                   children: <Widget>[
-                    _buildAvatar(context, user),
+                    _buildAvatar(user),
                     Expanded(
                       flex: 1,
                       child: Padding(
@@ -67,7 +68,7 @@ class PageUser extends StatelessWidget {
         });
   }
 
-  _buildAvatar(BuildContext context, UserInfoEntity user) {
+  _buildAvatar(UserInfoEntity user) {
     var size = 75.0;
     var padding = 8.0;
     return InkWell(
@@ -83,9 +84,7 @@ class PageUser extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return UserTabPage(id: user.id);
-        }));
+        Get.to(UserTabPage(id: user.id));
       },
     );
   }
@@ -100,7 +99,7 @@ class PageUser extends StatelessWidget {
         return ListView(
             physics: AlwaysScrollableScrollPhysics(), children: [emptyChild]);
       } else {
-        return _buildListWaterFall(context);
+        return _buildListWaterFall();
       }
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Link extends StatelessWidget {
   Link(this.text, {Key key, this.onTap}) : super(key: key);
@@ -8,9 +9,11 @@ class Link extends StatelessWidget {
 
   final GestureTapCallback onTap;
 
+  final primaryColor = Get.theme.primaryColor;
+
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+
     return GestureDetector(
       onTap: onTap,
       child: Text(

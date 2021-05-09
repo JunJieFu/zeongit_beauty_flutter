@@ -8,9 +8,10 @@ class Skeleton extends HookWidget {
   final double height;
   final double width;
 
+  final _isDark = Get.theme.brightness == Brightness.dark;
+
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     var controller =
         useAnimationController(duration: Duration(milliseconds: 1500));
     var animation = useAnimation(Tween<double>(
@@ -28,7 +29,7 @@ class Skeleton extends HookWidget {
           gradient: LinearGradient(
               begin: Alignment(animation, 0),
               end: Alignment(-1, 0),
-              colors: isDark
+              colors: _isDark
                   ? [Colors.white24, Colors.black12, Colors.white24]
                   : [Colors.black12, Colors.white12, Colors.black12])),
     );

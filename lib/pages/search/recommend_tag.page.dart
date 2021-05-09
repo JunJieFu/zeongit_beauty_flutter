@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
@@ -29,8 +30,8 @@ class RecommendTagPage extends HookWidget {
     }
 
     controller?.refresh = () {
-      _refreshController
-          .requestRefresh(duration: const Duration(milliseconds: 200));
+      _refreshController.requestRefresh(
+          duration: const Duration(milliseconds: 200));
     };
 
     return Scaffold(
@@ -40,7 +41,7 @@ class RecommendTagPage extends HookWidget {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                _search(context);
+                Get.to(SearchPage());
               },
             )
           ],
@@ -62,10 +63,7 @@ class RecommendTagPage extends HookWidget {
                             ?.map((e) => ActionChip(
                                 label: Text(e.name),
                                 onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (_) {
-                                    return SearchTabPage(keyword: e.name);
-                                  }));
+                                  Get.to(SearchTabPage(keyword: e.name));
                                 }))
                             ?.toList() ??
                         <Widget>[]),
@@ -73,11 +71,5 @@ class RecommendTagPage extends HookWidget {
             ],
           ),
         ));
-  }
-
-  _search(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) {
-      return SearchPage();
-    }));
   }
 }

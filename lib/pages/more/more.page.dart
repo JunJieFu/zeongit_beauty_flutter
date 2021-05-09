@@ -22,7 +22,6 @@ class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
-  final _themeGetxCtrl = Get.find<ThemeGetxCtrl>();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +98,7 @@ class MorePage extends StatelessWidget {
               }));
             }),
             ..._buildListTile(MdiIcons.logout, "登出", () {
-              _signOut(context);
+              _signOut();
             }),
             Divider(),
           ],
@@ -129,26 +128,24 @@ class MorePage extends StatelessWidget {
     ];
   }
 
-  _signOut(BuildContext context) {
+  _signOut() {
     showDialog(
-        context: context,
+        context: Get.context,
         builder: (ctx) {
           return AlertDialog(
             title: Text("提示"),
-            content: Text("您确定退出 Zeongit 吗？"),
+            content: Text("您确定退出 Zeongit 账号吗？"),
             actions: <Widget>[
               TextButton(
                   style: TextButton.styleFrom(
                     primary: StyleConfig.warningColor,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop(this);
-                  },
+                  onPressed:  Get.back,
                   child: Text("取消")),
               TextButton(
                   onPressed: () {
                     _userGetxCtrl.logout();
-                    Navigator.of(context).pop(this);
+                    Get.back();
                   },
                   child: Text("确定"))
             ],

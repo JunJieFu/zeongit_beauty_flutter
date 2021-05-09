@@ -49,7 +49,6 @@ class TabPage extends HookWidget {
             duration: Duration(seconds: 1),
             content: Text("再一次返回退出！"),
           ));
-          // BotToast.showText(text: I18n.of(context).return_again_to_exit);
           return Future.value(false);
         }
         return Future.value(true);

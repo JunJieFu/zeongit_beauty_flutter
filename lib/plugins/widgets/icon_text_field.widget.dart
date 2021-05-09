@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 
 class IconTextField extends HookWidget {
   IconTextField(
@@ -15,10 +16,10 @@ class IconTextField extends HookWidget {
   final bool obscureText;
   final String hintText;
   final IconData icon;
+  final _primaryColor = Get.theme.primaryColor;
 
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Theme.of(context).primaryColor;
     var focusNode = useFocusNode();
     var hasFocus = useState(false);
     focusNode.addListener(() {
@@ -28,14 +29,14 @@ class IconTextField extends HookWidget {
       focusNode: focusNode,
       controller: controller,
       obscureText: obscureText,
-      cursorColor: primaryColor,
+      cursorColor: _primaryColor,
       decoration: InputDecoration(
         isDense: false,
-        focusColor: primaryColor,
-        prefixIcon: Icon(icon, color: hasFocus.value ? primaryColor : null),
+        focusColor: _primaryColor,
+        prefixIcon: Icon(icon, color: hasFocus.value ? _primaryColor : null),
         hintText: hintText,
         focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: primaryColor)),
+            UnderlineInputBorder(borderSide: BorderSide(color: _primaryColor)),
       ),
     );
   }

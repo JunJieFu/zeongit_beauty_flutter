@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
@@ -377,7 +378,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                         ? null
                         : double.parse(_endRatioController.text);
                     widget.callback(widget.params);
-                    Navigator.maybePop(context);
+                    Get.back();
                   } catch (e) {
                     BotToast.showText(text: "输入有误");
                   }
@@ -391,8 +392,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
   SizedBox _buildLabel(String text) {
     return SizedBox(
       width: 70,
-      child: Text(text,
-          textScaleFactor: .85),
+      child: Text(text, textScaleFactor: .85),
     );
   }
 

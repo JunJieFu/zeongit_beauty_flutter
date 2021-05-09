@@ -6,6 +6,7 @@ import 'package:zeongitbeautyflutter/provider/fragment.getx_ctrl.dart';
 
 class WelcomePage extends StatelessWidget {
   final _fragmentGetxCtrl = Get.find<FragmentGetxCtrl>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +35,7 @@ class WelcomePage extends StatelessWidget {
                                   BorderSide(color: Colors.white, width: 1.5)),
                           onPressed: () {
                             _fragmentGetxCtrl.updateHadInit();
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (_) {
-                              return TabPage();
-                            }));
+                            Get.off(TabPage());
                           },
                           child: Text("进入首页"),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
@@ -26,7 +27,7 @@ class ForgetPage extends HookWidget {
       var result = await UserService.forgot(
           codeController.text, phone, passwordController.text);
       if (ResultUtil.check(result)) {
-        Navigator.popUntil(context, ModalRoute.withName(RoutesKey.SIGN_IN));
+        Get.until(ModalRoute.withName(RoutesKey.SIGN_IN));
       }
       loading.value = false;
     }

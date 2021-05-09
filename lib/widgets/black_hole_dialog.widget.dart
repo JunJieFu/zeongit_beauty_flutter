@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
@@ -14,7 +15,7 @@ class BlackHoleDialog extends HookWidget {
 
   final int id;
 
-  _buildLoading(BuildContext context) {
+  _buildLoading() {
     return AlertDialog(
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,15 +37,15 @@ class BlackHoleDialog extends HookWidget {
     );
   }
 
-  _buildMain(BuildContext context, ResultEntity<BlackHoleEntity> result) {
+  _buildMain(ResultEntity<BlackHoleEntity> result) {
     return _View(blackHole: result.data);
   }
 
-  _buildError(BuildContext context) => _buildLoading(context);
+  _buildError() => _buildLoading();
 
   @override
   Widget build(BuildContext context) {
-    Widget widget = _buildLoading(context);
+    Widget widget = _buildLoading();
 
     var snapshot =
         useFuture<ResultEntity<BlackHoleEntity>>(useMemoized(() async {
@@ -52,9 +53,9 @@ class BlackHoleDialog extends HookWidget {
       return PictureBlackHoleService.get(id);
     }), initialData: null);
     if (snapshot.hasData) {
-      widget = _buildMain(context, snapshot.data);
+      widget = _buildMain(snapshot.data);
     } else {
-      widget = _buildError(context);
+      widget = _buildError();
     }
     return widget;
   }
@@ -84,7 +85,7 @@ class _ViewState extends State<_View> {
       children: <Widget>[
         Container(
             padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-            width: MediaQuery.of(context).size.width,
+            width: Get.width,
             child: Flex(
               direction: Axis.horizontal,
               children: <Widget>[
@@ -156,9 +157,7 @@ class _ViewState extends State<_View> {
         ),
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return UserTabPage(id: user.id);
-        }));
+        Get.to(UserTabPage(id: user.id));
       },
     );
   }

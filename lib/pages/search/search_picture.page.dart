@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
@@ -55,9 +56,7 @@ class SearchPicturePage extends HookWidget {
             automaticallyImplyLeading: false,
             title: GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SearchPage(keyword: keyword, index: 0);
-                }));
+                Get.to(SearchPage(keyword: keyword, index: 0));
               },
               child: Text(
                 criteria.value.tagList,
@@ -68,10 +67,8 @@ class SearchPicturePage extends HookWidget {
               IconButton(
                 icon: Icon(MdiIcons.tune),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return SearchPictureTunePage(
-                        params: criteria.value, callback: _query);
-                  }));
+                  Get.to(SearchPictureTunePage(
+                      params: criteria.value, callback: _query));
                 },
               )
             ],

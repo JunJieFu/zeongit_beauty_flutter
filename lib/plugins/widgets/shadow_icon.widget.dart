@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:get/get.dart';
 
 class ShadowIcon extends StatelessWidget {
   ShadowIcon(this.icon, {Key key, this.color, this.size, this.boxShadow})
@@ -15,14 +14,15 @@ class ShadowIcon extends StatelessWidget {
 
   final BoxShadow boxShadow;
 
+  final _iconTheme = IconTheme.of(Get.context);
+
   @override
   Widget build(BuildContext context) {
-    final IconThemeData iconTheme = IconTheme.of(context);
     return Text(String.fromCharCode(icon.codePoint),
         style: TextStyle(
             color: color,
             fontFamily: icon.fontFamily,
-            fontSize: size ?? iconTheme.size,
+            fontSize: size ?? _iconTheme.size,
             shadows: [
               boxShadow ??
                   BoxShadow(

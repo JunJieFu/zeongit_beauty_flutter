@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/account/forgot.page.dart';
@@ -80,9 +81,7 @@ class SignCodePageState extends State<SignCodePage> {
                                 ],
                               )
                             : Text("获取验证码"),
-                        onPressed: () {
-                          _send(context);
-                        },
+                        onPressed: _send,
                       ),
                     ),
                   ),
@@ -99,7 +98,7 @@ class SignCodePageState extends State<SignCodePage> {
     super.dispose();
   }
 
-  _send(BuildContext context) async {
+  _send() async {
     if (_loading) return;
     setState(() {
       _loading = true;
@@ -111,13 +110,9 @@ class SignCodePageState extends State<SignCodePage> {
     });
     if (ResultUtil.check(result)) {
       if (widget.codeType == CodeTypeConstant.SIGN_UP) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return SignUpPage(_phoneController.text);
-        }));
+        Get.to(SignUpPage(_phoneController.text));
       } else if (widget.codeType == CodeTypeConstant.FORGOT) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return ForgetPage(_phoneController.text);
-        }));
+        Get.to(ForgetPage(_phoneController.text));
       }
     }
   }

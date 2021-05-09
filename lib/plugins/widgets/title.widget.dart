@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TitleWidget extends StatelessWidget {
   TitleWidget(
@@ -10,6 +11,6 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: Theme.of(context).textTheme.headline6);
+    return Text(text, style: Get.theme.textTheme.headline6);
   }
 }

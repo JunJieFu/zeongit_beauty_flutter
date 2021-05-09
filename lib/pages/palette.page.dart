@@ -3,8 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/widgets/card.widget.dart';
-import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/theme.getx_ctrl.dart';
 
 final _gap = StyleConfig.gap * 6;
@@ -15,7 +14,6 @@ class PalettePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var color = _themeGetxCtrl.primaryColor;
-    var isDark = _themeGetxCtrl.isDark;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -35,7 +33,7 @@ class PalettePage extends StatelessWidget {
                   ),
                   Switch(
                     value: _themeGetxCtrl.isDark,
-                    activeColor: Theme.of(context).primaryColor,
+                    activeColor: Get.theme.primaryColor,
                     onChanged: (_) {
                       _themeGetxCtrl.updateTheme();
                     },

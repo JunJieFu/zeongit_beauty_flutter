@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
@@ -25,7 +26,8 @@ class SearchUserPage extends HookWidget {
     criteria.value.nicknameList = keyword;
     var pagingHookResult = usePaging<UserInfoEntity, PageUserInfoEntity>(
         context,
-        (pageable) => UserInfoService.paging(pageable, criteria: criteria.value));
+        (pageable) =>
+            UserInfoService.paging(pageable, criteria: criteria.value));
 
     var refreshController = pagingHookResult.refreshController;
     var list = pagingHookResult.list;
@@ -44,9 +46,7 @@ class SearchUserPage extends HookWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return SearchPage(keyword: keyword, index: 1);
-              }));
+              Get.to(SearchPage(keyword: keyword, index: 1));
             },
             child: AppBar(
                 automaticallyImplyLeading: false,

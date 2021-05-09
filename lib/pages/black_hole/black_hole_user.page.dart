@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
@@ -53,7 +54,7 @@ class BlackHoleUserPage extends HookWidget {
                     child: Flex(
                       direction: Axis.horizontal,
                       children: <Widget>[
-                        _buildAvatar(context, user),
+                        _buildAvatar(user),
                         Expanded(
                           flex: 1,
                           child: Padding(
@@ -93,7 +94,7 @@ class BlackHoleUserPage extends HookWidget {
     );
   }
 
-  InkWell _buildAvatar(BuildContext context, UserBlackHoleEntity user) {
+  InkWell _buildAvatar(UserBlackHoleEntity user) {
     var size = 75.0;
     var padding = 8.0;
     return InkWell(
@@ -109,9 +110,7 @@ class BlackHoleUserPage extends HookWidget {
         ),
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return UserTabPage(id: user.id);
-        }));
+        Get.to(UserTabPage(id: user.id));
       },
     );
   }

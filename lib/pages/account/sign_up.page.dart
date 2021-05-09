@@ -29,11 +29,11 @@ class SignUpPage extends HookWidget {
       if (loading.value) return;
       loading.value = true;
       var result = await UserService.signUp(
-         codeController.text, phone, passwordController.text);
+          codeController.text, phone, passwordController.text);
       if (ResultUtil.check(result)) {
         await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
         await _userGetxCtrl.getInfo();
-        Navigator.popUntil(context, (route) => route.isFirst);
+        Get.until((route) => route.isFirst);
       }
       loading.value = false;
     }

@@ -2,6 +2,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
@@ -30,8 +31,7 @@ class DetailPage extends HookWidget {
 
   final int id;
 
-  _buildLoading(BuildContext context) {
-    var queryData = MediaQuery.of(context);
+  _buildLoading() {
     var pageGap = StyleConfig.gap * 3;
     return Scaffold(
         body: CustomScrollView(
@@ -40,18 +40,18 @@ class DetailPage extends HookWidget {
           leading: IconButton(
             icon: ShadowIcon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              Navigator.maybePop(context);
+              Get.back();
             },
           ),
           elevation: 1,
           //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
           floating: false,
-          expandedHeight: queryData.size.width,
+          expandedHeight: Get.width,
           //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
           flexibleSpace: FlexibleSpaceBar(
             background: Skeleton(
-              height: queryData.size.width,
-              width: queryData.size.width,
+              height: Get.width,
+              width: Get.width,
             ),
             collapseMode: CollapseMode.pin,
           ),
@@ -101,24 +101,24 @@ class DetailPage extends HookWidget {
     ));
   }
 
-  _buildMain(BuildContext context, ResultEntity<PictureEntity> result) {
+  _buildMain(ResultEntity<PictureEntity> result) {
     return _View(pictureResult: result);
   }
 
-  _buildError(BuildContext context) => _buildLoading(context);
+  _buildError() => _buildLoading();
 
   @override
   Widget build(BuildContext context) {
-    Widget widget = _buildLoading(context);
+    Widget widget = _buildLoading();
 
     var snapshot = useFuture<ResultEntity<PictureEntity>>(useMemoized(() async {
       await Future.delayed(Duration(milliseconds: 500));
       return await PictureService.get(id);
     }), initialData: null);
     if (snapshot.hasData) {
-      widget = _buildMain(context, snapshot.data);
+      widget = _buildMain(snapshot.data);
     } else {
-      widget = _buildError(context);
+      widget = _buildError();
     }
     return widget;
   }
@@ -153,7 +153,6 @@ class _ViewState extends State<_View> {
   @override
   Widget build(BuildContext context) {
     if (pictureResult.status == StatusCode.SUCCESS) {
-      var queryData = MediaQuery.of(context);
       var pageGap = StyleConfig.gap * 3;
       return Scaffold(
           body: CustomScrollView(
@@ -162,14 +161,13 @@ class _ViewState extends State<_View> {
             leading: IconButton(
               icon: ShadowIcon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                Navigator.maybePop(context);
+                Get.back();
               },
             ),
             elevation: 1,
             //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
             floating: false,
-            expandedHeight:
-                queryData.size.width * _picture.height / _picture.width,
+            expandedHeight: Get.width * _picture.height / _picture.width,
             //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
             flexibleSpace: FlexibleSpaceBar(
               background: _buildMainPicture(),
@@ -229,11 +227,8 @@ class _ViewState extends State<_View> {
                             Link(
                               "${_picture.viewAmount}",
                               onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (_) {
-                                  return DetailUserTabPage(
-                                      picture: _picture, index: 0);
-                                }));
+                                Get.to(DetailUserTabPage(
+                                    picture: _picture, index: 0));
                               },
                             ),
                             TextWidget("人阅读")
@@ -245,11 +240,8 @@ class _ViewState extends State<_View> {
                                 Link(
                                   "${_picture.likeAmount}",
                                   onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return DetailUserTabPage(
-                                          picture: _picture, index: 1);
-                                    }));
+                                    Get.to(DetailUserTabPage(
+                                        picture: _picture, index: 1));
                                   },
                                 ),
                                 TextWidget("人喜欢")
@@ -263,7 +255,7 @@ class _ViewState extends State<_View> {
                     ],
                   )),
               Divider(),
-              ..._buildTagList(pageGap, context),
+              ..._buildTagList(pageGap),
               Padding(
                 padding: EdgeInsets.all(pageGap),
                 child: Flex(
@@ -308,9 +300,7 @@ class _ViewState extends State<_View> {
       child: PictureWidget(_picture.url,
           style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return ViewPage(_picture.url);
-        }));
+        Get.to(ViewPage(_picture.url));
       },
     );
   }
@@ -331,14 +321,12 @@ class _ViewState extends State<_View> {
         ),
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return UserTabPage(id: _picture.user.id);
-        }));
+        Get.to(UserTabPage(id: _picture.user.id));
       },
     );
   }
 
-  _buildTagList(double pageGap, BuildContext context) {
+  _buildTagList(double pageGap) {
     if (_picture.tagList != null && _picture.tagList.length > 0) {
       return [
         Padding(
@@ -350,10 +338,7 @@ class _ViewState extends State<_View> {
                       ?.map((e) => ActionChip(
                           label: Text(e),
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return SearchTabPage(keyword: e);
-                            }));
+                            Get.to(SearchTabPage(keyword: e));
                           }))
                       ?.toList() ??
                   <Widget>[]),

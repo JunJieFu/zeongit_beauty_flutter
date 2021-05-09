@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
@@ -30,7 +31,7 @@ class PagePicture extends StatelessWidget {
   final VoidCallback refresh;
   final ChangePageCallback changePage;
 
-  _buildListWaterFall(BuildContext context) {
+  _buildListWaterFall() {
     return WaterfallFlow.builder(
         //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
@@ -54,20 +55,18 @@ class PagePicture extends StatelessWidget {
                     fit: BoxFit.cover,
                   )),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return DetailTabViewPage(
-                      list: list.map((it) => it.id).toList(), index: index);
-                }));
+                Get.to(DetailTabViewPage(
+                    list: list.map((it) => it.id).toList(), index: index));
               },
               onLongPress: () {
-                _remove(context, picture.id);
+                _remove(picture.id);
               });
         });
   }
 
-  _remove(BuildContext context, int id) {
+  _remove(int id) {
     showDialog(
-        context: context,
+        context: Get.context,
         builder: (ctx) {
           return AlertDialog(
             title: Text("提示"),
@@ -77,13 +76,11 @@ class PagePicture extends StatelessWidget {
                   style: TextButton.styleFrom(
                     primary: StyleConfig.warningColor,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop(this);
-                  },
+                  onPressed: Get.back,
                   child: Text("取消")),
               TextButton(
                   onPressed: () async {
-                    Navigator.of(context).pop(this);
+                    Get.back();
                     var result = await PictureService.remove(id);
                     if (ResultUtil.check(result)) {
                       BotToast.showText(text: "删除成功");
@@ -105,7 +102,7 @@ class PagePicture extends StatelessWidget {
         return ListView(
             physics: AlwaysScrollableScrollPhysics(), children: [emptyChild]);
       } else {
-        return _buildListWaterFall(context);
+        return _buildListWaterFall();
       }
     }
 

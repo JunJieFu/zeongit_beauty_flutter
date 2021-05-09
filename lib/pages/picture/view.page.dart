@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
@@ -48,7 +49,7 @@ class ViewPage extends HookWidget {
           leading: IconButton(
             icon: ShadowIcon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              Navigator.maybePop(context);
+              Get.back();
             },
           ),
           actions: [

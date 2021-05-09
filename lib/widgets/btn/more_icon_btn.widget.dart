@@ -1,5 +1,4 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
@@ -26,9 +25,9 @@ class MoreIconBtn extends StatelessWidget {
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
-  _remove(BuildContext context) {
+  _remove() {
     showDialog(
-        context: context,
+        context: Get.context,
         builder: (ctx) {
           return AlertDialog(
             title: Text("提示"),
@@ -38,13 +37,11 @@ class MoreIconBtn extends StatelessWidget {
                   style: TextButton.styleFrom(
                     primary: StyleConfig.warningColor,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop(this);
-                  },
+                  onPressed: Get.back,
                   child: Text("取消")),
               TextButton(
                   onPressed: () async {
-                    Navigator.of(context).pop(this);
+                    Get.back();
 //                    var result = await PictureService.remove(id);
 //                    if (ResultUtil.check(result)) {
 //                      Fluttertoast.showToast(
@@ -60,10 +57,10 @@ class MoreIconBtn extends StatelessWidget {
         });
   }
 
-  _hide(BuildContext context) {
+  _hide() {
     final privacy = picture.privacy == PrivacyState.PRIVATE.index;
     showDialog(
-        context: context,
+        context: Get.context,
         builder: (ctx) {
           return AlertDialog(
             title: Text("提示"),
@@ -73,13 +70,11 @@ class MoreIconBtn extends StatelessWidget {
                   style: TextButton.styleFrom(
                     primary: StyleConfig.warningColor,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop(this);
-                  },
+                  onPressed: Get.back,
                   child: Text("取消")),
               TextButton(
                   onPressed: () async {
-                    Navigator.of(context).pop(this);
+                    Get.back();
                     BotToast.showText(text: "尚未开发");
                   },
                   child: Text("确定"))
@@ -114,11 +109,8 @@ class MoreIconBtn extends StatelessWidget {
                                   title: buildListTileTitle("编辑",
                                       leftIcon: MdiIcons.image_edit_outline),
                                   onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return EditPage(picture,
-                                          callback: (picture) {});
-                                    }));
+                                    Get.to(EditPage(picture,
+                                        callback: (picture) {}));
                                   },
                                 ),
                                 Divider(height: 1),
@@ -129,8 +121,8 @@ class MoreIconBtn extends StatelessWidget {
                                           ? MdiIcons.eye_outline
                                           : MdiIcons.eye_off_outline),
                                   onTap: () {
-                                    Navigator.of(context).pop(this);
-                                    _hide(context);
+                                    Get.back();
+                                    _hide();
                                   },
                                 ),
                                 Divider(height: 1),
@@ -140,8 +132,8 @@ class MoreIconBtn extends StatelessWidget {
                                           ? MdiIcons.eye_off_outline
                                           : MdiIcons.delete_outline),
                                   onTap: () {
-                                    Navigator.of(context).pop(this);
-                                    _remove(context);
+                                    Get.back();
+                                    _remove();
                                   },
                                 )
                               ]
@@ -150,9 +142,9 @@ class MoreIconBtn extends StatelessWidget {
                                     title: buildListTileTitle("屏蔽",
                                         leftIcon: MdiIcons.shield_off_outline),
                                     onTap: () {
-                                      Navigator.of(context).pop(this);
+                                      Get.back();
                                       showDialog(
-                                          context: context,
+                                          context: Get.context,
                                           builder: (ctx) {
                                             return BlackHoleDialog(
                                               id: picture.id,
@@ -164,9 +156,9 @@ class MoreIconBtn extends StatelessWidget {
                                   title: buildListTileTitle("举报",
                                       leftIcon: MdiIcons.alert_octagon_outline),
                                   onTap: () {
-                                    Navigator.of(context).pop(this);
+                                    Get.back();
                                     showDialog(
-                                        context: context,
+                                        context: Get.context,
                                         builder: (ctx) {
                                           return ComplaintDialog(
                                             picture: picture,

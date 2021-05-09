@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 
 class SearchPage extends HookWidget {
@@ -12,12 +13,10 @@ class SearchPage extends HookWidget {
     var keywordController = useTextEditingController();
     keywordController.text = keyword;
     _search() {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        return SearchTabPage(
-          keyword: keywordController.text,
-          index: index,
-        );
-      }));
+      Get.off(SearchTabPage(
+        keyword: keywordController.text,
+        index: index,
+      ));
     }
 
     return Scaffold(

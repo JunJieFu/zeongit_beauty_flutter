@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const double _kWindowScreenPadding = 8.0;
 
@@ -107,12 +108,6 @@ class PopupContainer extends StatelessWidget {
 
   final Offset offset;
 
-  ///收起弹框
-  ///popup window dismiss
-  void _dismiss(BuildContext context) {
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     final RenderBox button =
@@ -140,7 +135,7 @@ class PopupContainer extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   onTap: () {
-                    _dismiss(context);
+                    Get.back();
                   },
                 ),
               ),
@@ -155,7 +150,7 @@ class PopupContainer extends StatelessWidget {
           ),
         ),
         onWillPop: () {
-          _dismiss(context);
+          Get.back();
           return Future.value(false);
         });
   }

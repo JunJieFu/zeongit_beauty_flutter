@@ -31,7 +31,7 @@ class SignInPage extends HookWidget {
       if (ResultUtil.check(result)) {
         await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
         await _userGetxCtrl.getInfo();
-        Navigator.maybePop(context);
+        Get.back();
       }
       loading.value = false;
     }
@@ -94,15 +94,11 @@ class SignInPage extends HookWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap / 2),
                     child: Link("忘记了登录密码？", onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return SignCodePage(CodeTypeConstant.FORGOT);
-                      }));
+                      Get.to(SignCodePage(CodeTypeConstant.FORGOT));
                     }),
                   ),
                   Link("没有登录账号，立即创建一个！", onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return SignCodePage(CodeTypeConstant.SIGN_UP);
-                    }));
+                    Get.to(SignCodePage(CodeTypeConstant.SIGN_UP));
                   }),
                 ],
               ),

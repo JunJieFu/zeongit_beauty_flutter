@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:zeongitbeautyflutter/pages/account/sign_in.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/card.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
@@ -61,7 +63,7 @@ class SignInPageCardWidget extends StatelessWidget {
       text: text,
       btnDesc: "登录",
       onPressed: () {
-        Navigator.pushNamed(context, RoutesKey.SIGN_IN);
+        Get.to(SignInPage());
       },
     );
   }

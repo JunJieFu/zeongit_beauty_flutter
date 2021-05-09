@@ -33,36 +33,10 @@ class FindPage extends HookWidget {
     controller?.refresh = () {
       refreshController.value.requestRefresh(duration: const Duration(milliseconds: 200));
     };
-
-    dateRefresh({DateTime dateTime}) {
-      dateRange.value.startDate = dateTime;
-      dateRange.value.endDate = dateTime;
-      refreshController.value.requestRefresh(needMove: false);
-    }
-
-    showStartDatePicker() async {
-      var dateTime = await showDatePicker(
-          context: context,
-          initialDate: dateRange.value?.startDate ?? DateTime.now(),
-          firstDate: DateTime(2015),
-          lastDate: DateTime.now());
-      dateRefresh(dateTime: dateTime);
-    }
-
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text("发现"),
-//          actions: [
-//            IconButton(
-//              icon: Icon(MdiIcons.calendar_month_outline),
-//              onPressed: showStartDatePicker,
-//            ),
-//            IconButton(
-//              icon: Icon(MdiIcons.refresh),
-//              onPressed: dateRefresh,
-//            )
-//          ],
+          title: Text("发现")
         ),
         body: PagePicture(
           currPage: currPage.value,
