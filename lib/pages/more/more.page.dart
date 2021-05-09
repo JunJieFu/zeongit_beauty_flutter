@@ -22,7 +22,6 @@ class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
