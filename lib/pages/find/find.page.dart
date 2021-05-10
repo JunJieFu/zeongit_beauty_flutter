@@ -26,7 +26,7 @@ class FindPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(elevation: 0, title: Text("发现")),
         body: Obx(
-              () => PagePicture2(
+              () => PagePicture(
             meta: meta.value,
             list: findLogic.list,
             refreshController: findLogic.refreshController,

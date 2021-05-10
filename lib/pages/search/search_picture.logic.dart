@@ -5,12 +5,27 @@ import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 
-
-class FindLogic extends GetxController
+class SearchPictureLogic extends GetxController
     with PagingMixin<PictureEntity, PagePictureEntity> {
+  SearchPictureLogic(this.keyword);
 
-  final dateRange = DateRange().obs;
+  final criteria = SearchPictureTune().obs;
+
+  final String keyword;
+
+  query(SearchPictureTune tune) {
+    criteria.value = tune;
+    refreshController.requestRefresh(needMove: false);
+  }
 
   @override
-  dao(pageable) => PictureService.pagingByRecommend(pageable);
+  void onInit() {
+    super.onInit();
+    criteria.value.tagList = keyword;
+  }
+
+  @override
+  dao(pageable) =>
+      PictureService.paging(pageable, criteria: criteria.value);
+
 }

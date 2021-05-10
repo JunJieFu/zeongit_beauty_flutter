@@ -42,7 +42,7 @@ class NewPage extends StatelessWidget {
           ],
         ),
         body: Obx(
-          () => PagePicture2(
+          () => PagePicture(
             meta: meta.value,
             list: newLogic.list,
             refreshController: newLogic.refreshController,
