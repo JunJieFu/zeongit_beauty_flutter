@@ -8,8 +8,10 @@ import 'package:zeongitbeautyflutter/assets/entity/footprint_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_collection_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_footprint_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
+import 'package:zeongitbeautyflutter/pages/find/find.logic.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail_tab_view.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
@@ -76,7 +78,7 @@ class PagePicture extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Column(
-                        crossAxisAlignment:CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               picture.name,
@@ -86,14 +88,16 @@ class PagePicture extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 textScaleFactor: .8,
                                 style: TextStyle(
-                                    color:
-                                    Theme.of(context).textTheme.bodyText1.color.withOpacity(.56))
-                            )
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .color
+                                        .withOpacity(.56)))
                           ],
                         ),
                         flex: 1,
                       ),
-                      CollectIconBtn(picture: picture,small: true),
+                      CollectIconBtn(picture: picture, small: true),
                     ],
                   ),
                 )
@@ -154,6 +158,147 @@ class PagePicture extends StatelessWidget {
           await changePage(currPage.meta.currentPage + 1);
         },
         child: buildIf());
+  }
+}
+
+class PagePicture2 extends StatelessWidget {
+  PagePicture2({
+    Key key,
+    @required this.emptyChild,
+    @required this.meta,
+    @required this.list,
+    @required this.refreshController,
+    @required this.refresh,
+    @required this.changePage,
+    this.callback,
+  }) : super(key: key);
+  final Widget emptyChild;
+  final Meta meta;
+  final RxList<PictureEntity> list;
+  final RefreshController refreshController;
+  final VoidCallback refresh;
+  final ChangePageCallback changePage;
+  final Function callback;
+
+  _buildListWaterFall() {
+    return WaterfallFlow.builder(
+        padding: EdgeInsets.all(StyleConfig.listGap),
+        gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: StyleConfig.listGap,
+            mainAxisSpacing: StyleConfig.listGap),
+        itemCount: list?.length,
+        itemBuilder: (BuildContext context, int index) {
+          PictureEntity picture = list[index];
+          var aspectRatio = 1.0;
+          if (picture.width != 0 && picture.height != 0) {
+            aspectRatio = picture.width / picture.height;
+          }
+          return Card(
+            child: Column(
+              children: [
+                ImageInk(
+                    child: AspectRatio(
+                        aspectRatio: aspectRatio,
+                        child: PictureWidget(
+                          picture.url,
+                          style: PictureStyle.specifiedWidth500,
+                          fit: BoxFit.cover,
+                        )),
+                    onTap: () {
+                      Get.to(DetailTabViewPage(
+                          list: list.map((e) => e.id).toList(), index: index));
+                    },
+                    onLongPress: () {
+                      _remove(picture.id);
+                    }),
+                Padding(
+                  padding: EdgeInsets.all(StyleConfig.gap * 3),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              picture.name,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(picture.user.nickname,
+                                overflow: TextOverflow.ellipsis,
+                                textScaleFactor: .8,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .color
+                                        .withOpacity(.56)))
+                          ],
+                        ),
+                        flex: 1,
+                      ),
+                      CollectIconBtn(
+                          picture: picture,
+                          small: true,
+                          callback: (p, f) {
+                            list[index].focus = f;
+                            list.refresh();
+                          }),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  _remove(int id) {
+    showDialog(
+        context: Get.context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Text("您确定删除该图片吗？"),
+            actions: <Widget>[
+              TextButton(
+                  style: TextButton.styleFrom(
+                    primary: StyleConfig.warningColor,
+                  ),
+                  onPressed: Get.back,
+                  child: Text("取消")),
+              TextButton(
+                  onPressed: () async {
+                    Get.back();
+                    var result = await PictureService.remove(id);
+                    if (ResultUtil.check(result)) {
+                      BotToast.showText(text: "删除成功");
+                    }
+                  },
+                  child: Text("确定"))
+            ],
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => SmartRefresher(
+          controller: refreshController,
+          enablePullDown: true,
+          enablePullUp: meta != null && !meta.last,
+          onRefresh: refresh,
+          onLoading: () async {
+            await changePage(meta.currentPage + 1);
+          },
+          child: meta != null && meta.empty && meta.first && meta.last
+              ? ListView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  children: [emptyChild])
+              : _buildListWaterFall()),
+    );
   }
 }
 

@@ -8,6 +8,7 @@ class DetailTabViewPage extends HookWidget {
       : super(key: key);
 
   final List<int> list;
+
   final int index;
 
   @override
