@@ -11,11 +11,14 @@ import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowIconBtn extends HookWidget {
-  FollowIconBtn({Key key, @required this.user, @required this.callback})
+  FollowIconBtn(
+      {Key key, @required this.user, this.callback, this.small = false})
       : super(key: key);
   final UserInfoEntity user;
 
   final void Function(UserInfoEntity, int) callback;
+
+  final bool small;
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
@@ -36,10 +39,20 @@ class FollowIconBtn extends HookWidget {
       }
     }
 
-    return IconButton(
-        key: _btnKey,
-        icon: Icon(focus ? Icons.star : Icons.star_border,
-            color: focus ? StyleConfig.errorColor : null),
-        onPressed: onPressed);
+    return SizedBox(
+      width: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      height: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      child: IconButton(
+          key: _btnKey,
+          iconSize:
+              small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
+          icon: Icon(focus ? Icons.star : Icons.star_border,
+              color: focus ? StyleConfig.errorColor : null),
+          onPressed: onPressed),
+    );
   }
 }

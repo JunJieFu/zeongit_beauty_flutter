@@ -19,4 +19,8 @@ class StyleConfig {
   static final pictureRadius = 2.0;
   static final durationMilliseconds = 200;
   static final buttonHeight = 46.0;
+  static final defaultIconButtonSize = 48.0;
+  static final defaultIconSize = 24.0;
+  static final smallIconButtonSize = 32.0;
+  static final smallIconSize = 20.0;
 }

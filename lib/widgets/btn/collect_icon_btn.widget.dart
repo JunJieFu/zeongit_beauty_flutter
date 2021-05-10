@@ -11,11 +11,14 @@ import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class CollectIconBtn extends HookWidget {
-  CollectIconBtn({Key key, @required this.picture, @required this.callback})
+  CollectIconBtn(
+      {Key key, @required this.picture, this.callback, this.small = false})
       : super(key: key);
   final PictureEntity picture;
 
   final void Function(PictureEntity picture, int focus) callback;
+
+  final bool small;
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
@@ -30,18 +33,29 @@ class CollectIconBtn extends HookWidget {
         loading.value = true;
         var result = await CollectionService.focus(picture.id);
         loading.value = false;
-        if (ResultUtil.check(result)) callback(picture, result.data);
+        if (ResultUtil.check(result) && callback != null)
+          callback(picture, result.data);
       } else {
         popupSignIn("喜欢这张绘画？", "请先登录，然后才能把这张绘画添加到收藏夹。", context, _btnKey);
       }
     }
 
-    return IconButton(
-        key: _btnKey,
-        icon: Icon(focus || loading.value ? Icons.star : Icons.star_border,
-            color: loading.value
-                ? StyleConfig.textColor
-                : (focus ? StyleConfig.errorColor : null)),
-        onPressed: onPressed);
+    return SizedBox(
+      width: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      height: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      child: IconButton(
+          key: _btnKey,
+          iconSize:
+              small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
+          icon: Icon(focus || loading.value ? Icons.star : Icons.star_border,
+              color: loading.value
+                  ? StyleConfig.textColor
+                  : (focus ? StyleConfig.errorColor : null)),
+          onPressed: onPressed),
+    );
   }
 }

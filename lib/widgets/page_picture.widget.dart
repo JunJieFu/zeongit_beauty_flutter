@@ -15,6 +15,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/picture.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 
 typedef ChangePageCallback = Future<void> Function(int pageIndex);
 
@@ -50,24 +51,54 @@ class PagePicture extends StatelessWidget {
           if (picture.width != 0 && picture.height != 0) {
             aspectRatio = picture.width / picture.height;
           }
-          return Column(
-            children: [
-              ImageInk(
-                  child: AspectRatio(
-                      aspectRatio: aspectRatio,
-                      child: PictureWidget(
-                        picture.url,
-                        style: PictureStyle.specifiedWidth500,
-                        fit: BoxFit.cover,
-                      )),
-                  onTap: () {
-                    Get.to(DetailTabViewPage(
-                        list: list.map((e) => e.id).toList(), index: index));
-                  },
-                  onLongPress: () {
-                    _remove(picture.id);
-                  }),
-            ],
+          return Card(
+            child: Column(
+              children: [
+                ImageInk(
+                    child: AspectRatio(
+                        aspectRatio: aspectRatio,
+                        child: PictureWidget(
+                          picture.url,
+                          style: PictureStyle.specifiedWidth500,
+                          fit: BoxFit.cover,
+                        )),
+                    onTap: () {
+                      Get.to(DetailTabViewPage(
+                          list: list.map((e) => e.id).toList(), index: index));
+                    },
+                    onLongPress: () {
+                      _remove(picture.id);
+                    }),
+                Padding(
+                  padding: EdgeInsets.all(StyleConfig.gap * 3),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      Expanded(
+                        child: Column(
+                        crossAxisAlignment:CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              picture.name,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(picture.user.nickname,
+                                overflow: TextOverflow.ellipsis,
+                                textScaleFactor: .8,
+                                style: TextStyle(
+                                    color:
+                                    Theme.of(context).textTheme.bodyText1.color.withOpacity(.56))
+                            )
+                          ],
+                        ),
+                        flex: 1,
+                      ),
+                      CollectIconBtn(picture: picture,small: true),
+                    ],
+                  ),
+                )
+              ],
+            ),
           );
         });
   }
@@ -168,7 +199,8 @@ class PageCollection extends StatelessWidget {
                       )),
                   onTap: () {
                     Get.to(DetailTabViewPage(
-                        list: list.map((e) => e.pictureId).toList(), index: index));
+                        list: list.map((e) => e.pictureId).toList(),
+                        index: index));
                   },
                   onLongPress: () {
                     _remove(picture.id);
@@ -251,7 +283,7 @@ class PageFootprint extends StatelessWidget {
 
   _buildListWaterFall() {
     return WaterfallFlow.builder(
-      //cacheExtent: 0.0,
+        //cacheExtent: 0.0,
         padding: EdgeInsets.all(StyleConfig.listGap),
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -261,7 +293,7 @@ class PageFootprint extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final picture = list[index].picture;
           var aspectRatio =
-          picture != null ? picture.width / picture.height : 1.0;
+              picture != null ? picture.width / picture.height : 1.0;
           return Column(
             children: [
               ImageInk(
@@ -274,7 +306,8 @@ class PageFootprint extends StatelessWidget {
                       )),
                   onTap: () {
                     Get.to(DetailTabViewPage(
-                        list: list.map((e) => e.pictureId).toList(), index: index));
+                        list: list.map((e) => e.pictureId).toList(),
+                        index: index));
                   },
                   onLongPress: () {
                     _remove(picture.id);

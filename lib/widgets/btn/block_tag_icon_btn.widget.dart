@@ -5,17 +5,21 @@ import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
+import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class BlockTagIconBtn extends HookWidget {
-  BlockTagIconBtn({Key key, @required this.tag, @required this.callback})
+  BlockTagIconBtn(
+      {Key key, @required this.tag, this.callback, this.small = false})
       : super(key: key);
   final TagBlackHoleEntity tag;
 
   final Function callback;
+
+  final bool small;
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
@@ -36,9 +40,19 @@ class BlockTagIconBtn extends HookWidget {
       }
     }
 
-    return IconButton(
-        key: _btnKey,
-        icon: Icon(normal ? MdiIcons.eye_off_outline : MdiIcons.eye_outline),
-        onPressed: onPressed);
+    return SizedBox(
+      width: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      height: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      child: IconButton(
+          key: _btnKey,
+          iconSize:
+              small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
+          icon: Icon(normal ? MdiIcons.eye_off_outline : MdiIcons.eye_outline),
+          onPressed: onPressed),
+    );
   }
 }

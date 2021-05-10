@@ -15,13 +15,16 @@ import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 // 应该用状态管理才对
 class MoreIconBtn extends StatelessWidget {
-  MoreIconBtn({Key key, @required this.picture, this.callback})
+  MoreIconBtn(
+      {Key key, @required this.picture, this.callback, this.small = false})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
   final PictureEntity picture;
 
   final Function callback;
+
+  final bool small;
 
   final _userGetxCtrl = Get.find<UserGetxCtrl>();
 
@@ -86,98 +89,110 @@ class MoreIconBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final privacy = picture.privacy == PrivacyState.PRIVATE.index;
-    return IconButton(
-      key: _btnKey,
-      icon: Icon(Icons.more_vert),
-      onPressed: () {
-        if (_userGetxCtrl.info != null) {
-          Navigator.push(
-            context,
-            PopupContainerRoute(
-              child: PopupContainer(
-                targetRenderKey: _btnKey,
-                child: Card(
-                  child: Container(
-                    width: 150,
-                    child: Obx(
-                      () => Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: _userGetxCtrl.info.id == picture.user.id
-                            ? [
-                                Divider(height: 1),
-                                ListTile(
-                                  title: buildListTileTitle("编辑",
-                                      leftIcon: MdiIcons.image_edit_outline),
-                                  onTap: () {
-                                    Get.to(EditPage(picture,
-                                        callback: (picture) {}));
-                                  },
-                                ),
-                                Divider(height: 1),
-                                ListTile(
-                                  title: buildListTileTitle(
-                                      privacy ? "公开" : "隐藏",
-                                      leftIcon: privacy
-                                          ? MdiIcons.eye_outline
-                                          : MdiIcons.eye_off_outline),
-                                  onTap: () {
-                                    Get.back();
-                                    _hide();
-                                  },
-                                ),
-                                Divider(height: 1),
-                                ListTile(
-                                  title: buildListTileTitle("删除",
-                                      leftIcon: privacy
-                                          ? MdiIcons.eye_off_outline
-                                          : MdiIcons.delete_outline),
-                                  onTap: () {
-                                    Get.back();
-                                    _remove();
-                                  },
-                                )
-                              ]
-                            : [
-                                ListTile(
-                                    title: buildListTileTitle("屏蔽",
-                                        leftIcon: MdiIcons.shield_off_outline),
+    return SizedBox(
+      width: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      height: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      child: IconButton(
+        key: _btnKey,
+        iconSize:
+            small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
+        icon: Icon(Icons.more_vert),
+        onPressed: () {
+          if (_userGetxCtrl.info != null) {
+            Navigator.push(
+              context,
+              PopupContainerRoute(
+                child: PopupContainer(
+                  targetRenderKey: _btnKey,
+                  child: Card(
+                    child: Container(
+                      width: 150,
+                      child: Obx(
+                        () => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: _userGetxCtrl.info.id == picture.user.id
+                              ? [
+                                  Divider(height: 1),
+                                  ListTile(
+                                    title: buildListTileTitle("编辑",
+                                        leftIcon: MdiIcons.image_edit_outline),
+                                    onTap: () {
+                                      Get.to(EditPage(picture,
+                                          callback: (picture) {}));
+                                    },
+                                  ),
+                                  Divider(height: 1),
+                                  ListTile(
+                                    title: buildListTileTitle(
+                                        privacy ? "公开" : "隐藏",
+                                        leftIcon: privacy
+                                            ? MdiIcons.eye_outline
+                                            : MdiIcons.eye_off_outline),
+                                    onTap: () {
+                                      Get.back();
+                                      _hide();
+                                    },
+                                  ),
+                                  Divider(height: 1),
+                                  ListTile(
+                                    title: buildListTileTitle("删除",
+                                        leftIcon: privacy
+                                            ? MdiIcons.eye_off_outline
+                                            : MdiIcons.delete_outline),
+                                    onTap: () {
+                                      Get.back();
+                                      _remove();
+                                    },
+                                  )
+                                ]
+                              : [
+                                  ListTile(
+                                      title: buildListTileTitle("屏蔽",
+                                          leftIcon:
+                                              MdiIcons.shield_off_outline),
+                                      onTap: () {
+                                        Get.back();
+                                        showDialog(
+                                            context: Get.context,
+                                            builder: (ctx) {
+                                              return BlackHoleDialog(
+                                                id: picture.id,
+                                              );
+                                            });
+                                      }),
+                                  Divider(height: 1),
+                                  ListTile(
+                                    title: buildListTileTitle("举报",
+                                        leftIcon:
+                                            MdiIcons.alert_octagon_outline),
                                     onTap: () {
                                       Get.back();
                                       showDialog(
                                           context: Get.context,
                                           builder: (ctx) {
-                                            return BlackHoleDialog(
-                                              id: picture.id,
+                                            return ComplaintDialog(
+                                              picture: picture,
                                             );
                                           });
-                                    }),
-                                Divider(height: 1),
-                                ListTile(
-                                  title: buildListTileTitle("举报",
-                                      leftIcon: MdiIcons.alert_octagon_outline),
-                                  onTap: () {
-                                    Get.back();
-                                    showDialog(
-                                        context: Get.context,
-                                        builder: (ctx) {
-                                          return ComplaintDialog(
-                                            picture: picture,
-                                          );
-                                        });
-                                  },
-                                )
-                              ],
+                                    },
+                                  )
+                                ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        } else {
-          popupSignIn("想要关于绘画的更多操作？", "请先登录，然后才能获取更多绘画操作。", context, _btnKey);
-        }
-      },
+            );
+          } else {
+            popupSignIn("想要关于绘画的更多操作？", "请先登录，然后才能获取更多绘画操作。", context, _btnKey);
+          }
+        },
+      ),
     );
   }
 }
