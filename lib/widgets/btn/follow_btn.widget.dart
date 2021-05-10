@@ -6,7 +6,7 @@ import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowBtn extends HookWidget {
@@ -17,7 +17,7 @@ class FollowBtn extends HookWidget {
 
   final void Function(UserInfoEntity, int) callback;
 
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class FollowBtn extends HookWidget {
     final GlobalKey _btnKey = GlobalKey();
     final loading = useState(false);
     Future<void> onPressed() async {
-      if (_userGetxCtrl.info != null) {
+      if (_userLogic.info != null) {
         if (loading.value) return;
         loading.value = true;
         var result = await FollowingService.follow(user.id);

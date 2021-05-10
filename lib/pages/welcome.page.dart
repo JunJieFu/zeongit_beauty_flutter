@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/pages/home/tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
-import 'package:zeongitbeautyflutter/provider/fragment.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/fragment.logic.dart';
 
 class WelcomePage extends StatelessWidget {
-  final _fragmentGetxCtrl = Get.find<FragmentGetxCtrl>();
+  final _fragmentLogic = Get.find<FragmentLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +32,7 @@ class WelcomePage extends StatelessWidget {
                               primary: Colors.white,
                               side:
                                   BorderSide(color: Colors.white, width: 1.5)),
-                          onPressed: () {
-                            _fragmentGetxCtrl.updateHadInit();
-                            Get.off(TabPage());
-                          },
+                          onPressed: _fragmentLogic.updateHadInit,
                           child: Text("进入首页"),
                         ),
                       ),

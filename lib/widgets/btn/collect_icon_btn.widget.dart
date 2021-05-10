@@ -7,7 +7,7 @@ import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class CollectIconBtn extends HookWidget {
@@ -20,7 +20,7 @@ class CollectIconBtn extends HookWidget {
 
   final bool small;
 
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CollectIconBtn extends HookWidget {
     final GlobalKey _btnKey = GlobalKey();
     final loading = useState(false);
     Future<void> onPressed() async {
-      if (_userGetxCtrl.info != null) {
+      if (_userLogic.info != null) {
         if (loading.value) return;
         loading.value = true;
         var result = await CollectionService.focus(picture.id);

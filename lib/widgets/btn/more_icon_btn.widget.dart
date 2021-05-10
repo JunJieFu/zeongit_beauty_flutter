@@ -8,7 +8,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/black_hole_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/complaint_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
@@ -26,7 +26,7 @@ class MoreIconBtn extends StatelessWidget {
 
   final bool small;
 
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
 
   _remove() {
     showDialog(
@@ -102,7 +102,7 @@ class MoreIconBtn extends StatelessWidget {
             small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
         icon: Icon(Icons.more_vert),
         onPressed: () {
-          if (_userGetxCtrl.info != null) {
+          if (_userLogic.info != null) {
             Navigator.push(
               context,
               PopupContainerRoute(
@@ -114,7 +114,7 @@ class MoreIconBtn extends StatelessWidget {
                       child: Obx(
                         () => Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: _userGetxCtrl.info.id == picture.user.id
+                          children: _userLogic.info.id == picture.user.id
                               ? [
                                   Divider(height: 1),
                                   ListTile(

@@ -8,16 +8,12 @@ import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 
-typedef RefreshControllerCallback = RefreshController Function();
-typedef PageableEntityCallback = PageableEntity Function();
-typedef Dao<P> = Future<ResultEntity<P>> Function(PageableEntity pageable);
 
 class FindLogic extends GetxController
     with PagingMixin<PictureEntity, PagePictureEntity> {
-  FindLogic();
 
   final dateRange = DateRange().obs;
 
   @override
-  var dao = (pageable) => PictureService.pagingByRecommend(pageable);
+  dao(pageable) => PictureService.pagingByRecommend(pageable);
 }

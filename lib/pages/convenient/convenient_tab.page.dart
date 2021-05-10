@@ -6,7 +6,7 @@ import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following_new.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class ConvenientTabPage extends HookWidget {
@@ -14,7 +14,7 @@ class ConvenientTabPage extends HookWidget {
 
   final CustomRefreshController controller;
 
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
 
   final _tabList = [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
 
@@ -35,7 +35,7 @@ class ConvenientTabPage extends HookWidget {
       };
     }, []);
     return Obx(() {
-      if (_userGetxCtrl.info == null) {
+      if (_userLogic.info == null) {
         return Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -63,9 +63,9 @@ class ConvenientTabPage extends HookWidget {
                 FollowingNewPage(controller: followingNewController),
                 CollectionPage(
                     controller: collectionController,
-                    id: _userGetxCtrl.info.id),
+                    id: _userLogic.info.id),
                 FollowingPage(
-                    controller: followingController, id: _userGetxCtrl.info.id),
+                    controller: followingController, id: _userLogic.info.id),
               ],
             ));
       }

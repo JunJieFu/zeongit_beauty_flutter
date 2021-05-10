@@ -13,19 +13,19 @@ import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/background.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
-import 'package:zeongitbeautyflutter/provider/theme.getx_ctrl.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/theme.logic.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (_userGetxCtrl.info == null) {
+      if (_userLogic.info == null) {
         return SignInPageCardWidget(
             icon: MdiIcons.dots_horizontal,
             title: "更多",
@@ -37,7 +37,7 @@ class MorePage extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 2,
                 child: BackgroundWidget(
-                  _userGetxCtrl.info?.background,
+                  _userLogic.info?.background,
                   fit: BoxFit.cover,
                   style: BackgroundStyle.backCard,
                 ),
@@ -51,24 +51,24 @@ class MorePage extends StatelessWidget {
             ]),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap * 3),
-              child: Center(child: TitleWidget(_userGetxCtrl.info.nickname)),
+              child: Center(child: TitleWidget(_userLogic.info.nickname)),
             ),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap),
-              child: Center(child: TextWidget(_userGetxCtrl.info.introduction)),
+              child: Center(child: TextWidget(_userLogic.info.introduction)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ShareUserIconBtn(
-                  user: _userGetxCtrl.info,
+                  user: _userLogic.info,
                   callback: () {},
                 ),
               ],
             ),
             ..._buildListTile(MdiIcons.shoe_print, "足迹", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FootprintPage(id: _userGetxCtrl.info.id);
+                return FootprintPage(id: _userLogic.info.id);
               }));
             }),
             ..._buildListTile(MdiIcons.upload_outline, "上传", () {
@@ -112,7 +112,7 @@ class MorePage extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
       child: AvatarWidget(
-          _userGetxCtrl.info?.avatarUrl, _userGetxCtrl.info?.nickname,
+          _userLogic.info?.avatarUrl, _userLogic.info?.nickname,
           fit: BoxFit.cover, size: size),
     );
   }
@@ -143,7 +143,7 @@ class MorePage extends StatelessWidget {
                   child: Text("取消")),
               TextButton(
                   onPressed: () {
-                    _userGetxCtrl.logout();
+                    _userLogic.logout();
                     Get.back();
                   },
                   child: Text("确定"))

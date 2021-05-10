@@ -8,7 +8,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 
 final _gap = StyleConfig.gap * 6;
 
@@ -17,7 +17,7 @@ class SignUpPage extends HookWidget {
 
   final String phone;
 
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class SignUpPage extends HookWidget {
           codeController.text, phone, passwordController.text);
       if (ResultUtil.check(result)) {
         await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
-        await _userGetxCtrl.getInfo();
+        await _userLogic.getInfo();
         Get.until((route) => route.isFirst);
       }
       loading.value = false;

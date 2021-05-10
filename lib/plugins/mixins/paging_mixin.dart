@@ -1,16 +1,19 @@
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
-import 'package:zeongitbeautyflutter/pages/find/find.logic.dart';
+
+typedef RefreshControllerCallback = RefreshController Function();
+typedef PageableEntityCallback = PageableEntity Function();
 
 abstract class Paging<M, P extends dynamic> {
-  Dao<P> dao;
   final refreshController = RefreshController(initialRefresh: true);
   final pageable = PageableEntity();
   final loading = false.obs;
   final list = RxList<M>([]);
   final meta = Rx<Meta>(null);
+  Future<ResultEntity<P>> dao(PageableEntity pageable);
 }
 
 mixin PagingMixin<M, P extends dynamic> on GetxController

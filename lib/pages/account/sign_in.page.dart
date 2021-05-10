@@ -11,12 +11,12 @@ import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/icon_text_field.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
-import 'package:zeongitbeautyflutter/provider/user.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/user.logic.dart';
 
 final _gap = StyleConfig.gap * 6;
 
 class SignInPage extends HookWidget {
-  final _userGetxCtrl = Get.find<UserGetxCtrl>();
+  final _userLogic = Get.find<UserLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class SignInPage extends HookWidget {
           phoneController.text, passwordController.text);
       if (ResultUtil.check(result)) {
         await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
-        await _userGetxCtrl.getInfo();
+        await _userLogic.getInfo();
         Get.back();
       }
       loading.value = false;

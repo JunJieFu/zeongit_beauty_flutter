@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
+import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
-import 'package:zeongitbeautyflutter/provider/theme.getx_ctrl.dart';
+import 'package:zeongitbeautyflutter/provider/theme.logic.dart';
 
 final _gap = StyleConfig.gap * 6;
 
 class PalettePage extends StatelessWidget {
-  final _themeGetxCtrl = Get.find<ThemeGetxCtrl>();
+  final _themeLogic = Get.find<ThemeLogic>();
 
   @override
   Widget build(BuildContext context) {
-    var color = _themeGetxCtrl.primaryColor;
+    var color = _themeLogic.primaryColor;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -32,10 +34,10 @@ class PalettePage extends StatelessWidget {
                     flex: 1,
                   ),
                   Switch(
-                    value: _themeGetxCtrl.isDark,
+                    value: Get.theme.brightness == Brightness.dark,
                     activeColor: Get.theme.primaryColor,
-                    onChanged: (_) {
-                      _themeGetxCtrl.updateTheme();
+                    onChanged: (bool value) {
+                      _themeLogic.changeTheme(isDark: value);
                     },
                   )
                 ],
@@ -55,8 +57,8 @@ class PalettePage extends StatelessWidget {
                         IconButton(
                           icon: Icon(MdiIcons.refresh),
                           onPressed: () {
-                            _themeGetxCtrl
-                                .updatePrimaryColor(StyleConfig.primaryColor);
+                            _themeLogic.changeTheme(
+                                color: StyleConfig.primaryColor);
                           },
                         )
                       ],
@@ -64,7 +66,7 @@ class PalettePage extends StatelessWidget {
                   ),
                   ColorPicker(
                     enableAlpha: false,
-                    pickerColor: _themeGetxCtrl.primaryColor,
+                    pickerColor: color,
                     onColorChanged: (c) {
                       color = c;
                     },
@@ -78,7 +80,7 @@ class PalettePage extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
-                            _themeGetxCtrl.updatePrimaryColor(color);
+                            _themeLogic.changeTheme(color: color);
                           },
                           child: Text("设置主题色")),
                     ),

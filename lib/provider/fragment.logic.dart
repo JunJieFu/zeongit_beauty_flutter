@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:zeongitbeautyflutter/pages/home/tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 
-class FragmentGetxCtrl extends GetxController {
+class FragmentLogic extends GetxController {
   final _hasInit =
       (StorageManager.get<bool>(KeyConstant.HAD_INIT) ?? false).obs;
 
@@ -10,6 +11,6 @@ class FragmentGetxCtrl extends GetxController {
 
   updateHadInit() {
     StorageManager.setBool(KeyConstant.HAD_INIT, true);
-    _hasInit.value = true;
+    Get.off(TabPage());
   }
 }
