@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/collection_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_collection_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
@@ -20,7 +20,7 @@ class CollectionPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pagingHookResult = usePaging<PictureEntity, PagePictureEntity>(
+    var pagingHookResult = usePaging<CollectionEntity, PageCollectionEntity>(
         context, (pageable) => CollectionService.paging(pageable, id));
 
     var refreshController = pagingHookResult.refreshController;
@@ -36,7 +36,7 @@ class CollectionPage extends HookWidget {
 
     return KeepAliveClient(
       child: Scaffold(
-          body: PagePicture(
+          body: PageCollection(
         currPage: currPage.value,
         list: list.value,
         refreshController: refreshController.value,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/footprint_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_footprint_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
@@ -19,7 +19,7 @@ class FootprintPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pagingHookResult = usePaging<PictureEntity, PagePictureEntity>(
+    var pagingHookResult = usePaging<FootprintEntity, PageFootprintEntity>(
         context, (pageable) => FootprintService.paging(pageable, id));
 
     var refreshController = pagingHookResult.refreshController;
@@ -33,7 +33,7 @@ class FootprintPage extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(title: Text("足迹")),
-        body: PagePicture(
+        body: PageFootprint(
           currPage: currPage.value,
           list: list.value,
           refreshController: refreshController.value,

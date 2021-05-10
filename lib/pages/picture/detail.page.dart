@@ -102,7 +102,7 @@ class DetailPage extends HookWidget {
   }
 
   _buildMain(ResultEntity<PictureEntity> result) {
-    return _View(pictureResult: result);
+    return PictureDetail2Page(pictureResult: result);
   }
 
   _buildError() => _buildLoading();
@@ -124,8 +124,8 @@ class DetailPage extends HookWidget {
   }
 }
 
-class _View extends StatefulWidget {
-  _View({Key key, @required this.pictureResult}) : super(key: key);
+class PictureDetail2Page extends StatefulWidget {
+  PictureDetail2Page({Key key, @required this.pictureResult}) : super(key: key);
 
   final ResultEntity<PictureEntity> pictureResult;
 
@@ -133,7 +133,7 @@ class _View extends StatefulWidget {
   _ViewState createState() => _ViewState(pictureResult);
 }
 
-class _ViewState extends State<_View> {
+class _ViewState extends State<PictureDetail2Page> {
   //目的为了脱离上级参数，因为要做识图的更改
   _ViewState(this.pictureResult);
 

@@ -4,6 +4,8 @@ import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/complaint.entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/feedback.entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_collection_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_footprint_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
@@ -174,7 +176,7 @@ class FollowerService {
 }
 
 class CollectionService {
-  static Future<ResultEntity<PagePictureEntity>> paging(
+  static Future<ResultEntity<PageCollectionEntity>> paging(
       PageableEntity pageable, targetId) {
     var params = pageable.toJson();
     params["targetId"] = targetId;
@@ -203,7 +205,7 @@ class WorksService {
 }
 
 class FootprintService {
-  static Future<ResultEntity<PagePictureEntity>> paging(
+  static Future<ResultEntity<PageFootprintEntity>> paging(
       PageableEntity pageable, int targetId) {
     var params = pageable.toJson();
     params["targetId"] = targetId;
@@ -287,7 +289,8 @@ class FeedbackService {
 }
 
 class ComplaintService {
-  static Future<ResultEntity<ComplaintEntity>> save(int pictureId, String content) {
+  static Future<ResultEntity<ComplaintEntity>> save(
+      int pictureId, String content) {
     return HttpUtil.post("/complaint/save",
         params: {"content": content, "pictureId": pictureId});
   }
