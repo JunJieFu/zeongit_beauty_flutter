@@ -27,7 +27,7 @@ class ForgetPage extends HookWidget {
       var result = await UserService.forgot(
           codeController.text, phone, passwordController.text);
       if (ResultUtil.check(result)) {
-        Get.until(ModalRoute.withName(RoutesKey.SIGN_IN));
+        Get.until((r) => Get.currentRoute == RoutesKey.SIGN_IN);
       }
       loading.value = false;
     }

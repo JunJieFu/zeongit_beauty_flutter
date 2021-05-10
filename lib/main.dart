@@ -46,51 +46,57 @@ class App extends StatelessWidget {
 
     /// 在异步操作时,显示的页面
     return Obx(
-      () => GetMaterialApp(
-        routes: routes,
-        theme: themeGetxCtrl.isDark
-            ? darkThemeData(themeGetxCtrl.primaryColor)
-            : lightThemeData(themeGetxCtrl.primaryColor),
-        home: Builder(builder: (ctx) {
-          var primaryColor = Theme.of(ctx).primaryColor;
-          return RefreshConfiguration(
-            headerBuilder: () => MaterialClassicHeader(
-              color: primaryColor,
-              backgroundColor: themeGetxCtrl.isDark ? Theme.of(ctx).cardColor : Colors.white,
-            ),
-            footerBuilder: () =>
-                CustomFooter(builder: (BuildContext context, LoadStatus mode) {
-              Widget body;
-              if (mode == LoadStatus.idle) {
-                body = Text("上拉加载");
-              } else if (mode == LoadStatus.loading) {
-                body = CircularProgressIndicator();
-              } else if (mode == LoadStatus.failed) {
-                body = Text("加载失败，点击重试");
-              } else if (mode == LoadStatus.canLoading) {
-                body = Text("松手加载更多");
-              } else {
-                body = Text("没有更多数据了");
-              }
-              return Container(
-                height: 55.0,
-                child: Center(child: body),
+          () =>
+          GetMaterialApp(
+            theme: themeGetxCtrl.isDark
+                ? darkThemeData(themeGetxCtrl.primaryColor)
+                : lightThemeData(themeGetxCtrl.primaryColor),
+            home: Builder(builder: (ctx) {
+              var primaryColor = Theme
+                  .of(ctx)
+                  .primaryColor;
+              return RefreshConfiguration(
+                headerBuilder: () =>
+                    MaterialClassicHeader(
+                      color: primaryColor,
+                      backgroundColor: themeGetxCtrl.isDark ? Theme
+                          .of(ctx)
+                          .cardColor : Colors.white,
+                    ),
+                footerBuilder: () =>
+                    CustomFooter(
+                        builder: (BuildContext context, LoadStatus mode) {
+                          Widget body;
+                          if (mode == LoadStatus.idle) {
+                            body = Text("上拉加载");
+                          } else if (mode == LoadStatus.loading) {
+                            body = CircularProgressIndicator();
+                          } else if (mode == LoadStatus.failed) {
+                            body = Text("加载失败，点击重试");
+                          } else if (mode == LoadStatus.canLoading) {
+                            body = Text("松手加载更多");
+                          } else {
+                            body = Text("没有更多数据了");
+                          }
+                          return Container(
+                            height: 55.0,
+                            child: Center(child: body),
+                          );
+                        }),
+                child:
+                Obx(() => fragmentGetxCtrl.hasInit ? TabPage() : WelcomePage()),
               );
             }),
-            child:
-                Obx(() => fragmentGetxCtrl.hasInit ? TabPage() : WelcomePage()),
-          );
-        }),
-        builder: BotToastInit(),
-        navigatorObservers: [BotToastNavigatorObserver()],
-        localizationsDelegates: [
-          // ... app-specific localization delegate[s] here
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: Platform.isIOS ? ios : an,
-        locale: Locale('zh'),
-      ),
+            builder: BotToastInit(),
+            navigatorObservers: [BotToastNavigatorObserver()],
+            localizationsDelegates: [
+              // ... app-specific localization delegate[s] here
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: Platform.isIOS ? ios : an,
+            locale: Locale('zh'),
+          ),
     );
   }
 }

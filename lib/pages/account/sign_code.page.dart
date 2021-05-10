@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
@@ -15,32 +16,33 @@ final _differenceList = {
   CodeTypeConstant.FORGOT: "找回您的密码"
 };
 
-class SignCodePage extends StatefulWidget {
+class SignCodePage extends HookWidget {
   SignCodePage(this.codeType, {Key key}) : super(key: key);
 
   final CodeTypeConstant codeType;
 
   @override
-  SignCodePageState createState() => SignCodePageState();
-}
-
-class SignCodePageState extends State<SignCodePage> {
-  TextEditingController _phoneController = TextEditingController();
-  FocusNode _focusNode = FocusNode();
-  bool _loading = false;
-
-  @override
-  void initState() {
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {}
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final phoneController = useTextEditingController();
+
+    final loading = useState(false);
+
+    send() async {
+      if (loading.value) return;
+      loading.value = true;
+      var result = await UserService.sendCode(phoneController.text, codeType);
+      if (ResultUtil.check(result)) {
+        if (codeType == CodeTypeConstant.SIGN_UP) {
+          Get.to(SignUpPage(phoneController.text));
+        } else if (codeType == CodeTypeConstant.FORGOT) {
+          Get.to(ForgetPage(phoneController.text));
+        }
+      }
+      loading.value = false;
+    }
+
     return Scaffold(
-        appBar: AppBar(title: Text(_differenceList[widget.codeType])),
+        appBar: AppBar(title: Text(_differenceList[codeType])),
         body: ListView(
           children: <Widget>[
             Padding(
@@ -51,7 +53,7 @@ class SignCodePageState extends State<SignCodePage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _phoneController,
+                      controller: phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -62,7 +64,7 @@ class SignCodePageState extends State<SignCodePage> {
                       width: double.infinity,
                       height: StyleConfig.buttonHeight,
                       child: ElevatedButton(
-                        child: _loading
+                        child: loading.value
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -81,7 +83,7 @@ class SignCodePageState extends State<SignCodePage> {
                                 ],
                               )
                             : Text("获取验证码"),
-                        onPressed: _send,
+                        onPressed: send,
                       ),
                     ),
                   ),
@@ -90,30 +92,5 @@ class SignCodePageState extends State<SignCodePage> {
             )
           ],
         ));
-  }
-
-  @override
-  void dispose() {
-    _phoneController.dispose();
-    super.dispose();
-  }
-
-  _send() async {
-    if (_loading) return;
-    setState(() {
-      _loading = true;
-    });
-    var result =
-        await UserService.sendCode(_phoneController.text, widget.codeType);
-    setState(() {
-      _loading = false;
-    });
-    if (ResultUtil.check(result)) {
-      if (widget.codeType == CodeTypeConstant.SIGN_UP) {
-        Get.to(SignUpPage(_phoneController.text));
-      } else if (widget.codeType == CodeTypeConstant.FORGOT) {
-        Get.to(ForgetPage(_phoneController.text));
-      }
-    }
   }
 }

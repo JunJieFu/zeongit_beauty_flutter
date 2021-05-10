@@ -22,6 +22,6 @@ class ThemeGetxCtrl extends GetxController {
 
   updateTheme() {
     StorageManager.setBool(KeyConstant.IS_DARK, !_isDark.value);
-    _isDark.value = !_isDark.value;
+    _isDark.toggle();
   }
 }
