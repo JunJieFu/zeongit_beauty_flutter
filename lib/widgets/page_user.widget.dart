@@ -8,6 +8,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
+import 'package:zeongitbeautyflutter/widgets/btn/follow_icon_btn.widget.dart';
 
 typedef ChangePageCallback = Future<void> Function(int pageIndex);
 typedef FollowCallback = void Function(int index, int focus);
@@ -54,55 +55,58 @@ class PageUser extends StatelessWidget {
                   UserInfoLogic logic;
                   try {
                     logic = Get.find(
-                        tag:
-                        USER_INFO_LOGIC_TAG_PREFIX + userInfo.id.toString());
+                        tag: USER_INFO_LOGIC_TAG_PREFIX +
+                            userInfo.id.toString());
                     logic.set(userInfo);
                   } catch (e) {
                     logic = Get.put(UserInfoLogic(userInfo),
-                        tag:
-                        USER_INFO_LOGIC_TAG_PREFIX + userInfo.id.toString());
+                        tag: USER_INFO_LOGIC_TAG_PREFIX +
+                            userInfo.id.toString());
                   }
-                  return Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: StyleConfig.gap * 3,
-                            vertical: StyleConfig.gap * 2),
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          children: <Widget>[
-                            InkWell(
-                              borderRadius: BorderRadius.all(Radius.circular(size / 2)),
-                              child: Padding(
-                                padding: EdgeInsets.all(padding),
-                                child: AvatarWidget(
-                                  logic.info?.avatarUrl,
-                                  logic.info?.nickname,
-                                  size: size - padding * 2,
-                                  fit: BoxFit.cover,
-                                  style: AvatarStyle.small50,
+                  return Obx(
+                    () => Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: StyleConfig.gap * 3,
+                              vertical: StyleConfig.gap * 2),
+                          child: Flex(
+                            direction: Axis.horizontal,
+                            children: <Widget>[
+                              InkWell(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(size / 2)),
+                                child: Padding(
+                                  padding: EdgeInsets.all(padding),
+                                  child: AvatarWidget(
+                                    logic.info?.avatarUrl,
+                                    logic.info?.nickname,
+                                    size: size - padding * 2,
+                                    fit: BoxFit.cover,
+                                    style: AvatarStyle.small50,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Get.to(UserTabPage(id: logic.info.id));
+                                },
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: StyleConfig.gap * 2),
+                                  child: Text(logic.info.nickname),
                                 ),
                               ),
-                              onTap: () {
-                                Get.to(UserTabPage(id: logic.info.id));
-                              },
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: StyleConfig.gap * 2),
-                                child: Text(logic.info.nickname),
-                              ),
-                            ),
-                            FollowBtn(
-                              user: logic.info,
-                            )
-                          ],
+                              FollowBtn(
+                                id: logic.info.id,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Divider(height: 1)
-                    ],
+                        Divider(height: 1)
+                      ],
+                    ),
                   );
                 }));
   }

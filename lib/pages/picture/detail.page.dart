@@ -271,12 +271,7 @@ class _ViewState extends State<PictureDetail2Page> {
                       ),
                     ),
                     FollowBtn(
-                      user: _picture.user,
-                      callback: (user, int focus) {
-                        setState(() {
-                          _picture.user.focus = focus;
-                        });
-                      },
+                      id: _picture.user.id,
                     )
                   ],
                 ),

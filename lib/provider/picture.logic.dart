@@ -9,20 +9,21 @@ import 'package:zeongitbeautyflutter/plugins/widgets/comfir.widget.dart';
 const String PICTURE_LOGIC_TAG_PREFIX = "PICTURE:";
 
 class PictureLogic extends GetxController {
-  PictureLogic(this.initial);
-
   final PictureEntity initial;
 
   final Rx<PictureEntity> _picture = Rx<PictureEntity>(null);
 
+  final loading = false.obs;
+
+  PictureLogic(this.initial) {
+    _picture.value = initial;
+  }
+
   PictureEntity get picture => _picture.value;
 
-  get aspectRatio =>
-      (picture.width != null && picture.height != null)
-          ? picture.width / picture.height
-          : 1.0;
-
-  final loading = false.obs;
+  get aspectRatio => (picture.width != null && picture.height != null)
+      ? picture.width / picture.height
+      : 1.0;
 
   set(PictureEntity p) {
     _picture.value = p;

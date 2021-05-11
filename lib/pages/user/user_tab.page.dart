@@ -8,11 +8,19 @@ import 'package:zeongitbeautyflutter/pages/user/collection.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/follower.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_detail.dart';
-import 'package:zeongitbeautyflutter/pages/user/user_module.getx_ctrl.dart';
 import 'package:zeongitbeautyflutter/pages/user/works.page.dart';
+import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 
+// ignore: must_be_immutable
 class UserTabPage extends HookWidget {
-  UserTabPage({Key key, @required this.id}) : super(key: key);
+  UserTabPage({Key key, @required this.id}) : super(key: key) {
+    try {
+      logic = Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
+    } catch (e) {
+      logic = Get.put(UserInfoLogic(null),
+          tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
+    }
+  }
 
   final int id;
 
@@ -24,17 +32,16 @@ class UserTabPage extends HookWidget {
     Tab(text: "详情")
   ];
 
+  UserInfoLogic logic;
+
   @override
   Widget build(BuildContext context) {
-    useEffect(() {
-      Get.lazyPut(() => UserModuleGetxCtrl(), tag: TAG_PREFIX + id.toString());
-      return () {
-        Get.delete(tag: TAG_PREFIX + id.toString());
-      };
-    });
-
-    Widget widget = _buildScaffold(_buildLoading());
     var controller = useTabController(initialLength: _tabList.length);
+    //如果不为空，则不用向api获取
+    if (logic.info != null) {
+      return _buildMain(logic.info, controller);
+    }
+    Widget widget = _buildScaffold(_buildLoading());
     var snapshot = useFuture<ResultEntity<UserInfoEntity>>(
         useMemoized(() => UserInfoService.getByTargetId(id)),
         initialData: null);
@@ -47,9 +54,7 @@ class UserTabPage extends HookWidget {
   }
 
   _buildMain(UserInfoEntity info, TabController controller) {
-    final userModuleGetxCtrl =
-        Get.find<UserModuleGetxCtrl>(tag: TAG_PREFIX + id.toString());
-    userModuleGetxCtrl.setInfo(info);
+    logic.set(info);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,

@@ -8,37 +8,27 @@ import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/account.logic.dart';
+import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
-class FollowIconBtn extends HookWidget {
-  FollowIconBtn(
-      {Key key, @required this.user, this.callback, this.small = false})
-      : super(key: key);
-  final UserInfoEntity user;
+class FollowIconBtn extends StatelessWidget {
+  FollowIconBtn({Key key, @required this.id, this.callback, this.small = false})
+      : logic = FollowBtnLogic(id),
+        super(key: key);
+  final int id;
 
   final void Function(UserInfoEntity, int) callback;
 
   final bool small;
 
-  final _accountLogic = Get.find<AccountLogic>();
+  final FollowBtnLogic logic;
+
+  final GlobalKey _btnKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    bool focus = user.focus == FollowState.CONCERNED.index;
-    final GlobalKey _btnKey = GlobalKey();
-    final loading = useState(false);
-    Future<void> onPressed() async {
-      if (_accountLogic.info != null) {
-        if (loading.value) return;
-        loading.value = true;
-        var result = await FollowingService.follow(user.id);
-        loading.value = false;
-        if (ResultUtil.check(result)) callback(user, result.data);
-      } else {
-        popupSignIn("想要关注这个画师？", "请先登录，然后才能成为该画师的粉丝。", context, _btnKey);
-      }
-    }
-
+    bool focus = logic.userInfoLogic.info.focus == FollowState.CONCERNED.index;
+    final loading = logic.userInfoLogic.loading;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -46,13 +36,36 @@ class FollowIconBtn extends HookWidget {
       height: small
           ? StyleConfig.smallIconButtonSize
           : StyleConfig.defaultIconButtonSize,
-      child: IconButton(
-          key: _btnKey,
-          iconSize:
-              small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
-          icon: Icon(focus ? Icons.star : Icons.star_border,
-              color: focus ? StyleConfig.errorColor : null),
-          onPressed: onPressed),
+      child: Obx(
+        () => IconButton(
+            key: _btnKey,
+            iconSize:
+                small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
+            icon: Icon(focus || loading.value ? Icons.star : Icons.star_border,
+                color: loading.value
+                    ? StyleConfig.textColor
+                    : (focus ? StyleConfig.errorColor : null)),
+            onPressed: () async {
+              if (logic.accountLogic.info != null) {
+                logic.userInfoLogic.follow();
+              } else {
+                popupSignIn(
+                    "想要关注这个画师？", "请先登录，然后才能成为该画师的粉丝。", context, _btnKey);
+              }
+            }),
+      ),
     );
   }
+}
+
+class FollowBtnLogic extends GetxController {
+  FollowBtnLogic(this.id)
+      : userInfoLogic =
+            Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
+
+  final int id;
+
+  final AccountLogic accountLogic = Get.find<AccountLogic>();
+
+  final UserInfoLogic userInfoLogic;
 }

@@ -10,18 +10,21 @@ import 'package:zeongitbeautyflutter/plugins/widgets/background.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
+import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 
 class UserDetailPage extends HookWidget {
-  UserDetailPage({Key key, @required this.id}) : super(key: key);
+  UserDetailPage({Key key, @required this.id})
+      : logic = Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString()),
+        super(key: key);
 
   final int id;
 
+  final UserInfoLogic logic;
+
   @override
   Widget build(BuildContext context) {
-    final _userModuleGetxCtrl =
-        Get.find<UserModuleGetxCtrl>(tag: TAG_PREFIX + id.toString());
     return KeepAliveClient(
       child: Obx(
         () => ListView(
@@ -30,7 +33,7 @@ class UserDetailPage extends HookWidget {
               AspectRatio(
                 aspectRatio: 2,
                 child: BackgroundWidget(
-                  _userModuleGetxCtrl.info?.background,
+                  logic.info?.background,
                   fit: BoxFit.cover,
                   style: BackgroundStyle.backCard,
                 ),
@@ -38,30 +41,27 @@ class UserDetailPage extends HookWidget {
               Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: StyleConfig.gap * 35),
-                  child: _buildMaterialAvatar(_userModuleGetxCtrl.info),
+                  child: _buildMaterialAvatar(),
                 ),
               ),
             ]),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap * 3),
               child:
-                  Center(child: TitleWidget(_userModuleGetxCtrl.info.nickname)),
+                  Center(child: TitleWidget(logic.info.nickname)),
             ),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap),
               child: Center(
-                  child: TextWidget(_userModuleGetxCtrl.info.introduction)),
+                  child: TextWidget(logic.info.introduction)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FollowIconBtn(
-                    user: _userModuleGetxCtrl.info,
-                    callback: (UserInfoEntity user, int focus) {
-                      _userModuleGetxCtrl.focus(focus);
-                    }),
+                    id: logic.info.id),
                 ShareUserIconBtn(
-                  user: _userModuleGetxCtrl.info,
+                  user: logic.info,
                   callback: () {},
                 ),
               ],
@@ -72,12 +72,12 @@ class UserDetailPage extends HookWidget {
     );
   }
 
-  _buildMaterialAvatar(UserInfoEntity info) {
+  _buildMaterialAvatar() {
     var size = 120.0;
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
-      child: AvatarWidget(info?.avatarUrl, info?.nickname,
+      child: AvatarWidget(logic.info?.avatarUrl, logic.info?.nickname,
           fit: BoxFit.cover, size: size),
     );
   }
