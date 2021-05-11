@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/pages/user/works.logic.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
+import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
@@ -40,4 +43,14 @@ class WorksPage extends StatelessWidget {
       )),
     );
   }
+}
+
+class WorksLogic extends GetxController
+    with PagingMixin<PictureEntity, PagePictureEntity> {
+  WorksLogic(this.id);
+
+  final int id;
+
+  @override
+  dao(pageable) => WorksService.paging(pageable, id);
 }

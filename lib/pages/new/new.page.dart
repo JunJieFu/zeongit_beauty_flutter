@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/pages/new/new.logic.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
+import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
@@ -52,5 +56,36 @@ class NewPage extends StatelessWidget {
                 icon: MdiIcons.compass, title: "没有作品", text: "难道是系统出现什么问题了。"),
           ),
         ));
+  }
+}
+
+class NewLogic extends GetxController
+    with PagingMixin<PictureEntity, PagePictureEntity> {
+  final criteria = SearchPictureTune().obs;
+
+  @override
+  onInit() {
+    super.onInit();
+    criteria.value.precise = null;
+  }
+
+  @override
+  dao(pageable) => PictureService.paging(pageable, criteria: criteria.value);
+
+  dateRefresh({DateTime dateTime, bool force = false}) {
+    criteria.value.date.startDate = dateTime;
+    criteria.value.date.endDate = dateTime;
+    if (dateTime != null || force) {
+      refreshController.requestRefresh(needMove: false);
+    }
+  }
+
+  showStartDatePicker() async {
+    var dateTime = await showDatePicker(
+        context: Get.context,
+        initialDate: criteria.value?.date?.startDate ?? DateTime.now(),
+        firstDate: DateTime(2015),
+        lastDate: DateTime.now());
+    dateRefresh(dateTime: dateTime);
   }
 }

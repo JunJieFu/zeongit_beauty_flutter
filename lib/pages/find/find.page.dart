@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/pages/find/find.logic.dart';
+import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
+import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
+import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
@@ -26,7 +30,7 @@ class FindPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(elevation: 0, title: Text("发现")),
         body: Obx(
-              () => PagePicture(
+          () => PagePicture(
             meta: meta.value,
             list: findLogic.list,
             refreshController: findLogic.refreshController,
@@ -37,4 +41,12 @@ class FindPage extends StatelessWidget {
           ),
         ));
   }
+}
+
+class FindLogic extends GetxController
+    with PagingMixin<PictureEntity, PagePictureEntity> {
+  final dateRange = DateRange().obs;
+
+  @override
+  dao(pageable) => PictureService.pagingByRecommend(pageable);
 }
