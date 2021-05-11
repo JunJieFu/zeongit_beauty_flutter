@@ -7,7 +7,8 @@ import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
-import 'package:zeongitbeautyflutter/provider/user.logic.dart';
+import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
+import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class CollectIconBtn extends HookWidget {
@@ -20,7 +21,7 @@ class CollectIconBtn extends HookWidget {
 
   final bool small;
 
-  final _userLogic = Get.find<UserLogic>();
+  final _accountLogic = Get.find<AccountLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class CollectIconBtn extends HookWidget {
     final GlobalKey _btnKey = GlobalKey();
     final loading = useState(false);
     Future<void> onPressed() async {
-      if (_userLogic.info != null) {
+      if (_accountLogic.info != null) {
         if (loading.value) return;
         loading.value = true;
         var result = await CollectionService.focus(picture.id);
@@ -57,5 +58,67 @@ class CollectIconBtn extends HookWidget {
                   : (focus ? StyleConfig.errorColor : null)),
           onPressed: onPressed),
     );
+  }
+}
+
+class CollectIconBtn2 extends StatelessWidget {
+  CollectIconBtn2(
+      {Key key, @required this.id, this.callback, this.small = false})
+      : super(key: key);
+  final int id;
+
+  final void Function(PictureEntity picture, int focus) callback;
+
+  final bool small;
+
+  final GlobalKey btnKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    CollectIconBtnLogic logic = CollectIconBtnLogic(id);
+    final focus =
+        logic.pictureLogic.picture.focus == CollectState.CONCERNED.index;
+    final loading = logic.pictureLogic.loading;
+    return SizedBox(
+      width: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      height: small
+          ? StyleConfig.smallIconButtonSize
+          : StyleConfig.defaultIconButtonSize,
+      child: Obx(
+        () => IconButton(
+            key: btnKey,
+            iconSize:
+                small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
+            icon: Icon(focus || loading.value ? Icons.star : Icons.star_border,
+                color: loading.value
+                    ? StyleConfig.textColor
+                    : (focus ? StyleConfig.errorColor : null)),
+            onPressed: () async {
+              if (logic.userLogic.info != null) {
+                await logic.pictureLogic.collect();
+              } else {
+                popupSignIn(
+                    "喜欢这张绘画？", "请先登录，然后才能把这张绘画添加到收藏夹。", Get.context, btnKey);
+              }
+            }),
+      ),
+    );
+  }
+}
+
+class CollectIconBtnLogic extends GetxController {
+  CollectIconBtnLogic(this.id);
+
+  final int id;
+
+  AccountLogic get userLogic => Get.find<AccountLogic>();
+
+  PictureLogic get pictureLogic => Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
+
+  @override
+  void onInit() {
+    super.onInit();
   }
 }

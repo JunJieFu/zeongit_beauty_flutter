@@ -6,7 +6,7 @@ import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 
-class UserLogic extends GetxController {
+class AccountLogic extends GetxController {
   final _info = Rx<UserInfoEntity>(
       StorageManager.getJson(KeyConstant.USER_INFO) != null
           ? userInfoEntityFromJson(

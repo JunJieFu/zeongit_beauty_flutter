@@ -7,7 +7,7 @@ import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
-import 'package:zeongitbeautyflutter/provider/user.logic.dart';
+import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowIconBtn extends HookWidget {
@@ -20,7 +20,7 @@ class FollowIconBtn extends HookWidget {
 
   final bool small;
 
-  final _userLogic = Get.find<UserLogic>();
+  final _accountLogic = Get.find<AccountLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class FollowIconBtn extends HookWidget {
     final GlobalKey _btnKey = GlobalKey();
     final loading = useState(false);
     Future<void> onPressed() async {
-      if (_userLogic.info != null) {
+      if (_accountLogic.info != null) {
         if (loading.value) return;
         loading.value = true;
         var result = await FollowingService.follow(user.id);

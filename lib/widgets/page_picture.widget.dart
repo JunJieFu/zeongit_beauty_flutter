@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,8 +16,11 @@ import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail_tab_view.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/comfir.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/config.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/image_ink.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/picture.widget.dart';
+import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 
 typedef ChangePageCallback = Future<void> Function(int pageIndex);
@@ -48,143 +53,91 @@ class PagePicture extends StatelessWidget {
             mainAxisSpacing: StyleConfig.listGap),
         itemCount: list?.length,
         itemBuilder: (BuildContext context, int index) {
-          PictureEntity picture = list[index];
-          var aspectRatio = 1.0;
-          if (picture.width != 0 && picture.height != 0) {
-            aspectRatio = picture.width / picture.height;
+          PictureLogic logic;
+          try {
+            logic = Get.find(
+                tag: PICTURE_LOGIC_TAG_PREFIX + list[index].id.toString());
+            logic.set(list[index]);
+          } catch (e) {
+            logic = Get.put(PictureLogic(list[index]),
+                tag: PICTURE_LOGIC_TAG_PREFIX + list[index].id.toString());
           }
-          return Card(
-            child: Column(
-              children: [
-                ImageInk(
-                    child: AspectRatio(
-                        aspectRatio: aspectRatio,
-                        child: PictureWidget(
-                          picture.url,
-                          style: PictureStyle.specifiedWidth500,
-                          fit: BoxFit.cover,
-                        )),
-                    onTap: () {
-                      Get.to(DetailTabViewPage(
-                          list: list.map((e) => e.id).toList(), index: index));
-                    },
-                    onLongPress: () {
-                      _remove(picture.id);
-                    }),
-                Padding(
-                  padding: EdgeInsets.all(StyleConfig.gap * 3),
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              picture.name,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(picture.user.nickname,
+          return Obx(
+            () => Card(
+              child: Column(
+                children: [
+                  ImageInk(
+                      child: AspectRatio(
+                          aspectRatio: logic.aspectRatio,
+                          child: PictureWidget(
+                            logic.picture.url,
+                            style: PictureStyle.specifiedWidth500,
+                            fit: BoxFit.cover,
+                          )),
+                      onTap: () {
+                        Get.to(DetailTabViewPage(
+                            list: list.map((e) => e.id).toList(),
+                            index: index));
+                      },
+                      onLongPress: () {
+                        logic.remove();
+                      }),
+                  Padding(
+                    padding: EdgeInsets.all(StyleConfig.gap * 3),
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                logic.picture.name,
                                 overflow: TextOverflow.ellipsis,
-                                textScaleFactor: .8,
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .color
-                                        .withOpacity(.56)))
-                          ],
+                              ),
+                              Text(logic.picture.user.nickname,
+                                  overflow: TextOverflow.ellipsis,
+                                  textScaleFactor: .8,
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .color
+                                          .withOpacity(.56)))
+                            ],
+                          ),
+                          flex: 1,
                         ),
-                        flex: 1,
-                      ),
-                      CollectIconBtn(
-                          picture: picture,
-                          small: true,
-                          callback: (p, f) {
-                            list[index].focus = f;
-                            list.refresh();
-                          }),
-                    ],
-                  ),
-                )
-              ],
+                        CollectIconBtn2(id: logic.picture.id, small: true),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          );
-        });
-  }
-
-  _remove(int id) {
-    showDialog(
-        context: Get.context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text("提示"),
-            content: Text("您确定删除该图片吗？"),
-            actions: <Widget>[
-              TextButton(
-                  style: TextButton.styleFrom(
-                    primary: StyleConfig.warningColor,
-                  ),
-                  onPressed: Get.back,
-                  child: Text("取消")),
-              TextButton(
-                  onPressed: () async {
-                    Get.back();
-                    var result = await PictureService.remove(id);
-                    if (ResultUtil.check(result)) {
-                      BotToast.showText(text: "删除成功");
-                    }
-                  },
-                  child: Text("确定"))
-            ],
           );
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return RefreshConfiguration(
-        headerBuilder: () => MaterialClassicHeader(
-              color: theme.primaryColor,
-              backgroundColor: theme.brightness == Brightness.dark
-                  ? Get.theme.cardColor
-                  : Colors.white,
-            ),
-        footerBuilder: () =>
-            CustomFooter(builder: (BuildContext context, LoadStatus mode) {
-              Widget body;
-              if (mode == LoadStatus.idle) {
-                body = Text("上拉加载");
-              } else if (mode == LoadStatus.loading) {
-                body = CircularProgressIndicator();
-              } else if (mode == LoadStatus.failed) {
-                body = Text("加载失败，点击重试");
-              } else if (mode == LoadStatus.canLoading) {
-                body = Text("松手加载更多");
-              } else {
-                body = Text("没有更多数据了");
-              }
-              return Container(
-                height: 55.0,
-                child: Center(child: body),
-              );
-            }),
-        child: Obx(
-          () => SmartRefresher(
-              controller: refreshController,
-              enablePullDown: true,
-              enablePullUp: meta != null && !meta.last,
-              onRefresh: refresh,
-              onLoading: () async {
-                await changePage(meta.currentPage + 1);
-              },
-              child: meta != null && meta.empty && meta.first && meta.last
-                  ? ListView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      children: [emptyChild])
-                  : _buildListWaterFall()),
-        ));
+    return Obx(
+      () => DefaultRefreshConfiguration(
+        child: SmartRefresher(
+            controller: refreshController,
+            enablePullDown: true,
+            enablePullUp: meta != null && !meta.last,
+            onRefresh: refresh,
+            onLoading: () async {
+              await changePage(meta.currentPage + 1);
+            },
+            child: meta != null && meta.empty && meta.first && meta.last
+                ? ListView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    children: [emptyChild])
+                : _buildListWaterFall()),
+      ),
+    );
   }
 }
 
@@ -245,26 +198,19 @@ class PageCollection extends StatelessWidget {
     showDialog(
         context: Get.context,
         builder: (ctx) {
-          return AlertDialog(
+          return Confirm(
             title: Text("提示"),
             content: Text("您确定删除该图片吗？"),
-            actions: <Widget>[
-              TextButton(
-                  style: TextButton.styleFrom(
-                    primary: StyleConfig.warningColor,
-                  ),
-                  onPressed: Get.back,
-                  child: Text("取消")),
-              TextButton(
-                  onPressed: () async {
-                    Get.back();
-                    var result = await PictureService.remove(id);
-                    if (ResultUtil.check(result)) {
-                      BotToast.showText(text: "删除成功");
-                    }
-                  },
-                  child: Text("确定"))
-            ],
+            cancelText: Text("取消"),
+            confirmText: Text("确定"),
+            cancelCallback: Get.back,
+            confirmCallback: () async {
+              Get.back();
+              var result = await PictureService.remove(id);
+              if (ResultUtil.check(result)) {
+                BotToast.showText(text: "删除成功");
+              }
+            },
           );
         });
   }
@@ -390,14 +336,16 @@ class PageFootprint extends StatelessWidget {
       }
     }
 
-    return SmartRefresher(
-        controller: refreshController,
-        enablePullDown: true,
-        enablePullUp: currPage != null && !currPage.meta.last,
-        onRefresh: refresh,
-        onLoading: () async {
-          await changePage(currPage.meta.currentPage + 1);
-        },
-        child: buildIf());
+    return DefaultRefreshConfiguration(
+      child: SmartRefresher(
+          controller: refreshController,
+          enablePullDown: true,
+          enablePullUp: currPage != null && !currPage.meta.last,
+          onRefresh: refresh,
+          onLoading: () async {
+            await changePage(currPage.meta.currentPage + 1);
+          },
+          child: buildIf()),
+    );
   }
 }

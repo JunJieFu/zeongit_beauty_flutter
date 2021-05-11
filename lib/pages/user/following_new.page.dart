@@ -13,7 +13,7 @@ class FollowingNewPage extends StatelessWidget {
 
   final CustomRefreshController controller;
 
-  final logic = Get.put(FollowingNewLogic());
+  final logic = FollowingNewLogic();
 
   @override
   Widget build(BuildContext context) {

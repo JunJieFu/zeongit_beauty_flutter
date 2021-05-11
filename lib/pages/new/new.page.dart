@@ -11,7 +11,7 @@ class NewPage extends StatelessWidget {
 
   final CustomRefreshController controller;
 
-  final newLogic = Get.put(NewLogic());
+  final newLogic = NewLogic();
 
   @override
   Widget build(BuildContext context) {

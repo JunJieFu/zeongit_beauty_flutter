@@ -14,7 +14,7 @@ class WorksPage extends StatelessWidget {
 
   final CustomRefreshController controller;
 
-  WorksLogic get logic => Get.put(WorksLogic(id));
+  WorksLogic get logic => WorksLogic(id);
 
   @override
   Widget build(BuildContext context) {

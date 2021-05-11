@@ -23,7 +23,7 @@ class SearchPicturePage extends StatelessWidget {
 
   final CustomRefreshController controller;
 
-  SearchPictureLogic get logic => Get.put(SearchPictureLogic(keyword));
+  SearchPictureLogic get logic => SearchPictureLogic(keyword);
 
   @override
   Widget build(BuildContext context) {

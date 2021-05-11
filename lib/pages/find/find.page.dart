@@ -11,7 +11,7 @@ class FindPage extends StatelessWidget {
 
   final CustomRefreshController controller;
 
-  final findLogic = Get.put(FindLogic());
+  final findLogic = FindLogic();
 
   @override
   Widget build(BuildContext context) {

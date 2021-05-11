@@ -21,7 +21,7 @@ mixin PagingMixin<M, P extends dynamic> on GetxController
   @override
   final refreshController = RefreshController(initialRefresh: true);
   @override
-  final pageable = PageableEntity();
+  final pageable = PageableEntity(limit: 2);
   @override
   final loading = false.obs;
   @override

@@ -6,7 +6,7 @@ import 'package:zeongitbeautyflutter/pages/user/following.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/following_new.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/provider/user.logic.dart';
+import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class ConvenientTabPage extends HookWidget {
@@ -14,7 +14,7 @@ class ConvenientTabPage extends HookWidget {
 
   final CustomRefreshController controller;
 
-  final _userLogic = Get.find<UserLogic>();
+  final _accountLogic = Get.find<AccountLogic>();
 
   final _tabList = [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
 
@@ -35,7 +35,7 @@ class ConvenientTabPage extends HookWidget {
       };
     }, []);
     return Obx(() {
-      if (_userLogic.info == null) {
+      if (_accountLogic.info == null) {
         return Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -63,9 +63,9 @@ class ConvenientTabPage extends HookWidget {
                 FollowingNewPage(controller: followingNewController),
                 CollectionPage(
                     controller: collectionController,
-                    id: _userLogic.info.id),
+                    id: _accountLogic.info.id),
                 FollowingPage(
-                    controller: followingController, id: _userLogic.info.id),
+                    controller: followingController, id: _accountLogic.info.id),
               ],
             ));
       }
