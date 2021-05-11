@@ -34,18 +34,17 @@ const List<Locale> an = [const Locale('zh', 'CH')];
 const List<Locale> ios = [const Locale('en', 'US')];
 
 class App extends StatelessWidget {
+  final accountLogic = Get.put(AccountLogic());
+  final themeLogic = Get.put(ThemeLogic());
+  final fragmentLogic = Get.put(FragmentLogic());
+
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => ThemeLogic());
-    Get.lazyPut(() => FragmentLogic());
-    Get.lazyPut(() => AccountLogic());
-    final fragmentLogic = Get.find<FragmentLogic>();
-    final themeLogic = Get.find<ThemeLogic>();
-
     return GetMaterialApp(
       theme: themeLogic.getTheme(),
-      home: Obx(() => DefaultRefreshConfiguration(
-          child: fragmentLogic.hasInit ? TabPage() : WelcomePage())),
+      home: Obx(() =>
+          DefaultRefreshConfiguration(
+              child: fragmentLogic.hasInit ? TabPage() : WelcomePage())),
       builder: BotToastInit(),
       navigatorObservers: [BotToastNavigatorObserver()],
       localizationsDelegates: [

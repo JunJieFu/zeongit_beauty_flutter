@@ -129,7 +129,7 @@ class PagePicture extends StatelessWidget {
                                     ),
                                     flex: 1,
                                   ),
-                                  CollectIconBtn2(
+                                  CollectIconBtn(
                                       id: logic.picture.id, small: true),
                                 ],
                               ),
@@ -212,7 +212,8 @@ class PageCollection extends StatelessWidget {
                                     )),
                                 onTap: () {
                                   Get.to(DetailTabViewPage(
-                                      list: list.map((e) => e.pictureId).toList(),
+                                      list:
+                                          list.map((e) => e.pictureId).toList(),
                                       index: index));
                                 },
                                 onLongPress: () {
@@ -245,7 +246,7 @@ class PageCollection extends StatelessWidget {
                                     ),
                                     flex: 1,
                                   ),
-                                  CollectIconBtn2(
+                                  CollectIconBtn(
                                       id: logic.picture.id, small: true),
                                 ],
                               ),
@@ -328,7 +329,8 @@ class PageFootprint extends StatelessWidget {
                                     )),
                                 onTap: () {
                                   Get.to(DetailTabViewPage(
-                                      list: list.map((e) => e.pictureId).toList(),
+                                      list:
+                                          list.map((e) => e.pictureId).toList(),
                                       index: index));
                                 },
                                 onLongPress: () {
@@ -348,7 +350,9 @@ class PageFootprint extends StatelessWidget {
                                           logic.picture.name ?? "无法显示",
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        Text(logic.picture.user?.nickname ?? "无法显示",
+                                        Text(
+                                            logic.picture.user?.nickname ??
+                                                "无法显示",
                                             overflow: TextOverflow.ellipsis,
                                             textScaleFactor: .8,
                                             style: TextStyle(
@@ -361,7 +365,7 @@ class PageFootprint extends StatelessWidget {
                                     ),
                                     flex: 1,
                                   ),
-                                  CollectIconBtn2(
+                                  CollectIconBtn(
                                       id: logic.picture.id, small: true),
                                 ],
                               ),

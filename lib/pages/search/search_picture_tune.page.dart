@@ -105,6 +105,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                       EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                   child: Switch(
                     value: widget.params.precise,
+                    activeColor: Get.theme.primaryColor,
                     onChanged: (bool val) {
                       setState(() {
                         widget.params.precise = val;

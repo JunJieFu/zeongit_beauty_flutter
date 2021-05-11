@@ -152,7 +152,7 @@ class DetailPage extends HookWidget {
                     icon: Icon(MdiIcons.message_outline),
                     onPressed: () {},
                   ),
-                  CollectIconBtn2(
+                  CollectIconBtn(
                     id: logic.picture.id,
                   ),
                   SharePictureIconBtn(id: logic.picture.id),
@@ -318,7 +318,7 @@ class DetailPage extends HookWidget {
   Widget build(BuildContext context) {
     Widget widget = _buildLoading();
     //如果不为空，则不用向api获取
-    if (logic.picture.width != null && logic.picture.height != null) {
+    if (logic.picture?.width != null && logic.picture?.height != null) {
       return _buildMain();
     }
 
@@ -335,7 +335,7 @@ class DetailPage extends HookWidget {
         widget = _buildError(message: result.message);
       }
     } else {
-      widget = _buildError();
+      widget = _buildLoading();
     }
     return widget;
   }

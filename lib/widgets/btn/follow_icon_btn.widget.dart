@@ -65,7 +65,7 @@ class FollowBtnLogic extends GetxController {
 
   final int id;
 
-  final AccountLogic accountLogic = Get.find<AccountLogic>();
+  final accountLogic = Get.find<AccountLogic>();
 
   final UserInfoLogic userInfoLogic;
 }
