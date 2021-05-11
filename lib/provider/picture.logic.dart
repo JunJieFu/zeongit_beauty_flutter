@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
@@ -45,6 +46,26 @@ class PictureLogic extends GetxController {
               if (ResultUtil.check(result)) {
                 BotToast.showText(text: "删除成功");
               }
+            },
+          );
+        });
+  }
+
+  hide() {
+    final privacy = picture.privacy == PrivacyState.PRIVATE.index;
+    showDialog(
+        context: Get.context,
+        builder: (ctx) {
+          return Confirm(
+            title: Text("提示"),
+            content: Text("您确定${privacy ? "公开" : "隐藏"}该图片吗？"),
+            cancelText: Text("取消"),
+            confirmText: Text("确定"),
+            cancelCallback: Get.back,
+            confirmCallback: () async {
+              Get.back();
+              //TODO
+              BotToast.showText(text: "尚未开发");
             },
           );
         });

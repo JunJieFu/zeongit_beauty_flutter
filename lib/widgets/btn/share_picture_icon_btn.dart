@@ -9,18 +9,22 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
+import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 
 class SharePictureIconBtn extends StatelessWidget {
   SharePictureIconBtn(
-      {Key key, @required this.picture, this.callback, this.small = false})
-      : super(key: key);
+      {Key key, @required this.id, this.callback, this.small = false})
+      : logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
+        super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
-  final PictureEntity picture;
+  final int id;
 
   final Function callback;
 
   final bool small;
+
+  final PictureLogic logic;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class SharePictureIconBtn extends StatelessWidget {
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                     text:
-                                        '${ConfigConstant.BEAUTY_HOST}/picture/${picture.id}'));
+                                        '${ConfigConstant.BEAUTY_HOST}/picture/${logic.picture.id}'));
                                 BotToast.showText(text: "复制成功");
                                 Get.back();
                               }),

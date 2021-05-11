@@ -7,88 +7,33 @@ import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/comfir.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 import 'package:zeongitbeautyflutter/provider/account.logic.dart';
+import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/black_hole_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/complaint_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
-// 应该用状态管理才对
 class MoreIconBtn extends StatelessWidget {
-  MoreIconBtn(
-      {Key key, @required this.picture, this.callback, this.small = false})
-      : super(key: key);
+  MoreIconBtn({Key key, @required this.id, this.callback, this.small = false})
+      : logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
+        super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
-  final PictureEntity picture;
+  final int id;
 
   final Function callback;
 
   final bool small;
 
+  final PictureLogic logic;
+
   final _accountLogic = Get.find<AccountLogic>();
-
-  _remove() {
-    showDialog(
-        context: Get.context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text("提示"),
-            content: Text("您确定删除该图片吗？"),
-            actions: <Widget>[
-              TextButton(
-                  style: TextButton.styleFrom(
-                    primary: StyleConfig.warningColor,
-                  ),
-                  onPressed: Get.back,
-                  child: Text("取消")),
-              TextButton(
-                  onPressed: () async {
-                    Get.back();
-//                    var result = await PictureService.remove(id);
-//                    if (ResultUtil.check(result)) {
-//                      Fluttertoast.showToast(
-//                          msg: "删除成功",
-//                          gravity: ToastGravity.BOTTOM,
-//                          backgroundColor: StyleConfig.successColor);
-//                    }
-                    BotToast.showText(text: "网站作者不让删");
-                  },
-                  child: Text("确定"))
-            ],
-          );
-        });
-  }
-
-  _hide() {
-    final privacy = picture.privacy == PrivacyState.PRIVATE.index;
-    showDialog(
-        context: Get.context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text("提示"),
-            content: Text("您确定${privacy ? "公开" : "隐藏"}该图片吗？"),
-            actions: <Widget>[
-              TextButton(
-                  style: TextButton.styleFrom(
-                    primary: StyleConfig.warningColor,
-                  ),
-                  onPressed: Get.back,
-                  child: Text("取消")),
-              TextButton(
-                  onPressed: () async {
-                    Get.back();
-                    BotToast.showText(text: "尚未开发");
-                  },
-                  child: Text("确定"))
-            ],
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
-    final privacy = picture.privacy == PrivacyState.PRIVATE.index;
+    final privacy = logic.picture.privacy == PrivacyState.PRIVATE.index;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -114,14 +59,14 @@ class MoreIconBtn extends StatelessWidget {
                       child: Obx(
                         () => Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: _accountLogic.info.id == picture.user.id
+                          children: _accountLogic.info.id == logic.picture.user.id
                               ? [
                                   Divider(height: 1),
                                   ListTile(
                                     title: buildListTileTitle("编辑",
                                         leftIcon: MdiIcons.image_edit_outline),
                                     onTap: () {
-                                      Get.to(EditPage(picture,
+                                      Get.to(EditPage(logic.picture,
                                           callback: (picture) {}));
                                     },
                                   ),
@@ -134,7 +79,7 @@ class MoreIconBtn extends StatelessWidget {
                                             : MdiIcons.eye_off_outline),
                                     onTap: () {
                                       Get.back();
-                                      _hide();
+                                      logic.hide();
                                     },
                                   ),
                                   Divider(height: 1),
@@ -145,7 +90,7 @@ class MoreIconBtn extends StatelessWidget {
                                             : MdiIcons.delete_outline),
                                     onTap: () {
                                       Get.back();
-                                      _remove();
+                                      logic.remove();
                                     },
                                   )
                                 ]
@@ -160,7 +105,7 @@ class MoreIconBtn extends StatelessWidget {
                                             context: Get.context,
                                             builder: (ctx) {
                                               return BlackHoleDialog(
-                                                id: picture.id,
+                                                id: logic.picture.id,
                                               );
                                             });
                                       }),
@@ -175,7 +120,7 @@ class MoreIconBtn extends StatelessWidget {
                                           context: Get.context,
                                           builder: (ctx) {
                                             return ComplaintDialog(
-                                              picture: picture,
+                                              id: logic.picture.id,
                                             );
                                           });
                                     },

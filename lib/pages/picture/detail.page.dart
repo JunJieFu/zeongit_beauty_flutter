@@ -20,16 +20,29 @@ import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/skeleton.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
+import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_picture_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
+final pageGap = StyleConfig.gap * 3;
+
+// ignore: must_be_immutable
 class DetailPage extends HookWidget {
-  DetailPage({Key key, @required this.id}) : super(key: key);
+  DetailPage({Key key, @required this.id}) : super(key: key) {
+    try {
+      logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
+    } catch (e) {
+      logic = Get.put(PictureLogic(null),
+          tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
+    }
+  }
 
   final int id;
+
+  PictureLogic logic;
 
   _buildLoading() {
     var pageGap = StyleConfig.gap * 3;
@@ -101,61 +114,15 @@ class DetailPage extends HookWidget {
     ));
   }
 
-  _buildMain(ResultEntity<PictureEntity> result) {
-    return PictureDetail2Page(pictureResult: result);
-  }
+  _buildError({String message}) => Scaffold(
+      appBar: AppBar(title: Text("详情")),
+      body: TipsPageCard(
+          icon: MdiIcons.image_outline, title: "获取图片有误", text: message ?? ""));
 
-  _buildError() => _buildLoading();
-
-  @override
-  Widget build(BuildContext context) {
-    Widget widget = _buildLoading();
-
-    var snapshot = useFuture<ResultEntity<PictureEntity>>(useMemoized(() async {
-      await Future.delayed(Duration(milliseconds: 500));
-      return await PictureService.get(id);
-    }), initialData: null);
-    if (snapshot.hasData) {
-      widget = _buildMain(snapshot.data);
-    } else {
-      widget = _buildError();
-    }
-    return widget;
-  }
-}
-
-class PictureDetail2Page extends StatefulWidget {
-  PictureDetail2Page({Key key, @required this.pictureResult}) : super(key: key);
-
-  final ResultEntity<PictureEntity> pictureResult;
-
-  @override
-  _ViewState createState() => _ViewState(pictureResult);
-}
-
-class _ViewState extends State<PictureDetail2Page> {
-  //目的为了脱离上级参数，因为要做识图的更改
-  _ViewState(this.pictureResult);
-
-  final ResultEntity<PictureEntity> pictureResult;
-
-  PictureEntity _picture;
-
-  @override
-  void initState() {
-    super.initState();
-    _picture = pictureResult.data;
-    try {
-      FootprintService.save(_picture.id);
-    } catch (e) {}
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (pictureResult.status == StatusCode.SUCCESS) {
-      var pageGap = StyleConfig.gap * 3;
-      return Scaffold(
-          body: CustomScrollView(
+  _buildMain() {
+    return Scaffold(
+        body: Obx(
+      () => CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             leading: IconButton(
@@ -167,7 +134,8 @@ class _ViewState extends State<PictureDetail2Page> {
             elevation: 1,
             //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
             floating: false,
-            expandedHeight: Get.width * _picture.height / _picture.width,
+            expandedHeight:
+                Get.width * logic.picture.height / logic.picture.width,
             //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
             flexibleSpace: FlexibleSpaceBar(
               background: _buildMainPicture(),
@@ -183,15 +151,11 @@ class _ViewState extends State<PictureDetail2Page> {
                     icon: Icon(MdiIcons.message_outline),
                     onPressed: () {},
                   ),
-                  CollectIconBtn(
-                      picture: _picture,
-                      callback: (picture, int focus) {
-                        setState(() {
-                          picture.focus = focus;
-                        });
-                      }),
-                  SharePictureIconBtn(picture: _picture),
-                  MoreIconBtn(picture: _picture)
+                  CollectIconBtn2(
+                    id: logic.picture.id,
+                  ),
+                  SharePictureIconBtn(id: logic.picture.id),
+                  MoreIconBtn(id: logic.picture.id)
                 ],
               ),
               Divider(),
@@ -200,14 +164,14 @@ class _ViewState extends State<PictureDetail2Page> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TitleWidget(_picture.name),
+                      TitleWidget(logic.picture.name),
                       Row(
                         children: [
                           Row(
                             children: [
                               TextWidget("创建于："),
                               TextWidget(formatDate(
-                                  DateTime.parse(_picture.createDate),
+                                  DateTime.parse(logic.picture.createDate),
                                   [yyyy, '-', mm, '-', dd])),
                             ],
                           ),
@@ -217,7 +181,7 @@ class _ViewState extends State<PictureDetail2Page> {
                               child: Row(children: <Widget>[
                                 TextWidget("分辨率："),
                                 TextWidget(
-                                    "${_picture.width}×${_picture.height}")
+                                    "${logic.picture.width}×${logic.picture.height}")
                               ])),
                         ],
                       ),
@@ -225,10 +189,10 @@ class _ViewState extends State<PictureDetail2Page> {
                         children: <Widget>[
                           Row(children: <Widget>[
                             Link(
-                              "${_picture.viewAmount}",
+                              "${logic.picture.viewAmount}",
                               onTap: () {
                                 Get.to(DetailUserTabPage(
-                                    picture: _picture, index: 0));
+                                    picture: logic.picture, index: 0));
                               },
                             ),
                             TextWidget("人阅读")
@@ -238,10 +202,10 @@ class _ViewState extends State<PictureDetail2Page> {
                                   EdgeInsets.only(left: StyleConfig.gap * 3),
                               child: Row(children: <Widget>[
                                 Link(
-                                  "${_picture.likeAmount}",
+                                  "${logic.picture.likeAmount}",
                                   onTap: () {
                                     Get.to(DetailUserTabPage(
-                                        picture: _picture, index: 1));
+                                        picture: logic.picture, index: 1));
                                   },
                                 ),
                                 TextWidget("人喜欢")
@@ -250,7 +214,7 @@ class _ViewState extends State<PictureDetail2Page> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: pageGap),
-                        child: Html(data: _picture.introduction),
+                        child: Html(data: logic.picture.introduction),
                       )
                     ],
                   )),
@@ -267,35 +231,28 @@ class _ViewState extends State<PictureDetail2Page> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: StyleConfig.gap * 2),
-                        child: Text(_picture.user.nickname),
+                        child: Text(logic.picture.user.nickname),
                       ),
                     ),
-                    FollowBtn(
-                      id: _picture.user.id,
-                    )
+//                    FollowBtn(
+//                      id: _picture.user.id,
+//                    )
                   ],
                 ),
               ),
             ]),
           ),
         ],
-      ));
-    } else {
-      return Scaffold(
-          appBar: AppBar(title: Text("详情")),
-          body: TipsPageCard(
-              icon: MdiIcons.image_outline,
-              title: "获取图片有误",
-              text: pictureResult.message));
-    }
+      ),
+    ));
   }
 
   GestureDetector _buildMainPicture() {
     return GestureDetector(
-      child: PictureWidget(_picture.url,
+      child: PictureWidget(logic.picture.url,
           style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
       onTap: () {
-        Get.to(ViewPage(_picture.url));
+        Get.to(ViewPage(logic.picture.url));
       },
     );
   }
@@ -308,28 +265,28 @@ class _ViewState extends State<PictureDetail2Page> {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          _picture?.user?.avatarUrl,
-          _picture?.user?.nickname,
+          logic.picture?.user?.avatarUrl,
+          logic.picture?.user?.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,
         ),
       ),
       onTap: () {
-        Get.to(UserTabPage(id: _picture.user.id));
+        Get.to(UserTabPage(id: logic.picture.user.id));
       },
     );
   }
 
   _buildTagList(double pageGap) {
-    if (_picture.tagList != null && _picture.tagList.length > 0) {
+    if (logic.picture.tagList != null && logic.picture.tagList.length > 0) {
       return [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: pageGap),
           child: Wrap(
               spacing: pageGap / 2,
               runSpacing: -pageGap / 2,
-              children: _picture.tagList
+              children: logic.picture.tagList
                       ?.map((e) => ActionChip(
                           label: Text(e),
                           onPressed: () {
@@ -343,5 +300,31 @@ class _ViewState extends State<PictureDetail2Page> {
     } else {
       return [];
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget widget = _buildLoading();
+    //如果不为空，则不用向api获取
+    if (logic.picture.width != null && logic.picture.height != null) {
+      return _buildMain();
+    }
+
+    var snapshot = useFuture<ResultEntity<PictureEntity>>(useMemoized(() async {
+      await Future.delayed(Duration(milliseconds: 500));
+      return await PictureService.get(id);
+    }), initialData: null);
+    if (snapshot.hasData) {
+      final result = snapshot.data;
+      if (result.status == StatusCode.SUCCESS) {
+        logic.set(result.data);
+        widget = _buildMain();
+      } else {
+        widget = _buildError(message: result.message);
+      }
+    } else {
+      widget = _buildError();
+    }
+    return widget;
   }
 }

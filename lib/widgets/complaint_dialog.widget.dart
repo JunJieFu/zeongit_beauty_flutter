@@ -8,9 +8,9 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 
 class ComplaintDialog extends HookWidget {
-  ComplaintDialog({Key key, @required this.picture}) : super(key: key);
+  ComplaintDialog({Key key, @required this.id}) : super(key: key);
 
-  final PictureEntity picture;
+  final int id;
 
   _buildLoading() {
     return AlertDialog(
@@ -54,7 +54,7 @@ class ComplaintDialog extends HookWidget {
         return;
       }
       loading.value = true;
-      final result = await ComplaintService.save(picture.id, content);
+      final result = await ComplaintService.save(id, content);
       await Future.delayed(Duration(milliseconds: 500));
       if (!ResultUtil.check(result)) {
         loading.value = false;

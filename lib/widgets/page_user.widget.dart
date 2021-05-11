@@ -87,6 +87,7 @@ class PageUser extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
+                                  print(123);
                                   Get.to(UserTabPage(id: logic.info.id));
                                 },
                               ),
