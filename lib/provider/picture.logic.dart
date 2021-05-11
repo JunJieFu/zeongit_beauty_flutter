@@ -18,7 +18,7 @@ class PictureLogic extends GetxController {
   PictureEntity get picture => _picture.value;
 
   get aspectRatio =>
-      (picture.width != 0 && picture.height != 0)
+      (picture.width != null && picture.height != null)
           ? picture.width / picture.height
           : 1.0;
 
@@ -54,7 +54,7 @@ class PictureLogic extends GetxController {
     loading.value = true;
     var result = await CollectionService.focus(picture.id);
     loading.value = false;
-
+    ResultUtil.check(result);
     _picture.update((val) {
       val.focus = result.data;
     });

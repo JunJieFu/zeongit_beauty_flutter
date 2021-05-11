@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
+import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 
 const String USER_INFO_LOGIC_TAG_PREFIX = "USER_INFO_LOGIC:";
 
@@ -24,10 +25,11 @@ class UserInfoLogic extends GetxController {
     loading.value = true;
     var result = await FollowingService.follow(info.id);
     loading.value = false;
-
-    _info.update((val) {
-      val.focus = result.data;
-    });
+    if(ResultUtil.check(result)){
+      _info.update((val) {
+        val.focus = result.data;
+      });
+    }
   }
 
   @override

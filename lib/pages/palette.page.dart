@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
-import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
-import 'package:zeongitbeautyflutter/plugins/widgets/link.widget.dart';
 import 'package:zeongitbeautyflutter/provider/theme.logic.dart';
 
 final _gap = StyleConfig.gap * 6;

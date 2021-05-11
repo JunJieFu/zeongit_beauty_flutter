@@ -7,11 +7,13 @@ import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 
 class SearchPictureLogic extends GetxController
     with PagingMixin<PictureEntity, PagePictureEntity> {
-  SearchPictureLogic(this.keyword);
-
   final criteria = SearchPictureTune().obs;
 
   final String keyword;
+
+  SearchPictureLogic(this.keyword) {
+    criteria.value.tagList = keyword;
+  }
 
   query(SearchPictureTune tune) {
     criteria.value = tune;
@@ -19,13 +21,5 @@ class SearchPictureLogic extends GetxController
   }
 
   @override
-  void onInit() {
-    super.onInit();
-    criteria.value.tagList = keyword;
-  }
-
-  @override
-  dao(pageable) =>
-      PictureService.paging(pageable, criteria: criteria.value);
-
+  dao(pageable) => PictureService.paging(pageable, criteria: criteria.value);
 }

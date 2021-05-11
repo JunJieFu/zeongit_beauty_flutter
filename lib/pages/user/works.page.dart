@@ -8,13 +8,15 @@ import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class WorksPage extends StatelessWidget {
-  WorksPage({Key key, @required this.id, this.controller}) : super(key: key);
+  WorksPage({Key key, @required this.id, this.controller})
+      : logic = WorksLogic(id),
+        super(key: key);
 
   final int id;
 
   final CustomRefreshController controller;
 
-  WorksLogic get logic => WorksLogic(id);
+  final WorksLogic logic;
 
   @override
   Widget build(BuildContext context) {
