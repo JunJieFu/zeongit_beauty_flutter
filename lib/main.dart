@@ -9,9 +9,10 @@ import 'package:zeongitbeautyflutter/pages/home/tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/welcome.page.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/config.widget.dart';
+import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.logic.dart';
 import 'package:zeongitbeautyflutter/provider/theme.logic.dart';
-import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,8 @@ class App extends StatelessWidget {
 
     return GetMaterialApp(
       theme: themeLogic.getTheme(),
-      home: Obx(() => fragmentLogic.hasInit ? TabPage() : WelcomePage()),
+      home: Obx(() => DefaultRefreshConfiguration(
+          child: fragmentLogic.hasInit ? TabPage() : WelcomePage())),
       builder: BotToastInit(),
       navigatorObservers: [BotToastNavigatorObserver()],
       localizationsDelegates: [

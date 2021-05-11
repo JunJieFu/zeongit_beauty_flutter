@@ -6,6 +6,7 @@ import 'package:zeongitbeautyflutter/pages/fragment/feedback.page.dart';
 import 'package:zeongitbeautyflutter/pages/palette.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/footprint.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/upload.page.dart';
+import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
@@ -21,6 +22,7 @@ class MorePage extends StatelessWidget {
   MorePage({Key key}) : super(key: key);
 
   final _accountLogic = Get.find<AccountLogic>();
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -44,7 +46,13 @@ class MorePage extends StatelessWidget {
               Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: StyleConfig.gap * 35),
-                  child: _buildMaterialAvatar(),
+                  child: GestureDetector(
+                    child: _buildMaterialAvatar(),
+                    onTap: () {
+                      Get.to(UserTabPage(id: _accountLogic.info.id),
+                          preventDuplicates: false);
+                    },
+                  ),
                 ),
               ),
             ]),
@@ -138,7 +146,7 @@ class MorePage extends StatelessWidget {
                   style: TextButton.styleFrom(
                     primary: StyleConfig.warningColor,
                   ),
-                  onPressed:  Get.back,
+                  onPressed: Get.back,
                   child: Text("取消")),
               TextButton(
                   onPressed: () {

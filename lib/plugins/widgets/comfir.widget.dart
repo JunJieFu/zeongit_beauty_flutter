@@ -27,7 +27,7 @@ class Confirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw AlertDialog(
+    return AlertDialog(
       title: title,
       content: content,
       actions: <Widget>[

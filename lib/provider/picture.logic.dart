@@ -39,7 +39,6 @@ class PictureLogic extends GetxController {
             content: Text("您确定删除该图片吗？"),
             cancelText: Text("取消"),
             confirmText: Text("确定"),
-            cancelCallback: Get.back,
             confirmCallback: () async {
               Get.back();
               var result = await PictureService.remove(picture.id);
@@ -61,7 +60,6 @@ class PictureLogic extends GetxController {
             content: Text("您确定${privacy ? "公开" : "隐藏"}该图片吗？"),
             cancelText: Text("取消"),
             confirmText: Text("确定"),
-            cancelCallback: Get.back,
             confirmCallback: () async {
               Get.back();
               //TODO

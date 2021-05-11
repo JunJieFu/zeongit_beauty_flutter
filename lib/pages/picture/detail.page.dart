@@ -21,6 +21,7 @@ import 'package:zeongitbeautyflutter/plugins/widgets/skeleton.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
+import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/follow_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/more_icon_btn.widget.dart';
@@ -234,9 +235,20 @@ class DetailPage extends HookWidget {
                         child: Text(logic.picture.user.nickname),
                       ),
                     ),
-//                    FollowBtn(
-//                      id: _picture.user.id,
-//                    )
+                    Builder(builder: (context) {
+                      try {
+                        Get.find(
+                            tag: USER_INFO_LOGIC_TAG_PREFIX +
+                                logic.picture.user.id.toString());
+                      } catch (e) {
+                        Get.put(UserInfoLogic(logic.picture.user),
+                            tag: USER_INFO_LOGIC_TAG_PREFIX +
+                                logic.picture.user.id.toString());
+                      }
+                      return FollowBtn(
+                        id: logic.picture.user.id,
+                      );
+                    })
                   ],
                 ),
               ),
@@ -247,7 +259,7 @@ class DetailPage extends HookWidget {
     ));
   }
 
-  GestureDetector _buildMainPicture() {
+  _buildMainPicture() {
     return GestureDetector(
       child: PictureWidget(logic.picture.url,
           style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
@@ -257,7 +269,7 @@ class DetailPage extends HookWidget {
     );
   }
 
-  InkWell _buildAvatar() {
+  _buildAvatar() {
     var size = 75.0;
     var padding = 8.0;
     return InkWell(
