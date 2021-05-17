@@ -8,7 +8,6 @@ import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail_user_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/view.page.dart';
-import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/user/user_tab.page.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/status.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
@@ -20,6 +19,7 @@ import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/skeleton.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
+import 'package:zeongitbeautyflutter/provider/fragment.logic.dart';
 import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/collect_icon_btn.widget.dart';
@@ -44,6 +44,8 @@ class DetailPage extends HookWidget {
   final int id;
 
   PictureLogic logic;
+
+  final fragmentLogic = Get.find<FragmentLogic>();
 
   _buildLoading() {
     var pageGap = StyleConfig.gap * 3;
@@ -302,7 +304,7 @@ class DetailPage extends HookWidget {
                       ?.map((e) => ActionChip(
                           label: Text(e),
                           onPressed: () {
-                            Get.to(SearchTabPage(keyword: e));
+                            fragmentLogic.searchPicture(e);
                           }))
                       ?.toList() ??
                   <Widget>[]),

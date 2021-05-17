@@ -23,6 +23,8 @@ import 'package:zeongitbeautyflutter/assets/entity/page_collection_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/page_collection_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/picture_entity_helper.dart';
+import 'package:zeongitbeautyflutter/assets/entity/tag_picture_entity.dart';
+import 'package:zeongitbeautyflutter/generated/json/tag_picture_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_footprint_entity.dart';
 import 'package:zeongitbeautyflutter/generated/json/page_footprint_entity_helper.dart';
 import 'package:zeongitbeautyflutter/assets/entity/complaint.entity.dart';
@@ -69,6 +71,8 @@ class JsonConvert<T> {
 				return pageCollectionEntityFromJson(data as PageCollectionEntity, json) as T;
 			case PictureEntity:
 				return pictureEntityFromJson(data as PictureEntity, json) as T;
+			case TagPictureEntity:
+				return tagPictureEntityFromJson(data as TagPictureEntity, json) as T;
 			case PageFootprintEntity:
 				return pageFootprintEntityFromJson(data as PageFootprintEntity, json) as T;
 			case ComplaintEntity:
@@ -118,6 +122,8 @@ class JsonConvert<T> {
 				return pageCollectionEntityToJson(data as PageCollectionEntity);
 			case PictureEntity:
 				return pictureEntityToJson(data as PictureEntity);
+			case TagPictureEntity:
+				return tagPictureEntityToJson(data as TagPictureEntity);
 			case PageFootprintEntity:
 				return pageFootprintEntityToJson(data as PageFootprintEntity);
 			case ComplaintEntity:
@@ -168,6 +174,8 @@ class JsonConvert<T> {
 			return PageCollectionEntity().fromJson(json);
 		}	else if(type == (PictureEntity).toString()){
 			return PictureEntity().fromJson(json);
+		}	else if(type == (TagPictureEntity).toString()){
+			return TagPictureEntity().fromJson(json);
 		}	else if(type == (PageFootprintEntity).toString()){
 			return PageFootprintEntity().fromJson(json);
 		}	else if(type == (ComplaintEntity).toString()){
@@ -218,6 +226,8 @@ class JsonConvert<T> {
 			return data.map<PageCollectionEntity>((e) => PageCollectionEntity().fromJson(e)).toList() as M;
 		}	else if(List<PictureEntity>() is M){
 			return data.map<PictureEntity>((e) => PictureEntity().fromJson(e)).toList() as M;
+		}	else if(List<TagPictureEntity>() is M){
+			return data.map<TagPictureEntity>((e) => TagPictureEntity().fromJson(e)).toList() as M;
 		}	else if(List<PageFootprintEntity>() is M){
 			return data.map<PageFootprintEntity>((e) => PageFootprintEntity().fromJson(e)).toList() as M;
 		}	else if(List<ComplaintEntity>() is M){

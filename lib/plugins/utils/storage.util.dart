@@ -26,9 +26,22 @@ class StorageManager {
     sharedPreferences.setString(key, json.encode(value));
   }
 
+  static setStringList(String key, List<String> value) {
+    sharedPreferences.setStringList(key, value);
+  }
+
   static T get<T>(String key) {
     return sharedPreferences.get(key) as T;
   }
+
+  static List<String> getStringList(String key) {
+    return sharedPreferences.getStringList(key);
+  }
+
+  static bool getBool(String key) {
+    return sharedPreferences.getBool(key);
+  }
+
 
   static getJson(String key) {
     var value = sharedPreferences.get(key);

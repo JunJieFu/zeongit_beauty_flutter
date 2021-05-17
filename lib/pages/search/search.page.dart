@@ -2,21 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
+import 'package:zeongitbeautyflutter/provider/fragment.logic.dart';
 
 class SearchPage extends HookWidget {
-  SearchPage({Key key, this.keyword, this.index}) : super(key: key);
+  SearchPage({Key key, this.keyword, this.index = 0}) : super(key: key);
   final String keyword;
   final int index;
+
+  final fragmentLogic = Get.find<FragmentLogic>();
 
   @override
   Widget build(BuildContext context) {
     var keywordController = useTextEditingController();
     keywordController.text = keyword;
     _search() {
-      Get.off(SearchTabPage(
-        keyword: keywordController.text,
-        index: index,
-      ));
+      if (index == 0) {
+        fragmentLogic.searchPicture(keywordController.text);
+      } else {
+        Get.off(SearchTabPage(
+          keyword: keywordController.text,
+          index: index,
+        ));
+      }
     }
 
     return Scaffold(
@@ -35,9 +42,7 @@ class SearchPage extends HookWidget {
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {
-            _search();
-          },
+          onPressed: _search,
         )
       ],
     ));

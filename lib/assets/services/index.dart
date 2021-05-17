@@ -11,6 +11,7 @@ import 'package:zeongitbeautyflutter/assets/entity/page_user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/tag_frequency_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/tag_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/assets/models/dto.model.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
@@ -233,6 +234,10 @@ class TagService {
       listTagFrequencyByUserId(int targetId) {
     return HttpUtil.get("/tag/listTagFrequencyByUserId",
         params: {"targetId": targetId});
+  }
+
+  static Future<ResultEntity<List<TagPictureEntity>>> listTagAndPictureTop30() {
+    return HttpUtil.get("/tag/listTagAndPictureTop30");
   }
 }
 

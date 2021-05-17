@@ -8,4 +8,6 @@ class KeyConstant {
   static const String PRIMARY_COLOR = "primary_color";
 
   static const String IS_DARK = "is_dark";
+
+  static const String SEARCH_HISTORY = "search_history";
 }
