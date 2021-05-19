@@ -103,9 +103,7 @@ class MorePage extends StatelessWidget {
                 return AboutPage();
               }));
             }),
-            ..._buildListTile(MdiIcons.logout, "登出", () {
-              _signOut();
-            }),
+            ..._buildListTile(MdiIcons.logout, "登出", _accountLogic.signOut),
             Divider(),
           ],
         );
@@ -132,30 +130,5 @@ class MorePage extends StatelessWidget {
           title: buildListTileTitle(title,
               leftIcon: icon, rightIcon: Icons.keyboard_arrow_right))
     ];
-  }
-
-  _signOut() {
-    showDialog(
-        context: Get.context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text("提示"),
-            content: Text("您确定退出 Zeongit 账号吗？"),
-            actions: <Widget>[
-              TextButton(
-                  style: TextButton.styleFrom(
-                    primary: StyleConfig.warningColor,
-                  ),
-                  onPressed: Get.back,
-                  child: Text("取消")),
-              TextButton(
-                  onPressed: () {
-                    _accountLogic.logout();
-                    Get.back();
-                  },
-                  child: Text("确定"))
-            ],
-          );
-        });
   }
 }
