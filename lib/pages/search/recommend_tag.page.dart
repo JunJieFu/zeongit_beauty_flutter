@@ -82,20 +82,28 @@ class RecommendTagPage extends HookWidget {
                                     ?.toList() ??
                                 <Widget>[]),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          fragmentLogic.removeHistory();
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(StyleConfig.gap),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(MdiIcons.delete_outline),
-                              Text("清空搜索历史")
-                            ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(StyleConfig.gap),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                primary: Colors.black54,
+                              ),
+                              onPressed: () {
+                                fragmentLogic.removeHistory();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(MdiIcons.delete_outline),
+                                  Text("清空搜索历史")
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ]
                   : []),
