@@ -13,7 +13,8 @@ import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowIconBtn extends StatelessWidget {
   FollowIconBtn({Key key, @required this.id, this.callback, this.small = false})
-      : logic = FollowBtnLogic(id),
+      : userInfoLogic =
+            Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final int id;
 
@@ -21,14 +22,16 @@ class FollowIconBtn extends StatelessWidget {
 
   final bool small;
 
-  final FollowBtnLogic logic;
-
   final GlobalKey _btnKey = GlobalKey();
+
+  final accountLogic = Get.find<AccountLogic>();
+
+  final UserInfoLogic userInfoLogic;
 
   @override
   Widget build(BuildContext context) {
-    bool focus = logic.userInfoLogic.info.focus == FollowState.CONCERNED.index;
-    final loading = logic.userInfoLogic.loading;
+    bool focus = userInfoLogic.info.focus == FollowState.CONCERNED.index;
+    final loading = userInfoLogic.loading;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -46,8 +49,8 @@ class FollowIconBtn extends StatelessWidget {
                     ? StyleConfig.textColor
                     : (focus ? StyleConfig.errorColor : null)),
             onPressed: () async {
-              if (logic.accountLogic.info != null) {
-                logic.userInfoLogic.follow();
+              if (accountLogic.info != null) {
+                userInfoLogic.follow();
               } else {
                 popupSignIn(
                     "想要关注这个画师？", "请先登录，然后才能成为该画师的粉丝。", context, _btnKey);
@@ -56,16 +59,4 @@ class FollowIconBtn extends StatelessWidget {
       ),
     );
   }
-}
-
-class FollowBtnLogic extends GetxController {
-  FollowBtnLogic(this.id)
-      : userInfoLogic =
-            Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
-
-  final int id;
-
-  final accountLogic = Get.find<AccountLogic>();
-
-  final UserInfoLogic userInfoLogic;
 }

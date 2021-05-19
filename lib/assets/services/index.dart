@@ -300,3 +300,9 @@ class ComplaintService {
         params: {"content": content, "pictureId": pictureId});
   }
 }
+
+class SuggestService {
+  static Future<ResultEntity<List<String>>> search(String keyword) {
+    return HttpUtil.get("/suggest/search", params: {"keyword": keyword});
+  }
+}
