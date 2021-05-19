@@ -13,7 +13,7 @@ import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 
 // ignore: must_be_immutable
 class UserTabPage extends HookWidget {
-  UserTabPage({Key key, @required this.id}) : super(key: key) {
+  UserTabPage({Key? key, required this.id}) : super(key: key) {
     try {
       logic = Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
     } catch (e) {
@@ -32,21 +32,21 @@ class UserTabPage extends HookWidget {
     Tab(text: "详情")
   ];
 
-  UserInfoLogic logic;
+  late UserInfoLogic logic;
 
   @override
   Widget build(BuildContext context) {
     var controller = useTabController(initialLength: _tabList.length);
     //如果不为空，则不用向api获取
     if (logic.info != null) {
-      return _buildMain(logic.info, controller);
+      return _buildMain(logic.info!, controller);
     }
     Widget widget = _buildScaffold(_buildLoading());
     var snapshot = useFuture<ResultEntity<UserInfoEntity>>(
         useMemoized(() => UserInfoService.getByTargetId(id)),
         initialData: null);
     if (snapshot.hasData) {
-      widget = _buildMain(snapshot.data.data, controller);
+      widget = _buildMain(snapshot.data!.data!, controller);
     } else {
       widget = _buildScaffold(_buildLoading());
     }

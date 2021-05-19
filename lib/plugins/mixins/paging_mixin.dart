@@ -12,7 +12,7 @@ abstract class Paging<M, P extends dynamic> {
   final pageable = PageableEntity();
   final loading = false.obs;
   final list = RxList<M>([]);
-  final meta = Rx<Meta>(null);
+  final meta = Rx<Meta?>(null);
   Future<ResultEntity<P>> dao(PageableEntity pageable);
 }
 
@@ -27,15 +27,15 @@ mixin PagingMixin<M, P extends dynamic> on GetxController
   @override
   final list = RxList<M>([]);
   @override
-  final meta = Rx<Meta>(null);
+  final meta = Rx<Meta?>(null);
 
   Future<void> paging() async {
     if (loading.value) return;
     loading.value = true;
     var result = await dao(pageable);
     meta.value = result.data.meta as Meta;
-    if (meta.value.first) {
-      refreshController.position.jumpTo(0);
+    if (meta.value!.first) {
+      refreshController.position?.jumpTo(0);
       list.clear();
       list.addAll(result.data.items as List<M>);
     } else {
@@ -52,8 +52,8 @@ mixin PagingMixin<M, P extends dynamic> on GetxController
   }
 
   Future<void> changePage(int pageIndex) async {
-    if (meta.value != null && meta.value.last ||
-        meta.value != null && meta.value.currentPage >= pageIndex) return;
+    if (meta.value != null && meta.value!.last ||
+        meta.value != null && meta.value!.currentPage >= pageIndex) return;
     pageable.page = pageIndex;
     paging();
   }

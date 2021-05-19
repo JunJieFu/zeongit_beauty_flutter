@@ -58,7 +58,7 @@ pictureEntityFromJson(PictureEntity data, Map<String, dynamic> json) {
 				: json['ratio'].toDouble();
 	}
 	if (json['tagList'] != null) {
-		data.tagList = json['tagList']?.map((v) => v.toString())?.toList()?.cast<String>();
+		data.tagList = (json['tagList'] as List).map((v) => v.toString()).toList().cast<String>();
 	}
 	if (json['focus'] != null) {
 		data.focus = json['focus'] is String
@@ -66,7 +66,7 @@ pictureEntityFromJson(PictureEntity data, Map<String, dynamic> json) {
 				: json['focus'].toInt();
 	}
 	if (json['user'] != null) {
-		data.user = new UserInfoEntity().fromJson(json['user']);
+		data.user = UserInfoEntity().fromJson(json['user']);
 	}
 	return data;
 }
@@ -88,8 +88,6 @@ Map<String, dynamic> pictureEntityToJson(PictureEntity entity) {
 	data['ratio'] = entity.ratio;
 	data['tagList'] = entity.tagList;
 	data['focus'] = entity.focus;
-	if (entity.user != null) {
-		data['user'] = entity.user.toJson();
-	}
+	data['user'] = entity.user.toJson();
 	return data;
 }

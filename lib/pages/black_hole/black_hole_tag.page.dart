@@ -13,9 +13,9 @@ import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart'
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class BlackHoleTagPage extends HookWidget {
-  BlackHoleTagPage({Key key, this.controller}) : super(key: key);
+  BlackHoleTagPage({Key? key, this.controller}) : super(key: key);
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +33,9 @@ class BlackHoleTagPage extends HookWidget {
     };
     Widget _emptyWidget() {
       if (currPage.value?.meta != null &&
-          currPage.value.meta.empty &&
-          currPage.value.meta.first &&
-          currPage.value.meta.last) {
+          currPage.value!.meta.empty &&
+          currPage.value!.meta.first &&
+          currPage.value!.meta.last) {
         return TipsPageCard(icon: MdiIcons.tag_outline, title: "没有屏蔽标签");
       } else {
         return ListView.builder(
@@ -81,10 +81,10 @@ class BlackHoleTagPage extends HookWidget {
       child: SmartRefresher(
         controller: refreshController.value,
         enablePullDown: true,
-        enablePullUp: currPage.value != null && !currPage.value.meta.last,
+        enablePullUp: currPage.value != null && !currPage.value!.meta.last,
         onRefresh: refresh,
         onLoading: () async {
-          await changePage(currPage.value.meta.currentPage + 1);
+          await changePage(currPage.value!.meta.currentPage + 1);
         },
         child: _emptyWidget(),
       ),

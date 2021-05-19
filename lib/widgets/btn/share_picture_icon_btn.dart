@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/config.constant.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
@@ -12,15 +11,12 @@ import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart
 import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 
 class SharePictureIconBtn extends StatelessWidget {
-  SharePictureIconBtn(
-      {Key key, @required this.id, this.callback, this.small = false})
+  SharePictureIconBtn({Key? key, required this.id, this.small = false})
       : logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
   final int id;
-
-  final Function callback;
 
   final bool small;
 
@@ -58,7 +54,7 @@ class SharePictureIconBtn extends StatelessWidget {
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                     text:
-                                        '${ConfigConstant.BEAUTY_HOST}/picture/${logic.picture.id}'));
+                                        '${ConfigConstant.BEAUTY_HOST}/picture/${logic.picture!.id}'));
                                 BotToast.showText(text: "复制成功");
                                 Get.back();
                               }),

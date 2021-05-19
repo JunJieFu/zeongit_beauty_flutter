@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
 class CardTitle extends StatelessWidget {
-  CardTitle({Key key, this.child}) : super(key: key);
+  CardTitle({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 
@@ -16,10 +16,7 @@ class CardTitle extends StatelessWidget {
 }
 
 class CardText extends StatelessWidget {
-  CardText({
-    Key key,
-    this.child
-  }) : super(key: key);
+  CardText({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 

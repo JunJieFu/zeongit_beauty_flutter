@@ -21,10 +21,10 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 		data.introduction = json['introduction'].toString();
 	}
 	if (json['avatarUrl'] != null) {
-		data.avatarUrl = json['avatarUrl'].toString();
+		data.avatarUrl = json['avatarUrl'];
 	}
 	if (json['background'] != null) {
-		data.background = json['background'].toString();
+		data.background = json['background'];
 	}
 	if (json['focus'] != null) {
 		data.focus = json['focus'] is String
@@ -32,13 +32,13 @@ userInfoEntityFromJson(UserInfoEntity data, Map<String, dynamic> json) {
 				: json['focus'].toInt();
 	}
 	if (json['country'] != null) {
-		data.country = json['country'].toString();
+		data.country = json['country'];
 	}
 	if (json['province'] != null) {
-		data.province = json['province'].toString();
+		data.province = json['province'];
 	}
 	if (json['city'] != null) {
-		data.city = json['city'].toString();
+		data.city = json['city'];
 	}
 	return data;
 }

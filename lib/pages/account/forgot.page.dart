@@ -11,7 +11,7 @@ import 'package:zeongitbeautyflutter/routes.dart';
 final _gap = StyleConfig.gap * 6;
 
 class ForgetPage extends HookWidget {
-  ForgetPage(this.phone, {Key key}) : super(key: key);
+  ForgetPage(this.phone, {Key? key}) : super(key: key);
 
   final String phone;
 

@@ -10,9 +10,9 @@ import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class ConvenientTabPage extends HookWidget {
-  ConvenientTabPage({Key key, this.controller}) : super(key: key);
+  ConvenientTabPage({Key? key, this.controller}) : super(key: key);
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final _accountLogic = Get.find<AccountLogic>();
 
@@ -26,9 +26,12 @@ class ConvenientTabPage extends HookWidget {
     final followingController = CustomRefreshController();
     useEffect(() {
       controller?.refresh = () {
-        if (tabController.index == 0) followingNewController.refresh();
-        if (tabController.index == 1) collectionController.refresh();
-        if (tabController.index == 2) followingController.refresh();
+        if (tabController.index == 0 && followingNewController.refresh != null)
+          followingNewController.refresh!();
+        if (tabController.index == 1 && collectionController.refresh != null)
+          collectionController.refresh!();
+        if (tabController.index == 2 && followingController.refresh != null)
+          followingController.refresh!();
       };
       return () {
         controller?.refresh = null;
@@ -63,9 +66,9 @@ class ConvenientTabPage extends HookWidget {
                 FollowingNewPage(controller: followingNewController),
                 CollectionPage(
                     controller: collectionController,
-                    id: _accountLogic.info.id),
+                    id: _accountLogic.info!.id),
                 FollowingPage(
-                    controller: followingController, id: _accountLogic.info.id),
+                    controller: followingController, id: _accountLogic.info!.id),
               ],
             ));
       }

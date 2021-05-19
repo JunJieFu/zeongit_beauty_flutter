@@ -1,8 +1,8 @@
 import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
 
 class PaginationEntity<T> {
-  List<T> items;
-  Meta meta;
+  late List<T> items;
+  late Meta meta;
 }
 
 

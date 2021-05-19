@@ -1,6 +1,6 @@
 import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.dart';
 
 class TagFrequencyEntity with JsonConvert<TagFrequencyEntity> {
-	String name;
-	int amount;
+	late String name;
+	late int amount;
 }

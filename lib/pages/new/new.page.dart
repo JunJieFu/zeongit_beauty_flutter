@@ -11,9 +11,9 @@ import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class NewPage extends StatelessWidget {
-  NewPage({Key key, this.controller}) : super(key: key);
+  NewPage({Key? key, this.controller}) : super(key: key);
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final newLogic = NewLogic();
 
@@ -66,13 +66,12 @@ class NewLogic extends GetxController
   @override
   onInit() {
     super.onInit();
-    criteria.value.precise = null;
   }
 
   @override
   dao(pageable) => PictureService.paging(pageable, criteria: criteria.value);
 
-  dateRefresh({DateTime dateTime, bool force = false}) {
+  dateRefresh({DateTime? dateTime, bool force = false}) {
     criteria.value.date.startDate = dateTime;
     criteria.value.date.endDate = dateTime;
     if (dateTime != null || force) {
@@ -82,8 +81,8 @@ class NewLogic extends GetxController
 
   showStartDatePicker() async {
     var dateTime = await showDatePicker(
-        context: Get.context,
-        initialDate: criteria.value?.date?.startDate ?? DateTime.now(),
+        context: Get.context!,
+        initialDate: criteria.value.date.startDate ?? DateTime.now(),
         firstDate: DateTime(2015),
         lastDate: DateTime.now());
     dateRefresh(dateTime: dateTime);

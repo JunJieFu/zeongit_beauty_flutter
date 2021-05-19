@@ -16,11 +16,11 @@ import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 class SearchPicturePage extends StatelessWidget {
   final String keyword;
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final SearchPictureLogic logic;
 
-  SearchPicturePage({Key key, @required this.keyword, this.controller})
+  SearchPicturePage({Key? key, required this.keyword, this.controller})
       : logic = SearchPictureLogic(keyword),
         super(key: key);
 

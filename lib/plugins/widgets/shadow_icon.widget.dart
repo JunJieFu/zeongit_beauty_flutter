@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShadowIcon extends StatelessWidget {
-  ShadowIcon(this.icon, {Key key, this.color, this.size, this.boxShadow})
+  ShadowIcon(this.icon,
+      {Key? key, required this.color, this.size, this.boxShadow})
       : super(key: key);
 
   final IconData icon;
 
   final Color color;
 
-  final double size;
+  final double? size;
 
-  final BoxShadow boxShadow;
+  final BoxShadow? boxShadow;
 
-  final _iconTheme = IconTheme.of(Get.context);
+  final _iconTheme = IconTheme.of(Get.context!);
 
   @override
   Widget build(BuildContext context) {

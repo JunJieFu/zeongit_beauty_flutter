@@ -11,13 +11,13 @@ import 'package:zeongitbeautyflutter/widgets/page_user.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class FollowerPage extends StatelessWidget {
-  FollowerPage({Key key, @required this.id, this.controller})
+  FollowerPage({Key? key, required this.id, this.controller})
       : logic = FollowerLogic(id),
         super(key: key);
 
   final int id;
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final FollowerLogic logic;
 

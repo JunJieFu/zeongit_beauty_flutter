@@ -12,7 +12,7 @@ feedbackEntityFromJson(FeedbackEntity data, Map<String, dynamic> json) {
 				: json['state'].toInt();
 	}
 	if (json['email'] != null) {
-		data.email = json['email'].toString();
+		data.email = json['email'];
 	}
 	if (json['content'] != null) {
 		data.content = json['content'].toString();

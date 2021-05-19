@@ -1,24 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
-import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
-import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowIconBtn extends StatelessWidget {
-  FollowIconBtn({Key key, @required this.id, this.callback, this.small = false})
+  FollowIconBtn({Key? key, required this.id, this.callback, this.small = false})
       : userInfoLogic =
             Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final int id;
 
-  final void Function(UserInfoEntity, int) callback;
+  final void Function(UserInfoEntity, int)? callback;
 
   final bool small;
 
@@ -30,7 +27,7 @@ class FollowIconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool focus = userInfoLogic.info.focus == FollowState.CONCERNED.index;
+    bool focus = userInfoLogic.info!.focus == FollowState.CONCERNED.index;
     final loading = userInfoLogic.loading;
     return SizedBox(
       width: small

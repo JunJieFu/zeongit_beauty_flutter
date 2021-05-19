@@ -13,11 +13,11 @@ import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class BlockTagIconBtn extends HookWidget {
   BlockTagIconBtn(
-      {Key key, @required this.tag, this.callback, this.small = false})
+      {Key? key, required this.tag, required this.callback, this.small = false})
       : super(key: key);
   final TagBlackHoleEntity tag;
 
-  final Function callback;
+  final void Function(TagBlackHoleEntity, int) callback;
 
   final bool small;
 
@@ -34,7 +34,7 @@ class BlockTagIconBtn extends HookWidget {
         loading.value = true;
         var result = await TagBlackHoleService.block(tag.name);
         loading.value = false;
-        if (ResultUtil.check(result)) callback(tag, result.data);
+        if (ResultUtil.check(result)) callback(tag, result.data!);
       } else {
         popupSignIn("屏蔽该标签？", "请先登录，然后才能把屏蔽该标签。", context, _btnKey);
       }

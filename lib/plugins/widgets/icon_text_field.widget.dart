@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 
 class IconTextField extends HookWidget {
   IconTextField(
-      {Key key,
-      this.controller,
+      {Key? key,
+      required this.controller,
       this.obscureText = false,
-      this.hintText,
-      this.icon})
+      required this.hintText,
+      required this.icon})
       : super(key: key);
 
   final TextEditingController controller;

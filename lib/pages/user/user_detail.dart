@@ -13,7 +13,7 @@ import 'package:zeongitbeautyflutter/widgets/btn/follow_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 
 class UserDetailPage extends HookWidget {
-  UserDetailPage({Key key, @required this.id})
+  UserDetailPage({Key? key, required this.id})
       : logic = Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
 
@@ -31,7 +31,7 @@ class UserDetailPage extends HookWidget {
               AspectRatio(
                 aspectRatio: 2,
                 child: BackgroundWidget(
-                  logic.info?.background,
+                  logic.info!.background,
                   fit: BoxFit.cover,
                   style: BackgroundStyle.backCard,
                 ),
@@ -46,21 +46,20 @@ class UserDetailPage extends HookWidget {
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap * 3),
               child:
-                  Center(child: TitleWidget(logic.info.nickname)),
+                  Center(child: TitleWidget(logic.info!.nickname)),
             ),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap),
               child: Center(
-                  child: TextWidget(logic.info.introduction)),
+                  child: TextWidget(logic.info!.introduction)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FollowIconBtn(
-                    id: logic.info.id),
+                    id: logic.info!.id),
                 ShareUserIconBtn(
-                  user: logic.info,
-                  callback: () {},
+                  user: logic.info!
                 ),
               ],
             )
@@ -75,7 +74,7 @@ class UserDetailPage extends HookWidget {
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
-      child: AvatarWidget(logic.info?.avatarUrl, logic.info?.nickname,
+      child: AvatarWidget(logic.info!.avatarUrl, logic.info!.nickname,
           fit: BoxFit.cover, size: size),
     );
   }

@@ -2,19 +2,15 @@ import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.da
 
 class ResultEntity<T> {
   int status;
-  String message;
-  T data;
+  String? message;
+  T? data;
 
-  ResultEntity({this.status, this.message, this.data});
+  ResultEntity({required this.status, required this.message, this.data});
 
   static fromJson<T>(Map<String, dynamic> json) {
-    var data = ResultEntity<T>();
-    if (json['status'] != null) {
-      data.status = json['status']?.toInt();
-    }
-    if (json['message'] != null) {
-      data.message = json['message']?.toString();
-    }
+    var data = ResultEntity<T>(
+        status: json['status']?.toInt() ?? 500,
+        message: json['message']?.toString() ?? "服务器错误");
     if (json['data'] != null) {
       try {
         data.data = JsonConvert.fromJsonAsT<T>(json['data']);
@@ -47,13 +43,13 @@ class ResultEntity<T> {
   static _getListFromType(String type) {
     switch (type) {
       case 'String':
-        return List<String>();
+        return <String>[];
       case 'int':
-        return List<int>();
+        return <int>[];
       case 'double':
-        return List<double>();
+        return <double>[];
       case 'bool':
-        return List<bool>();
+        return <bool>[];
     }
     return null;
   }

@@ -57,19 +57,19 @@ class UserInfoService {
 
   static Future<ResultEntity<PageUserInfoEntity>> paging(
       PageableEntity pageable,
-      {SearchUserTune criteria}) {
+      {SearchUserTune? criteria}) {
     var params = pageable.toJson();
     if (criteria?.nicknameList != null) {
-      params["nicknameList"] = criteria.nicknameList.split(" ");
+      params["nicknameList"] = criteria!.nicknameList?.split(" ");
     }
     if (criteria?.precise != null) {
-      params["precise"] = criteria.precise;
+      params["precise"] = criteria!.precise;
     }
-    if (criteria?.date?.startDate != null) {
-      params["startDate"] = criteria.date.startDate;
+    if (criteria?.date.startDate != null) {
+      params["startDate"] = criteria!.date.startDate;
     }
-    if (criteria?.date?.endDate != null) {
-      params["endDate"] = criteria.date.endDate;
+    if (criteria?.date.endDate != null) {
+      params["endDate"] = criteria!.date.endDate;
     }
     return HttpUtil.get("/userInfo/paging", params: params);
   }
@@ -78,52 +78,52 @@ class UserInfoService {
 class PictureService {
   static Future<ResultEntity<PagePictureEntity>> pagingByRecommend(
       PageableEntity pageable,
-      {DateRange dateRange}) {
+      {DateRange? dateRange}) {
     var params = pageable.toJson();
     if (dateRange?.startDate != null) {
-      params["startDate"] = dateRange.startDate;
+      params["startDate"] = dateRange!.startDate;
     }
     if (dateRange?.endDate != null) {
-      params["endDate"] = dateRange.endDate;
+      params["endDate"] = dateRange!.endDate;
     }
     return HttpUtil.get("/picture/pagingByRecommend", params: params);
   }
 
   static Future<ResultEntity<PagePictureEntity>> paging(PageableEntity pageable,
-      {SearchPictureTune criteria}) {
+      {SearchPictureTune? criteria}) {
     var params = pageable.toJson();
     if (criteria?.tagList != null) {
-      params["tagList"] = criteria.tagList.split(" ");
+      params["tagList"] = criteria!.tagList!.split(" ");
     }
     if (criteria?.precise != null) {
-      params["precise"] = criteria.precise;
+      params["precise"] = criteria!.precise;
     }
     if (criteria?.name != null) {
-      params["name"] = criteria.name;
+      params["name"] = criteria!.name;
     }
-    if (criteria?.date?.startDate != null) {
-      params["startDate"] = criteria.date.startDate;
+    if (criteria?.date.startDate != null) {
+      params["startDate"] = criteria!.date.startDate;
     }
-    if (criteria?.date?.endDate != null) {
-      params["endDate"] = criteria.date.endDate;
+    if (criteria?.date.endDate != null) {
+      params["endDate"] = criteria!.date.endDate;
     }
     if (criteria?.startWidth != null) {
-      params["startWidth"] = criteria.startWidth;
+      params["startWidth"] = criteria!.startWidth;
     }
     if (criteria?.endWidth != null) {
-      params["endWidth"] = criteria.endWidth;
+      params["endWidth"] = criteria!.endWidth;
     }
     if (criteria?.startHeight != null) {
-      params["startHeight"] = criteria.startHeight;
+      params["startHeight"] = criteria!.startHeight;
     }
     if (criteria?.endHeight != null) {
-      params["endHeight"] = criteria.endHeight;
+      params["endHeight"] = criteria!.endHeight;
     }
     if (criteria?.startRatio != null) {
-      params["startRatio"] = criteria.startRatio;
+      params["startRatio"] = criteria!.startRatio;
     }
     if (criteria?.endRatio != null) {
-      params["endRatio"] = criteria.endRatio;
+      params["endRatio"] = criteria!.endRatio;
     }
     return HttpUtil.get("/picture/paging", params: params);
   }
@@ -287,7 +287,7 @@ class TagBlackHoleService {
 
 class FeedbackService {
   static Future<ResultEntity<FeedbackEntity>> save(String content,
-      {String email}) {
+      {String? email}) {
     return HttpUtil.post("/feedback/save",
         params: {"content": content, "email": email});
   }

@@ -2,13 +2,12 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 
 class ComplaintDialog extends HookWidget {
-  ComplaintDialog({Key key, @required this.id}) : super(key: key);
+  ComplaintDialog({Key? key, required this.id}) : super(key: key);
 
   final int id;
 
@@ -49,7 +48,7 @@ class ComplaintDialog extends HookWidget {
     save() async {
       if (loading.value) return;
       final content = contentController.text;
-      if (content == null || content == '') {
+      if (content == '') {
         BotToast.showText(text: "请输入举报内容");
         return;
       }

@@ -11,13 +11,13 @@ import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class CollectionPage extends StatelessWidget {
-  CollectionPage({Key key, @required this.id, this.controller})
+  CollectionPage({Key? key, required this.id, this.controller})
       : logic = CollectionLogic(id),
         super(key: key);
 
   final int id;
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final CollectionLogic logic;
 

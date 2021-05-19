@@ -12,7 +12,10 @@ import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class BlockUserIconBtn extends HookWidget {
   BlockUserIconBtn(
-      {Key key, @required this.user, this.callback, this.small = false})
+      {Key? key,
+      required this.user,
+      required this.callback,
+      this.small = false})
       : super(key: key);
   final UserBlackHoleEntity user;
 
@@ -33,7 +36,7 @@ class BlockUserIconBtn extends HookWidget {
         loading.value = true;
         var result = await UserBlackHoleService.block(user.id);
         loading.value = false;
-        if (ResultUtil.check(result)) callback(user, result.data);
+        if (ResultUtil.check(result)) callback(user, result.data!);
       } else {
         popupSignIn("屏蔽该用户？", "请先登录，然后才能把屏蔽该用户。", context, _btnKey);
       }

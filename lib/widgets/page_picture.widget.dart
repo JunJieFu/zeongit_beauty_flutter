@@ -8,6 +8,7 @@ import 'package:zeongitbeautyflutter/assets/entity/collection_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/footprint_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pagination_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
+import 'package:zeongitbeautyflutter/assets/entity/user_info_entity.dart';
 import 'package:zeongitbeautyflutter/pages/picture/detail_tab_view.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/config.widget.dart';
@@ -22,30 +23,34 @@ final _infoGap = StyleConfig.gap * 3;
 
 _getEmptyPicture(int id, int focus) {
   final picture = PictureEntity();
+  var info = UserInfoEntity();
+  info.nickname = "无法显示";
   picture.id = id;
   picture.focus = focus;
-  picture.focus = focus;
+  picture.name = "无法显示";
+  picture.user = info;
+
   return picture;
 }
 
 class PagePicture extends StatelessWidget {
   PagePicture({
-    Key key,
-    @required this.emptyChild,
-    @required this.meta,
-    @required this.list,
-    @required this.refreshController,
-    @required this.refresh,
-    @required this.changePage,
+    Key? key,
+    required this.emptyChild,
+    this.meta,
+    required this.list,
+    required this.refreshController,
+    required this.refresh,
+    required this.changePage,
     this.callback,
   }) : super(key: key);
   final Widget emptyChild;
-  final Meta meta;
+  final Meta? meta;
   final RxList<PictureEntity> list;
   final RefreshController refreshController;
   final VoidCallback refresh;
   final ChangePageCallback changePage;
-  final Function callback;
+  final Function? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +58,12 @@ class PagePicture extends StatelessWidget {
       child: SmartRefresher(
           controller: refreshController,
           enablePullDown: true,
-          enablePullUp: meta != null && !meta.last,
+          enablePullUp: meta != null && !meta!.last,
           onRefresh: refresh,
           onLoading: () async {
-            await changePage(meta.currentPage + 1);
+            await changePage(meta!.currentPage + 1);
           },
-          child: meta != null && meta.empty && meta.first && meta.last
+          child: meta != null && meta!.empty && meta!.first && meta!.last
               ? ListView(
                   physics: AlwaysScrollableScrollPhysics(),
                   children: [emptyChild])
@@ -69,7 +74,7 @@ class PagePicture extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: StyleConfig.listGap,
                           mainAxisSpacing: StyleConfig.listGap),
-                  itemCount: list?.length,
+                  itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
                     PictureLogic logic;
                     try {
@@ -90,7 +95,7 @@ class PagePicture extends StatelessWidget {
                                 child: AspectRatio(
                                     aspectRatio: logic.aspectRatio,
                                     child: PictureWidget(
-                                      logic.picture.url,
+                                      logic.picture!.url,
                                       style: PictureStyle.specifiedWidth500,
                                       fit: BoxFit.cover,
                                     )),
@@ -113,24 +118,24 @@ class PagePicture extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          logic.picture.name,
+                                          logic.picture!.name,
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        Text(logic.picture.user.nickname,
+                                        Text(logic.picture!.user.nickname,
                                             overflow: TextOverflow.ellipsis,
                                             textScaleFactor: .8,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
-                                                    .color
+                                                    .bodyText1!
+                                                    .color!
                                                     .withOpacity(.56)))
                                       ],
                                     ),
                                     flex: 1,
                                   ),
                                   CollectIconBtn(
-                                      id: logic.picture.id, small: true),
+                                      id: logic.picture!.id, small: true),
                                 ],
                               ),
                             )
@@ -145,16 +150,16 @@ class PagePicture extends StatelessWidget {
 
 class PageCollection extends StatelessWidget {
   PageCollection({
-    Key key,
-    @required this.emptyChild,
-    @required this.meta,
-    @required this.list,
-    @required this.refreshController,
-    @required this.refresh,
-    @required this.changePage,
+    Key? key,
+    required this.emptyChild,
+    this.meta,
+    required this.list,
+    required this.refreshController,
+    required this.refresh,
+    required this.changePage,
   }) : super(key: key);
   final Widget emptyChild;
-  final Meta meta;
+  final Meta? meta;
   final List<CollectionEntity> list;
   final RefreshController refreshController;
   final VoidCallback refresh;
@@ -166,12 +171,12 @@ class PageCollection extends StatelessWidget {
       child: SmartRefresher(
           controller: refreshController,
           enablePullDown: true,
-          enablePullUp: meta != null && !meta.last,
+          enablePullUp: meta != null && !meta!.last,
           onRefresh: refresh,
           onLoading: () async {
-            await changePage(meta.currentPage + 1);
+            await changePage(meta!.currentPage + 1);
           },
-          child: meta != null && meta.empty && meta.first && meta.last
+          child: meta != null && meta!.empty && meta!.first && meta!.last
               ? ListView(
                   physics: AlwaysScrollableScrollPhysics(),
                   children: [emptyChild])
@@ -182,7 +187,7 @@ class PageCollection extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: StyleConfig.listGap,
                           mainAxisSpacing: StyleConfig.listGap),
-                  itemCount: list?.length,
+                  itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
                     PictureEntity picture = list[index].picture ??
                         _getEmptyPicture(
@@ -206,7 +211,7 @@ class PageCollection extends StatelessWidget {
                                 child: AspectRatio(
                                     aspectRatio: logic.aspectRatio,
                                     child: PictureWidget(
-                                      logic.picture.url,
+                                      logic.picture!.url,
                                       style: PictureStyle.specifiedWidth500,
                                       fit: BoxFit.cover,
                                     )),
@@ -230,24 +235,24 @@ class PageCollection extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          logic.picture.name,
+                                          logic.picture!.name,
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        Text(logic.picture.user.nickname,
+                                        Text(logic.picture!.user.nickname,
                                             overflow: TextOverflow.ellipsis,
                                             textScaleFactor: .8,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
-                                                    .color
+                                                    .bodyText1!
+                                                    .color!
                                                     .withOpacity(.56)))
                                       ],
                                     ),
                                     flex: 1,
                                   ),
                                   CollectIconBtn(
-                                      id: logic.picture.id, small: true),
+                                      id: logic.picture!.id, small: true),
                                 ],
                               ),
                             )
@@ -262,16 +267,16 @@ class PageCollection extends StatelessWidget {
 
 class PageFootprint extends StatelessWidget {
   PageFootprint({
-    Key key,
-    @required this.emptyChild,
-    @required this.meta,
-    @required this.list,
-    @required this.refreshController,
-    @required this.refresh,
-    @required this.changePage,
+    Key? key,
+    required this.emptyChild,
+    this.meta,
+    required this.list,
+    required this.refreshController,
+    required this.refresh,
+    required this.changePage,
   }) : super(key: key);
   final Widget emptyChild;
-  final Meta meta;
+  final Meta? meta;
   final List<FootprintEntity> list;
   final RefreshController refreshController;
   final VoidCallback refresh;
@@ -283,12 +288,12 @@ class PageFootprint extends StatelessWidget {
       child: SmartRefresher(
           controller: refreshController,
           enablePullDown: true,
-          enablePullUp: meta != null && !meta.last,
+          enablePullUp: meta != null && !meta!.last,
           onRefresh: refresh,
           onLoading: () async {
-            await changePage(meta.currentPage + 1);
+            await changePage(meta!.currentPage + 1);
           },
-          child: meta != null && meta.empty && meta.first && meta.last
+          child: meta != null && meta!.empty && meta!.first && meta!.last
               ? ListView(
                   physics: AlwaysScrollableScrollPhysics(),
                   children: [emptyChild])
@@ -299,7 +304,7 @@ class PageFootprint extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: StyleConfig.listGap,
                           mainAxisSpacing: StyleConfig.listGap),
-                  itemCount: list?.length,
+                  itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
                     PictureEntity picture = list[index].picture ??
                         _getEmptyPicture(
@@ -323,7 +328,7 @@ class PageFootprint extends StatelessWidget {
                                 child: AspectRatio(
                                     aspectRatio: logic.aspectRatio,
                                     child: PictureWidget(
-                                      logic.picture.url,
+                                      logic.picture!.url,
                                       style: PictureStyle.specifiedWidth500,
                                       fit: BoxFit.cover,
                                     )),
@@ -347,26 +352,25 @@ class PageFootprint extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          logic.picture.name ?? "无法显示",
+                                          logic.picture!.name,
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         Text(
-                                            logic.picture.user?.nickname ??
-                                                "无法显示",
+                                            logic.picture!.user.nickname,
                                             overflow: TextOverflow.ellipsis,
                                             textScaleFactor: .8,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .textTheme
                                                     .bodyText1
-                                                    .color
-                                                    .withOpacity(.56)))
+                                                    !.color
+                                                    !.withOpacity(.56)))
                                       ],
                                     ),
                                     flex: 1,
                                   ),
                                   CollectIconBtn(
-                                      id: logic.picture.id, small: true),
+                                      id: logic.picture!.id, small: true),
                                 ],
                               ),
                             )

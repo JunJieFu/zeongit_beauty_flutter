@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 
 class LazyIndexedStack extends StatefulWidget {
   LazyIndexedStack(
-      {Key key,
+      {Key? key,
       this.alignment = AlignmentDirectional.topStart,
       this.textDirection,
       this.sizing = StackFit.loose,
-      this.index,
+      this.index = 0,
       this.reuse = true,
-      @required this.itemBuilder,
+      required this.itemBuilder,
       this.itemCount = 0})
       : super(key: key);
 
   final AlignmentGeometry alignment;
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
   final StackFit sizing;
   final int index;
   final bool reuse;
@@ -25,13 +25,11 @@ class LazyIndexedStack extends StatefulWidget {
 }
 
 class _LazyIndexedStackState extends State<LazyIndexedStack> {
-  List<Widget> _children;
-  List<bool> _loaded;
+  List<Widget> _children = [];
+  List<bool> _loaded = [];
 
   @override
   void initState() {
-    _loaded = [];
-    _children = [];
     for (int i = 0; i < widget.itemCount; ++i) {
       if (i == widget.index) {
         _children.add(widget.itemBuilder(context, i));

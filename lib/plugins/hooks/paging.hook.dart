@@ -10,13 +10,13 @@ typedef PageableEntityCallback = PageableEntity Function();
 
 PagingHookResult<M, P> usePaging<M, P extends dynamic>(BuildContext context,
     Future<ResultEntity<P>> Function(PageableEntity pageable) dao,
-    {RefreshControllerCallback buildController,
-    PageableEntityCallback buildPageable}) {
+    {RefreshControllerCallback? buildController,
+    PageableEntityCallback? buildPageable}) {
   var refreshController = useState(buildController != null
       ? buildController()
       : RefreshController(initialRefresh: true));
   bool loading = false;
-  var currPage = useState<P>(null);
+  var currPage = useState<P?>(null);
   var list = useState<List<M>>([]);
   PageableEntity pageable =
       buildPageable != null ? buildPageable() : PageableEntity();
@@ -27,7 +27,7 @@ PagingHookResult<M, P> usePaging<M, P extends dynamic>(BuildContext context,
     var result = await dao(pageable);
     currPage.value = result.data;
     if (currPage.value.meta.first) {
-      refreshController.value.position.jumpTo(0);
+      refreshController.value.position?.jumpTo(0);
       list.value = currPage.value.items as List<M>;
     } else {
       list.value.addAll(currPage.value.items as List<M>);
@@ -63,18 +63,18 @@ PagingHookResult<M, P> usePaging<M, P extends dynamic>(BuildContext context,
 
 class PagingHookResult<M, P extends dynamic> {
   PagingHookResult({
-    this.refreshController,
-    this.list,
-    this.currPage,
-    this.pageable,
-    this.paging,
-    this.refresh,
-    this.changePage,
+    required this.refreshController,
+    required this.list,
+    required this.currPage,
+    required this.pageable,
+    required this.paging,
+    required this.refresh,
+    required this.changePage,
   });
 
   ValueNotifier<RefreshController> refreshController;
   ValueNotifier<List<M>> list;
-  ValueNotifier<P> currPage;
+  ValueNotifier<P?> currPage;
   PageableEntity pageable;
   Future<void> Function() paging;
   Future<void> Function() refresh;

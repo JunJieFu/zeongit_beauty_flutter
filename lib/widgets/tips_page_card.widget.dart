@@ -6,18 +6,22 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/card.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/text.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
-import 'package:zeongitbeautyflutter/routes.dart';
 
 class TipsPageCard extends StatelessWidget {
   TipsPageCard(
-      {Key key, this.icon, this.title, this.text, this.btnDesc, this.onPressed})
+      {Key? key,
+      required this.icon,
+      required this.title,
+      this.text,
+      this.btnDesc,
+      this.onPressed})
       : super(key: key);
 
   final IconData icon;
   final String title;
-  final String text;
-  final String btnDesc;
-  final VoidCallback onPressed;
+  final String? text;
+  final String? btnDesc;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +41,24 @@ class TipsPageCard extends StatelessWidget {
       CardTitle(child: TitleWidget(title)),
     ];
     if (text != null) {
-      list.add(CardText(child: TextWidget(text)));
+      list.add(CardText(child: TextWidget(text!)));
     }
 
     if (btnDesc != null) {
-      list.add(OutlinedButton(child: Text(btnDesc), onPressed: onPressed));
+      list.add(OutlinedButton(child: Text(btnDesc!), onPressed: onPressed));
     }
     return list;
   }
 }
 
 class SignInPageCardWidget extends StatelessWidget {
-  SignInPageCardWidget({Key key, this.icon, this.title, this.text})
+  SignInPageCardWidget(
+      {Key? key, required this.icon, required this.title, this.text})
       : super(key: key);
 
   final IconData icon;
   final String title;
-  final String text;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {

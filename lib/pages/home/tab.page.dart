@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/convenient_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/more.page.dart';
@@ -11,7 +10,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/lazy_indexed_stack.widget.dart';
 
 class TabPage extends HookWidget {
-  TabPage({Key key}) : super(key: key);
+  TabPage({Key? key}) : super(key: key);
 
   final _tabList = [
     Tab(
@@ -39,12 +38,12 @@ class TabPage extends HookWidget {
   Widget build(BuildContext context) {
     var tabController = useTabController(initialLength: _tabList.length);
 
-    var preTime = useState<DateTime>(null);
+    var preTime = useState<DateTime?>(null);
     var tabIndex = useState(0);
     return WillPopScope(
       onWillPop: () async {
         if (preTime.value == null ||
-            DateTime.now().difference(preTime.value) > Duration(seconds: 2)) {
+            DateTime.now().difference(preTime.value!) > Duration(seconds: 2)) {
           preTime.value = DateTime.now();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: Duration(seconds: 1),
@@ -85,24 +84,24 @@ class TabPage extends HookWidget {
                         switch (index) {
                           case 0:
                             {
-                              _findPageController.refresh();
+                              _findPageController.refresh!();
                             }
                             break;
                           case 1:
                             {
-                              _newPageController.refresh();
+                              _newPageController.refresh!();
                             }
                             break;
                           case 2:
                             {
                               try{
-                                _convenientPageController.refresh();
+                                _convenientPageController.refresh!();
                               }catch(e){}
                             }
                             break;
                           case 3:
                             {
-                              _tagPageController.refresh();
+                              _tagPageController.refresh!();
                             }
                             break;
                           default:

@@ -24,7 +24,7 @@ collectionEntityFromJson(CollectionEntity data, Map<String, dynamic> json) {
 				: json['focus'].toInt();
 	}
 	if (json['picture'] != null) {
-		data.picture = new PictureEntity().fromJson(json['picture']);
+		data.picture = PictureEntity().fromJson(json['picture']);
 	}
 	return data;
 }
@@ -36,8 +36,6 @@ Map<String, dynamic> collectionEntityToJson(CollectionEntity entity) {
 	data['updateDate'] = entity.updateDate;
 	data['pictureId'] = entity.pictureId;
 	data['focus'] = entity.focus;
-	if (entity.picture != null) {
-		data['picture'] = entity.picture.toJson();
-	}
+	data['picture'] = entity.picture?.toJson();
 	return data;
 }

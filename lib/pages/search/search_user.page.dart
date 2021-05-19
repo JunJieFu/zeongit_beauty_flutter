@@ -12,13 +12,13 @@ import 'package:zeongitbeautyflutter/widgets/page_user.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class SearchUserPage extends StatelessWidget {
-  SearchUserPage({Key key, @required this.keyword, this.controller})
+  SearchUserPage({Key? key, required this.keyword, this.controller})
       : logic = SearchUserLogic(keyword),
         super(key: key);
 
   final String keyword;
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final SearchUserLogic logic;
 

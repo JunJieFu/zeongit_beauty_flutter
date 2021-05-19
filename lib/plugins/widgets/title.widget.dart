@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TitleWidget extends StatelessWidget {
   TitleWidget(
     this.text, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final String text;

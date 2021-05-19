@@ -1,26 +1,26 @@
 import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.dart';
 
 class BlackHoleEntity with JsonConvert<BlackHoleEntity> {
-	UserBlackHoleEntity user;
-	List<TagBlackHoleEntity> tagList;
-	PictureBlackHoleEntity picture;
+  late UserBlackHoleEntity user;
+  late List<TagBlackHoleEntity> tagList;
+  PictureBlackHoleEntity? picture;
 }
 
 class UserBlackHoleEntity with JsonConvert<UserBlackHoleEntity> {
-	int id;
-	String avatarUrl;
-	String nickname;
-	int state;
+  late int id;
+  String? avatarUrl;
+  late String nickname;
+	late int state;
 }
 
 class TagBlackHoleEntity with JsonConvert<TagBlackHoleEntity> {
-	String name;
-	int state;
+  late String name;
+  late int state;
 }
 
 class PictureBlackHoleEntity with JsonConvert<PictureBlackHoleEntity> {
-	int id;
-	String url;
-	String name;
-	int state;
+  late int id;
+  late String url;
+  String? name;
+  int? state;
 }

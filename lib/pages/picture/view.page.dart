@@ -13,7 +13,7 @@ import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 
 class ViewPage extends HookWidget {
-  ViewPage(this.url, {Key key}) : super(key: key);
+  ViewPage(this.url, {Key? key}) : super(key: key);
 
   final String url;
 
@@ -24,7 +24,7 @@ class ViewPage extends HookWidget {
     saveStorage() async {
       if (await PermissionUtil.storage()) {
         final success = await GallerySaver.saveImage(completeUrl);
-        if (success) {
+        if (success != null && success) {
           BotToast.showText(text: "保存成功");
         } else {
           BotToast.showText(text: "保存失败");
@@ -69,12 +69,11 @@ class ViewPage extends HookWidget {
         ),
         body: PhotoView(
           imageProvider: CachedNetworkImageProvider(completeUrl),
-          loadingBuilder: (BuildContext context, ImageChunkEvent event) {
+          loadingBuilder: (BuildContext context, ImageChunkEvent? event) {
             return Center(
-              child: Container(
-                child: CircularProgressIndicator(),
-              ),
-            );
+                child: Container(
+              child: CircularProgressIndicator(),
+            ));
           },
         ));
   }

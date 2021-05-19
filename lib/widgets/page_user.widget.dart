@@ -15,22 +15,22 @@ typedef FollowCallback = void Function(int index, int focus);
 
 class PageUser extends StatelessWidget {
   PageUser({
-    Key key,
-    @required this.emptyChild,
-    @required this.meta,
-    @required this.list,
-    @required this.refreshController,
-    @required this.refresh,
-    @required this.changePage,
+    Key? key,
+    required this.emptyChild,
+    this.meta,
+    required this.list,
+    required this.refreshController,
+    required this.refresh,
+    required this.changePage,
     this.followCallback,
   }) : super(key: key);
   final Widget emptyChild;
-  final Meta meta;
+  final Meta? meta;
   final List<UserInfoEntity> list;
   final RefreshController refreshController;
   final VoidCallback refresh;
   final ChangePageCallback changePage;
-  final FollowCallback followCallback;
+  final FollowCallback? followCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +40,17 @@ class PageUser extends StatelessWidget {
       child: SmartRefresher(
           controller: refreshController,
           enablePullDown: true,
-          enablePullUp: meta != null && !meta.last,
+          enablePullUp: meta != null && !meta!.last,
           onRefresh: refresh,
           onLoading: () async {
-            await changePage(meta.currentPage + 1);
+            await changePage(meta!.currentPage + 1);
           },
-          child: meta != null && meta.empty && meta.first && meta.last
+          child: meta != null && meta!.empty && meta!.first && meta!.last
               ? ListView(
                   physics: AlwaysScrollableScrollPhysics(),
                   children: [emptyChild])
               : ListView.builder(
-                  itemCount: list?.length,
+                  itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
                     UserInfoEntity userInfo = list[index];
                     UserInfoLogic logic;
@@ -80,15 +80,15 @@ class PageUser extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.all(padding),
                                     child: AvatarWidget(
-                                      logic.info?.avatarUrl,
-                                      logic.info?.nickname,
+                                      logic.info!.avatarUrl,
+                                      logic.info!.nickname,
                                       size: size - padding * 2,
                                       fit: BoxFit.cover,
                                       style: AvatarStyle.small50,
                                     ),
                                   ),
                                   onTap: () {
-                                    Get.to(UserTabPage(id: logic.info.id),
+                                    Get.to(UserTabPage(id: logic.info!.id),
                                         preventDuplicates: false);
                                   },
                                 ),
@@ -97,11 +97,11 @@ class PageUser extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: StyleConfig.gap * 2),
-                                    child: Text(logic.info.nickname),
+                                    child: Text(logic.info!.nickname),
                                   ),
                                 ),
                                 FollowBtn(
-                                  id: logic.info.id,
+                                  id: logic.info!.id,
                                 )
                               ],
                             ),

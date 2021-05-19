@@ -1,58 +1,56 @@
 class SearchPictureTune {
-  String tagList;
+  String? tagList;
 
-  String name;
+  String? name;
 
   bool precise;
 
-  SearchTuneDateItem date = SearchTuneDateItem("不限制", null, null);
+  SearchTuneDateItem date = SearchTuneDateItem(text: "不限制");
 
-  double startWidth;
+  double? startWidth;
 
-  double endWidth;
+  double? endWidth;
 
-  double startHeight;
+  double? startHeight;
 
-  double endHeight;
+  double? endHeight;
 
-  double startRatio;
+  double? startRatio;
 
-  double endRatio;
+  double? endRatio;
 
   SearchPictureTune(
       {this.tagList,
       this.name,
-      this.precise,
+      this.precise = false,
       this.startWidth,
       this.endWidth,
       this.startHeight,
-      this.endHeight}) {
-    if (this.precise == null) precise = false;
-  }
+      this.endHeight}) {}
 }
 
 enum SearchTuneDate { NORMAL, WEEK, MONTH, SIX_MONTHS, YEAR, CUSTOM }
 
 class SearchTuneDateItem {
-  SearchTuneDateItem(this.text, this.startDate, this.endDate);
+  SearchTuneDateItem({required this.text, this.startDate, this.endDate});
 
   String text;
 
-  DateTime startDate;
+  DateTime? startDate;
 
-  DateTime endDate;
+  DateTime? endDate;
 }
 
 class DateRange {
-  DateTime startDate;
+  DateTime? startDate;
 
-  DateTime endDate;
+  DateTime? endDate;
 }
 
 class SearchUserTune {
-  String nicknameList;
+  String? nicknameList;
 
-  bool precise;
+  bool precise = false;
 
-  SearchTuneDateItem date = SearchTuneDateItem("不限制", null, null);
+  SearchTuneDateItem date = SearchTuneDateItem(text: "不限制");
 }

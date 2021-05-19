@@ -4,11 +4,11 @@ import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
 class Confirm extends StatelessWidget {
   Confirm(
-      {Key key,
-      this.title,
-      this.content,
-      this.cancelText,
-      this.confirmText,
+      {Key? key,
+      required this.title,
+      required this.content,
+      required this.cancelText,
+      required this.confirmText,
       this.cancelCallback,
       this.confirmCallback})
       : super(key: key);
@@ -21,9 +21,9 @@ class Confirm extends StatelessWidget {
 
   final Widget confirmText;
 
-  final Function cancelCallback;
+  final Function? cancelCallback;
 
-  final Function confirmCallback;
+  final Function? confirmCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +37,17 @@ class Confirm extends StatelessWidget {
             ),
             onPressed: () {
               Get.back();
-              if (cancelCallback != null) cancelCallback();
+              if (cancelCallback != null) cancelCallback!();
             },
             child: cancelText),
-        TextButton(onPressed: confirmCallback ?? Get.back, child: confirmText)
+        TextButton(
+            onPressed: () {
+              if (confirmCallback != null)
+                confirmCallback!();
+              else
+                Get.back();
+            },
+            child: confirmText)
       ],
     );
   }

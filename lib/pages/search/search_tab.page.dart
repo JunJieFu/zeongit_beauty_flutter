@@ -4,7 +4,7 @@ import 'package:zeongitbeautyflutter/pages/search/search_picture.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_user.page.dart';
 
 class SearchTabPage extends HookWidget {
-  SearchTabPage({Key key, @required this.keyword, this.index})
+  SearchTabPage({Key? key, required this.keyword, this.index = 0})
       : super(key: key);
 
   final String keyword;
@@ -16,7 +16,7 @@ class SearchTabPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var tabController =
-        useTabController(initialLength: _tabList.length, initialIndex: index ?? 0);
+        useTabController(initialLength: _tabList.length, initialIndex: index);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,

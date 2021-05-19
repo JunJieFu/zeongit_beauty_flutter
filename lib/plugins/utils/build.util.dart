@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 
-buildListTileTitle(String text, {IconData leftIcon, IconData rightIcon}) {
+buildListTileTitle(String text, {IconData? leftIcon, IconData? rightIcon}) {
   var children = <Widget>[];
   if (leftIcon != null) {
     children.add(Icon(leftIcon));

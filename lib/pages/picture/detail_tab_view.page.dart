@@ -4,7 +4,7 @@ import 'package:zeongitbeautyflutter/pages/picture/detail.page.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
 
 class DetailTabViewPage extends HookWidget {
-  DetailTabViewPage({Key key, @required this.list, @required this.index})
+  DetailTabViewPage({Key? key, required this.list, required this.index})
       : super(key: key);
 
   final List<int> list;

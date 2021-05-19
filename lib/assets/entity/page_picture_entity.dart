@@ -4,6 +4,6 @@ import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.da
 
 class PagePictureEntity
     with JsonConvert<PagePictureEntity> {
-  List<PictureEntity> items;
-  Meta meta;
+  late List<PictureEntity> items;
+  late Meta meta;
 }

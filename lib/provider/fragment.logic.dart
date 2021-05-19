@@ -47,7 +47,7 @@ class FragmentLogic extends GetxController {
 
   removeHistory() {
     showDialog(
-        context: Get.context,
+        context: Get.context!,
         builder: (ctx) {
           return Confirm(
             title: Text("提示"),

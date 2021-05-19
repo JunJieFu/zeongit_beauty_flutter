@@ -17,16 +17,16 @@ const avatarColorList = [
 
 class AvatarWidget extends StatelessWidget {
   AvatarWidget(this.url, this.nickname,
-      {Key key, this.size = 50.0, this.fit, this.style})
+      {Key? key, this.size = 50.0, this.fit = BoxFit.contain, this.style})
       : super(key: key);
 
-  final String url;
+  final String? url;
 
   final String nickname;
 
   final BoxFit fit;
 
-  final AvatarStyle style;
+  final AvatarStyle? style;
 
   final double size;
 
@@ -67,8 +67,8 @@ class AvatarWidget extends StatelessWidget {
       SvgPicture.asset("assets/images/default-avatar.svg", fit: fit);
 
   Widget _buildNicknameAvatar() {
-    var character = nickname?.substring(0, 1) ?? "";
-    var index = (nickname?.codeUnitAt(0) ?? 2) % avatarColorList.length;
+    var character = nickname.substring(0, 1);
+    var index = (nickname.codeUnitAt(0)) % avatarColorList.length;
     return Container(
       color: avatarColorList[index],
       child: Center(

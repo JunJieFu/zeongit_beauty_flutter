@@ -19,7 +19,7 @@ import 'package:zeongitbeautyflutter/widgets/btn/share_user_icon_btn.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class MorePage extends StatelessWidget {
-  MorePage({Key key}) : super(key: key);
+  MorePage({Key? key}) : super(key: key);
 
   final _accountLogic = Get.find<AccountLogic>();
 
@@ -49,7 +49,7 @@ class MorePage extends StatelessWidget {
                   child: GestureDetector(
                     child: _buildMaterialAvatar(),
                     onTap: () {
-                      Get.to(UserTabPage(id: _accountLogic.info.id),
+                      Get.to(UserTabPage(id: _accountLogic.info!.id),
                           preventDuplicates: false);
                     },
                   ),
@@ -58,24 +58,23 @@ class MorePage extends StatelessWidget {
             ]),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap * 3),
-              child: Center(child: TitleWidget(_accountLogic.info.nickname)),
+              child: Center(child: TitleWidget(_accountLogic.info!.nickname)),
             ),
             Padding(
               padding: EdgeInsets.only(top: StyleConfig.gap),
-              child: Center(child: TextWidget(_accountLogic.info.introduction)),
+              child: Center(child: TextWidget(_accountLogic.info!.introduction)),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ShareUserIconBtn(
-                  user: _accountLogic.info,
-                  callback: () {},
+                  user: _accountLogic.info!
                 ),
               ],
             ),
             ..._buildListTile(MdiIcons.shoe_print, "足迹", () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return FootprintPage(id: _accountLogic.info.id);
+                return FootprintPage(id: _accountLogic.info!.id);
               }));
             }),
             ..._buildListTile(MdiIcons.upload_outline, "上传", () {
@@ -117,7 +116,7 @@ class MorePage extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(size)),
       elevation: 3,
       child: AvatarWidget(
-          _accountLogic.info?.avatarUrl, _accountLogic.info?.nickname,
+          _accountLogic.info!.avatarUrl, _accountLogic.info!.nickname,
           fit: BoxFit.cover, size: size),
     );
   }

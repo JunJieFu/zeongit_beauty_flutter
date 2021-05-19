@@ -3,7 +3,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class AboutPage extends StatelessWidget {
-  AboutPage({Key key}) : super(key: key);
+  AboutPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

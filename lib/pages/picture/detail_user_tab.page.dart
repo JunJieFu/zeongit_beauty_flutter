@@ -6,7 +6,7 @@ import 'package:zeongitbeautyflutter/pages/picture/collection_user.page.dart';
 import 'package:zeongitbeautyflutter/pages/picture/footprint_user.page.dart';
 
 class DetailUserTabPage extends HookWidget {
-  DetailUserTabPage({Key key, @required this.picture, this.index})
+  DetailUserTabPage({Key? key, required this.picture, required this.index})
       : super(key: key);
 
   final PictureEntity picture;

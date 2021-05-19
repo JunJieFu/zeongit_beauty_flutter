@@ -11,13 +11,13 @@ import 'package:zeongitbeautyflutter/widgets/page_user.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class FootprintUserPage extends StatelessWidget {
-  FootprintUserPage({Key key, @required this.id, this.controller})
+  FootprintUserPage({Key? key,required this.id, this.controller})
       : logic = FootprintUserLogic(id),
         super(key: key);
 
   final int id;
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final FootprintUserLogic logic;
 

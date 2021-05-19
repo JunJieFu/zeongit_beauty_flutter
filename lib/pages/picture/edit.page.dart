@@ -4,11 +4,11 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class EditPage extends StatefulWidget {
-  EditPage(this.picture, {Key key, @required this.callback}) : super(key: key);
+  EditPage(this.picture, {Key? key, required this.callback}) : super(key: key);
 
   final PictureEntity picture;
 
-  final void Function(PictureEntity) callback;
+  final void Function(PictureEntity)? callback;
 
   @override
   EditPageState createState() => EditPageState(picture);

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class KeepAliveClient extends StatefulWidget {
-  KeepAliveClient({Key key, this.child}) : super(key: key);
+  KeepAliveClient({Key? key, required this.child}) : super(key: key);
   final Widget child;
 
   @override

@@ -10,7 +10,7 @@ tagPictureEntityFromJson(TagPictureEntity data, Map<String, dynamic> json) {
 				: json['amount'].toInt();
 	}
 	if (json['url'] != null) {
-		data.url = json['url'].toString();
+		data.url = json['url'];
 	}
 	return data;
 }

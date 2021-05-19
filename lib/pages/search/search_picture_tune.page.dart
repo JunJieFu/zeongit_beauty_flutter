@@ -12,7 +12,7 @@ final _gap = StyleConfig.gap * 6;
 
 class SearchPictureTunePage extends StatefulWidget {
   SearchPictureTunePage(
-      {Key key, @required this.params, @required this.callback})
+      {Key? key, required this.params, required this.callback})
       : super(key: key);
 
   final SearchPictureTune params;
@@ -40,12 +40,12 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
   @override
   void initState() {
     super.initState();
-    _nameController.text = widget.params.name;
+    _nameController.text = widget.params.name ?? "";
     _startWidthController.text = widget.params.startWidth == null
         ? ""
         : widget.params.startWidth.toString();
     _endWidthController.text =
-        widget.params.endWidth == null ? "" : widget.params.endWidth.toString();
+    widget.params.endWidth == null ? "" : widget.params.endWidth.toString();
     _startHeightController.text = widget.params.startHeight == null
         ? ""
         : widget.params.startHeight.toString();
@@ -56,7 +56,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
         ? ""
         : widget.params.startRatio.toString();
     _endRatioController.text =
-        widget.params.endRatio == null ? "" : widget.params.endRatio.toString();
+    widget.params.endRatio == null ? "" : widget.params.endRatio.toString();
   }
 
   @override
@@ -81,7 +81,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       controller: _nameController,
                       decoration: InputDecoration(
@@ -102,7 +102,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                 _buildLabel("精准搜索"),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                  EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                   child: Switch(
                     value: widget.params.precise,
                     activeColor: Get.theme.primaryColor,
@@ -129,7 +129,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                                 child: Card(
                                   child: Container(
                                     padding:
-                                        EdgeInsets.all(StyleConfig.gap * 2),
+                                    EdgeInsets.all(StyleConfig.gap * 2),
                                     width: 250,
                                     child: TextWidget(
                                         "在精准搜索下，只会显示您输入的图片名和标签名完全一致的结果。"),
@@ -154,7 +154,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: Text(widget.params.date.text),
                   ),
                 ),
@@ -172,10 +172,10 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: Text(widget.params.date.startDate != null
                         ? DateFormat('yyyy-MM-dd')
-                            .format(widget.params.date.startDate)
+                        .format(widget.params.date.startDate!)
                         : ""),
                   ),
                 ),
@@ -193,10 +193,10 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: Text(widget.params.date.endDate != null
                         ? DateFormat('yyyy-MM-dd')
-                            .format(widget.params.date.endDate)
+                        .format(widget.params.date.endDate!)
                         : ""),
                   ),
                 ),
@@ -214,7 +214,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: _startWidthController,
@@ -238,7 +238,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: _endWidthController,
@@ -262,7 +262,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: _startHeightController,
@@ -286,7 +286,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: _endHeightController,
@@ -310,7 +310,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: _startRatioController,
@@ -334,7 +334,7 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                   flex: 1,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                    EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       controller: _endRatioController,
@@ -366,9 +366,9 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
                         ? null
                         : double.parse(_endWidthController.text);
                     widget.params.startHeight =
-                        _startHeightController.text == ""
-                            ? null
-                            : double.parse(_startHeightController.text);
+                    _startHeightController.text == ""
+                        ? null
+                        : double.parse(_startHeightController.text);
                     widget.params.endHeight = _endHeightController.text == ""
                         ? null
                         : double.parse(_endHeightController.text);
@@ -430,16 +430,24 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
 
   _showSelectDate() {
     Map<SearchTuneDate, SearchTuneDateItem> _searchTuneDateMap = {
-      SearchTuneDate.NORMAL: SearchTuneDateItem("不限制", null, null),
+      SearchTuneDate.NORMAL: SearchTuneDateItem(text: "不限制"),
       SearchTuneDate.WEEK: SearchTuneDateItem(
-          "一周内", DateTime.now().add(Duration(days: -7)), DateTime.now()),
+          text: "一周内",
+          startDate: DateTime.now().add(Duration(days: -7)),
+          endDate: DateTime.now()),
       SearchTuneDate.MONTH: SearchTuneDateItem(
-          "一个月内", DateTime.now().add(Duration(days: -30)), DateTime.now()),
+          text: "一个月内",
+          startDate: DateTime.now().add(Duration(days: -30)),
+          endDate: DateTime.now()),
       SearchTuneDate.SIX_MONTHS: SearchTuneDateItem(
-          "半年内", DateTime.now().add(Duration(days: -186)), DateTime.now()),
+          text: "半年内",
+          startDate: DateTime.now().add(Duration(days: -186)),
+          endDate: DateTime.now()),
       SearchTuneDate.YEAR: SearchTuneDateItem(
-          "一年内", DateTime.now().add(Duration(days: -365)), DateTime.now()),
-      SearchTuneDate.CUSTOM: SearchTuneDateItem("自定义", null, null),
+          text: "一年内",
+          startDate: DateTime.now().add(Duration(days: -365)),
+          endDate: DateTime.now()),
+      SearchTuneDate.CUSTOM: SearchTuneDateItem(text: "自定义"),
     };
     showDialog(
         context: context,
@@ -447,15 +455,16 @@ class _SearchPictureTunePageState extends State<SearchPictureTunePage> {
           return SimpleDialog(
               title: Text("时间选择"),
               children: _searchTuneDateMap.keys
-                  .map((e) => ListTile(
-                        title: Text(_searchTuneDateMap[e].text.toString()),
-                        onTap: () {
-                          setState(() {
-                            widget.params.date = _searchTuneDateMap[e];
-                            Navigator.maybePop(context);
-                          });
-                        },
-                      ))
+                  .map((e) =>
+                  ListTile(
+                    title: Text(_searchTuneDateMap[e]!.text.toString()),
+                    onTap: () {
+                      setState(() {
+                        widget.params.date = _searchTuneDateMap[e]!;
+                        Navigator.maybePop(context);
+                      });
+                    },
+                  ))
                   .toList());
         });
   }

@@ -7,18 +7,18 @@ class PageableEntity with JsonConvert<PageableEntity> {
 
   PageableEntity({this.page = 1, this.limit = 16, this.sort = "createDate,desc"});
 }
-
-class PagePageable with JsonConvert<PagePageable> {
-  PageSort sort;
-  int pageSize;
-  int pageNumber;
-  int offset;
-  bool paged;
-  bool unpaged;
-}
-
-class PageSort with JsonConvert<PageSort> {
-  bool sorted;
-  bool unsorted;
-  bool empty;
-}
+//
+// class PagePageable with JsonConvert<PagePageable> {
+//   PageSort sort;
+//   int pageSize;
+//   int pageNumber;
+//   int offset;
+//   bool paged;
+//   bool unpaged;
+// }
+//
+// class PageSort with JsonConvert<PageSort> {
+//   bool sorted;
+//   bool unsorted;
+//   bool empty;
+// }

@@ -1,3 +1,3 @@
 class CustomRefreshController {
-  void Function() refresh;
+  void Function()? refresh;
 }

@@ -11,17 +11,11 @@ import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 
 class ShareUserIconBtn extends StatelessWidget {
-  ShareUserIconBtn(
-      {Key key,
-      @required this.user,
-      @required this.callback,
-      this.small = false})
+  ShareUserIconBtn({Key? key, required this.user, this.small = false})
       : super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
   final UserInfoEntity user;
-
-  final Function callback;
 
   final bool small;
 

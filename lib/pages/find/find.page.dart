@@ -11,9 +11,9 @@ import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class FindPage extends StatelessWidget {
-  FindPage({Key key, this.controller}) : super(key: key);
+  FindPage({Key? key, this.controller}) : super(key: key);
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final findLogic = FindLogic();
 

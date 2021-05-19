@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 class Skeleton extends HookWidget {
-  Skeleton({Key key, this.height = 20, this.width = 200}) : super(key: key);
+  Skeleton({Key? key, this.height = 20, this.width = 200}) : super(key: key);
   final double height;
   final double width;
 

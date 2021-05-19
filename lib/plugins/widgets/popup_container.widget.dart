@@ -62,17 +62,17 @@ class PopupContainerRoute extends PopupRoute {
   final Widget child;
 
   PopupContainerRoute({
-    @required this.child,
+    required this.child,
   });
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
   bool get barrierDismissible => true;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   Duration get transitionDuration => Duration(milliseconds: 200);
@@ -96,9 +96,9 @@ class PopupContainerRoute extends PopupRoute {
 
 class PopupContainer extends StatelessWidget {
   const PopupContainer({
-    Key key,
-    this.child,
-    this.targetRenderKey,
+    Key? key,
+    required this.child,
+    required this.targetRenderKey,
     this.offset = Offset.zero,
   }) : super(key: key);
 
@@ -111,8 +111,8 @@ class PopupContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RenderBox button =
-        targetRenderKey.currentContext.findRenderObject() as RenderBox;
-    final RenderBox overlay = Overlay.of(targetRenderKey.currentContext)
+        targetRenderKey.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox overlay = Overlay.of(targetRenderKey.currentContext!)!
         .context
         .findRenderObject() as RenderBox;
     final RelativeRect position = RelativeRect.fromRect(
@@ -142,7 +142,7 @@ class PopupContainer extends StatelessWidget {
               CustomSingleChildLayout(
                 delegate: _PopupWindowRouteLayout(
                   position,
-                  Directionality.of(targetRenderKey.currentContext),
+                  Directionality.of(targetRenderKey.currentContext!),
                 ),
                 child: child,
               )

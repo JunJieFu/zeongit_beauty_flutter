@@ -15,9 +15,9 @@ import 'package:zeongitbeautyflutter/plugins/widgets/title.widget.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.logic.dart';
 
 class RecommendTagPage extends HookWidget {
-  RecommendTagPage({Key key, this.controller}) : super(key: key);
+  RecommendTagPage({Key? key, this.controller}) : super(key: key);
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
@@ -30,7 +30,7 @@ class RecommendTagPage extends HookWidget {
 
     Future<void> _listTagAndPictureTop30() async {
       var result = await TagService.listTagAndPictureTop30();
-      recommendTagList.value = result.data;
+      recommendTagList.value = result.data!;
       _refreshController.refreshCompleted();
       return;
     }
@@ -74,13 +74,12 @@ class RecommendTagPage extends HookWidget {
                             spacing: StyleConfig.listGap,
                             runSpacing: -StyleConfig.gap,
                             children: fragmentLogic.searchHistory
-                                    ?.map((item) => ActionChip(
+                                    .map((item) => ActionChip(
                                         label: Text(item),
                                         onPressed: () {
                                           fragmentLogic.searchPicture(item);
                                         }))
-                                    ?.toList() ??
-                                <Widget>[]),
+                                    .toList()),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +119,7 @@ class RecommendTagPage extends HookWidget {
                   crossAxisCount: 3,
                   childAspectRatio: 1.0,
                   children: recommendTagList.value
-                          ?.map((item) => Stack(children: [
+                          .map((item) => Stack(children: [
                                 ImageInk(
                                   child: AspectRatio(
                                       aspectRatio: 1,
@@ -153,8 +152,7 @@ class RecommendTagPage extends HookWidget {
                                   ),
                                 )
                               ]))
-                          ?.toList() ??
-                      <Widget>[])
+                          .toList())
             ],
           ),
         ),

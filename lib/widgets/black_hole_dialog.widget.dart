@@ -11,7 +11,7 @@ import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart'
 import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart';
 
 class BlackHoleDialog extends HookWidget {
-  BlackHoleDialog({Key key, @required this.id}) : super(key: key);
+  BlackHoleDialog({Key? key, required this.id}) : super(key: key);
 
   final int id;
 
@@ -38,7 +38,7 @@ class BlackHoleDialog extends HookWidget {
   }
 
   _buildMain(ResultEntity<BlackHoleEntity> result) {
-    return _View(blackHole: result.data);
+    return _View(blackHole: result.data!);
   }
 
   _buildError() => _buildLoading();
@@ -53,7 +53,7 @@ class BlackHoleDialog extends HookWidget {
       return PictureBlackHoleService.get(id);
     }), initialData: null);
     if (snapshot.hasData) {
-      widget = _buildMain(snapshot.data);
+      widget = _buildMain(snapshot.data!);
     } else {
       widget = _buildError();
     }
@@ -62,7 +62,7 @@ class BlackHoleDialog extends HookWidget {
 }
 
 class _View extends StatefulWidget {
-  _View({Key key, @required this.blackHole}) : super(key: key);
+  _View({Key? key, required this.blackHole}) : super(key: key);
 
   final BlackHoleEntity blackHole;
 
@@ -149,8 +149,8 @@ class _ViewState extends State<_View> {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          user?.avatarUrl,
-          user?.nickname,
+          user.avatarUrl,
+          user.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

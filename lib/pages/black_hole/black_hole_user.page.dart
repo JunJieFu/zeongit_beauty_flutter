@@ -16,9 +16,9 @@ import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 class BlackHoleUserPage extends HookWidget {
-  BlackHoleUserPage({Key key, this.controller}) : super(key: key);
+  BlackHoleUserPage({Key? key, this.controller}) : super(key: key);
 
-  final CustomRefreshController controller;
+  final CustomRefreshController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,10 @@ class BlackHoleUserPage extends HookWidget {
       refreshController.value.requestRefresh();
     };
     Widget _emptyWidget() {
-      if (currPage.value?.meta != null &&
-          currPage.value.meta.empty &&
-          currPage.value.meta.first &&
-          currPage.value.meta.last) {
+      if (currPage.value != null &&
+          currPage.value!.meta.empty &&
+          currPage.value!.meta.first &&
+          currPage.value!.meta.last) {
         return TipsPageCard(icon: MdiIcons.account_outline, title: "没有屏蔽用户");
       } else {
         return ListView.builder(
@@ -84,10 +84,10 @@ class BlackHoleUserPage extends HookWidget {
       child: SmartRefresher(
         controller: refreshController.value,
         enablePullDown: true,
-        enablePullUp: currPage.value != null && !currPage.value.meta.last,
+        enablePullUp: currPage.value != null && !currPage.value!.meta.last,
         onRefresh: refresh,
         onLoading: () async {
-          await changePage(currPage.value.meta.currentPage + 1);
+          await changePage(currPage.value!.meta.currentPage + 1);
         },
         child: _emptyWidget(),
       ),
@@ -102,8 +102,8 @@ class BlackHoleUserPage extends HookWidget {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          user?.avatarUrl,
-          user?.nickname,
+          user.avatarUrl,
+          user.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,

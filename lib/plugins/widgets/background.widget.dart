@@ -8,13 +8,14 @@ import 'package:zeongitbeautyflutter/plugins/utils/string.util.dart';
 enum BackgroundStyle { backCard }
 
 class BackgroundWidget extends StatelessWidget {
-  BackgroundWidget(this.url, {Key key, this.fit, this.style}) : super(key: key);
+  BackgroundWidget(this.url, {Key? key, this.fit = BoxFit.contain, this.style})
+      : super(key: key);
 
-  final String url;
+  final String? url;
 
   final BoxFit fit;
 
-  final BackgroundStyle style;
+  final BackgroundStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +24,22 @@ class BackgroundWidget extends StatelessWidget {
         : "${ConfigConstant.QINIU_BACKGROUND}/$url";
     return url != null
         ? CachedNetworkImage(
-        imageUrl: _url,
-        fit: fit,
-        progressIndicatorBuilder: (
-            BuildContext context,
-            String url,
-            DownloadProgress progress,
+            imageUrl: _url,
+            fit: fit,
+            progressIndicatorBuilder: (
+              BuildContext context,
+              String url,
+              DownloadProgress progress,
             ) {
-          return Center(
-            child: Container(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        },
-        errorWidget: (BuildContext context, String url, dynamic error) {
-          return _buildSvgPicture();
-        })
+              return Center(
+                child: Container(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
+            errorWidget: (BuildContext context, String url, dynamic error) {
+              return _buildSvgPicture();
+            })
         : _buildSvgPicture();
   }
 

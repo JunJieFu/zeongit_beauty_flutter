@@ -1,13 +1,10 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
-import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
 import 'package:zeongitbeautyflutter/pages/picture/edit.page.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/build.util.dart';
-import 'package:zeongitbeautyflutter/plugins/widgets/comfir.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/popup_container.widget.dart';
 import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
@@ -16,14 +13,12 @@ import 'package:zeongitbeautyflutter/widgets/complaint_dialog.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class MoreIconBtn extends StatelessWidget {
-  MoreIconBtn({Key key, @required this.id, this.callback, this.small = false})
+  MoreIconBtn({Key? key, required this.id, this.small = false})
       : logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
   final int id;
-
-  final Function callback;
 
   final bool small;
 
@@ -33,7 +28,7 @@ class MoreIconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final privacy = logic.picture.privacy == PrivacyState.PRIVATE.index;
+    final privacy = logic.picture!.privacy == PrivacyState.PRIVATE.index;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -59,14 +54,15 @@ class MoreIconBtn extends StatelessWidget {
                       child: Obx(
                         () => Column(
                           mainAxisSize: MainAxisSize.min,
-                          children: _accountLogic.info.id == logic.picture.user.id
+                          children: _accountLogic.info?.id ==
+                                  logic.picture!.user.id
                               ? [
                                   Divider(height: 1),
                                   ListTile(
                                     title: buildListTileTitle("编辑",
                                         leftIcon: MdiIcons.image_edit_outline),
                                     onTap: () {
-                                      Get.to(EditPage(logic.picture,
+                                      Get.to(EditPage(logic.picture!,
                                           callback: (picture) {}));
                                     },
                                   ),
@@ -102,10 +98,10 @@ class MoreIconBtn extends StatelessWidget {
                                       onTap: () {
                                         Get.back();
                                         showDialog(
-                                            context: Get.context,
+                                            context: Get.context!,
                                             builder: (ctx) {
                                               return BlackHoleDialog(
-                                                id: logic.picture.id,
+                                                id: logic.picture!.id,
                                               );
                                             });
                                       }),
@@ -117,10 +113,10 @@ class MoreIconBtn extends StatelessWidget {
                                     onTap: () {
                                       Get.back();
                                       showDialog(
-                                          context: Get.context,
+                                          context: Get.context!,
                                           builder: (ctx) {
                                             return ComplaintDialog(
-                                              id: logic.picture.id,
+                                              id: logic.picture!.id,
                                             );
                                           });
                                     },

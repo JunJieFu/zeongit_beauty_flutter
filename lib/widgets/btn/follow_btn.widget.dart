@@ -8,13 +8,13 @@ import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class FollowBtn extends StatelessWidget {
-  FollowBtn({Key key, @required this.id, this.callback, this.small = false})
+  FollowBtn({Key? key, required this.id, this.callback, this.small = false})
       : userInfoLogic =
             Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final int id;
 
-  final void Function(UserInfoEntity, int) callback;
+  final void Function(UserInfoEntity, int)? callback;
 
   final bool small;
 
@@ -30,7 +30,7 @@ class FollowBtn extends StatelessWidget {
       () => ElevatedButton(
           key: _btnKey,
           style: ButtonStyle(elevation: MaterialStateProperty.all(0)),
-          child: Text(userInfoLogic.info.focus == FollowState.CONCERNED.index
+          child: Text(userInfoLogic.info!.focus == FollowState.CONCERNED.index
               ? "已关注"
               : "关注"),
           onPressed: () async {

@@ -6,9 +6,9 @@ import 'package:zeongitbeautyflutter/pages/search/search_tab.page.dart';
 import 'package:zeongitbeautyflutter/provider/fragment.logic.dart';
 
 class SearchPage extends StatelessWidget {
-  SearchPage({Key key, this.keyword, this.index = 0}) : super(key: key);
+  SearchPage({Key? key, this.keyword, this.index = 0}) : super(key: key);
 
-  final String keyword;
+  final String? keyword;
 
   final int index;
 
@@ -40,7 +40,7 @@ class SearchPage extends StatelessWidget {
             ),
             body: ListView(
               children: logic.list
-                      ?.map((e) => Column(
+                      .map((e) => Column(
                             children: [
                               ListTile(
                                 title: Text(e),
@@ -51,8 +51,7 @@ class SearchPage extends StatelessWidget {
                               Divider(height: 1),
                             ],
                           ))
-                      ?.toList() ??
-                  [],
+                      .toList(),
             ),
           );
         });
@@ -61,11 +60,11 @@ class SearchPage extends StatelessWidget {
 
 class SearchLogic extends GetxController {
   SearchLogic(this.keyword, this.index)
-      : keywordController = TextEditingController(text: keyword);
+      : keywordController = TextEditingController(text: keyword ?? "");
 
   final keywordController;
 
-  final String keyword;
+  final String? keyword;
 
   final int index;
 
@@ -74,7 +73,7 @@ class SearchLogic extends GetxController {
   final list = RxList(<String>[]);
 
   final throttle =
-      Throttle<String>(Duration(milliseconds: 200), initialValue: null);
+      Throttle<String?>(Duration(milliseconds: 200), initialValue: null);
 
   search() {
     if (index == 0) {
@@ -101,7 +100,7 @@ class SearchLogic extends GetxController {
         list.value = [];
       } else {
         final result = await SuggestService.search(search);
-        list.value = result.data;
+        list.value = result.data!;
       }
     });
 

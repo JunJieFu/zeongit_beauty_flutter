@@ -13,7 +13,7 @@ import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 final _gap = StyleConfig.gap * 6;
 
 class SignUpPage extends HookWidget {
-  SignUpPage(this.phone, {Key key}) : super(key: key);
+  SignUpPage(this.phone, {Key? key}) : super(key: key);
 
   final String phone;
 
@@ -31,7 +31,7 @@ class SignUpPage extends HookWidget {
       var result = await UserService.signUp(
           codeController.text, phone, passwordController.text);
       if (ResultUtil.check(result)) {
-        await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
+        await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data!);
         await _accountLogic.getInfo();
         Get.until((route) => route.isFirst);
       }

@@ -5,7 +5,7 @@ import 'package:zeongitbeautyflutter/plugins/constants/status.constant.dart';
 class ResultUtil {
   static bool check(ResultEntity result) {
     if (result.status != StatusCode.SUCCESS) {
-      BotToast.showText(text: result.message);
+      BotToast.showText(text: result.message!);
       return false;
     } else {
       return true;

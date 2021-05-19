@@ -6,17 +6,15 @@ import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 const String USER_INFO_LOGIC_TAG_PREFIX = "USER_INFO_LOGIC:";
 
 class UserInfoLogic extends GetxController {
-  final UserInfoEntity initial;
+  final UserInfoEntity? initial;
 
-  final Rx<UserInfoEntity> _info = Rx<UserInfoEntity>(null);
+  final Rx<UserInfoEntity?> _info;
 
   final loading = false.obs;
 
-  UserInfoLogic(this.initial) {
-    _info.value = initial;
-  }
+  UserInfoLogic(this.initial) :_info = Rx<UserInfoEntity?>(initial);
 
-  UserInfoEntity get info => _info.value;
+  UserInfoEntity? get info => _info.value;
 
   set(UserInfoEntity p) async {
     _info.value = p;
@@ -25,11 +23,11 @@ class UserInfoLogic extends GetxController {
   follow() async {
     if (loading.value) return;
     loading.value = true;
-    var result = await FollowingService.follow(info.id);
+    var result = await FollowingService.follow(info!.id);
     loading.value = false;
     if (ResultUtil.check(result)) {
       _info.update((val) {
-        val.focus = result.data;
+        val!.focus = result.data!;
       });
     }
   }

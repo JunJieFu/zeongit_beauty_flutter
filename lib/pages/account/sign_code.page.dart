@@ -17,7 +17,7 @@ final _differenceList = {
 };
 
 class SignCodePage extends HookWidget {
-  SignCodePage(this.codeType, {Key key}) : super(key: key);
+  SignCodePage(this.codeType, {Key? key}) : super(key: key);
 
   final CodeTypeConstant codeType;
 
@@ -42,7 +42,7 @@ class SignCodePage extends HookWidget {
     }
 
     return Scaffold(
-        appBar: AppBar(title: Text(_differenceList[codeType])),
+        appBar: AppBar(title: Text(_differenceList[codeType]!)),
         body: ListView(
           children: <Widget>[
             Padding(

@@ -15,14 +15,14 @@ enum PictureStyle {
 }
 
 class PictureWidget extends StatelessWidget {
-  PictureWidget(this.url, {Key key, this.fit = BoxFit.contain, this.style})
+  PictureWidget(this.url, {Key? key, this.fit = BoxFit.contain, this.style})
       : super(key: key);
 
-  final String url;
+  final String? url;
 
   final BoxFit fit;
 
-  final PictureStyle style;
+  final PictureStyle? style;
 
   @override
   Widget build(BuildContext context) {

@@ -10,20 +10,18 @@ import 'package:zeongitbeautyflutter/plugins/widgets/comfir.widget.dart';
 const String PICTURE_LOGIC_TAG_PREFIX = "PICTURE:";
 
 class PictureLogic extends GetxController {
-  final PictureEntity initial;
+  final PictureEntity? initial;
 
-  final Rx<PictureEntity> _picture = Rx<PictureEntity>(null);
+  final Rx<PictureEntity?> _picture;
 
   final loading = false.obs;
 
-  PictureLogic(this.initial) {
-    _picture.value = initial;
-  }
+  PictureLogic(this.initial) : _picture = Rx<PictureEntity?>(initial);
 
-  PictureEntity get picture => _picture.value;
+  PictureEntity? get picture => _picture.value;
 
-  get aspectRatio => (picture.width != null && picture.height != null)
-      ? picture.width / picture.height
+  get aspectRatio => (picture!=null)
+      ? picture!.width / picture!.height
       : 1.0;
 
   set(PictureEntity p) {
@@ -32,7 +30,7 @@ class PictureLogic extends GetxController {
 
   remove() {
     showDialog(
-        context: Get.context,
+        context: Get.context!,
         builder: (ctx) {
           return Confirm(
             title: Text("提示"),
@@ -41,7 +39,7 @@ class PictureLogic extends GetxController {
             confirmText: Text("确定"),
             confirmCallback: () async {
               Get.back();
-              var result = await PictureService.remove(picture.id);
+              var result = await PictureService.remove(picture!.id);
               if (ResultUtil.check(result)) {
                 BotToast.showText(text: "删除成功");
               }
@@ -51,9 +49,9 @@ class PictureLogic extends GetxController {
   }
 
   hide() {
-    final privacy = picture.privacy == PrivacyState.PRIVATE.index;
+    final privacy = picture!.privacy == PrivacyState.PRIVATE.index;
     showDialog(
-        context: Get.context,
+        context: Get.context!,
         builder: (ctx) {
           return Confirm(
             title: Text("提示"),
@@ -72,11 +70,11 @@ class PictureLogic extends GetxController {
   collect() async {
     if (loading.value) return;
     loading.value = true;
-    var result = await CollectionService.focus(picture.id);
+    var result = await CollectionService.focus(picture!.id);
     loading.value = false;
     ResultUtil.check(result);
     _picture.update((val) {
-      val.focus = result.data;
+      val!.focus = result.data!;
     });
   }
 

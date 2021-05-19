@@ -7,12 +7,12 @@ import 'package:zeongitbeautyflutter/plugins/utils/storage.util.dart';
 
 class HttpUtil {
   static Future<ResultEntity<T>> get<T>(String url,
-      {Map<String, dynamic> params, String host}) async {
+      {Map<String, dynamic>? params, String? host}) async {
     if (host == null) {
       host = ConfigConstant.BEAUTY_API_HOST;
     }
     try {
-      String token = _getToken();
+      var token = _getToken();
       Options options = Options(
           headers: token != null ? {"Authorization": "Bearer " + token} : {});
       Response response = await Dio()
@@ -35,12 +35,12 @@ class HttpUtil {
   }
 
   static Future<ResultEntity<T>> post<T>(String url,
-      {Map<String, dynamic> params, String host}) async {
+      {Map<String, dynamic>? params, String? host}) async {
     if (host == null) {
       host = ConfigConstant.BEAUTY_API_HOST;
     }
     try {
-      String token = _getToken();
+      var token = _getToken();
       Options options = Options(
           headers: token != null ? {"Authorization": "Bearer " + token} : {});
       Response response =
@@ -65,7 +65,7 @@ class HttpUtil {
   //统一获取缓存token发送
   static _getToken() {
     try {
-      return StorageManager.get(KeyConstant.TOKEN_KEY);
+      return StorageManager.getString(KeyConstant.TOKEN_KEY);
     } catch (e) {
       return null;
     }

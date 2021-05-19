@@ -29,7 +29,7 @@ class SignInPage extends HookWidget {
       var result = await UserService.signIn(
           phoneController.text, passwordController.text);
       if (ResultUtil.check(result)) {
-        await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data);
+        await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data!);
         await _accountLogic.getInfo();
         Get.back();
       }

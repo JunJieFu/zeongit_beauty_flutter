@@ -9,7 +9,7 @@ import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
 final _gap = StyleConfig.gap * 6;
 
 class FeedbackPage extends HookWidget {
-  FeedbackPage({Key key}) : super(key: key);
+  FeedbackPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

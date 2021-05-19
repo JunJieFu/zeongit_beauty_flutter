@@ -10,11 +10,11 @@ import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class CollectIconBtn extends StatelessWidget {
   CollectIconBtn(
-      {Key key, @required this.id, this.callback, this.small = false})
+      {Key? key, required this.id, this.callback, this.small = false})
       : super(key: key);
   final int id;
 
-  final void Function(PictureEntity picture, int focus) callback;
+  final void Function(PictureEntity picture, int focus)? callback;
 
   final bool small;
 
@@ -27,7 +27,7 @@ class CollectIconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final focus = pictureLogic.picture.focus == CollectState.CONCERNED.index;
+    final focus = pictureLogic.picture!.focus == CollectState.CONCERNED.index;
     final loading = pictureLogic.loading;
     return SizedBox(
       width: small
@@ -50,7 +50,7 @@ class CollectIconBtn extends StatelessWidget {
                 await pictureLogic.collect();
               } else {
                 popupSignIn(
-                    "喜欢这张绘画？", "请先登录，然后才能把这张绘画添加到收藏夹。", Get.context, _btnKey);
+                    "喜欢这张绘画？", "请先登录，然后才能把这张绘画添加到收藏夹。", Get.context!, _btnKey);
               }
             }),
       ),

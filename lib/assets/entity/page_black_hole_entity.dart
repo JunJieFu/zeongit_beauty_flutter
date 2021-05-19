@@ -4,16 +4,16 @@ import 'package:zeongitbeautyflutter/generated/json/base/json_convert_content.da
 
 
 class PageUserBlackHoleEntity with JsonConvert<PageUserBlackHoleEntity> {
-  List<UserBlackHoleEntity> items;
-  Meta meta;
+  late List<UserBlackHoleEntity> items;
+  late Meta meta;
 }
 
 class PagePictureBlackHoleEntity with JsonConvert<PagePictureBlackHoleEntity> {
-  List<PictureBlackHoleEntity> items;
-  Meta meta;
+  late List<PictureBlackHoleEntity> items;
+  late Meta meta;
 }
 
 class PageTagBlackHoleEntity with JsonConvert<PageTagBlackHoleEntity> {
-  List<TagBlackHoleEntity> items;
-  Meta meta;
+  late List<TagBlackHoleEntity> items;
+  late Meta meta;
 }
