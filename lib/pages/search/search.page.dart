@@ -1,3 +1,4 @@
+import 'package:debounce_throttle/debounce_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
@@ -38,14 +39,19 @@ class SearchPage extends StatelessWidget {
               ],
             ),
             body: ListView(
-              children:
-              logic.list?.map((e) =>
-                  Column(children: [
-                    ListTile(title: Text(e), onTap: () {
-                      logic.tapSuggest(e);
-                    },),
-                    Divider(height: 1),
-                  ],))?.toList() ??
+              children: logic.list
+                      ?.map((e) => Column(
+                            children: [
+                              ListTile(
+                                title: Text(e),
+                                onTap: () {
+                                  logic.tapSuggest(e);
+                                },
+                              ),
+                              Divider(height: 1),
+                            ],
+                          ))
+                      ?.toList() ??
                   [],
             ),
           );
@@ -67,6 +73,9 @@ class SearchLogic extends GetxController {
 
   final list = RxList(<String>[]);
 
+  final throttle =
+      Throttle<String>(Duration(milliseconds: 200), initialValue: null);
+
   search() {
     if (index == 0) {
       fragmentLogic.searchPicture(keywordController.text, off: true);
@@ -85,9 +94,17 @@ class SearchLogic extends GetxController {
   @override
   void onInit() {
     keywordController.addListener(() async {
-      final result = await SuggestService.search(keywordController.text);
-      list.value = result.data;
+      throttle.value = keywordController.text;
     });
+    throttle.values.listen((search) async {
+      if (search == null || search == "") {
+        list.value = [];
+      } else {
+        final result = await SuggestService.search(search);
+        list.value = result.data;
+      }
+    });
+
     super.onInit();
   }
 

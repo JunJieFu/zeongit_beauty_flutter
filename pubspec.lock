@@ -113,6 +113,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.2"
+  debounce_throttle:
+    dependency: "direct main"
+    description:
+      name: debounce_throttle
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   dio:
     dependency: "direct main"
     description:
@@ -483,6 +490,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.2+3"
+  simple_observable:
+    dependency: transitive
+    description:
+      name: simple_observable
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
