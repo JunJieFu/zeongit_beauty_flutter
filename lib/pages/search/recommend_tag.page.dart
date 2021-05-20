@@ -52,7 +52,7 @@ class RecommendTagPage extends HookWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              Get.to(SearchPage());
+              Get.to(() => SearchPage());
             },
           )
         ],

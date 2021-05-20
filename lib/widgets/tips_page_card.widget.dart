@@ -68,7 +68,7 @@ class SignInPageCardWidget extends StatelessWidget {
       text: text,
       btnDesc: "登录",
       onPressed: () {
-        Get.to(SignInPage());
+        Get.to(() => SignInPage());
       },
     );
   }

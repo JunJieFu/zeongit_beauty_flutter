@@ -62,7 +62,7 @@ class MoreIconBtn extends StatelessWidget {
                                     title: buildListTileTitle("编辑",
                                         leftIcon: MdiIcons.image_edit_outline),
                                     onTap: () {
-                                      Get.to(EditPage(logic.picture!,
+                                      Get.to(() => EditPage(logic.picture!,
                                           callback: (picture) {}));
                                     },
                                   ),

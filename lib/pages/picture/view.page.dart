@@ -12,33 +12,35 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/permission.util.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/shadow_icon.widget.dart';
 
-class ViewPage extends HookWidget {
+class ViewPage extends StatelessWidget {
   ViewPage(this.url, {Key? key}) : super(key: key);
 
   final String url;
 
+  String get completeUrl => "${ConfigConstant.QINIU_PICTURE}/$url";
+
+  saveStorage() async {
+    if (await PermissionUtil.storage()) {
+      final success = await GallerySaver.saveImage(completeUrl);
+      if (success != null && success) {
+        BotToast.showText(text: "保存成功");
+      } else {
+        BotToast.showText(text: "保存失败");
+      }
+    }
+  }
+
+  selectMenu(String value) {
+    switch (value) {
+      case "save":
+        saveStorage();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    final completeUrl = "${ConfigConstant.QINIU_PICTURE}/$url";
-    saveStorage() async {
-      if (await PermissionUtil.storage()) {
-        final success = await GallerySaver.saveImage(completeUrl);
-        if (success != null && success) {
-          BotToast.showText(text: "保存成功");
-        } else {
-          BotToast.showText(text: "保存失败");
-        }
-      }
-    }
-
-    selectMenu(String value) {
-      switch (value) {
-        case "save":
-          saveStorage();
-          break;
-      }
-    }
 
     return Scaffold(
         backgroundColor: Colors.black,

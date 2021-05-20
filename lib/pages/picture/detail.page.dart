@@ -197,7 +197,7 @@ class DetailPage extends HookWidget {
                             Link(
                               "${logic.picture!.viewAmount}",
                               onTap: () {
-                                Get.to(DetailUserTabPage(
+                                Get.to(() => DetailUserTabPage(
                                     picture: logic.picture!, index: 0));
                               },
                             ),
@@ -210,7 +210,7 @@ class DetailPage extends HookWidget {
                                 Link(
                                   "${logic.picture!.likeAmount}",
                                   onTap: () {
-                                    Get.to(DetailUserTabPage(
+                                    Get.to(() => DetailUserTabPage(
                                         picture: logic.picture!, index: 1));
                                   },
                                 ),
@@ -269,7 +269,7 @@ class DetailPage extends HookWidget {
       child: PictureWidget(logic.picture!.url,
           style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
       onTap: () {
-        Get.to(ViewPage(logic.picture!.url!));
+        Get.to(() => ViewPage(logic.picture!.url!));
       },
     );
   }
@@ -290,7 +290,7 @@ class DetailPage extends HookWidget {
         ),
       ),
       onTap: () {
-        Get.to(UserTabPage(id: logic.picture!.user.id));
+        Get.to(() => UserTabPage(id: logic.picture!.user.id));
       },
     );
   }

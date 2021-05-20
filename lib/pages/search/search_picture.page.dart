@@ -40,7 +40,7 @@ class SearchPicturePage extends HookWidget {
                   automaticallyImplyLeading: false,
                   title: GestureDetector(
                     onTap: () {
-                      Get.to(SearchPage(keyword: keyword, index: 0));
+                      Get.to(() => SearchPage(keyword: keyword, index: 0));
                     },
                     child: Text(
                       keyword,
@@ -51,7 +51,7 @@ class SearchPicturePage extends HookWidget {
                     IconButton(
                       icon: Icon(MdiIcons.tune),
                       onPressed: () {
-                        Get.to(SearchPictureTunePage(
+                        Get.to(() => SearchPictureTunePage(
                             params: logic.criteria.value,
                             callback: logic.query));
                       },

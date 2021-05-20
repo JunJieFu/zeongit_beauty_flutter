@@ -49,7 +49,7 @@ class MorePage extends StatelessWidget {
                   child: GestureDetector(
                     child: _buildMaterialAvatar(),
                     onTap: () {
-                      Get.to(UserTabPage(id: _accountLogic.info!.id),
+                      Get.to(() => UserTabPage(id: _accountLogic.info!.id),
                           preventDuplicates: false);
                     },
                   ),

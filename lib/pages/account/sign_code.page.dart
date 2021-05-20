@@ -16,31 +16,31 @@ final _differenceList = {
   CodeTypeConstant.FORGOT: "找回您的密码"
 };
 
-class SignCodePage extends HookWidget {
+class SignCodePage extends StatelessWidget {
   SignCodePage(this.codeType, {Key? key}) : super(key: key);
 
   final CodeTypeConstant codeType;
 
+  final _phoneController = TextEditingController();
+
+  final _loading = false.obs;
+
+  _send() async {
+    if (_loading.value) return;
+    _loading.value = true;
+    var result = await UserService.sendCode(_phoneController.text, codeType);
+    if (ResultUtil.check(result)) {
+      if (codeType == CodeTypeConstant.SIGN_UP) {
+        Get.to(() => SignUpPage(_phoneController.text));
+      } else if (codeType == CodeTypeConstant.FORGOT) {
+        Get.to(() => ForgetPage(_phoneController.text));
+      }
+    }
+    _loading.value = false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final phoneController = useTextEditingController();
-
-    final loading = useState(false);
-
-    send() async {
-      if (loading.value) return;
-      loading.value = true;
-      var result = await UserService.sendCode(phoneController.text, codeType);
-      if (ResultUtil.check(result)) {
-        if (codeType == CodeTypeConstant.SIGN_UP) {
-          Get.to(SignUpPage(phoneController.text));
-        } else if (codeType == CodeTypeConstant.FORGOT) {
-          Get.to(ForgetPage(phoneController.text));
-        }
-      }
-      loading.value = false;
-    }
-
     return Scaffold(
         appBar: AppBar(title: Text(_differenceList[codeType]!)),
         body: ListView(
@@ -53,7 +53,7 @@ class SignCodePage extends HookWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: phoneController,
+                      controller: _phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -63,27 +63,29 @@ class SignCodePage extends HookWidget {
                     child: SizedBox(
                       width: double.infinity,
                       height: StyleConfig.buttonHeight,
-                      child: ElevatedButton(
-                        child: loading.value
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation(
-                                            Colors.white),
-                                        strokeWidth: 3,
-                                      )),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16),
-                                    child: Text("发送中..."),
-                                  )
-                                ],
-                              )
-                            : Text("获取验证码"),
-                        onPressed: send,
+                      child: Obx(
+                        () => ElevatedButton(
+                          child: _loading.value
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation(
+                                              Colors.white),
+                                          strokeWidth: 3,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 16),
+                                      child: Text("发送中..."),
+                                    )
+                                  ],
+                                )
+                              : Text("获取验证码"),
+                          onPressed: _send,
+                        ),
                       ),
                     ),
                   ),

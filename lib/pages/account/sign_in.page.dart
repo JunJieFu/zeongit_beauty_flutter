@@ -15,27 +15,30 @@ import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class SignInPage extends HookWidget {
+class SignInPage extends StatelessWidget {
   final _accountLogic = Get.find<AccountLogic>();
+  
+  final _phoneController = TextEditingController();
+
+  final _passwordController = TextEditingController();
+
+  final _loading = false.obs;
+
+  _signIn() async {
+    if (_loading.value) return;
+    _loading.value = true;
+    var result = await UserService.signIn(
+        _phoneController.text, _passwordController.text);
+    if (ResultUtil.check(result)) {
+      await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data!);
+      await _accountLogic.getInfo();
+      Get.back();
+    }
+    _loading.value = false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final phoneController = useTextEditingController();
-    final passwordController = useTextEditingController();
-    final loading = useState(false);
-    signIn() async {
-      if (loading.value) return;
-      loading.value = true;
-      var result = await UserService.signIn(
-          phoneController.text, passwordController.text);
-      if (ResultUtil.check(result)) {
-        await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data!);
-        await _accountLogic.getInfo();
-        Get.back();
-      }
-      loading.value = false;
-    }
-
     return Scaffold(
         appBar: AppBar(title: Text("登录您的账号")),
         body: ListView(
@@ -48,7 +51,7 @@ class SignInPage extends HookWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: phoneController,
+                      controller: _phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),
@@ -56,7 +59,7 @@ class SignInPage extends HookWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: passwordController,
+                      controller: _passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -67,38 +70,39 @@ class SignInPage extends HookWidget {
                     child: SizedBox(
                       width: double.infinity,
                       height: StyleConfig.buttonHeight,
-                      child: ElevatedButton(
-                        child: loading.value
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation(
-                                            Colors.white),
-                                        strokeWidth: 3,
-                                      )),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16),
-                                    child: Text("登录中..."),
+                      child: Obx(() => ElevatedButton(
+                            child: _loading.value
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(
+                                            valueColor: AlwaysStoppedAnimation(
+                                                Colors.white),
+                                            strokeWidth: 3,
+                                          )),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: Text("登录中..."),
+                                      )
+                                    ],
                                   )
-                                ],
-                              )
-                            : Text("登录"),
-                        onPressed: signIn,
-                      ),
+                                : Text("登录"),
+                            onPressed: _signIn,
+                          )),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap / 2),
                     child: Link("忘记了登录密码？", onTap: () {
-                      Get.to(SignCodePage(CodeTypeConstant.FORGOT));
+                      Get.to(() => SignCodePage(CodeTypeConstant.FORGOT));
                     }),
                   ),
                   Link("没有登录账号，立即创建一个！", onTap: () {
-                    Get.to(SignCodePage(CodeTypeConstant.SIGN_UP));
+                    Get.to(() => SignCodePage(CodeTypeConstant.SIGN_UP));
                   }),
                 ],
               ),

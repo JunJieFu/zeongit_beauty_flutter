@@ -102,7 +102,7 @@ class PagePicture extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     )),
                                 onTap: () {
-                                  Get.to(DetailTabViewPage(
+                                  Get.to(() => DetailTabViewPage(
                                       list: list.map((e) => e.id).toList(),
                                       index: index));
                                 },
@@ -218,7 +218,7 @@ class PageCollection extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     )),
                                 onTap: () {
-                                  Get.to(DetailTabViewPage(
+                                  Get.to(() => DetailTabViewPage(
                                       list:
                                           list.map((e) => e.pictureId).toList(),
                                       index: index));
@@ -335,7 +335,7 @@ class PageFootprint extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     )),
                                 onTap: () {
-                                  Get.to(DetailTabViewPage(
+                                  Get.to(() => DetailTabViewPage(
                                       list:
                                           list.map((e) => e.pictureId).toList(),
                                       index: index));

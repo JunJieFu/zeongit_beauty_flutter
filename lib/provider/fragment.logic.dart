@@ -35,13 +35,13 @@ class FragmentLogic extends GetxController {
       StorageManager.setStringList(KeyConstant.SEARCH_HISTORY, _searchHistory);
     }
     if (off) {
-      Get.off(SearchTabPage(
-        keyword: tagListString,
-      ));
+      Get.off(() => SearchTabPage(
+            keyword: tagListString,
+          ));
     } else {
-      Get.to(SearchTabPage(
-        keyword: tagListString,
-      ));
+      Get.to(() => SearchTabPage(
+            keyword: tagListString,
+          ));
     }
   }
 

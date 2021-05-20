@@ -38,7 +38,7 @@ class SearchUserPage extends HookWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(SearchPage(keyword: keyword, index: 1));
+                        Get.to(() => SearchPage(keyword: keyword, index: 1));
                       },
                       child: AppBar(
                           automaticallyImplyLeading: false,

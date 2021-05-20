@@ -157,7 +157,7 @@ class _ViewState extends State<_View> {
         ),
       ),
       onTap: () {
-        Get.to(UserTabPage(id: user.id));
+        Get.to(() => UserTabPage(id: user.id));
       },
     );
   }

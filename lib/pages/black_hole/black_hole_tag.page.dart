@@ -19,18 +19,25 @@ class BlackHoleTagPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pagingHookResult =
+    final pagingHookResult =
         usePaging<TagBlackHoleEntity, PageTagBlackHoleEntity>(
             context, (pageable) => TagBlackHoleService.paging(pageable));
 
-    var refreshController = pagingHookResult.refreshController;
-    var list = pagingHookResult.list;
-    var currPage = pagingHookResult.currPage;
-    var refresh = pagingHookResult.refresh;
-    var changePage = pagingHookResult.changePage;
-    controller?.refresh = () {
-      refreshController.value.requestRefresh();
-    };
+    final refreshController = pagingHookResult.refreshController;
+    final list = pagingHookResult.list;
+    final currPage = pagingHookResult.currPage;
+    final refresh = pagingHookResult.refresh;
+    final changePage = pagingHookResult.changePage;
+
+    useEffect(() {
+      controller?.refresh = () {
+        refreshController.value.requestRefresh();
+      };
+      return () {
+        controller?.dispose();
+      };
+    }, const []);
+
     Widget _emptyWidget() {
       if (currPage.value?.meta != null &&
           currPage.value!.meta.empty &&
