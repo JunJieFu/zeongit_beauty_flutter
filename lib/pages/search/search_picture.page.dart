@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -13,23 +14,23 @@ import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.da
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class SearchPicturePage extends StatelessWidget {
+class SearchPicturePage extends HookWidget {
+  SearchPicturePage({Key? key, required this.keyword, this.controller})
+      : logic = SearchPictureLogic(keyword, controller),
+        super(key: key);
+
   final String keyword;
 
   final CustomRefreshController? controller;
 
   final SearchPictureLogic logic;
 
-  SearchPicturePage({Key? key, required this.keyword, this.controller})
-      : logic = SearchPictureLogic(keyword),
-        super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    controller?.refresh = () {
-      logic.refreshController
-          .requestRefresh(duration: const Duration(milliseconds: 200));
-    };
+    useEffect(() {
+      logic.onStart();
+      return logic.onDelete;
+    }, const []);
 
     return KeepAliveClient(
       child: Scaffold(
@@ -79,13 +80,14 @@ class SearchPicturePage extends StatelessWidget {
 
 class SearchPictureLogic extends GetxController
     with PagingMixin<PictureEntity, PagePictureEntity> {
-  final criteria = SearchPictureTune().obs;
+  SearchPictureLogic(this.keyword, this.controller)
+      : criteria = SearchPictureTune(tagList: keyword).obs;
 
   final String keyword;
 
-  SearchPictureLogic(this.keyword) {
-    criteria.value.tagList = keyword;
-  }
+  final CustomRefreshController? controller;
+
+  final Rx<SearchPictureTune> criteria;
 
   query(SearchPictureTune tune) {
     criteria.value = tune;
@@ -94,4 +96,19 @@ class SearchPictureLogic extends GetxController
 
   @override
   dao(pageable) => PictureService.paging(pageable, criteria: criteria.value);
+
+  @override
+  void onInit() {
+    super.onInit();
+    controller?.refresh = () {
+      refreshController.requestRefresh(
+          duration: const Duration(milliseconds: 200));
+    };
+  }
+
+  @override
+  void onClose() {
+    controller?.dispose();
+    super.onClose();
+  }
 }

@@ -36,10 +36,11 @@ class TabPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tabController = useTabController(initialLength: _tabList.length);
+    final tabController = useTabController(initialLength: _tabList.length);
+    final preTime = useState<DateTime?>(null);
+    final tabIndex = useState(0);
 
-    var preTime = useState<DateTime?>(null);
-    var tabIndex = useState(0);
+
     return WillPopScope(
       onWillPop: () async {
         if (preTime.value == null ||

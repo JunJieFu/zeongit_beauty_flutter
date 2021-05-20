@@ -22,7 +22,7 @@ class RecommendTagPage extends HookWidget {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
 
-  final fragmentLogic = Get.find<FragmentLogic>();
+  final _fragmentLogic = Get.find<FragmentLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,15 @@ class RecommendTagPage extends HookWidget {
       return;
     }
 
-    controller?.refresh = () {
-      _refreshController.requestRefresh(
-          duration: const Duration(milliseconds: 200));
-    };
+    useEffect(() {
+      controller?.refresh = () {
+        _refreshController.requestRefresh(
+            duration: const Duration(milliseconds: 200));
+      };
+      return () {
+        controller?.dispose();
+      };
+    }, const []);
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +67,7 @@ class RecommendTagPage extends HookWidget {
             shrinkWrap: true,
             physics: AlwaysScrollableScrollPhysics(),
             children: [
-              ...(fragmentLogic.searchHistory.length != 0
+              ...(_fragmentLogic.searchHistory.length != 0
                   ? [
                       Padding(
                         padding: EdgeInsets.all(StyleConfig.listGap),
@@ -73,13 +78,13 @@ class RecommendTagPage extends HookWidget {
                         child: Wrap(
                             spacing: StyleConfig.listGap,
                             runSpacing: -StyleConfig.gap,
-                            children: fragmentLogic.searchHistory
-                                    .map((item) => ActionChip(
-                                        label: Text(item),
-                                        onPressed: () {
-                                          fragmentLogic.searchPicture(item);
-                                        }))
-                                    .toList()),
+                            children: _fragmentLogic.searchHistory
+                                .map((item) => ActionChip(
+                                    label: Text(item),
+                                    onPressed: () {
+                                      _fragmentLogic.searchPicture(item);
+                                    }))
+                                .toList()),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +96,7 @@ class RecommendTagPage extends HookWidget {
                                 primary: Colors.black54,
                               ),
                               onPressed: () {
-                                fragmentLogic.removeHistory();
+                                _fragmentLogic.removeHistory();
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -119,40 +124,39 @@ class RecommendTagPage extends HookWidget {
                   crossAxisCount: 3,
                   childAspectRatio: 1.0,
                   children: recommendTagList.value
-                          .map((item) => Stack(children: [
-                                ImageInk(
-                                  child: AspectRatio(
-                                      aspectRatio: 1,
-                                      child: PictureWidget(
-                                        item.url,
-                                        style: PictureStyle.specifiedWidth500,
-                                        fit: BoxFit.cover,
-                                      )),
-                                  onTap: () {
-                                    fragmentLogic.searchPicture(item.name);
-                                  },
+                      .map((item) => Stack(children: [
+                            ImageInk(
+                              child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: PictureWidget(
+                                    item.url,
+                                    style: PictureStyle.specifiedWidth500,
+                                    fit: BoxFit.cover,
+                                  )),
+                              onTap: () {
+                                _fragmentLogic.searchPicture(item.name);
+                              },
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1, horizontal: StyleConfig.gap),
+                                decoration: new BoxDecoration(
+                                  color: Colors.black38,
                                 ),
-                                Positioned(
-                                  bottom: 0,
-                                  left: 0,
-                                  right: 0,
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 1,
-                                        horizontal: StyleConfig.gap),
-                                    decoration: new BoxDecoration(
-                                      color: Colors.black38,
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      item.name,
-                                      textScaleFactor: .9,
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                                  ),
-                                )
-                              ]))
-                          .toList())
+                                child: Center(
+                                    child: Text(
+                                  item.name,
+                                  textScaleFactor: .9,
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                              ),
+                            )
+                          ]))
+                      .toList())
             ],
           ),
         ),

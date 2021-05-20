@@ -30,20 +30,23 @@ import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
 final pageGap = StyleConfig.gap * 3;
 
-// ignore: must_be_immutable
-class DetailPage extends HookWidget {
-  DetailPage({Key? key, required this.id}) : super(key: key) {
-    try {
-      logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
-    } catch (e) {
-      logic = Get.put(PictureLogic(null),
-          tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
-    }
+PictureLogic _getLogic(int id) {
+  try {
+    return Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
+  } catch (e) {
+    return Get.put(PictureLogic(null),
+        tag: PICTURE_LOGIC_TAG_PREFIX + id.toString());
   }
+}
+
+class DetailPage extends HookWidget {
+  DetailPage({Key? key, required this.id})
+      : logic = _getLogic(id),
+        super(key: key);
 
   final int id;
 
-  late PictureLogic logic;
+  final PictureLogic logic;
 
   final fragmentLogic = Get.find<FragmentLogic>();
 
@@ -301,12 +304,12 @@ class DetailPage extends HookWidget {
               spacing: pageGap / 2,
               runSpacing: -pageGap / 2,
               children: logic.picture!.tagList
-                      .map((e) => ActionChip(
-                          label: Text(e),
-                          onPressed: () {
-                            fragmentLogic.searchPicture(e);
-                          }))
-                      .toList()),
+                  .map((e) => ActionChip(
+                      label: Text(e),
+                      onPressed: () {
+                        fragmentLogic.searchPicture(e);
+                      }))
+                  .toList()),
         ),
         Divider()
       ];

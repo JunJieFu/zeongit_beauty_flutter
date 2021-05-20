@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -10,23 +11,21 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class NewPage extends StatelessWidget {
-  NewPage({Key? key, this.controller}) : super(key: key);
+class NewPage extends HookWidget {
+  NewPage({Key? key, this.controller})
+      : logic = NewLogic(controller),
+        super(key: key);
 
   final CustomRefreshController? controller;
 
-  final newLogic = NewLogic();
+  final NewLogic logic;
 
   @override
   Widget build(BuildContext context) {
-    final meta = newLogic.meta;
-    final refresh = newLogic.refresh;
-    final changePage = newLogic.changePage;
-
-    controller?.refresh = () {
-      newLogic.refreshController
-          .requestRefresh(duration: const Duration(milliseconds: 200));
-    };
+    useEffect(() {
+      logic.onStart();
+      return logic.onDelete;
+    }, const []);
 
     return Scaffold(
         appBar: AppBar(
@@ -35,23 +34,23 @@ class NewPage extends StatelessWidget {
           actions: [
             IconButton(
               icon: Icon(MdiIcons.calendar_month_outline),
-              onPressed: newLogic.showStartDatePicker,
+              onPressed: logic.showStartDatePicker,
             ),
             IconButton(
               icon: Icon(MdiIcons.refresh),
               onPressed: () {
-                newLogic.dateRefresh(force: true);
+                logic.dateRefresh(force: true);
               },
             )
           ],
         ),
         body: Obx(
           () => PagePicture(
-            meta: meta.value,
-            list: newLogic.list,
-            refreshController: newLogic.refreshController,
-            refresh: refresh,
-            changePage: changePage,
+            meta: logic.meta.value,
+            list: logic.list,
+            refreshController: logic.refreshController,
+            refresh: logic.refresh,
+            changePage: logic.changePage,
             emptyChild: TipsPageCard(
                 icon: MdiIcons.compass, title: "没有作品", text: "难道是系统出现什么问题了。"),
           ),
@@ -61,12 +60,11 @@ class NewPage extends StatelessWidget {
 
 class NewLogic extends GetxController
     with PagingMixin<PictureEntity, PagePictureEntity> {
-  final criteria = SearchPictureTune().obs;
+  NewLogic(this.controller);
 
-  @override
-  onInit() {
-    super.onInit();
-  }
+  final CustomRefreshController? controller;
+
+  final criteria = SearchPictureTune().obs;
 
   @override
   dao(pageable) => PictureService.paging(pageable, criteria: criteria.value);
@@ -86,5 +84,20 @@ class NewLogic extends GetxController
         firstDate: DateTime(2015),
         lastDate: DateTime.now());
     dateRefresh(dateTime: dateTime);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    controller?.refresh = () {
+      refreshController.requestRefresh(
+          duration: const Duration(milliseconds: 200));
+    };
+  }
+
+  @override
+  void onClose() {
+    controller?.dispose();
+    super.onClose();
   }
 }

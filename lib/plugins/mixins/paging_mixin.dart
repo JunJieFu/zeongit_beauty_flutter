@@ -57,4 +57,10 @@ mixin PagingMixin<M, P extends dynamic> on GetxController
     pageable.page = pageIndex;
     paging();
   }
+
+  @override
+  void onClose() {
+    refreshController.dispose();
+    super.onClose();
+  }
 }

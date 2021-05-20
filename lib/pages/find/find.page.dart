@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_picture_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/picture_entity.dart';
@@ -10,32 +11,31 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class FindPage extends StatelessWidget {
-  FindPage({Key? key, this.controller}) : super(key: key);
+class FindPage extends HookWidget {
+  FindPage({Key? key, this.controller})
+      : logic = FindLogic(controller),
+        super(key: key);
 
   final CustomRefreshController? controller;
 
-  final findLogic = FindLogic();
+  final FindLogic logic;
 
   @override
   Widget build(BuildContext context) {
-    final meta = findLogic.meta;
-    final refresh = findLogic.refresh;
-    final changePage = findLogic.changePage;
+    useEffect(() {
+      logic.onStart();
+      return logic.onDelete;
+    }, const []);
 
-    controller?.refresh = () {
-      findLogic.refreshController
-          .requestRefresh(duration: const Duration(milliseconds: 200));
-    };
     return Scaffold(
         appBar: AppBar(elevation: 0, title: Text("发现")),
         body: Obx(
           () => PagePicture(
-            meta: meta.value,
-            list: findLogic.list,
-            refreshController: findLogic.refreshController,
-            refresh: refresh,
-            changePage: changePage,
+            meta: logic.meta.value,
+            list: logic.list,
+            refreshController: logic.refreshController,
+            refresh: logic.refresh,
+            changePage: logic.changePage,
             emptyChild: TipsPageCard(
                 icon: MdiIcons.compass, title: "没有作品", text: "难道是系统出现什么问题了。"),
           ),
@@ -45,8 +45,27 @@ class FindPage extends StatelessWidget {
 
 class FindLogic extends GetxController
     with PagingMixin<PictureEntity, PagePictureEntity> {
+  FindLogic(this.controller);
+
+  final CustomRefreshController? controller;
+
   final dateRange = DateRange().obs;
 
   @override
   dao(pageable) => PictureService.pagingByRecommend(pageable);
+
+  @override
+  void onInit() {
+    super.onInit();
+    controller?.refresh = () {
+      refreshController.requestRefresh(
+          duration: const Duration(milliseconds: 200));
+    };
+  }
+
+  @override
+  void onClose() {
+    controller?.dispose();
+    super.onClose();
+  }
 }

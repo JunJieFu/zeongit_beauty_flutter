@@ -72,11 +72,11 @@ class PagingHookResult<M, P extends dynamic> {
     required this.changePage,
   });
 
-  ValueNotifier<RefreshController> refreshController;
-  ValueNotifier<List<M>> list;
-  ValueNotifier<P?> currPage;
-  PageableEntity pageable;
-  Future<void> Function() paging;
-  Future<void> Function() refresh;
-  Future<void> Function(int pageIndex) changePage;
+  final ValueNotifier<RefreshController> refreshController;
+  final ValueNotifier<List<M>> list;
+  final ValueNotifier<P?> currPage;
+  final PageableEntity pageable;
+  final Future<void> Function() paging;
+  final Future<void> Function() refresh;
+  final Future<void> Function(int pageIndex) changePage;
 }

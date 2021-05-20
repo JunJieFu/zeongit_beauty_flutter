@@ -26,7 +26,7 @@ class SearchPictureTune {
       this.startWidth,
       this.endWidth,
       this.startHeight,
-      this.endHeight}) {}
+      this.endHeight});
 }
 
 enum SearchTuneDate { NORMAL, WEEK, MONTH, SIX_MONTHS, YEAR, CUSTOM }
@@ -50,7 +50,12 @@ class DateRange {
 class SearchUserTune {
   String? nicknameList;
 
-  bool precise = false;
+  bool precise;
 
   SearchTuneDateItem date = SearchTuneDateItem(text: "不限制");
+
+  SearchUserTune({
+    this.nicknameList,
+    this.precise = false,
+  });
 }

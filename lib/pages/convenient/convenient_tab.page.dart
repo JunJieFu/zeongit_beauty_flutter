@@ -18,25 +18,27 @@ class ConvenientTabPage extends HookWidget {
 
   final _tabList = [Tab(text: "动态"), Tab(text: "收藏"), Tab(text: "关注")];
 
+  final _followingNewController = CustomRefreshController();
+
+  final _collectionController = CustomRefreshController();
+
+  final _followingController = CustomRefreshController();
+
   @override
   Widget build(BuildContext context) {
-    final tabController = useTabController(initialLength: _tabList.length);
-    final followingNewController = CustomRefreshController();
-    final collectionController = CustomRefreshController();
-    final followingController = CustomRefreshController();
+    final tabController =
+        useTabController(initialLength: _tabList.length);
     useEffect(() {
       controller?.refresh = () {
-        if (tabController.index == 0 && followingNewController.refresh != null)
-          followingNewController.refresh!();
-        if (tabController.index == 1 && collectionController.refresh != null)
-          collectionController.refresh!();
-        if (tabController.index == 2 && followingController.refresh != null)
-          followingController.refresh!();
+        if (tabController.index == 0 && _followingNewController.refresh != null)
+          _followingNewController.refresh!();
+        if (tabController.index == 1 && _collectionController.refresh != null)
+          _collectionController.refresh!();
+        if (tabController.index == 2 && _followingController.refresh != null)
+          _followingController.refresh!();
       };
-      return () {
-        controller?.refresh = null;
-      };
-    }, []);
+      return controller?.dispose;
+    }, const []);
     return Obx(() {
       if (_accountLogic.info == null) {
         return Scaffold(
@@ -63,12 +65,13 @@ class ConvenientTabPage extends HookWidget {
             body: TabBarView(
               controller: tabController,
               children: [
-                FollowingNewPage(controller: followingNewController),
+                FollowingNewPage(controller: _followingNewController),
                 CollectionPage(
-                    controller: collectionController,
+                    controller: _collectionController,
                     id: _accountLogic.info!.id),
                 FollowingPage(
-                    controller: followingController, id: _accountLogic.info!.id),
+                    controller: _followingController,
+                    id: _accountLogic.info!.id),
               ],
             ));
       }

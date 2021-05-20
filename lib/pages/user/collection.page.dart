@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/collection_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_collection_entity.dart';
@@ -10,9 +11,9 @@ import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.da
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
 
-class CollectionPage extends StatelessWidget {
+class CollectionPage extends HookWidget {
   CollectionPage({Key? key, required this.id, this.controller})
-      : logic = CollectionLogic(id),
+      : logic = CollectionLogic(id, controller),
         super(key: key);
 
   final int id;
@@ -23,10 +24,10 @@ class CollectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller?.refresh = () {
-      logic.refreshController
-          .requestRefresh(duration: const Duration(milliseconds: 200));
-    };
+    useEffect(() {
+      logic.onStart();
+      return logic.onDelete;
+    }, const []);
 
     return KeepAliveClient(
       child: Scaffold(
@@ -49,10 +50,27 @@ class CollectionPage extends StatelessWidget {
 
 class CollectionLogic extends GetxController
     with PagingMixin<CollectionEntity, PageCollectionEntity> {
-  CollectionLogic(this.id);
+  CollectionLogic(this.id, this.controller);
 
   final int id;
 
+  final CustomRefreshController? controller;
+
   @override
   dao(pageable) => CollectionService.paging(pageable, id);
+
+  @override
+  void onInit() {
+    super.onInit();
+    controller?.refresh = () {
+      refreshController.requestRefresh(
+          duration: const Duration(milliseconds: 200));
+    };
+  }
+
+  @override
+  void onClose() {
+    controller?.dispose();
+    super.onClose();
+  }
 }
