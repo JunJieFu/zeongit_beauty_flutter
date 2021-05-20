@@ -12,7 +12,7 @@ class PictureEntity with JsonConvert<PictureEntity> {
   late int likeAmount;
   late int width;
   late int height;
-  late String url;
+  String? url;
   late int aspectRatio;
   late double ratio;
   late List<String> tagList;

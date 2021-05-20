@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/entity/footprint_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_footprint_entity.dart';
-import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
@@ -49,9 +48,6 @@ class FootprintPage extends StatelessWidget {
 class FootprintLogic extends GetxController
     with PagingMixin<FootprintEntity, PageFootprintEntity> {
   FootprintLogic(this.id);
-
-  @override
-  final pageable = PageableEntity(sort: "updateDate,desc");
 
   final int id;
 

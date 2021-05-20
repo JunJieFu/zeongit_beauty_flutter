@@ -266,7 +266,7 @@ class DetailPage extends HookWidget {
       child: PictureWidget(logic.picture!.url,
           style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
       onTap: () {
-        Get.to(ViewPage(logic.picture!.url));
+        Get.to(ViewPage(logic.picture!.url!));
       },
     );
   }

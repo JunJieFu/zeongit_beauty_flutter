@@ -29,6 +29,8 @@ _getEmptyPicture(int id, int focus) {
   picture.focus = focus;
   picture.name = "无法显示";
   picture.user = info;
+  picture.width = 1000;
+  picture.height = 1000;
 
   return picture;
 }
@@ -355,16 +357,15 @@ class PageFootprint extends StatelessWidget {
                                           logic.picture!.name,
                                           overflow: TextOverflow.ellipsis,
                                         ),
-                                        Text(
-                                            logic.picture!.user.nickname,
+                                        Text(logic.picture!.user.nickname,
                                             overflow: TextOverflow.ellipsis,
                                             textScaleFactor: .8,
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
-                                                    !.color
-                                                    !.withOpacity(.56)))
+                                                    .bodyText1!
+                                                    .color!
+                                                    .withOpacity(.56)))
                                       ],
                                     ),
                                     flex: 1,
