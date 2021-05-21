@@ -45,7 +45,7 @@ pictureEntityFromJson(PictureEntity data, Map<String, dynamic> json) {
 				: json['height'].toInt();
 	}
 	if (json['url'] != null) {
-		data.url = json['url'].toString();
+		data.url = json['url'];
 	}
 	if (json['aspectRatio'] != null) {
 		data.aspectRatio = json['aspectRatio'] is String

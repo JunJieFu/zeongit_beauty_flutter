@@ -28,13 +28,15 @@ userBlackHoleEntityFromJson(UserBlackHoleEntity data, Map<String, dynamic> json)
 				: json['id'].toInt();
 	}
 	if (json['avatarUrl'] != null) {
-		data.avatarUrl = json['avatarUrl'].toString();
+		data.avatarUrl = json['avatarUrl'];
 	}
 	if (json['nickname'] != null) {
-		data.nickname = json['nickname'];
+		data.nickname = json['nickname'].toString();
 	}
 	if (json['state'] != null) {
-		data.state = json['state'];
+		data.state = json['state'] is String
+				? int.tryParse(json['state'])
+				: json['state'].toInt();
 	}
 	return data;
 }
