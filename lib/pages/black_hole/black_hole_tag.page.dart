@@ -72,6 +72,7 @@ class BlackHoleTagPage extends HookWidget {
                           tag: tag,
                           callback: (user, int state) {
                             list[index].state = state;
+                            list.refresh();
                           },
                         )
                       ],

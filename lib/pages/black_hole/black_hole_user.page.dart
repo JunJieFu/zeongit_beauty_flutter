@@ -75,6 +75,7 @@ class BlackHoleUserPage extends HookWidget {
                           user: user,
                           callback: (user, int state) {
                             list[index].state = state;
+                            list.refresh();
                           },
                         )
                       ],
