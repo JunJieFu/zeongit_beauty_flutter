@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
+import 'package:zeongitbeautyflutter/plugins/hooks/text_editing_controller.hook.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
@@ -9,24 +11,23 @@ import 'package:zeongitbeautyflutter/routes.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class ForgetPage extends StatelessWidget {
+class ForgetPage extends HookWidget {
   ForgetPage(this.phone, {Key? key}) : super(key: key);
 
   final String phone;
 
-  final _codeController = TextEditingController();
+  final code = "".obs;
 
-  final _passwordController = TextEditingController();
+  final password = "".obs;
 
-  final _rePasswordController = TextEditingController();
+  final rePassword = "".obs;
 
   final _loading = false.obs;
 
   _forget() async {
     if (_loading.value) return;
     _loading.value = true;
-    var result = await UserService.forgot(
-        _codeController.text, phone, _passwordController.text);
+    var result = await UserService.forgot(code.value, phone, password.value);
     if (ResultUtil.check(result)) {
       Get.until((r) => Get.currentRoute == RoutesKey.SIGN_IN);
     }
@@ -35,6 +36,10 @@ class ForgetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final codeController = useTextEditingControllerObs(code);
+    final passwordController = useTextEditingControllerObs(password);
+    final rePasswordController = useTextEditingControllerObs(rePassword);
+
     return Scaffold(
         appBar: AppBar(title: Text("找回您的密码")),
         body: ListView(
@@ -47,7 +52,7 @@ class ForgetPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: _codeController,
+                      controller: codeController,
                       icon: MdiIcons.check,
                       hintText: '验证码',
                     ),
@@ -55,7 +60,7 @@ class ForgetPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: _passwordController,
+                      controller: passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -64,7 +69,7 @@ class ForgetPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _rePasswordController,
+                      controller: rePasswordController,
                       icon: MdiIcons.lock_check,
                       obscureText: true,
                       hintText: '确认密码',

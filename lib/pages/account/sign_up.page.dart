@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/plugins/constants/key.constant.dart';
+import 'package:zeongitbeautyflutter/plugins/hooks/text_editing_controller.hook.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
@@ -12,24 +13,25 @@ import 'package:zeongitbeautyflutter/provider/account.logic.dart';
 
 final _gap = StyleConfig.gap * 6;
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends HookWidget {
   SignUpPage(this.phone, {Key? key}) : super(key: key);
 
   final String phone;
 
   final _accountLogic = Get.find<AccountLogic>();
 
-  final _codeController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _rePasswordController = TextEditingController();
+  final code = "".obs;
+
+  final password = "".obs;
+
+  final rePassword = "".obs;
 
   final _loading = false.obs;
 
   _signUp() async {
     if (_loading.value) return;
     _loading.value = true;
-    var result = await UserService.signUp(
-        _codeController.text, phone, _passwordController.text);
+    var result = await UserService.signUp(code.value, phone, password.value);
     if (ResultUtil.check(result)) {
       await StorageManager.setString(KeyConstant.TOKEN_KEY, result.data!);
       await _accountLogic.getInfo();
@@ -40,6 +42,9 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final codeController = useTextEditingControllerObs(code);
+    final passwordController = useTextEditingControllerObs(password);
+    final rePasswordController = useTextEditingControllerObs(rePassword);
     return Scaffold(
         appBar: AppBar(title: Text("注册您的账号")),
         body: ListView(
@@ -52,7 +57,7 @@ class SignUpPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: _codeController,
+                      controller: codeController,
                       icon: MdiIcons.check,
                       hintText: '验证码',
                     ),
@@ -60,7 +65,7 @@ class SignUpPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap),
                     child: IconTextField(
-                      controller: _passwordController,
+                      controller: passwordController,
                       icon: MdiIcons.lock,
                       obscureText: true,
                       hintText: '密码',
@@ -69,7 +74,7 @@ class SignUpPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _rePasswordController,
+                      controller: rePasswordController,
                       icon: MdiIcons.lock_check,
                       obscureText: true,
                       hintText: '确认密码',

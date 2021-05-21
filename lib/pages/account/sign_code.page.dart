@@ -5,6 +5,7 @@ import 'package:zeongitbeautyflutter/assets/constants/enum.constant.dart';
 import 'package:zeongitbeautyflutter/assets/services/index.dart';
 import 'package:zeongitbeautyflutter/pages/account/forgot.page.dart';
 import 'package:zeongitbeautyflutter/pages/account/sign_up.page.dart';
+import 'package:zeongitbeautyflutter/plugins/hooks/text_editing_controller.hook.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/index.style.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/utils/result.util.dart';
@@ -16,24 +17,24 @@ final _differenceList = {
   CodeTypeConstant.FORGOT: "找回您的密码"
 };
 
-class SignCodePage extends StatelessWidget {
+class SignCodePage extends HookWidget {
   SignCodePage(this.codeType, {Key? key}) : super(key: key);
 
   final CodeTypeConstant codeType;
 
-  final _phoneController = TextEditingController();
+  final phone = "".obs;
 
   final _loading = false.obs;
 
   _send() async {
     if (_loading.value) return;
     _loading.value = true;
-    var result = await UserService.sendCode(_phoneController.text, codeType);
+    var result = await UserService.sendCode(phone.value, codeType);
     if (ResultUtil.check(result)) {
       if (codeType == CodeTypeConstant.SIGN_UP) {
-        Get.to(() => SignUpPage(_phoneController.text));
+        Get.to(() => SignUpPage(phone.value));
       } else if (codeType == CodeTypeConstant.FORGOT) {
-        Get.to(() => ForgetPage(_phoneController.text));
+        Get.to(() => ForgetPage(phone.value));
       }
     }
     _loading.value = false;
@@ -41,6 +42,7 @@ class SignCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final phoneController = useTextEditingControllerObs(phone);
     return Scaffold(
         appBar: AppBar(title: Text(_differenceList[codeType]!)),
         body: ListView(
@@ -53,7 +55,7 @@ class SignCodePage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: _gap * 2),
                     child: IconTextField(
-                      controller: _phoneController,
+                      controller: phoneController,
                       icon: MdiIcons.cellphone,
                       hintText: '手机号码',
                     ),

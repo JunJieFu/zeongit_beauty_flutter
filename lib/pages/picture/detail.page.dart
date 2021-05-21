@@ -41,17 +41,16 @@ PictureLogic _getLogic(int id) {
 
 class DetailPage extends HookWidget {
   DetailPage({Key? key, required this.id})
-      : logic = _getLogic(id),
+      : _logic = _getLogic(id),
         super(key: key);
 
   final int id;
 
-  final PictureLogic logic;
+  final PictureLogic _logic;
 
-  final fragmentLogic = Get.find<FragmentLogic>();
+  final FragmentLogic _fragmentLogic = Get.find<FragmentLogic>();
 
   _buildLoading() {
-    var pageGap = StyleConfig.gap * 3;
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
@@ -141,7 +140,7 @@ class DetailPage extends HookWidget {
             //默认高度是状态栏和导航栏的高度，如果有滚动视差的话，要大于前两者的高度
             floating: false,
             expandedHeight:
-                Get.width * logic.picture!.height / logic.picture!.width,
+                Get.width * _logic.picture!.height / _logic.picture!.width,
             //只跟floating相对应，如果为true，floating必须为true，也就是向下滑动一点儿，整个大背景就会动画显示全部，网上滑动整个导航栏的内容就会消失
             flexibleSpace: FlexibleSpaceBar(
               background: _buildMainPicture(),
@@ -158,10 +157,10 @@ class DetailPage extends HookWidget {
                     onPressed: () {},
                   ),
                   CollectIconBtn(
-                    id: logic.picture!.id,
+                    id: _logic.picture!.id,
                   ),
-                  SharePictureIconBtn(id: logic.picture!.id),
-                  MoreIconBtn(id: logic.picture!.id)
+                  SharePictureIconBtn(id: _logic.picture!.id),
+                  MoreIconBtn(id: _logic.picture!.id)
                 ],
               ),
               Divider(),
@@ -170,14 +169,14 @@ class DetailPage extends HookWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TitleWidget(logic.picture!.name),
+                      TitleWidget(_logic.picture!.name),
                       Row(
                         children: [
                           Row(
                             children: [
                               TextWidget("创建于："),
                               TextWidget(formatDate(
-                                  DateTime.parse(logic.picture!.createDate),
+                                  DateTime.parse(_logic.picture!.createDate),
                                   [yyyy, '-', mm, '-', dd])),
                             ],
                           ),
@@ -187,7 +186,7 @@ class DetailPage extends HookWidget {
                               child: Row(children: <Widget>[
                                 TextWidget("分辨率："),
                                 TextWidget(
-                                    "${logic.picture!.width}×${logic.picture!.height}")
+                                    "${_logic.picture!.width}×${_logic.picture!.height}")
                               ])),
                         ],
                       ),
@@ -195,10 +194,10 @@ class DetailPage extends HookWidget {
                         children: <Widget>[
                           Row(children: <Widget>[
                             Link(
-                              "${logic.picture!.viewAmount}",
+                              "${_logic.picture!.viewAmount}",
                               onTap: () {
                                 Get.to(() => DetailUserTabPage(
-                                    picture: logic.picture!, index: 0));
+                                    picture: _logic.picture!, index: 0));
                               },
                             ),
                             TextWidget("人阅读")
@@ -208,10 +207,10 @@ class DetailPage extends HookWidget {
                                   EdgeInsets.only(left: StyleConfig.gap * 3),
                               child: Row(children: <Widget>[
                                 Link(
-                                  "${logic.picture!.likeAmount}",
+                                  "${_logic.picture!.likeAmount}",
                                   onTap: () {
                                     Get.to(() => DetailUserTabPage(
-                                        picture: logic.picture!, index: 1));
+                                        picture: _logic.picture!, index: 1));
                                   },
                                 ),
                                 TextWidget("人喜欢")
@@ -220,7 +219,7 @@ class DetailPage extends HookWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: pageGap),
-                        child: Html(data: logic.picture!.introduction),
+                        child: Html(data: _logic.picture!.introduction),
                       )
                     ],
                   )),
@@ -237,21 +236,21 @@ class DetailPage extends HookWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: StyleConfig.gap * 2),
-                        child: Text(logic.picture!.user.nickname),
+                        child: Text(_logic.picture!.user.nickname),
                       ),
                     ),
                     Builder(builder: (context) {
                       try {
                         Get.find(
                             tag: USER_INFO_LOGIC_TAG_PREFIX +
-                                logic.picture!.user.id.toString());
+                                _logic.picture!.user.id.toString());
                       } catch (e) {
-                        Get.put(UserInfoLogic(logic.picture!.user),
+                        Get.put(UserInfoLogic(_logic.picture!.user),
                             tag: USER_INFO_LOGIC_TAG_PREFIX +
-                                logic.picture!.user.id.toString());
+                                _logic.picture!.user.id.toString());
                       }
                       return FollowBtn(
-                        id: logic.picture!.user.id,
+                        id: _logic.picture!.user.id,
                       );
                     })
                   ],
@@ -266,10 +265,10 @@ class DetailPage extends HookWidget {
 
   _buildMainPicture() {
     return GestureDetector(
-      child: PictureWidget(logic.picture!.url,
+      child: PictureWidget(_logic.picture!.url,
           style: PictureStyle.specifiedHeight1200, fit: BoxFit.cover),
       onTap: () {
-        Get.to(() => ViewPage(logic.picture!.url!));
+        Get.to(() => ViewPage(_logic.picture!.url!));
       },
     );
   }
@@ -282,32 +281,32 @@ class DetailPage extends HookWidget {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: AvatarWidget(
-          logic.picture!.user.avatarUrl,
-          logic.picture!.user.nickname,
+          _logic.picture!.user.avatarUrl,
+          _logic.picture!.user.nickname,
           size: size - padding * 2,
           fit: BoxFit.cover,
           style: AvatarStyle.small50,
         ),
       ),
       onTap: () {
-        Get.to(() => UserTabPage(id: logic.picture!.user.id));
+        Get.to(() => UserTabPage(id: _logic.picture!.user.id));
       },
     );
   }
 
   _buildTagList(double pageGap) {
-    if (logic.picture!.tagList.length > 0) {
+    if (_logic.picture!.tagList.length > 0) {
       return [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: pageGap),
           child: Wrap(
               spacing: pageGap / 2,
               runSpacing: -pageGap / 2,
-              children: logic.picture!.tagList
+              children: _logic.picture!.tagList
                   .map((e) => ActionChip(
                       label: Text(e),
                       onPressed: () {
-                        fragmentLogic.searchPicture(e);
+                        _fragmentLogic.searchPicture(e);
                       }))
                   .toList()),
         ),
@@ -322,18 +321,18 @@ class DetailPage extends HookWidget {
   Widget build(BuildContext context) {
     Widget widget = _buildLoading();
     //如果不为空，则不用向api获取
-    if (logic.picture?.width != null && logic.picture?.height != null) {
+    if (_logic.picture?.url != null) {
       return _buildMain();
     }
 
-    var snapshot = useFuture<ResultEntity<PictureEntity>>(useMemoized(() async {
+    final snapshot = useFuture<ResultEntity<PictureEntity>>(useMemoized(() async {
       await Future.delayed(Duration(milliseconds: 500));
       return await PictureService.get(id);
     }), initialData: null);
     if (snapshot.hasData) {
       final result = snapshot.data!;
       if (result.status == StatusCode.SUCCESS) {
-        logic.set(result.data!);
+        _logic.set(result.data!);
         widget = _buildMain();
       } else {
         widget = _buildError(message: result.message);

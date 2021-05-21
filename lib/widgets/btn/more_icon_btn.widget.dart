@@ -14,7 +14,7 @@ import 'package:zeongitbeautyflutter/widgets/popup.fun.dart';
 
 class MoreIconBtn extends StatelessWidget {
   MoreIconBtn({Key? key, required this.id, this.small = false})
-      : logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
+      : _pictureLogic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
@@ -22,13 +22,14 @@ class MoreIconBtn extends StatelessWidget {
 
   final bool small;
 
-  final PictureLogic logic;
+  final PictureLogic _pictureLogic;
 
   final _accountLogic = Get.find<AccountLogic>();
 
   @override
   Widget build(BuildContext context) {
-    final privacy = logic.picture!.privacy == PrivacyState.PRIVATE.index;
+    final privacy =
+        _pictureLogic.picture!.privacy == PrivacyState.PRIVATE.index;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -55,14 +56,15 @@ class MoreIconBtn extends StatelessWidget {
                         () => Column(
                           mainAxisSize: MainAxisSize.min,
                           children: _accountLogic.info?.id ==
-                                  logic.picture!.user.id
+                                  _pictureLogic.picture!.user.id
                               ? [
                                   Divider(height: 1),
                                   ListTile(
                                     title: buildListTileTitle("编辑",
                                         leftIcon: MdiIcons.image_edit_outline),
                                     onTap: () {
-                                      Get.to(() => EditPage(logic.picture!,
+                                      Get.to(() => EditPage(
+                                          _pictureLogic.picture!,
                                           callback: (picture) {}));
                                     },
                                   ),
@@ -75,7 +77,7 @@ class MoreIconBtn extends StatelessWidget {
                                             : MdiIcons.eye_off_outline),
                                     onTap: () {
                                       Get.back();
-                                      logic.hide();
+                                      _pictureLogic.hide();
                                     },
                                   ),
                                   Divider(height: 1),
@@ -86,7 +88,7 @@ class MoreIconBtn extends StatelessWidget {
                                             : MdiIcons.delete_outline),
                                     onTap: () {
                                       Get.back();
-                                      logic.remove();
+                                      _pictureLogic.remove();
                                     },
                                   )
                                 ]
@@ -101,7 +103,7 @@ class MoreIconBtn extends StatelessWidget {
                                             context: Get.context!,
                                             builder: (ctx) {
                                               return BlackHoleDialog(
-                                                id: logic.picture!.id,
+                                                id: _pictureLogic.picture!.id,
                                               );
                                             });
                                       }),
@@ -116,7 +118,7 @@ class MoreIconBtn extends StatelessWidget {
                                           context: Get.context!,
                                           builder: (ctx) {
                                             return ComplaintDialog(
-                                              id: logic.picture!.id,
+                                              id: _pictureLogic.picture!.id,
                                             );
                                           });
                                     },

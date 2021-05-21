@@ -14,6 +14,7 @@ import 'package:zeongitbeautyflutter/plugins/widgets/avatar.widget.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/block_user_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/config.widget.dart';
 
 class BlackHoleUserPage extends HookWidget {
   BlackHoleUserPage({Key? key, this.controller}) : super(key: key);
@@ -28,30 +29,30 @@ class BlackHoleUserPage extends HookWidget {
 
     final refreshController = pagingHookResult.refreshController;
     final list = pagingHookResult.list;
-    final currPage = pagingHookResult.currPage;
+    final meta = pagingHookResult.meta;
     final refresh = pagingHookResult.refresh;
     final changePage = pagingHookResult.changePage;
 
     useEffect(() {
       controller?.refresh = () {
-        refreshController.value.requestRefresh();
+        refreshController.requestRefresh();
       };
       return () {
         controller?.dispose();
       };
     }, const []);
 
-    Widget _emptyWidget() {
-      if (currPage.value != null &&
-          currPage.value!.meta.empty &&
-          currPage.value!.meta.first &&
-          currPage.value!.meta.last) {
+    emptyWidget() {
+      if (meta.value != null &&
+          meta.value!.empty &&
+          meta.value!.first &&
+          meta.value!.last) {
         return TipsPageCard(icon: MdiIcons.account_outline, title: "没有屏蔽用户");
       } else {
         return ListView.builder(
-            itemCount: list.value.length,
+            itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
-              UserBlackHoleEntity user = list.value[index];
+              UserBlackHoleEntity user = list[index];
               return Column(
                 children: <Widget>[
                   Padding(
@@ -73,8 +74,7 @@ class BlackHoleUserPage extends HookWidget {
                         BlockUserIconBtn(
                           user: user,
                           callback: (user, int state) {
-                            list.value[index].state = state;
-                            list.notifyListeners();
+                            list[index].state = state;
                           },
                         )
                       ],
@@ -88,15 +88,19 @@ class BlackHoleUserPage extends HookWidget {
     }
 
     return KeepAliveClient(
-      child: SmartRefresher(
-        controller: refreshController.value,
-        enablePullDown: true,
-        enablePullUp: currPage.value != null && !currPage.value!.meta.last,
-        onRefresh: refresh,
-        onLoading: () async {
-          await changePage(currPage.value!.meta.currentPage + 1);
-        },
-        child: _emptyWidget(),
+      child: DefaultRefreshConfiguration(
+        child: Obx(
+          () => SmartRefresher(
+            controller: refreshController,
+            enablePullDown: true,
+            enablePullUp: meta.value != null && !meta.value!.last,
+            onRefresh: refresh,
+            onLoading: () async {
+              await changePage(meta.value!.currentPage + 1);
+            },
+            child: emptyWidget(),
+          ),
+        ),
       ),
     );
   }

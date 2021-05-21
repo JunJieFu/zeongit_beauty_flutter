@@ -11,16 +11,19 @@ import 'package:zeongitbeautyflutter/pages/user/user_detail.dart';
 import 'package:zeongitbeautyflutter/pages/user/works.page.dart';
 import 'package:zeongitbeautyflutter/provider/user_info.logic.dart';
 
-// ignore: must_be_immutable
-class UserTabPage extends HookWidget {
-  UserTabPage({Key? key, required this.id}) : super(key: key) {
-    try {
-      logic = Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
-    } catch (e) {
-      logic = Get.put(UserInfoLogic(null),
-          tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
-    }
+UserInfoLogic _getLogic(int id) {
+  try {
+    return Get.find(tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
+  } catch (e) {
+    return Get.put(UserInfoLogic(null),
+        tag: USER_INFO_LOGIC_TAG_PREFIX + id.toString());
   }
+}
+
+class UserTabPage extends HookWidget {
+  UserTabPage({Key? key, required this.id})
+      : logic = _getLogic(id),
+        super(key: key);
 
   final int id;
 
@@ -41,8 +44,8 @@ class UserTabPage extends HookWidget {
     if (logic.info != null) {
       return _buildMain(logic.info!, controller);
     }
-    Widget widget = _buildScaffold(_buildLoading());
-    var snapshot = useFuture<ResultEntity<UserInfoEntity>>(
+    var widget = _buildScaffold(_buildLoading());
+    final snapshot = useFuture<ResultEntity<UserInfoEntity>>(
         useMemoized(() => UserInfoService.getByTargetId(id)),
         initialData: null);
     if (snapshot.hasData) {

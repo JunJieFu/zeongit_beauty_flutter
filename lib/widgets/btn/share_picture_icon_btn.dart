@@ -12,7 +12,7 @@ import 'package:zeongitbeautyflutter/provider/picture.logic.dart';
 
 class SharePictureIconBtn extends StatelessWidget {
   SharePictureIconBtn({Key? key, required this.id, this.small = false})
-      : logic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
+      : _pictureLogic = Get.find(tag: PICTURE_LOGIC_TAG_PREFIX + id.toString()),
         super(key: key);
   final GlobalKey _btnKey = GlobalKey();
 
@@ -20,7 +20,7 @@ class SharePictureIconBtn extends StatelessWidget {
 
   final bool small;
 
-  final PictureLogic logic;
+  final PictureLogic _pictureLogic;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class SharePictureIconBtn extends StatelessWidget {
                               onTap: () {
                                 Clipboard.setData(ClipboardData(
                                     text:
-                                        '${ConfigConstant.BEAUTY_HOST}/picture/${logic.picture!.id}'));
+                                        '${ConfigConstant.BEAUTY_HOST}/picture/${_pictureLogic.picture!.id}'));
                                 BotToast.showText(text: "复制成功");
                                 Get.back();
                               }),

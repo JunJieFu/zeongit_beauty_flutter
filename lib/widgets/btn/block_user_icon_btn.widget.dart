@@ -25,23 +25,24 @@ class BlockUserIconBtn extends HookWidget {
 
   final _accountLogic = Get.find<AccountLogic>();
 
+  final GlobalKey _btnKey = GlobalKey();
+  final _loading = false.obs;
+
+  Future<void> _onPressed() async {
+    if (_accountLogic.info != null) {
+      if (_loading.value) return;
+      _loading.value = true;
+      var result = await UserBlackHoleService.block(user.id);
+      _loading.value = false;
+      if (ResultUtil.check(result)) callback(user, result.data!);
+    } else {
+      popupSignIn("屏蔽该用户？", "请先登录，然后才能把屏蔽该用户。", Get.context!, _btnKey);
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
-    bool normal = user.state == BlockState.NORMAL.index;
-    final GlobalKey _btnKey = GlobalKey();
-    final loading = useState(false);
-    Future<void> onPressed() async {
-      if (_accountLogic.info != null) {
-        if (loading.value) return;
-        loading.value = true;
-        var result = await UserBlackHoleService.block(user.id);
-        loading.value = false;
-        if (ResultUtil.check(result)) callback(user, result.data!);
-      } else {
-        popupSignIn("屏蔽该用户？", "请先登录，然后才能把屏蔽该用户。", context, _btnKey);
-      }
-    }
-
+    final normal = user.state == BlockState.NORMAL.index;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -54,7 +55,7 @@ class BlockUserIconBtn extends HookWidget {
           iconSize:
               small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
           icon: Icon(normal ? MdiIcons.eye_off_outline : MdiIcons.eye_outline),
-          onPressed: onPressed),
+          onPressed: _onPressed),
     );
   }
 }

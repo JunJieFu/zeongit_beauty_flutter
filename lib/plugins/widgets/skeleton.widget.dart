@@ -8,13 +8,13 @@ class Skeleton extends HookWidget {
   final double height;
   final double width;
 
-  final _isDark = Get.theme.brightness == Brightness.dark;
+  bool get _isDark => Get.theme.brightness == Brightness.dark;
 
   @override
   Widget build(BuildContext context) {
-    var controller =
+    final controller =
         useAnimationController(duration: Duration(milliseconds: 1500));
-    var animation = useAnimation(Tween<double>(
+    final animation = useAnimation(Tween<double>(
       begin: -3,
       end: 10,
     ).animate(

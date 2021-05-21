@@ -23,23 +23,25 @@ class BlockTagIconBtn extends HookWidget {
 
   final _accountLogic = Get.find<AccountLogic>();
 
+  final GlobalKey _btnKey = GlobalKey();
+
+  final _loading = false.obs;
+
+  Future<void> _onPressed() async {
+    if (_accountLogic.info != null) {
+      if (_loading.value) return;
+      _loading.value = true;
+      var result = await TagBlackHoleService.block(tag.name);
+      _loading.value = false;
+      if (ResultUtil.check(result)) callback(tag, result.data!);
+    } else {
+      popupSignIn("屏蔽该标签？", "请先登录，然后才能把屏蔽该标签。", Get.context!, _btnKey);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool normal = tag.state == BlockState.NORMAL.index;
-    final GlobalKey _btnKey = GlobalKey();
-    final loading = useState(false);
-    Future<void> onPressed() async {
-      if (_accountLogic.info != null) {
-        if (loading.value) return;
-        loading.value = true;
-        var result = await TagBlackHoleService.block(tag.name);
-        loading.value = false;
-        if (ResultUtil.check(result)) callback(tag, result.data!);
-      } else {
-        popupSignIn("屏蔽该标签？", "请先登录，然后才能把屏蔽该标签。", context, _btnKey);
-      }
-    }
-
+    final normal = tag.state == BlockState.NORMAL.index;
     return SizedBox(
       width: small
           ? StyleConfig.smallIconButtonSize
@@ -52,7 +54,7 @@ class BlockTagIconBtn extends HookWidget {
           iconSize:
               small ? StyleConfig.smallIconSize : StyleConfig.defaultIconSize,
           icon: Icon(normal ? MdiIcons.eye_off_outline : MdiIcons.eye_outline),
-          onPressed: onPressed),
+          onPressed: _onPressed),
     );
   }
 }

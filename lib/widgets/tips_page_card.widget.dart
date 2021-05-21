@@ -33,7 +33,7 @@ class TipsPageCard extends StatelessWidget {
   }
 
   List<Widget> _columnChildren() {
-    var list = [
+    final list = [
       Padding(
         padding: EdgeInsets.only(top: StyleConfig.gap * 12),
         child: Icon(icon, size: 100),

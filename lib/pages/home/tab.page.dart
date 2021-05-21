@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:zeongitbeautyflutter/pages/convenient/convenient_tab.page.dart';
 import 'package:zeongitbeautyflutter/pages/find/find.page.dart';
 import 'package:zeongitbeautyflutter/pages/more/more.page.dart';
@@ -34,42 +35,77 @@ class TabPage extends HookWidget {
   final _tagPageController = CustomRefreshController();
   final _convenientPageController = CustomRefreshController();
 
+  final _preTime = Rx<DateTime?>(null);
+  final _tabIndex = 0.obs;
+
+  _pop() async {
+    if (_preTime.value == null ||
+        DateTime.now().difference(_preTime.value!) > Duration(seconds: 2)) {
+      _preTime.value = DateTime.now();
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        duration: Duration(seconds: 1),
+        content: Text("再一次返回退出！"),
+      ));
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
+  _goTop(int index) {
+    switch (index) {
+      case 0:
+        {
+          _findPageController.refresh!();
+        }
+        break;
+      case 1:
+        {
+          _newPageController.refresh!();
+        }
+        break;
+      case 2:
+        {
+          try {
+            _convenientPageController.refresh!();
+          } catch (e) {}
+        }
+        break;
+      case 3:
+        {
+          _tagPageController.refresh!();
+        }
+        break;
+      default:
+        {}
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final tabController = useTabController(initialLength: _tabList.length);
-    final preTime = useState<DateTime?>(null);
-    final tabIndex = useState(0);
-
 
     return WillPopScope(
-      onWillPop: () async {
-        if (preTime.value == null ||
-            DateTime.now().difference(preTime.value!) > Duration(seconds: 2)) {
-          preTime.value = DateTime.now();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 1),
-            content: Text("再一次返回退出！"),
-          ));
-          return Future.value(false);
-        }
-        return Future.value(true);
-      },
+      onWillPop: () => _pop(),
       child: Scaffold(
-          body: LazyIndexedStack(
-            index: tabIndex.value,
-            itemBuilder: (c, i) {
-              if (i == 0)
-                return FindPage(controller: _findPageController);
-              else if (i == 1)
-                return NewPage(controller: _newPageController);
-              else if (i == 2)
-                return ConvenientTabPage(controller: _convenientPageController);
-              else if (i == 3)
-                return RecommendTagPage(controller: _tagPageController);
-              else
-                return MorePage();
-            },
-            itemCount: 5,
+          body: Obx(
+            () => LazyIndexedStack(
+              index: _tabIndex.value,
+              itemBuilder: (c, i) {
+                if (i == 0)
+                  return FindPage(controller: _findPageController);
+                else if (i == 1)
+                  return NewPage(controller: _newPageController);
+                else if (i == 2)
+                  return ConvenientTabPage(
+                      controller: _convenientPageController);
+                else if (i == 3)
+                  return RecommendTagPage(controller: _tagPageController);
+                else
+                  return MorePage();
+              },
+              itemCount: 5,
+            ),
           ),
           bottomNavigationBar: SizedBox(
             height: 56,
@@ -80,35 +116,9 @@ class TabPage extends HookWidget {
                     controller: tabController,
                     indicatorColor: Colors.transparent,
                     onTap: (int index) {
-                      tabIndex.value = index;
+                      _tabIndex.value = index;
                       if (!tabController.indexIsChanging) {
-                        switch (index) {
-                          case 0:
-                            {
-                              _findPageController.refresh!();
-                            }
-                            break;
-                          case 1:
-                            {
-                              _newPageController.refresh!();
-                            }
-                            break;
-                          case 2:
-                            {
-                              try{
-                                _convenientPageController.refresh!();
-                              }catch(e){}
-                            }
-                            break;
-                          case 3:
-                            {
-                              _tagPageController.refresh!();
-                            }
-                            break;
-                          default:
-                            {}
-                            break;
-                        }
+                        _goTop(index);
                       }
                     })),
           )),

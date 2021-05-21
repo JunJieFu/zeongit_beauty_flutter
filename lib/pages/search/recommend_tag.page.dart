@@ -24,10 +24,10 @@ class RecommendTagPage extends HookWidget {
 
   final _fragmentLogic = Get.find<FragmentLogic>();
 
+  final recommendTagList = RxList<TagPictureEntity>();
+
   @override
   Widget build(BuildContext context) {
-    var recommendTagList = useState<List<TagPictureEntity>>([]);
-
     Future<void> _listTagAndPictureTop30() async {
       var result = await TagService.listTagAndPictureTop30();
       recommendTagList.value = result.data!;

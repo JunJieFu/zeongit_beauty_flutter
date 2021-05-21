@@ -15,6 +15,10 @@ class BlackHoleDialog extends HookWidget {
 
   final int id;
 
+  final user = Rx<UserBlackHoleEntity?>(null);
+
+  final tagList = RxList<TagBlackHoleEntity>();
+
   _buildLoading() {
     return AlertDialog(
       content: Column(
@@ -37,8 +41,43 @@ class BlackHoleDialog extends HookWidget {
     );
   }
 
-  _buildMain(ResultEntity<BlackHoleEntity> result) {
-    return _View(blackHole: result.data!);
+  _buildMain(BlackHoleEntity data) {
+    user.value = data.user;
+    tagList.value = data.tagList;
+
+    return Obx(
+      () => SimpleDialog(
+        title: Text("屏蔽设置"),
+        children: <Widget>[
+          Container(
+              padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+              width: Get.width,
+              child: Flex(
+                direction: Axis.horizontal,
+                children: <Widget>[
+                  _buildAvatar(user.value!),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                      child: Text(user.value!.nickname),
+                    ),
+                  ),
+                  BlockUserIconBtn(
+                      user: user.value!,
+                      callback: (UserBlackHoleEntity result, int state) {
+                        user.update((val) {
+                          val!.state = state;
+                        });
+                      })
+                ],
+              )),
+          Divider(),
+          ..._buildTagList(tagList),
+        ],
+      ),
+    );
   }
 
   _buildError() => _buildLoading();
@@ -46,99 +85,45 @@ class BlackHoleDialog extends HookWidget {
   @override
   Widget build(BuildContext context) {
     Widget widget = _buildLoading();
-
-    var snapshot =
+    final snapshot =
         useFuture<ResultEntity<BlackHoleEntity>>(useMemoized(() async {
       await Future.delayed(Duration(milliseconds: 500));
       return PictureBlackHoleService.get(id);
     }), initialData: null);
     if (snapshot.hasData) {
-      widget = _buildMain(snapshot.data!);
+      widget = _buildMain(snapshot.data!.data!);
     } else {
       widget = _buildError();
     }
     return widget;
   }
-}
 
-class _View extends StatefulWidget {
-  _View({Key? key, required this.blackHole}) : super(key: key);
-
-  final BlackHoleEntity blackHole;
-
-  @override
-  _ViewState createState() => _ViewState(blackHole);
-}
-
-class _ViewState extends State<_View> {
-  //目的为了脱离上级参数，因为要做识图的更改
-  _ViewState(this.blackHole);
-
-  BlackHoleEntity blackHole;
-
-  @override
-  Widget build(BuildContext context) {
-    var user = blackHole.user;
-    var tagList = blackHole.tagList;
-    return SimpleDialog(
-      title: Text("屏蔽设置"),
-      children: <Widget>[
-        Container(
-            padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-            width: Get.width,
-            child: Flex(
-              direction: Axis.horizontal,
-              children: <Widget>[
-                _buildAvatar(user),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-                    child: Text(user.nickname),
-                  ),
-                ),
-                BlockUserIconBtn(
-                    user: user,
-                    callback: (UserBlackHoleEntity result, int state) {
-                      setState(() {
-                        result.state = state;
-                      });
-                    })
-              ],
-            )),
-        Divider(),
-        ..._buildTagList(tagList),
-      ],
-    );
-  }
-
-  List<Padding> _buildTagList(List<TagBlackHoleEntity> tagList) {
-    return tagList
-        .map((e) => Padding(
-              padding: EdgeInsets.all(StyleConfig.gap * 3),
-              child: Flex(
-                direction: Axis.horizontal,
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
-                      child: Text(e.name),
-                    ),
-                  ),
-                  BlockTagIconBtn(
-                      tag: e,
-                      callback: (TagBlackHoleEntity tag, int state) {
-                        setState(() {
-                          tag.state = state;
-                        });
-                      })
-                ],
+  List<Padding> _buildTagList(RxList<TagBlackHoleEntity> tagList) {
+    return tagList.asMap().entries.map((entry) {
+      final index = entry.key;
+      final value = entry.value;
+      return Padding(
+        padding: EdgeInsets.all(StyleConfig.gap * 3),
+        child: Flex(
+          direction: Axis.horizontal,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: StyleConfig.gap * 2),
+                child: Text(value.name),
               ),
-            ))
-        .toList();
+            ),
+            BlockTagIconBtn(
+                tag: value,
+                callback: (TagBlackHoleEntity tag, int state) {
+                  tagList[index].state = state;
+                  tagList.refresh();
+                })
+          ],
+        ),
+      );
+    }).toList();
   }
 
   InkWell _buildAvatar(UserBlackHoleEntity user) {

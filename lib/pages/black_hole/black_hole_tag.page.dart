@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/black_hole_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/page_black_hole_entity.dart';
@@ -11,6 +12,7 @@ import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/btn/block_tag_icon_btn.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/tips_page_card.widget.dart';
+import 'package:zeongitbeautyflutter/plugins/widgets/config.widget.dart';
 
 class BlackHoleTagPage extends HookWidget {
   BlackHoleTagPage({Key? key, this.controller}) : super(key: key);
@@ -25,30 +27,30 @@ class BlackHoleTagPage extends HookWidget {
 
     final refreshController = pagingHookResult.refreshController;
     final list = pagingHookResult.list;
-    final currPage = pagingHookResult.currPage;
+    final meta = pagingHookResult.meta;
     final refresh = pagingHookResult.refresh;
     final changePage = pagingHookResult.changePage;
 
     useEffect(() {
       controller?.refresh = () {
-        refreshController.value.requestRefresh();
+        refreshController.requestRefresh();
       };
       return () {
         controller?.dispose();
       };
     }, const []);
 
-    Widget _emptyWidget() {
-      if (currPage.value?.meta != null &&
-          currPage.value!.meta.empty &&
-          currPage.value!.meta.first &&
-          currPage.value!.meta.last) {
+    emptyWidget() {
+      if (meta.value != null &&
+          meta.value!.empty &&
+          meta.value!.first &&
+          meta.value!.last) {
         return TipsPageCard(icon: MdiIcons.tag_outline, title: "没有屏蔽标签");
       } else {
         return ListView.builder(
-            itemCount: list.value.length,
+            itemCount: list.length,
             itemBuilder: (BuildContext context, int index) {
-              TagBlackHoleEntity tag = list.value[index];
+              TagBlackHoleEntity tag = list[index];
               return Column(
                 children: <Widget>[
                   Padding(
@@ -69,9 +71,7 @@ class BlackHoleTagPage extends HookWidget {
                         BlockTagIconBtn(
                           tag: tag,
                           callback: (user, int state) {
-                            list.value[index].state = state;
-                            //由于list不监听，所以要调用刷新
-                            list.notifyListeners();
+                            list[index].state = state;
                           },
                         )
                       ],
@@ -85,15 +85,19 @@ class BlackHoleTagPage extends HookWidget {
     }
 
     return KeepAliveClient(
-      child: SmartRefresher(
-        controller: refreshController.value,
-        enablePullDown: true,
-        enablePullUp: currPage.value != null && !currPage.value!.meta.last,
-        onRefresh: refresh,
-        onLoading: () async {
-          await changePage(currPage.value!.meta.currentPage + 1);
-        },
-        child: _emptyWidget(),
+      child: Obx(
+        () => DefaultRefreshConfiguration(
+          child: SmartRefresher(
+            controller: refreshController,
+            enablePullDown: true,
+            enablePullUp: meta.value != null && !meta.value!.last,
+            onRefresh: refresh,
+            onLoading: () async {
+              await changePage(meta.value!.currentPage + 1);
+            },
+            child: emptyWidget(),
+          ),
+        ),
       ),
     );
   }
