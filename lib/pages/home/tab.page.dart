@@ -38,7 +38,7 @@ class TabPage extends HookWidget {
   final _preTime = Rx<DateTime?>(null);
   final _tabIndex = 0.obs;
 
-  _pop() async {
+  Future<bool> _pop() {
     if (_preTime.value == null ||
         DateTime.now().difference(_preTime.value!) > Duration(seconds: 2)) {
       _preTime.value = DateTime.now();
@@ -86,7 +86,7 @@ class TabPage extends HookWidget {
     final tabController = useTabController(initialLength: _tabList.length);
 
     return WillPopScope(
-      onWillPop: () => _pop(),
+      onWillPop: _pop,
       child: Scaffold(
           body: Obx(
             () => LazyIndexedStack(
