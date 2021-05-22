@@ -15,7 +15,7 @@ class SearchTabPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tabController =
+    final tabController =
         useTabController(initialLength: _tabList.length, initialIndex: index);
     return Scaffold(
         appBar: AppBar(

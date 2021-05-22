@@ -9,7 +9,6 @@ useTextEditingControllerObs(Rx<String> text) {
       text.value = controller.text;
     });
     return () {
-      print(123);
       controller.dispose();
     };
   }, const []);

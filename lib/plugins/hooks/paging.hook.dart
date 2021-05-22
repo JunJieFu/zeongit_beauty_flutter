@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:zeongitbeautyflutter/assets/entity/base/result_entity.dart';
 import 'package:zeongitbeautyflutter/assets/entity/pageable_entity.dart';
@@ -13,7 +13,9 @@ PagingHookResult<M, P> usePaging<M, P extends dynamic>(BuildContext context,
     {RefreshControllerCallback? buildController,
     PageableEntityCallback? buildPageable}) {
   final pageable = buildPageable != null ? buildPageable() : PageableEntity();
-  final refreshController = buildController != null ? buildController() : RefreshController(initialRefresh: true);
+  final refreshController = buildController != null
+      ? buildController()
+      : RefreshController(initialRefresh: true);
   final loading = false.obs;
   final list = RxList<M>([]);
   final meta = Rx<Meta?>(null);
