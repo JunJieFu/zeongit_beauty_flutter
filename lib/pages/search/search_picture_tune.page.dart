@@ -446,6 +446,7 @@ class SearchPictureTunePage extends HookWidget {
                           _params.update((val) {
                             val!.date = _searchTuneDateMap[e]!;
                           });
+                          Get.back();
                         },
                       ))
                   .toList());
