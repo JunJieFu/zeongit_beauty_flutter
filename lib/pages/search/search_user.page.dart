@@ -45,11 +45,6 @@ class SearchUserPage extends HookWidget {
       };
     }, const []);
 
-    query(SearchUserTune tune) {
-      _criteria.value = tune;
-      refreshController.requestRefresh(needMove: false);
-    }
-
     return KeepAliveClient(
       child: Scaffold(
           body: Obx(

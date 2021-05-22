@@ -23,7 +23,7 @@ class FragmentLogic extends GetxController {
   }
 
   searchPicture(String tagListString, {bool off = false}) {
-    if (tagListString != null && tagListString != "") {
+    if (tagListString != "") {
       var tagList = tagListString.split(" ");
       tagList.forEach((tag) {
         _searchHistory.removeWhere((element) => tag == element);

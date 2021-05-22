@@ -123,7 +123,7 @@ class RecommendTagPage extends HookWidget {
                   mainAxisSpacing: StyleConfig.listGap,
                   crossAxisCount: 3,
                   childAspectRatio: 1.0,
-                  children: recommendTagList.value
+                  children: recommendTagList
                       .map((item) => Stack(children: [
                             ImageInk(
                               child: AspectRatio(

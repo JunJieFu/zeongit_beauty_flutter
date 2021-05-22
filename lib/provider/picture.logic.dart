@@ -58,7 +58,6 @@ class PictureLogic extends GetxController {
             confirmText: Text("确定"),
             confirmCallback: () async {
               Get.back();
-              //TODO
               BotToast.showText(text: "尚未开发");
             },
           );

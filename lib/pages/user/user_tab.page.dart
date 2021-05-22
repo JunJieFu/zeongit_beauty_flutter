@@ -35,7 +35,7 @@ class UserTabPage extends HookWidget {
     Tab(text: "详情")
   ];
 
-  late UserInfoLogic logic;
+  final UserInfoLogic logic;
 
   @override
   Widget build(BuildContext context) {

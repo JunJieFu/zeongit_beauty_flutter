@@ -29,7 +29,6 @@ class _PopupWindowRouteLayout extends SingleChildLayoutDelegate {
     } else if (position.left < position.right) {
       x = position.left;
     } else {
-      assert(textDirection != null);
       switch (textDirection) {
         case TextDirection.rtl:
           x = size.width - position.right - childSize.width;

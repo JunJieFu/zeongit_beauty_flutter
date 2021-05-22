@@ -9,7 +9,6 @@ import 'package:zeongitbeautyflutter/pages/search/search.page.dart';
 import 'package:zeongitbeautyflutter/pages/search/search_picture_tune.page.dart';
 import 'package:zeongitbeautyflutter/plugins/controllers/refresh.controller.dart';
 import 'package:zeongitbeautyflutter/plugins/hooks/paging.hook.dart';
-import 'package:zeongitbeautyflutter/plugins/mixins/paging_mixin.dart';
 import 'package:zeongitbeautyflutter/plugins/styles/mdi_icons.style.dart';
 import 'package:zeongitbeautyflutter/plugins/widgets/keep_alive_client.widget.dart';
 import 'package:zeongitbeautyflutter/widgets/page_picture.widget.dart';
